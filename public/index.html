@@ -1628,10 +1628,10 @@ fetch('data/clima.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>
 function fmtUpd(iso){ const d=new Date(iso); return isNaN(d)?'':`el ${d.getDate()} de ${MESL[d.getMonth()]}`; }
 function weather(e){
   if(e.mod==='linea'||e.off<0) return '';
-  const d=WX.days[isoOf(e.off)]; if(!d) return '';
+  const iso=isoOf(e.off), d=(WX.zonas&&WX.zonas[e.zona]&&WX.zonas[e.zona][iso])||WX.days[iso]; if(!d) return '';
   const [hi,lo,pp]=d, out=e.amb==='exterior', rain=pp>=35, hot=hi>=33;
   const tip = out ? (rain?' Lleva paraguas o impermeable.':hot?' Lleva agua, gorra y bloqueador.':momentoOf(e.h)==='noche'&&lo<=18?' En la noche refresca; lleva algo para abrigarte.':' Buen clima para salir.') : (rain?' Si vas a llegar caminando, lleva paraguas.':'');
-  return `<div class="wx ${rain||hot?'warn':'ok'}">${rain?I.rain:I.sun}<span>${out?'Evento al aire libre. ':''}Pronóstico para ese día en Monterrey: entre ${Math.round(lo)} y ${Math.round(hi)} °C, ${pp} % de probabilidad de lluvia.${tip} <small style="opacity:.75">Actualizado ${WX.updated?fmtUpd(WX.updated):''}.</small></span></div>`;
+  return `<div class="wx ${rain||hot?'warn':'ok'}">${rain?I.rain:I.sun}<span>${out?'Evento al aire libre. ':''}Pronóstico para ese día en ${WX.zonas&&WX.zonas[e.zona]?ZONAS[e.zona].n:'Monterrey'}: entre ${Math.round(lo)} y ${Math.round(hi)} °C, ${pp} % de probabilidad de lluvia.${tip} <small style="opacity:.75">Actualizado ${WX.updated?fmtUpd(WX.updated):''}.</small></span></div>`;
 }
 
 /* ---------- Detalle de evento ---------- */
@@ -1810,6 +1810,30 @@ if(sb){
   });
   loadReviews().then(()=>{ if(typeof render==='function') render(); });
 }
+/* Eventos aprobados en el panel de Supabase (enviados por organizadores o encontrados por el recolector) */
+const CAT_OK=k=>CATS[k]?k:'expo';
+async function loadApproved(){
+  if(!sb) return;
+  const { data, error } = await sb.from('eventos_enviados').select('id,datos,foto,fuente').eq('estado','aprobado');
+  if(error||!data) return;
+  let n=0;
+  data.forEach(r=>{
+    const d=r.datos||{}; if(!d.nombre||!/^\d{4}-\d{2}-\d{2}$/.test(d.fecha||'')) return;
+    const id='db-'+r.id; if(ev(id)) return;
+    const orgKey='org-'+String(d.organizador||r.fuente||'Organizador').toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,'-');
+    if(!ORGS[orgKey]) ORGS[orgKey]={n:d.organizador||r.fuente||'Organizador',c:'#7F95E4',d:''};
+    let off=offOfDate(new Date(d.fecha+'T00:00')), range=null;
+    if(d.hasta&&/^\d{4}-\d{2}-\d{2}$/.test(d.hasta)){ const end=offOfDate(new Date(d.hasta+'T00:00')); if(off<0&&end>=0) off=0; const h=new Date(d.hasta+'T00:00'); range=`Hasta el ${h.getDate()} de ${MESL[h.getMonth()]}`; }
+    const linea=d.municipio==='linea';
+    EVENTS.push({id,t:d.nombre,cat:CAT_OK(d.categoria),org:orgKey,venue:d.lugar||(linea?'En línea':'Por confirmar'),zona:ZONAS[d.municipio]?d.municipio:'centro',
+      amb:d.espacio==='exterior'?'exterior':'interior',mod:linea?'linea':'presencial',off,h:/^\d{1,2}:\d{2}/.test(d.hora||'')?d.hora.slice(0,5).padStart(5,'0'):'00:00',
+      price:typeof d.precio==='number'?d.precio:null,tags:Array.isArray(d.caracteristicas)?d.caracteristicas:[],going:0,desc:d.descripcion||'',range,
+      img:r.foto||undefined,url:d.enlace||undefined,src:r.fuente&&r.fuente!=='Organizador'?r.fuente:undefined});
+    n++;
+  });
+  if(n){ Object.keys(PS).forEach(k=>delete PS[k]); render(); }
+}
+loadApproved();
 
 renderUser(); fromHash();
 </script>

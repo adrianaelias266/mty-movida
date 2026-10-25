@@ -21,6 +21,6 @@ jobs:
         run: |
           git config user.name "mty-movida-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/clima.json
+          git add public/data/clima.json
           git diff --cached --quiet || git commit -m "Actualizar pronóstico del clima"
           git push

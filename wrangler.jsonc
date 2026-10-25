@@ -1,0 +1,6 @@
+{
+  // Configuración para Cloudflare: publica la carpeta "public" como sitio
+  "name": "mty-movida",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "./public" }
+}

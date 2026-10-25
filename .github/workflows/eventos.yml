@@ -1,0 +1,16 @@
+name: Buscar eventos nuevos
+
+on:
+  schedule:
+    - cron: '43 7 * * *'    # todos los días a la 1:43 a. m. de Monterrey
+  workflow_dispatch:        # permite correrlo a mano desde GitHub
+
+jobs:
+  eventos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/eventos.mjs
