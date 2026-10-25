@@ -498,6 +498,7 @@ form.card .full{grid-column:1/-1}
 .foot b{color:var(--on-brand);font-family:var(--f-display)}
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
 </head>
 <body>
 <header class="top">
@@ -945,7 +946,7 @@ function bindPlans(root){
   root.querySelectorAll('[data-pshare]').forEach(b=>b.onclick=()=>{ const st=PS[b.dataset.pshare], e=ev(st.cur), c=compOf(e);
     copy(`Plan ${MOODS[st.ctx.mood].s.toLowerCase()}: ${e.t}\n${relDay(e.off)} ${e.h} h · ${e.venue}${c?`\n${c.t} ${c.a.n}`:''}\n¿Vamos? Visto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); });
   root.querySelectorAll('[data-psave]').forEach(b=>b.onclick=()=>requireLogin(()=>{ const st=PS[b.dataset.psave], e=ev(st.cur);
-    if(!isSaved(e.id)) S.saved.push(e.id); S.plans.push({name:`Plan ${MOODS[st.ctx.mood].s.toLowerCase()}${st.ctx.con?' · '+CON[st.ctx.con].n.toLowerCase():''}`,ids:[e.id]}); persist(); toast('Guardado en Mis planes'); render(); }));
+    if(!isSaved(e.id)) S.saved.push(e.id); S.plans.push({id:crypto.randomUUID(),name:`Plan ${MOODS[st.ctx.mood].s.toLowerCase()}${st.ctx.con?' · '+CON[st.ctx.con].n.toLowerCase():''}`,ids:[e.id]}); persist(); toast('Guardado en Mis planes'); render(); }));
 }
 let PA={mood:'tranquilo',con:'amiga',cuando:'hoy',presu:'todo'};
 try{ const pa=JSON.parse(localStorage.getItem('mtymovida-pa')||'null'); if(pa) PA=Object.assign(PA,pa); }catch(e){}
@@ -990,14 +991,14 @@ const KEY='mtymovida-v1';
 let S0 = {user:null,saved:[],going:[],follows:[],followCats:[],prefZonas:[],prefMom:[],onboarded:false,reviews:{},plans:[],prefs:{reminders:true,weekly:false}};
 let S=S0; try{ const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(S,JSON.parse(raw)); }catch(e){}
 S.follows=(S.follows||[]).filter(o=>ORGS[o]);
-const persist = () => { try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} };
+const persist = () => { try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} if(typeof syncCloud==='function') syncCloud(); };
 const F = {all:false,q:'',cats:new Set(),mom:new Set(),amb:new Set(),mod:new Set(),extras:new Set(),zona:'',precio:'',cuando:'todo',fecha:'',vista:'lista',open:false};
 let weekOff=0, calView='semana', monthOff=0, calSel=null, pendingAfterLogin=null, heroTimer=null;
 const ev = id => EVENTS.find(e=>e.id===id);
 const isSaved = id => S.saved.includes(id);
 const toggleIn = (arr,v) => { const i=arr.indexOf(v); i>=0?arr.splice(i,1):arr.push(v); return i<0; };
 
-function reviewsOf(id){ return [...(SEED_REVIEWS[id]||[]),...(S.reviews[id]||[])]; }
+function reviewsOf(id){ return [...((typeof REV!=='undefined'&&REV[id])||[]),...(S.reviews[id]||[]).filter(r=>!r.synced)]; }
 function avgOf(list){ if(!list.length) return null; return list.reduce((t,r)=>t+(r.a+r.o+r.v)/3,0)/list.length; }
 function orgStats(org){ const past=EVENTS.filter(e=>e.org===org&&e.off<0); const all=past.flatMap(e=>reviewsOf(e.id)); return {past,count:all.length,avg:avgOf(all)}; }
 function stars(v){ let h='<span class="stars" aria-label="'+(v?v.toFixed(1):'0')+' de 5">'; for(let i=1;i<=5;i++) h+= v>=i-0.25?I.star:I.starO; return h+'</span>'; }
@@ -1051,18 +1052,23 @@ function openLogin(){
   openModal(`<div class="auth-grid">${illLeft()}
     <div class="auth-card"><img class="logo-sm" src="${BIGLOGO}" alt="Mty Movida">
       <div><h2>Bienvenido a Mty Movida</h2><p style="margin:6px 0 0;color:var(--muted)">Guarda tu agenda, arma planes con tus amigos y entérate de todo lo que pasa en la ciudad.</p></div>
-      <button class="btn primary" id="lgG" style="justify-content:center">Continuar con Google</button>
-      <div class="divider">o con tu correo</div>
-      <div class="field"><label for="lgName">Nombre</label><input class="inp" id="lgName" placeholder="Tu nombre"></div>
-      <div class="field"><label for="lgMail">Correo electrónico</label><input class="inp" id="lgMail" type="email" placeholder="nombre@correo.com"></div>
+      <div id="lgBox" style="display:flex;flex-direction:column;gap:14px">
+      <div class="field"><label for="lgName">Nombre</label><input class="inp" id="lgName" placeholder="Tu nombre" autocomplete="name"></div>
+      <div class="field"><label for="lgMail">Correo electrónico</label><input class="inp" id="lgMail" type="email" placeholder="nombre@correo.com" autocomplete="email"></div>
       <div class="err" id="lgErr" hidden></div>
-      <button class="btn" id="lgE" style="justify-content:center">Crear cuenta o entrar</button>
-      <p style="margin:0;font-size:12px;color:var(--muted)">Prototipo: el inicio de sesión es simulado y los datos se guardan solo en este navegador.</p></div>
+      <button class="btn primary" id="lgE" style="justify-content:center">Enviarme el enlace para entrar</button>
+      <p style="margin:0;font-size:12px;color:var(--muted)">Sin contraseña: te mandamos un enlace a tu correo y al abrirlo entras directo. Si ya tienes cuenta, solo escribe tu correo.</p></div></div>
     ${illRight()}</div>`,()=>{
-    const done=name=>{ S.user={name}; persist(); renderUser(); closeModal(); toast(`Hola, ${name.split(' ')[0]}`); const f=pendingAfterLogin; pendingAfterLogin=null; if(!S.onboarded){ openOnboarding(f); return; } if(f) f(); else render(); };
-    document.getElementById('lgG').onclick=()=>done('Usuario de Google');
-    document.getElementById('lgE').onclick=()=>{ const n=document.getElementById('lgName').value.trim(), m=document.getElementById('lgMail').value.trim(), er=document.getElementById('lgErr');
-      if(!n||!/^\S+@\S+\.\S+$/.test(m)){ er.hidden=false; er.textContent='Escribe tu nombre y un correo válido.'; return; } done(n); };
+    const go=async()=>{ const n=document.getElementById('lgName').value.trim(), m=document.getElementById('lgMail').value.trim(), er=document.getElementById('lgErr'), b=document.getElementById('lgE');
+      if(!/^\S+@\S+\.\S+$/.test(m)){ er.hidden=false; er.textContent='Escribe un correo válido.'; return; }
+      if(!sb){ er.hidden=false; er.textContent='No pudimos conectar con el servicio de cuentas. Revisa tu conexión y vuelve a cargar la página.'; return; }
+      b.disabled=true; b.textContent='Enviando…'; er.hidden=true;
+      const { error } = await sb.auth.signInWithOtp({ email:m, options:{ emailRedirectTo: location.origin+location.pathname, data: n?{nombre:n}:undefined } });
+      if(error){ b.disabled=false; b.textContent='Enviarme el enlace para entrar'; er.hidden=false; er.textContent=/rate|seconds/i.test(error.message)?'Espera un minuto antes de pedir otro enlace.':'No pudimos enviar el enlace. Revisa el correo e intenta de nuevo.'; return; }
+      document.getElementById('lgBox').innerHTML=`<div class="panel" style="background:var(--lila-soft);box-shadow:none"><h3>Revisa tu correo</h3><p style="margin:0">Te mandamos un enlace a <b>${esc(m)}</b>. Ábrelo desde este mismo dispositivo para entrar. Si no lo ves, busca en la carpeta de spam o correo no deseado.</p></div>`;
+    };
+    document.getElementById('lgE').onclick=go;
+    document.getElementById('lgMail').onkeydown=e=>{ if(e.key==='Enter') go(); };
   },'auth');
 }
 function openOnboarding(after){
@@ -1472,7 +1478,7 @@ function bindCal(){
   if(g('mPrev')) g('mPrev').onclick=()=>{monthOff--;calSel=null;render();}; if(g('mNext')) g('mNext').onclick=()=>{monthOff++;calSel=null;render();}; if(g('mNow')) g('mNow').onclick=()=>{monthOff=0;calSel=null;render();};
   document.querySelectorAll('[data-mday]').forEach(c=>c.onclick=x=>{ if(x.target.closest('[data-open]')) return; calSel=+c.dataset.mday; render(); });
   if(g('mSeeDay')) g('mSeeDay').onclick=()=>{ clearFiltersSilent(); F.cuando='fecha'; F.fecha=isoOf(calSel); go('eventos'); };
-  g('logout').onclick=()=>{ S.user=null; Object.keys(PS).forEach(k=>delete PS[k]); persist(); renderUser(); render(); toast('Sesión cerrada'); };
+  g('logout').onclick=async()=>{ if(sb) await sb.auth.signOut(); S=blank(); CLOUD=null; Object.keys(PS).forEach(k=>delete PS[k]); try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} renderUser(); render(); toast('Sesión cerrada'); };
   g('gcal').onclick=openGcal;
   g('editGustos').onclick=()=>openOnboarding();
   g('pRem').onchange=e=>{S.prefs.reminders=e.target.checked;persist();toast(e.target.checked?'Recordatorios activados':'Recordatorios desactivados');};
@@ -1483,7 +1489,7 @@ function bindCal(){
     copy(`${p.name}\n`+es.map(e=>`• ${relDay(e.off)} ${e.h} – ${e.t} (${e.venue})`).join('\n')+`\nVisto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); });
   if(g('planSave')) g('planSave').onclick=()=>{ const n=g('planName').value.trim(), ids=[...document.querySelectorAll('.planchk:checked')].map(c=>c.value), er=g('planErr');
     if(!n||!ids.length){ er.hidden=false; er.textContent='Escribe un nombre y elige al menos un evento.'; return; }
-    S.plans.push({name:n,ids}); persist(); render(); toast('Plan guardado'); };
+    S.plans.push({id:crypto.randomUUID(),name:n,ids}); persist(); render(); toast('Plan guardado'); };
 }
 function monthNav(){
   const m=new Date(T0.getFullYear(),T0.getMonth()+monthOff,1);
@@ -1516,7 +1522,7 @@ function openGcal(){
   openModal(`<div class="dhead plain-top"><span class="eyebrow">Google Calendar</span><h2>Conecta tu calendario</h2><p style="margin:0;color:var(--muted)">Con este enlace, los eventos que agendes aquí aparecen solos en Google Calendar. También funciona con el calendario del iPhone y Outlook.</p></div>
     <div class="copyline"><span>${url}</span><button class="btn small" id="cpCal">Copiar</button></div>
     <div><div class="section-t" style="margin-bottom:8px">En Google Calendar (computadora)</div><ol class="steps"><li>Abre Google Calendar y, en el panel izquierdo, junto a "Otros calendarios", toca el signo +.</li><li>Elige "Desde URL" y pega el enlace.</li><li>Toca "Agregar calendario". Tus eventos se actualizan automáticamente.</li></ol></div>
-    <p style="margin:0;font-size:12px;color:var(--muted)">Prototipo: el enlace es de ejemplo. En la versión final se genera uno personal para cada usuario.</p>`,()=>{ document.getElementById('cpCal').onclick=()=>copy(url,'Enlace copiado'); });
+    <p style="margin:0;font-size:12px;color:var(--muted)">Próximamente: esta conexión todavía está en preparación.</p>`,()=>{ document.getElementById('cpCal').onclick=()=>copy(url,'Enlace copiado'); });
 }
 
 /* ---------- Vista: Atracciones ---------- */
@@ -1584,9 +1590,25 @@ function bindAgregar(){
     if(miss.length){ er.hidden=false; er.textContent='Faltan campos obligatorios (marcados con *).'; document.getElementById(miss[0]).focus(); return; }
     if(!/^\S+@\S+\.\S+$/.test(document.getElementById('sMail').value)){ er.hidden=false; er.textContent='Revisa el correo de contacto.'; return; }
     if(!document.getElementById('sImg').files.length){ er.hidden=false; er.textContent='Agrega una foto o el cartel del evento.'; return; }
-    const n=document.getElementById('sNombre').value;
-    document.getElementById('subForm').outerHTML=`<div class="panel" style="padding:28px"><span class="eyebrow">Recibido</span><h3 style="font-family:var(--f-display);font-size:22px">Gracias. Recibimos "${esc(n)}".</h3><p style="margin:0;color:var(--muted)">Lo revisaremos y te avisaremos por correo cuando esté publicado. (Prototipo: el envío es simulado.)</p><div><button class="btn" id="again">Enviar otro evento</button></div></div>`;
-    document.getElementById('again').onclick=render; window.scrollTo({top:0,behavior:'smooth'});
+    const v=id=>document.getElementById(id).value.trim(), n=v('sNombre'), btn=document.querySelector('#subForm button[type=submit]');
+    if(!sb){ er.hidden=false; er.textContent='No pudimos conectar con el servidor. Revisa tu conexión e intenta de nuevo, o escríbenos al correo de la derecha.'; return; }
+    btn.disabled=true; btn.textContent='Enviando…'; er.hidden=true;
+    (async()=>{
+      try{
+        const f=document.getElementById('sImg').files[0], ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
+        const path=`${new Date().toISOString().slice(0,10)}/${crypto.randomUUID()}.${ext}`;
+        const up=await sb.storage.from('carteles').upload(path,f,{contentType:f.type});
+        if(up.error) throw up.error;
+        const foto=sb.storage.from('carteles').getPublicUrl(path).data.publicUrl;
+        const datos={nombre:n,organizador:v('sOrg'),correo:v('sMail'),categoria:v('sCat'),municipio:v('sZona'),fecha:v('sFecha'),hora:v('sHora'),lugar:v('sLugar'),
+          espacio:(document.querySelector('input[name=sAmb]:checked')||{}).value||null,precio:v('sPrecio')===''?null:Number(v('sPrecio')),
+          caracteristicas:[...document.querySelectorAll('input[name=sExtra]:checked')].map(c=>c.value),descripcion:v('sDesc'),enlace:v('sLink'),redes:v('sRedes')};
+        const ins=await sb.from('eventos_enviados').insert({datos,foto});
+        if(ins.error) throw ins.error;
+        document.getElementById('subForm').outerHTML=`<div class="panel" style="padding:28px"><span class="eyebrow">Recibido</span><h3 style="font-family:var(--f-display);font-size:22px">Gracias. Recibimos "${esc(n)}".</h3><p style="margin:0;color:var(--muted)">Lo revisaremos y te avisaremos por correo cuando esté publicado.</p><div><button class="btn" id="again">Enviar otro evento</button></div></div>`;
+        document.getElementById('again').onclick=render; window.scrollTo({top:0,behavior:'smooth'});
+      }catch(x){ console.warn(x); btn.disabled=false; btn.textContent='Enviar para revisión'; er.hidden=false; er.textContent='No pudimos enviar tu evento. Intenta de nuevo en unos minutos.'; }
+    })();
   });
 }
 
@@ -1619,7 +1641,7 @@ function eventHTML(e){
   let rev='';
   if(past){
     const asp=[['a','Ambiente'],['o','Organización'],['v','Precio-calidad']];
-    const mine=(S.reviews[e.id]||[]).some(r=>r.mine);
+    const mine=reviewsOf(e.id).some(r=>r.mine);
     rev=`<div style="display:flex;flex-direction:column;gap:12px"><div class="section-t">Reseñas de quienes fueron</div>
       ${revs.length?`<div class="row" style="gap:12px"><b style="font-family:var(--f-display);font-size:30px">${avgOf(revs).toFixed(1)}</b><div>${stars(avgOf(revs))}<div style="font-size:13px;color:var(--muted)">${revs.length} reseñas verificadas</div></div></div>
       <div class="aspects">${asp.map(([k,n])=>{const v=revs.reduce((t,r)=>t+r[k],0)/revs.length;return `<div class="aspect"><span>${n}</span><span class="bar"><i style="width:${v/5*100}%"></i></span><b>${v.toFixed(1)}</b></div>`;}).join('')}</div>
@@ -1628,7 +1650,7 @@ function eventHTML(e){
         <div class="rategrid">${asp.map(([k,n])=>`<span>${n}</span><span class="rateinp" data-asp="${k}">${[1,2,3,4,5].map(i=>`<button type="button" data-v="${i}" aria-label="${i} estrellas">${I.star}</button>`).join('')}</span>`).join('')}</div>
         <textarea class="inp" id="rvTxt" placeholder="Cuéntanos qué tal estuvo: ambiente, organización, lugar…"></textarea><div class="err" id="rvErr" hidden></div>
         <button class="btn primary small" id="rvSend" style="align-self:flex-start">Publicar reseña</button></div>`
-        :`<div class="panel" style="background:var(--sunk);border:0"><p style="margin:0;font-size:14px">Solo quienes agendaron este evento pueden calificarlo. Así evitamos reseñas falsas.</p><button class="btn small" id="rvAttend" style="align-self:flex-start">Prototipo: marcar que asistí</button></div>`)}
+        :`<div class="panel" style="background:var(--sunk);border:0"><p style="margin:0;font-size:14px">Solo quienes agendaron este evento pueden calificarlo. Así evitamos reseñas falsas.</p></div>`)}
     </div>`;
   }
   return `<figure class="mhero"><img src="${evImg(e)}" alt=""><figcaption>${e.img?'Foto: agenda FISL 2026':'Imagen ilustrativa'}</figcaption></figure>
@@ -1716,6 +1738,79 @@ function render(){
 function fromHash(){ const h=location.hash.replace('#',''); current=VIEWS[h]?h:'inicio'; render(); }
 window.addEventListener('hashchange',()=>{ fromHash(); window.scrollTo(0,0); });
 document.getElementById('brandBtn').onclick=()=>go('inicio');
+/* ---------- Nube (Supabase): cuentas y datos de cada persona ---------- */
+const SB_URL='https://aqakoihxgwxdyrtzjrfh.supabase.co';
+const SB_KEY='sb_publishable_LfR-ayNY5bpv2xlO8pkEXQ_sE4nP0BG';
+const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY):null;
+let CLOUD=null, REV={}, syncT=null;
+const blank=()=>JSON.parse(JSON.stringify(S0));
+const snapOf=()=>JSON.parse(JSON.stringify({saved:S.saved,going:S.going,follows:S.follows,followCats:S.followCats,prefZonas:S.prefZonas,prefMom:S.prefMom,onboarded:S.onboarded,prefs:S.prefs,plans:S.plans}));
+if(S.user&&!S.user.id){ S=blank(); }
+function cloudErr(e){ console.warn(e); toast('No se pudo guardar en tu cuenta. Revisa tu conexión.'); }
+function syncCloud(){ clearTimeout(syncT); syncT=setTimeout(doSync,400); }
+async function doSync(){
+  if(!sb||!S.user||!S.user.id||!CLOUD) return;
+  const uid=S.user.id, old=CLOUD, now=snapOf(); CLOUD=now;
+  const jobs=[];
+  const evs=new Set([...now.saved,...now.going]), oldEvs=new Set([...old.saved,...old.going]);
+  const ups=[...evs].filter(id=>!oldEvs.has(id)||old.going.includes(id)!==now.going.includes(id)).map(id=>({usuario:uid,evento:id,voy:now.going.includes(id)}));
+  if(ups.length) jobs.push(sb.from('agendados').upsert(ups));
+  const del=[...oldEvs].filter(id=>!evs.has(id)); if(del.length) jobs.push(sb.from('agendados').delete().eq('usuario',uid).in('evento',del));
+  const fAdd=now.follows.filter(o=>!old.follows.includes(o)).map(o=>({usuario:uid,organizador:o}));
+  if(fAdd.length) jobs.push(sb.from('seguidos').upsert(fAdd));
+  const fDel=old.follows.filter(o=>!now.follows.includes(o)); if(fDel.length) jobs.push(sb.from('seguidos').delete().eq('usuario',uid).in('organizador',fDel));
+  if(JSON.stringify([old.followCats,old.prefZonas,old.prefMom,old.onboarded,old.prefs])!==JSON.stringify([now.followCats,now.prefZonas,now.prefMom,now.onboarded,now.prefs]))
+    jobs.push(sb.from('perfiles').update({gustos:now.followCats,zonas:now.prefZonas,horarios:now.prefMom,listo:now.onboarded,avisos:{recordatorios:!!now.prefs.reminders,semanal:!!now.prefs.weekly}}).eq('id',uid));
+  const oldP=old.plans.map(p=>p.id), newP=now.plans.map(p=>p.id);
+  const pAdd=now.plans.filter(p=>!oldP.includes(p.id)).map(p=>({id:p.id,usuario:uid,nombre:p.name,eventos:p.ids}));
+  if(pAdd.length) jobs.push(sb.from('planes').insert(pAdd));
+  const pDel=oldP.filter(id=>!newP.includes(id)); if(pDel.length) jobs.push(sb.from('planes').delete().in('id',pDel));
+  for(const [ev,list] of Object.entries(S.reviews)) for(const r of list) if(r.mine&&!r.synced){
+    r.synced=true;
+    jobs.push(sb.from('resenas').insert({usuario:uid,evento:ev,nombre:r.u,ambiente:r.a,organizacion:r.o,precio:r.v,texto:r.txt}).then(res=>{ if(!res.error){ (REV[ev]=REV[ev]||[]).push({...r}); } return res; }));
+  }
+  try{ const res=await Promise.all(jobs); const bad=res.find(x=>x&&x.error); if(bad) cloudErr(bad.error); }catch(e){ cloudErr(e); }
+  try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){}
+}
+async function loadReviews(){
+  if(!sb) return;
+  const { data, error } = await sb.from('resenas').select('evento,nombre,ambiente,organizacion,precio,texto,usuario');
+  if(error) return;
+  REV={}; const uid=S.user&&S.user.id;
+  data.forEach(r=>(REV[r.evento]=REV[r.evento]||[]).push({u:r.nombre,a:r.ambiente,o:r.organizacion,v:r.precio,txt:r.texto||'Sin comentario.',mine:r.usuario===uid}));
+}
+async function loadCloud(session){
+  const u=session.user;
+  const [pf,ag,sg,pl]=await Promise.all([
+    sb.from('perfiles').select('*').eq('id',u.id).maybeSingle(),
+    sb.from('agendados').select('evento,voy'),
+    sb.from('seguidos').select('organizador'),
+    sb.from('planes').select('id,nombre,eventos').order('creado')
+  ]);
+  const p=pf.data||{};
+  S=blank();
+  S.user={id:u.id,email:u.email,name:p.nombre||(u.user_metadata&&u.user_metadata.nombre)||u.email.split('@')[0]};
+  S.saved=(ag.data||[]).map(r=>r.evento); S.going=(ag.data||[]).filter(r=>r.voy).map(r=>r.evento);
+  S.follows=(sg.data||[]).map(r=>r.organizador).filter(o=>ORGS[o]);
+  S.followCats=p.gustos||[]; S.prefZonas=p.zonas||[]; S.prefMom=p.horarios||[]; S.onboarded=!!p.listo;
+  S.prefs={reminders:p.avisos?p.avisos.recordatorios!==false:true, weekly:!!(p.avisos&&p.avisos.semanal)};
+  S.plans=(pl.data||[]).map(x=>({id:x.id,name:x.nombre,ids:x.eventos}));
+  CLOUD=snapOf();
+  try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){}
+  await loadReviews();
+  Object.keys(PS).forEach(k=>delete PS[k]);
+  renderUser(); render();
+  if(!S.onboarded) openOnboarding();
+}
+if(sb){
+  sb.auth.onAuthStateChange((event,session)=>{
+    if(/access_token|error_description/.test(location.hash)) history.replaceState(null,'',location.pathname+'#inicio');
+    if(session&&(!S.user||S.user.id!==session.user.id||!CLOUD)){ const fresh=event==='SIGNED_IN'; loadCloud(session).then(()=>{ if(fresh) toast(`Hola, ${S.user.name.split(' ')[0]}`); }).catch(cloudErr); }
+    else if(!session&&S.user){ S=blank(); CLOUD=null; try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} renderUser(); render(); }
+  });
+  loadReviews().then(()=>{ if(typeof render==='function') render(); });
+}
+
 renderUser(); fromHash();
 </script>
 
