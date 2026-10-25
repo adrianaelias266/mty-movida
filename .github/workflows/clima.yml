@@ -1,0 +1,26 @@
+name: Actualizar clima
+
+on:
+  schedule:
+    - cron: '17 11 * * *'   # todos los días a las 5:17 a. m. de Monterrey
+  workflow_dispatch:        # permite correrlo a mano desde GitHub
+
+permissions:
+  contents: write
+
+jobs:
+  clima:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/clima.mjs
+      - name: Guardar cambios
+        run: |
+          git config user.name "mty-movida-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/clima.json
+          git diff --cached --quiet || git commit -m "Actualizar pronóstico del clima"
+          git push
