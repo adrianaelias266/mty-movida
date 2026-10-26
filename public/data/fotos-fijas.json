@@ -6,6 +6,15 @@
  "d05": null,
  "d06": null,
  "d07": null,
+ "d08": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/LABNL_Lab_Cultural_Ciudadano%2C_Monterrey%2C_M%C3%A9xico.jpg/960px-LABNL_Lab_Cultural_Ciudadano%2C_Monterrey%2C_M%C3%A9xico.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Pequeño mar",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:LABNL_Lab_Cultural_Ciudadano,_Monterrey,_M%C3%A9xico.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
  "d09": null,
  "d10": null,
  "d11": null,
@@ -28,14 +37,228 @@
  "c15": null,
  "c16": null,
  "k01": null,
+ "k02": null,
+ "k03": null,
+ "k04": null,
+ "k05": null,
+ "k06": null,
+ "k07": null,
+ "k08": null,
+ "k09": null,
+ "k10": null,
  "k11": null,
  "k12": null,
  "k13": null,
+ "k14": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/ff/Disco_de_oro_%2819043687839%29.jpg/960px-Disco_de_oro_%2819043687839%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Ángel M. Felicísimo from Mérida, España",
+   "licencia": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Disco_de_oro_(19043687839).jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "k15": null,
+ "k16": null,
+ "k17": null,
+ "k18": null,
+ "k19": null,
  "k20": null,
  "k21": null,
  "k22": null,
+ "s01": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Pimpinela_2022_Luna_Park_Traicion.png/960px-Pimpinela_2022_Luna_Park_Traicion.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "SebasAcosta26",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Pimpinela_2022_Luna_Park_Traicion.png",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s02": {
+  "foto": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Arena_Monterrey.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "credito": {
+   "autor": "Hector Martínez",
+   "licencia": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Arena_Monterrey.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s03": {
+  "foto": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Los_Tucanes_de_Tijuana_en_Acceso_Total_%286798754565%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "credito": {
+   "autor": "Lunchbox LP",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Los_Tucanes_de_Tijuana_en_Acceso_Total_(6798754565).jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s04": {
+  "foto": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Arena_Monterrey.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "credito": {
+   "autor": "Hector Martínez",
+   "licencia": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Arena_Monterrey.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s05": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/M%C3%A4go_de_Oz_en_2013_%283%29_%28cropped%29.jpg/960px-M%C3%A4go_de_Oz_en_2013_%283%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Premsa Ajuntament de Torrent",
+   "licencia": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:M%C3%A4go_de_Oz_en_2013_(3)_(cropped).jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s06": {
+  "foto": "https://upload.wikimedia.org/wikipedia/commons/1/18/Ricardo_Montaner_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "credito": {
+   "autor": "Horacio Cambeiro",
+   "licencia": "CC BY-SA 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Ricardo_Montaner_(cropped).jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s07": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Banda_MS_Cholula.jpg/960px-Banda_MS_Cholula.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Gobierno de Cholula",
+   "licencia": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Banda_MS_Cholula.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s08": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Banda_MS_Cholula.jpg/960px-Banda_MS_Cholula.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Gobierno de Cholula",
+   "licencia": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Banda_MS_Cholula.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s09": {
+  "foto": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Eden_Mu%C3%B1oz_premios_lo_nuestro.jpg",
+  "credito": {
+   "autor": "Edén Muñoz",
+   "licencia": "CC CC0 1.0",
+   "url": "https://commons.wikimedia.org/w/index.php?curid=119260871",
+   "fuente": "Openverse"
+  }
+ },
+ "s10": {
+  "foto": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Earth_Wind_Fire_%2856341212%29.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "credito": {
+   "autor": "Marco Rosanova",
+   "licencia": "CC BY 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Earth_Wind_Fire_(56341212).jpeg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s11": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Los_Payasonicos.jpg/960px-Los_Payasonicos.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "RandomMoys",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Los_Payasonicos.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s12": {
+  "foto": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Arena_Monterrey.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "credito": {
+   "autor": "Hector Martínez",
+   "licencia": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Arena_Monterrey.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s13": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Morat_en_concierto.jpg/960px-Morat_en_concierto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Andrea Herrera / Secretaría de Cultura de la Ciudad de México",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Morat_en_concierto.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s14": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Morat_en_concierto.jpg/960px-Morat_en_concierto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Andrea Herrera / Secretaría de Cultura de la Ciudad de México",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Morat_en_concierto.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s15": {
+  "foto": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Arena_Monterrey.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "credito": {
+   "autor": "Hector Martínez",
+   "licencia": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Arena_Monterrey.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s16": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Intocable0519-1000.jpg/960px-Intocable0519-1000.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "en:User:Dwightmccann",
+   "licencia": "CC BY-SA 2.5",
+   "url": "https://commons.wikimedia.org/wiki/File:Intocable0519-1000.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s17": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Sin_Bandera_singing_at_Festival_Vi%C3%B1a_del_Mar.jpg/960px-Sin_Bandera_singing_at_Festival_Vi%C3%B1a_del_Mar.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "FESTIVALDEVINACHILE",
+   "licencia": "CC BY 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Sin_Bandera_singing_at_Festival_Vi%C3%B1a_del_Mar.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
  "sp1": null,
+ "sp2": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Parque_Rufino_tamayo.jpg/960px-Parque_Rufino_tamayo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Rick González",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Parque_Rufino_tamayo.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "sp3": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Parque_Rufino_tamayo.jpg/960px-Parque_Rufino_tamayo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Rick González",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Parque_Rufino_tamayo.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "sp4": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Parque_Rufino_tamayo.jpg/960px-Parque_Rufino_tamayo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Rick González",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Parque_Rufino_tamayo.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
  "sp5": null,
  "sp6": null,
- "sp7": null
+ "sp7": null,
+ "sp8": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Parque_Rufino_tamayo.jpg/960px-Parque_Rufino_tamayo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Rick González",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Parque_Rufino_tamayo.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "ft1": null,
+ "fo3": null
 }
