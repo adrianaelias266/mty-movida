@@ -17,6 +17,12 @@ export const FUENTES = [
   { nombre: 'Metapatio', sitio: 'https://www.songkick.com', paginas: ['https://www.songkick.com/venues/3675169-metapatio'], filtro: /./, municipio: 'centro', limpiarNombre: /\s+@\s+.*$/ },
   // Todos los conciertos de la zona de Monterrey en Songkick (la lista ya trae cada evento completo)
   { nombre: 'Songkick', sitio: 'https://www.songkick.com', lista: 'https://www.songkick.com/metro-areas/31051-mexico-monterrey', listaDirecta: true, paginasLista: 6, filtro: /./, municipio: 'centro', cat: 'concierto', limpiarNombre: /\s+@\s+.*$/ },
+  // MARCO, Museo de Arte Contemporáneo: exposiciones vigentes
+  { nombre: 'MARCO', sitio: 'https://www.marco.org.mx', lector: 'marco', lugar: 'MARCO, Zuazua y Jardón, Centro', municipio: 'centro' },
+  // Superboletos: todo lo que vende en Nuevo León (Arena Monterrey, Auditorio, Showcenter, etc.)
+  { nombre: 'Superboletos', sitio: 'https://www.superboletos.com', lector: 'superboletos', municipio: 'centro',
+    datos: 'https://dl09mj2qf37fz.cloudfront.net/SuperBoletosRepositorio/apps/jsonCache/27768/catalogos/search.json', enlace: 'https://www.superboletos.com/landing-evento/',
+    excluir: /backstage|meet ?(and|&) ?greet|vip|paquete|estacionamiento|abono|upgrade/i },
   // Cultura UANL (Colegio Civil, Teatro Universitario y más): calendario de WordPress
   { nombre: 'Cultura UANL', sitio: 'https://cultura.uanl.mx', lector: 'tribe', lugar: 'UANL, Monterrey', municipio: 'centro' },
   // Fever (conciertos a la luz de las velas y experiencias): se siguen los enlaces de cada plan

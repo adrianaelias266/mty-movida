@@ -115,7 +115,7 @@ function fechaHora(iso) {
 // Páginas que arman su calendario con JavaScript: se abren en un navegador real (Chromium)
 let navegador = null;
 async function htmlConNavegador(url) {
-  if (!navegador) { const { chromium } = await import('playwright'); navegador = await chromium.launch(); }
+  if (!navegador) { const { chromium } = await import('playwright'); navegador = await chromium.launch({ channel: 'chrome' }).catch(() => chromium.launch()); }
   const p = await navegador.newPage({ userAgent: AGENTE });
   try {
     await p.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
@@ -216,7 +216,42 @@ async function filasNLGob(f) {
   return filas;
 }
 
-const LECTORES = { civitas: filasCivitas, tribe: filasTribe, payload: filasPayload, nlgob: filasNLGob, primetickets: f => filasPrimeTickets(f) };
+const entidades = t => String(t || '').replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n)).replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)));
+const PEQ = new Set(['de', 'del', 'la', 'las', 'el', 'los', 'y', 'en', 'a', 'al', 'con', 'por', 'para', 'un', 'una', 'e', 'o']);
+// "MR. SPEED - TRIBUTO A KISS" → "Mr. Speed - Tributo a Kiss" (solo si viene todo en mayúsculas)
+const capitalizar = t => t === t.toUpperCase() && /[A-ZÁÉÍÓÚÑ]{3}/.test(t) ? t.toLowerCase().split(' ').map((w, i) => i && PEQ.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : t;
+
+// MARCO: exposiciones desde su WordPress (fechas en los campos de la exposición)
+async function filasMarco(f) {
+  const lista = await json(`${f.sitio}/wp-json/wp/v2/exposiciones?per_page=40&_embed=wp:featuredmedia`) || [];
+  const ymd = x => /^\d{8}$/.test(x || '') ? `${x.slice(0, 4)}-${x.slice(4, 6)}-${x.slice(6, 8)}` : null;
+  return lista.filter(x => !/\/en\//.test(x.link)).map(x => {
+    const ini = ymd(x.acf?.start_date), fin = ymd(x.acf?.end_date) || ini; if (!ini || !enRango(ini, fin)) return null;
+    let nombre = limpiar(entidades(x.title?.rendered)); const autor = limpiar(entidades(x.acf?.autor || ''));
+    if (/:$/.test(nombre) && autor) nombre = `${nombre} ${autor}`;
+    const curada = autor && !nombre.includes(autor) ? `${autor}. ` : '';
+    return fila(f, { id: x.link, nombre, fecha: ini, hasta: fin, hora: null, cat: 'expo', espacio: 'interior', url: x.link,
+      foto: x._embedded?.['wp:featuredmedia']?.[0]?.source_url, desc: `${curada}Exposición en el Museo de Arte Contemporáneo de Monterrey. Abre de martes a domingo.` });
+  }).filter(Boolean);
+}
+
+// Superboletos: su catálogo de eventos de todo el país, en un solo archivo de datos
+async function filasSuperboletos(f) {
+  const lista = await json(f.datos) || [];
+  const TIPO = { conciertos: 'concierto', teatro: 'teatro', deportes: 'deporte', familiares: 'teatro', ferias: 'fiestas', festivales: 'concierto' };
+  return lista.filter(e => /nuevo le/i.test(e.nombreEstado || '') && !(f.excluir && f.excluir.test(e.nombreEvento || ''))).map(e => {
+    const m = String(e.fechaPrimeraPresentacion || '').match(/^(\d{2})\/(\d{2})\/(\d{4})(?: (\d{2}):(\d{2}))?/); if (!m) return null;
+    const fecha = `${m[3]}-${m[2]}-${m[1]}`; if (!enRango(fecha)) return null;
+    const hora = (String(e.fechas || '').match(/(\d{1,2}:\d{2})\s*Hrs/i) || [])[1]?.padStart(5, '0') || (m[4] ? `${m[4]}:${m[5]}` : null);
+    const nombre = capitalizar(limpiar(entidades(e.nombreEvento))), pmin = Number(e.precioMinimo) || 0;
+    const tipo = String(e.claveTipoEvento || '').toLowerCase();
+    return fila(f, { id: `${f.enlace}${e.eventoId}`, nombre, fecha, hora, lugar: limpiar(e.nombreRecinto), municipio: municipio(e.nombreCiudad || '', f.municipio),
+      cat: TIPO[tipo] || categoria(nombre + ' ' + tipo + ' ' + (e.claveSubtipo || '')), precio: pmin > 0 ? pmin : null, foto: e.rutaImagenMain || e.rutaImagenThumb,
+      url: `${f.enlace}${e.eventoId}`, organizador: limpiar(e.nombreRecinto) || f.nombre, desc: [e.artista && `Con ${capitalizar(e.artista)}.`, e.fechas && `Fecha: ${limpiar(entidades(e.fechas))}.`].filter(Boolean).join(' ') });
+  }).filter(Boolean);
+}
+
+const LECTORES = { marco: filasMarco, superboletos: filasSuperboletos, civitas: filasCivitas, tribe: filasTribe, payload: filasPayload, nlgob: filasNLGob, primetickets: f => filasPrimeTickets(f) };
 
 // Boletera PrimeTickets (Foro 13): la portada trae cada obra y su página trae las funciones
 const MESES = { enero: 1, febrero: 2, marzo: 3, abril: 4, mayo: 5, junio: 6, julio: 7, agosto: 8, septiembre: 9, octubre: 10, noviembre: 11, diciembre: 12 };
@@ -296,9 +331,9 @@ async function completarFotos(filas) {
     const d = x.datos, cat = d.categoria;
     // 1) el artista o la obra (lo que va antes de ":" o " - "), solo para música, conciertos, teatro y danza
     const artista = d.nombre.split(/\s[-–|@]\s|:|\(/)[0];
-    let r = ['concierto', 'musica', 'teatro', 'danza'].includes(cat) ? await buscarFoto(artista) : null;
+    let r = ['concierto', 'musica', 'teatro', 'danza'].includes(cat) ? await buscarFoto(artista, 'artista') : null;
     // 2) el lugar del evento
-    if (!r && d.lugar) r = await buscarFoto(d.lugar.split(',')[0] + ' Monterrey');
+    if (!r && d.lugar) r = await buscarFoto(d.lugar.split(',')[0], 'lugar');
     if (r) { x.foto = r.foto; d.credito = r.credito; n++; }
   }
   return n;

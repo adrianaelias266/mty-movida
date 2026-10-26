@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 20
       - name: Preparar el navegador para las páginas que usan JavaScript
-        run: npm install --no-save playwright@1.48.2 && npx playwright install --with-deps chromium
+        run: npm install --no-save playwright@1.48.2 && (google-chrome --version || npx playwright install --with-deps chromium)
       - run: node scripts/eventos.mjs
         env:
           SOLO: ${{ github.event.inputs.solo }}
