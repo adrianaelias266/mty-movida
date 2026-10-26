@@ -1479,13 +1479,13 @@ function viewPlan(){
       <div class="hoycard">${SILLA}<span class="eyebrow" style="color:inherit;opacity:.8">${PA.cuando==='hoy'?longDate(0):PA.cuando==='manana'?longDate(1):PA.cuando==='fecha'?'Elige cualquier día del próximo mes':'Elige el día'}</span>
         <h1>¿Qué plan <span class="dia">${dia}</span>?</h1>
         <div class="daytabs" role="group" aria-label="¿Para cuándo?">${Object.entries(DIA_TABS).map(([k,v])=>`<button data-pa="cuando" data-v="${k}" aria-pressed="${PA.cuando===k}">${v}</button>`).join('')}${PA.cuando==='fecha'?`<label class="dayinp"><span class="sr">Fecha</span><input type="date" id="paFecha" value="${isoOf(PA.foff)}" min="${isoOf(0)}" max="${isoOf(MAXOFF)}"></label>`:''}</div>
-        <p>${list.length?`Hay ${list.length} eventos ${dia}.`:`No hay eventos registrados para ${dia}.`} Dinos tu mood y te armamos un plan, o deja que la página elija por ti.</p>
-        <button class="btn lila" id="surprise">${I.dice}Sorpréndeme</button></div>
+        <p>${list.length?`Hay ${list.length} eventos ${dia}.`:`No hay eventos registrados para ${dia}.`} Dinos tu mood y te armamos un plan.</p>
+        <a class="btn lila" href="#plan-armado" data-goplan>${I.dice}Ármame un plan</a></div>
       <div class="hoystats">
         <button class="stat" data-qd="todo"><b>${list.length}</b><span>eventos ${PA.cuando==='fecha'?'ese día':dia}</span></button>
         <button class="stat" data-qd="gratis"><b>${free}</b><span>gratis</span></button>
         <button class="stat" data-qd="exterior"><b>${outdoor}</b><span>al aire libre</span></button>
-        <a class="stat" href="#plan-armado"><b>${I.dice}</b><span>Ármame un plan</span></a>
+        <button class="stat" id="surprise"><b>${I.dice}</b><span>Sorpréndeme</span></button>
       </div>
     </div>
     <div class="phead" id="plan-armado"><div><span class="script">Tú dime el mood</span><h2 class="h2plan">Ármame un plan para ${dia}</h2><p>Contesta tres preguntas y te damos un solo plan. Si no te convence, cámbialo por uno parecido.</p></div></div>
@@ -1502,7 +1502,7 @@ function bindPlan(){
   const fi=document.getElementById('paFecha'); if(fi) fi.onchange=()=>{ if(!fi.value) return; const o=offOfDate(new Date(fi.value+'T00:00')); if(o<0||o>MAXOFF) return; PA.foff=o; try{ localStorage.setItem('mtymovida-pa',JSON.stringify(PA)); }catch(e){} const y=window.scrollY; render(); window.scrollTo(0,y); };
   document.querySelectorAll('[data-qd]').forEach(b=>b.onclick=ev=>{ ev.preventDefault(); clearFiltersSilent(); F.cuando=PA.cuando; if(PA.cuando==='fecha') F.fecha=isoOf(PA.foff); if(b.dataset.qd==='gratis') F.precio='gratis'; if(b.dataset.qd==='exterior') F.amb.add('exterior'); go('eventos'); });
   const sp=document.getElementById('surprise'); if(sp) sp.onclick=()=>{ const nowH=new Date().getHours(); let pool=EVENTS.filter(e=>inWhen(e,PA.cuando)&&(PA.cuando!=='hoy'||!e.h||parseInt(e.h)>=nowH)); if(!pool.length) pool=EVENTS.filter(e=>e.off>=0&&e.off<=2); if(pool.length) openEvent(pool[Math.floor(Math.random()*pool.length)].id); };
-  const pa=document.querySelector('a[href="#plan-armado"]'); if(pa) pa.onclick=ev=>{ ev.preventDefault(); document.getElementById('plan-armado').scrollIntoView({behavior:'smooth',block:'start'}); };
+  const pa=document.querySelector('[data-goplan]'); if(pa) pa.onclick=ev=>{ ev.preventDefault(); document.getElementById('plan-armado').scrollIntoView({behavior:'smooth',block:'start'}); };
   bindPlans(document.getElementById('app'));
 }
 
