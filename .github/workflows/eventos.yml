@@ -23,3 +23,4 @@ jobs:
       - run: node scripts/eventos.mjs
         env:
           SOLO: ${{ github.event.inputs.solo }}
+          SUPABASE_SECRET: ${{ secrets.SUPABASE_SECRET }}

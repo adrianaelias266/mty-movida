@@ -7,7 +7,11 @@ const FUENTES = (process.env.FUENTES_PRUEBA ? JSON.parse(process.env.FUENTES_PRU
   .filter(f => !SOLO.length || SOLO.some(x => f.nombre.toLowerCase().includes(x)));
 
 const SB_URL = process.env.SUPABASE_URL || 'https://aqakoihxgwxdyrtzjrfh.supabase.co';
-const SB_KEY = process.env.SUPABASE_KEY || 'sb_publishable_LfR-ayNY5bpv2xlO8pkEXQ_sE4nP0BG';
+// Con la llave secreta (guardada en GitHub › Secrets como SUPABASE_SECRET) los eventos de estas fuentes
+// entran ya aprobados. Sin ella, entran como "pendiente" para revisión.
+const SECRETA = process.env.SUPABASE_SECRET || '';
+const SB_KEY = SECRETA || process.env.SUPABASE_KEY || 'sb_publishable_LfR-ayNY5bpv2xlO8pkEXQ_sE4nP0BG';
+const ESTADO = SECRETA ? 'aprobado' : 'pendiente';
 const MAX_PAGINAS = 80;          // páginas por fuente en cada corrida
 const DIAS_ADELANTE = 90;        // solo eventos de hoy a 90 días
 const AGENTE = 'MtyMovidaBot/1.0 (+agenda cultural de Monterrey)';
@@ -23,7 +27,18 @@ async function traer(url) {
 }
 const locs = xml => [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>(?:[\s\S]*?<lastmod>([^<]+)<\/lastmod>)?/g)].map(m => ({ url: m[1].replace(/&amp;/g, '&'), mod: m[2] }));
 
+const limpiaUrl = u => /eventbrite\.com/.test(u) ? u.replace(/^https:\/\/www\.eventbrite\.com(\.mx)?\//, 'https://www.eventbrite.com.mx/').split('?')[0] : u;
+
 async function paginasDe(f) {
+  if (f.lista) {                     // listado con varias páginas (por ejemplo, Eventbrite en Nuevo León)
+    const urls = [];
+    for (let n = 1; n <= (f.paginasLista || 40); n++) {
+      const html = await traer(`${f.lista}?page=${n}`); if (!html) break;
+      const evs = eventosLD(html); if (!evs.length) break;
+      for (const e of evs) if (e.url && !(f.excluir && f.excluir.test(limpiar(e.name)))) urls.push(limpiaUrl(e.url));
+    }
+    return [...new Set(urls)].slice(0, f.max || MAX_PAGINAS);
+  }
   if (f.paginas && f.enlaces) {      // páginas con la lista de eventos: se siguen los enlaces a cada evento
     const urls = [];
     for (const p of f.paginas) {
@@ -124,7 +139,7 @@ async function filasPrimeTickets(f) {
     const fechaTxt = x => { const d = new Date(x.fecha + 'T00:00'); return `${d.getDate()} de ${Object.keys(MESES)[d.getMonth()]} a las ${x.hora} h`; };
     desc = ((desc.length > 320 ? desc.slice(0, 320).replace(/\s+\S*$/, '') + '…' : desc) + (unicas.length > 1 ? ` Funciones: ${unicas.slice(0, 6).map(fechaTxt).join('; ')}.` : '')).trim();
     filas.push({
-      fuente: f.nombre, fuente_url: url, foto: o.foto,
+      fuente: f.nombre, fuente_url: url, foto: o.foto, estado: ESTADO,
       datos: {
         nombre: o.nombre, organizador: f.nombre, categoria: categoria(o.tipo + ' ' + o.nombre + ' ' + desc), municipio: f.municipio,
         fecha: unicas[0].fecha, hora: unicas[0].hora, hasta: unicas.at(-1).fecha !== unicas[0].fecha ? unicas.at(-1).fecha : null,
@@ -150,6 +165,14 @@ async function guardar(filas) {
   return nuevos;
 }
 
+if (SECRETA) {
+  const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados?estado=eq.pendiente&fuente=neq.Organizador`, {
+    method: 'PATCH', headers: { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}`, 'content-type': 'application/json', prefer: 'return=minimal' },
+    body: JSON.stringify({ estado: 'aprobado' }),
+  });
+  console.log(r.ok ? '::notice::Los pendientes del recolector quedaron aprobados' : `::warning::No se pudieron aprobar los pendientes: ${r.status}`);
+} else console.log('::notice::Sin llave secreta: los eventos entran como pendientes');
+
 let total = 0, fallas = 0;
 for (const f of FUENTES) {
  try {
@@ -169,19 +192,22 @@ for (const f of FUENTES) {
       if (dFin < hoy || dIni > limite) continue;
       const loc = [].concat(e.location || [])[0] || {};
       const lugar = limpiar([loc.name, typeof loc.address === 'string' ? loc.address : loc.address?.streetAddress].filter(Boolean).join(', '));
+      const ciudad = limpiar(loc.address?.addressLocality || '');
+      if (f.soloEstado && loc.address?.addressRegion && !f.soloEstado.test(loc.address.addressRegion)) continue;
       const oferta = [].concat(e.offers || [])[0] || {};
-      const precio = oferta.price != null && !isNaN(Number(oferta.price)) ? Number(oferta.price) : (/gratis|libre|free/i.test(JSON.stringify(e)) ? 0 : null);
+      const p0 = oferta.price ?? oferta.lowPrice;
+      const precio = p0 != null && !isNaN(Number(p0)) ? Number(p0) : (/gratis|libre|free/i.test(JSON.stringify(e)) ? 0 : null);
       const nombre = limpiar(e.name), desc = limpiar(e.description).slice(0, 400);
       if (f.excluir && f.excluir.test(nombre)) continue;   // por ejemplo, clases deportivas que se repiten cada semana
       const enLinea = /Online/.test(String(e.eventAttendanceMode || ''));
       filas.push({
         fuente: f.nombre,
-        fuente_url: `${e.url || url}#${e.startDate}`,
+        fuente_url: `${limpiaUrl(e.url || url)}#${e.startDate}`, estado: ESTADO,
         foto: [].concat(e.image || [])[0]?.url || [].concat(e.image || [])[0] || null,
         datos: {
-          nombre, organizador: f.nombre, categoria: categoria(nombre + ' ' + desc), municipio: enLinea ? 'linea' : municipio(lugar, f.municipio),
+          nombre, organizador: f.nombre, categoria: categoria(nombre + ' ' + desc), municipio: enLinea ? 'linea' : municipio(lugar + ' ' + ciudad, f.municipio),
           fecha: ini.fecha, hora: ini.hora, hasta: fin.fecha !== ini.fecha ? fin.fecha : null, lugar, espacio: null, precio,
-          caracteristicas: [], descripcion: desc, enlace: e.url || url, fuente: f.nombre,
+          caracteristicas: [], descripcion: desc, enlace: limpiaUrl(e.url || url), fuente: f.nombre,
         },
       });
     }

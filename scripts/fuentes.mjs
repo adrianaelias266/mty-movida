@@ -19,6 +19,9 @@ export const FUENTES = [
   { nombre: 'Casa Padre Mier', sitio: 'https://www.eventbrite.com.mx', paginas: ['https://www.eventbrite.com.mx/o/casa-padre-mier-34353364941'], enlaces: /eventbrite\.com\.mx\/e\//, filtro: /./, municipio: 'centro' },
   { nombre: 'San Pedro Parques', sitio: 'https://sanpedroparques.mx', paginas: ['https://sanpedroparques.mx/calendario-eventos/'], navegador: true, filtro: /./, municipio: 'sanpedro',
     excluir: /cobro|yoga|pilates|tenis|tai ?chi|basquet|b[aá]squet|atletismo|roundnet|disc golf|skate|falun|hipopresivos|meditaci|mindfulness|sonidoterapia|cuencos|salsa con|rollerdance|running|esgrima|futb|adiestramiento|huerto|academia|zumba|entrenamiento|funcional|softbol|b[eé]isbol|soccer|corredores|patines|ritmos latinos/i },
+  // Todo lo que Eventbrite tiene en Nuevo León (sin congresos, cursos de negocios ni eventos médicos)
+  { nombre: 'Eventbrite', sitio: 'https://www.eventbrite.com.mx', lista: 'https://www.eventbrite.com.mx/d/mexico--nuevo-leon--85686681/all-events/', max: 300, filtro: /./, municipio: 'centro', soloEstado: /^(NLE|NL|Nuevo Le[oó]n)$/i,
+    excluir: /cumbre|congreso|summit|convenci[oó]n|diplomado|certificaci|webinar|capacitaci|negocio|empresari|emprend|inversi|bienes ra[ií]ces|inmobiliari|liderazgo|recursos humanos|compensaciones|n[oó]mina|fiscal|contab|m[eé]dic|c[aá]ncer|cl[ií]nic|oncolog|odontolog|dental|nutrici[oó]n cl|networking|b2b|reclutamiento|empleo|ventas|marketing|finanzas|trading|cripto|seguros|inteligencia artificial|\bIA\b|\bAI\b|ciberseguridad|software|log[ií]stica|industrial|manufactura/i },
   // Boletera PrimeTickets: se lee la portada y la página de cada obra
   { nombre: 'Foro 13', sitio: 'https://foro13.primetickets.mx/', lector: 'primetickets', lugar: 'Foro 13, Hidalgo 511, Centro', lugarCorto: 'FORO 13', municipio: 'centro' },
 ];
