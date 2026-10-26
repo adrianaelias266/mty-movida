@@ -100,7 +100,14 @@ a{color:var(--accent)}
   .nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:2px;overflow:visible;background:var(--brand);padding:6px max(16px,env(safe-area-inset-right,0px)) 18px max(16px,env(safe-area-inset-left,0px));box-shadow:0 14px 30px rgba(0,0,0,.25);border-top:1px solid rgba(255,255,255,.18)}
   .top.menu-open .nav{display:flex}
   .nav a{font-size:17px;padding:13px 14px;border-radius:12px}
+  .nav a.hoy{order:-1;display:flex;align-items:center;gap:12px;background:#FFFFFF;color:var(--lila-ink);font-weight:800;padding:12px 14px;margin:4px 0 8px;box-shadow:0 6px 18px rgba(36,18,63,.25)}
+  .nav a.hoy:hover{background:#FFFFFF;color:var(--lila-ink)}
+  .nav a.hoy .ni{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--lila-bg);color:var(--lila-ink);flex:none}
+  .nav a.hoy .ni svg{width:20px;height:20px}
+  .nav a.hoy small{display:block;font-size:12px;font-weight:600;opacity:.75;margin-top:1px}
+  .nav a.hoy[aria-current="page"]{background:#FFFFFF;color:var(--lila-ink);box-shadow:0 0 0 3px var(--lila-bg),0 6px 18px rgba(36,18,63,.25)}
 }
+@media (min-width:821px){.nav a.hoy .ni,.nav a.hoy small{display:none}}
 
 
 /* Botones y chips */
@@ -651,7 +658,7 @@ form.card .full{grid-column:1/-1}
     </button>
     <nav class="nav" id="mainNav" aria-label="Secciones">
       <a href="#inicio" data-view="inicio">Inicio</a>
-      <a href="#plan" data-view="plan" class="hoy">¿Qué plan?</a>
+      <a href="#plan" data-view="plan" class="hoy"><span class="ni" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span class="nt">¿Qué plan?<small>Hoy, mañana o un día completo</small></span></a>
       <a href="#eventos" data-view="eventos">Eventos</a>
       <a href="#calendario" data-view="calendario">Mi calendario</a>
       <a href="#atracciones" data-view="atracciones">Atracciones</a>
