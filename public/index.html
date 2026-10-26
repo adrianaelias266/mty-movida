@@ -1034,7 +1034,7 @@ function planCard(id,big){
   const e=ev(st.cur), ctx=st.ctx, c=compOf(e), s=isSaved(e.id);
   const others=st.list.filter(x=>x!==st.cur), pages=Math.max(1,Math.ceil(others.length/3)), alts=others.slice((st.page%pages)*3,(st.page%pages)*3+3).map(ev);
   return `<article class="pc ${big?'big':''}">
-    <div class="pc-main"><div class="pc-img" data-open="${e.id}"><img src="${evImg(e)}" alt=""><span class="mood" style="--mc:${MOODS[ctx.mood].c}">${MOODS[ctx.mood].s}</span>${e.rec?'<span class="recb">Recomendado por Mty Movida</span>':''}</div>
+    <div class="pc-main"><div class="pc-img" data-open="${e.id}"><img src="${evImg(e)}" alt=""${fitAttr(e)}><span class="mood" style="--mc:${MOODS[ctx.mood].c}">${MOODS[ctx.mood].s}</span>${e.rec?'<span class="recb">Recomendado por Mty Movida</span>':''}</div>
     <div class="pc-body">${catDot(e.cat,big)}<span class="pc-when">${relDay(e.off)} · ${hh(e)} · ${priceTxt(e.price)}</span><h3>${esc(e.t)}</h3><p class="meta">${esc(e.venue)}${e.mod==='linea'?'':' · '+ZONAS[e.zona].n}</p>
       <p class="why">${I.ok}<span>${whyOf(e,ctx)}</span></p>
       ${c?`<div class="comp"><span>${c.t} <button class="linkish" data-atr="${c.a.id}">${esc(c.a.n)}</button>.</span></div>`:`<div class="comp"><span>${e.mod==='linea'?'Conéctate cinco minutos antes para no perderte el inicio.':'Llega 15 minutos antes para encontrar buen lugar.'}</span></div>`}
@@ -1087,6 +1087,7 @@ const MES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','
 const longDate = o => { const d=dOf(o); return `${DOWL[d.getDay()]} ${d.getDate()} de ${MESL[d.getMonth()]}`; };
 const relDay = o => o===0?'Hoy':o===1?'Mañana':o===-1?'Ayer':longDate(o).replace(/^./,c=>c.toUpperCase());
 const momentoOf = h => { if(!h) return ''; const n=parseInt(h,10); return n<12?'manana':n<19?'tarde':'noche'; };
+const fitAttr = e => e.org==='foro13'&&e.img?' style="object-fit:contain;background:#1E1714"':'';
 const hh = e => e.h?e.h+' h':'Horario por confirmar';
 const offOfDate = d => Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-T0)/864e5);
 const isoOf = o => { const d=dOf(o); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
@@ -1205,7 +1206,7 @@ function card(e){
   let extra='';
   if(e.off<0){ const r=reviewsOf(e.id), a=avgOf(r); extra = a?`<span class="rating">${I.star.replace('<svg','<svg width="13" height="13"')} ${a.toFixed(1)} · ${r.length} reseñas</span>`:''; }
   return `<article class="ev" data-open="${e.id}" tabindex="0">
-    <div class="ev-img"><img src="${evImg(e)}" alt="" loading="lazy"><div class="ev-date"><span class="dow">${DOW[d.getDay()]}</span><span class="num">${d.getDate()}</span><span class="mon">${MES[d.getMonth()]}</span></div><span class="ev-hr">${hh(e)}</span>
+    <div class="ev-img"><img src="${evImg(e)}" alt=""${fitAttr(e)} loading="lazy"><div class="ev-date"><span class="dow">${DOW[d.getDay()]}</span><span class="num">${d.getDate()}</span><span class="mon">${MES[d.getMonth()]}</span></div><span class="ev-hr">${hh(e)}</span>
     ${e.off>=0?`<button class="savebtn" data-save="${e.id}" aria-pressed="${s}" aria-label="${s?'Quitar de':'Agregar a'} Mi calendario">${s?I.bmf:I.bm}</button>`:''}</div>
     <div class="ev-body">${catDot(e.cat)}<div class="ev-cat">${c.n}</div><h3>${esc(e.t)}</h3><p class="ev-meta">${esc(e.venue)} · ${ZONAS[e.zona].n}</p>${extra}<div class="ev-tags">${tags.join('')}</div></div>
   </article>`;
@@ -1290,7 +1291,7 @@ function buildRows(){
   return rows.filter(r=>r.items.length>=3).slice(0,8).map(r=>({...r,items:r.top?r.items:r.items.sort((a,b)=>a.off-b.off||a.h.localeCompare(b.h)).slice(0,10)}));
 }
 function rowCard(e){ const s=isSaved(e.id);
-  return `<article class="rc" data-open="${e.id}" tabindex="0"><div class="rc-img"><img src="${evImg(e)}" alt="" loading="lazy"><span class="ev-hr">${hh(e)}</span></div>
+  return `<article class="rc" data-open="${e.id}" tabindex="0"><div class="rc-img"><img src="${evImg(e)}" alt=""${fitAttr(e)} loading="lazy"><span class="ev-hr">${hh(e)}</span></div>
     <div class="rc-b">${catDot(e.cat)}<b>${esc(e.t)}</b><small>${e.range&&e.off===0?(e.season?'En temporada':'Todos los días'):relDay(e.off)} · ${priceTxt(e.price)} · ${e.mod==='linea'?'En línea':ZONAS[e.zona].n}</small>
     <div class="qa"><button class="btn primary small" data-save="${e.id}">${s?'Agendado':'Agendar'}</button><button class="btn small" data-open="${e.id}">Ver</button></div></div></article>`; }
 function rowsHTML(){
@@ -1307,7 +1308,7 @@ function viewInicio(){
   const top=topWeek().slice(0,5), month=EVENTS.filter(e=>e.off>=0&&e.off<=MAXOFF).length;
   HOME_CTX.forEach((c,i)=>slot('h'+i,c));
   const slides=top.map((e,i)=>`<div class="slide ${i===0?'on':''}" data-i="${i}" aria-hidden="${i!==0}">
-      <img src="${evImg(e)}" alt="">
+      <img src="${evImg(e)}" alt=""${fitAttr(e)}>
       <div class="cap"><span class="kick">${relDay(e.off)} · ${hh(e)}</span><h2>${esc(e.t)}</h2><p>${esc(e.venue)} · ${ZONAS[e.zona].n} · ${priceTxt(e.price)}</p>
       <div class="row"><button class="btn primary" data-open="${e.id}">Ver evento</button><button class="btn" data-save="${e.id}">${isSaved(e.id)?I.ok+'Agendado':I.cal+'Agendar'}</button></div></div></div>`).join('');
   return `<div class="wrap page" style="padding-top:28px">
@@ -1760,7 +1761,7 @@ function eventHTML(e){
         :`<div class="panel" style="background:var(--sunk);border:0"><p style="margin:0;font-size:14px">Solo quienes agendaron este evento pueden calificarlo. Así evitamos reseñas falsas.</p></div>`)}
     </div>`;
   }
-  return `<figure class="mhero"><img src="${evImg(e)}" alt=""><figcaption>${e.img?(e.fisl?'Foto: agenda FISL 2026':'Foto: '+esc(ORGS[e.org]?ORGS[e.org].n:'organizador')):'Imagen ilustrativa'}</figcaption></figure>
+  return `<figure class="mhero"><img src="${evImg(e)}" alt=""${fitAttr(e)}><figcaption>${e.img?(e.fisl?'Foto: agenda FISL 2026':'Foto: '+esc(ORGS[e.org]?ORGS[e.org].n:'organizador')):'Imagen ilustrativa'}</figcaption></figure>
     <div class="dhead"><div class="ev-cat" style="font-size:13px;gap:10px">${catDot(e.cat)}${c.n}${past?' · Evento pasado':''}${e.rec&&!past?' · <b style="color:var(--accent)">Recomendado por Mty Movida</b>':''}</div><h2>${esc(e.t)}</h2></div>
     <div class="facts">
       <div class="fact">${I.cal}<div><small>Fecha y hora</small>${e.range?e.range+' · '+hh(e):relDay(e.off)+(e.off>=0&&e.off<=1?', '+longDate(e.off):'')+' · '+hh(e)}</div></div>
