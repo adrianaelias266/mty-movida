@@ -2,7 +2,9 @@
 // eventos en su mapa del sitio (sitemap) y lee los datos que publican en formato
 // schema.org/Event. Cada evento nuevo entra a Supabase como "pendiente" para revisión.
 import { FUENTES as LISTA } from './fuentes.mjs';
-const FUENTES = process.env.FUENTES_PRUEBA ? JSON.parse(process.env.FUENTES_PRUEBA).map(f => ({ ...f, filtro: new RegExp(f.filtro) })) : LISTA;
+const SOLO = (process.env.SOLO || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean);  // para probar solo algunas fuentes
+const FUENTES = (process.env.FUENTES_PRUEBA ? JSON.parse(process.env.FUENTES_PRUEBA).map(f => ({ ...f, filtro: new RegExp(f.filtro) })) : LISTA)
+  .filter(f => !SOLO.length || SOLO.some(x => f.nombre.toLowerCase().includes(x)));
 
 const SB_URL = process.env.SUPABASE_URL || 'https://aqakoihxgwxdyrtzjrfh.supabase.co';
 const SB_KEY = process.env.SUPABASE_KEY || 'sb_publishable_LfR-ayNY5bpv2xlO8pkEXQ_sE4nP0BG';
@@ -144,8 +146,9 @@ async function guardar(filas) {
   return filas.length;
 }
 
-let total = 0;
+let total = 0, fallas = 0;
 for (const f of FUENTES) {
+ try {
   if (f.lector === 'primetickets') {
     const filas = await filasPrimeTickets(f);
     const n = await guardar(filas);
@@ -182,6 +185,11 @@ for (const f of FUENTES) {
   const n = await guardar([...new Map(filas.map(x => [x.fuente_url, x])).values()]);
   console.log(`::notice::${f.nombre}: ${paginas.length} páginas revisadas, ${n} eventos enviados a revisión (los repetidos se ignoran)`);
   total += n;
+ } catch (err) {
+  fallas++;
+  console.log(`::error::${f.nombre}: ${String(err?.message || err).slice(0, 500)}`);
+ }
 }
 if (navegador) await navegador.close();
 console.log(`Listo: ${total} eventos revisados en total.`);
+if (fallas === FUENTES.length) process.exit(1);

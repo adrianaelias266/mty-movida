@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '43 7 * * *'    # todos los días a la 1:43 a. m. de Monterrey
   workflow_dispatch:        # permite correrlo a mano desde GitHub
+    inputs:
+      solo:
+        description: 'Revisar solo estas fuentes (separadas por coma). Vacío = todas'
+        required: false
+        default: ''
 
 jobs:
   eventos:
@@ -16,3 +21,5 @@ jobs:
       - name: Preparar el navegador para las páginas que usan JavaScript
         run: npm install --no-save playwright@1.48.2 && npx playwright install --with-deps chromium
       - run: node scripts/eventos.mjs
+        env:
+          SOLO: ${{ github.event.inputs.solo }}
