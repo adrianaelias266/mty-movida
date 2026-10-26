@@ -694,7 +694,7 @@ const I = {
   search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
   left:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>',
   right:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>',
-  dice:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>',
+  dado:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>',dice:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M1.8 12.6c1 2 2.7 3.2 4.9 3.7 1.7.4 3.5.5 5.3.5s3.6-.1 5.3-.5c2.2-.5 3.9-1.7 4.9-3.7"/><path d="M6.6 14.6c-.4-3.1.1-6.6 1.7-8.4.9-1 2.2-.8 3 .2.4.5 1 .5 1.4 0 .8-1 2.1-1.2 3-.2 1.6 1.8 2.1 5.3 1.7 8.4"/><path d="M6.9 12.2c1.6.6 3.3.9 5.1.9s3.5-.3 5.1-.9"/></svg>',
   people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6M16 4.5a3.5 3.5 0 010 7M22 20c0-3-2-5-5-5.7"/></svg>'
 };
 const SILLA = '<svg class="silla" viewBox="0 0 400 140" aria-hidden="true"><path d="M0 140 L60 92 L95 104 L150 40 L190 78 L225 66 L262 86 L305 22 L400 140 Z" fill="currentColor"/></svg>';
@@ -1583,7 +1583,7 @@ function viewPlan(){
         <button class="stat" data-qd="todo"><b>${list.length}</b><span>eventos ${PA.cuando==='fecha'?'ese día':dia}</span></button>
         <button class="stat" data-qd="gratis"><b>${free}</b><span>gratis</span></button>
         <button class="stat" data-qd="exterior"><b>${outdoor}</b><span>al aire libre</span></button>
-        <button class="stat" id="surprise"><b>${I.dice}</b><span>Sorpréndeme</span></button>
+        <button class="stat" id="surprise"><b>${I.dado}</b><span>Sorpréndeme</span></button>
       </div>
     </div>
     <div class="phead" id="plan-armado"><div><span class="script">Tú dime el mood</span><h2 class="h2plan">Ármame un plan para ${dia}</h2><p>Contesta unas preguntas y te damos un plan, o un día completo con varias paradas. Si algo no te convence, cámbialo.</p></div></div>
