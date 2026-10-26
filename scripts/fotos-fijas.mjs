@@ -1,0 +1,27 @@
+// Fotos libres para los eventos que vienen escritos dentro de la página (FISL, CONARTE, Arena, etc.) y no traen foto.
+// Abre la página con un navegador, toma la lista de eventos sin foto y guarda en public/data/fotos-fijas.json
+// la foto y el crédito que encuentre. Lo ya buscado no se vuelve a buscar.
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { createServer } from 'node:http';
+import { extname, join } from 'node:path';
+import { chromium } from 'playwright';
+import { buscarFoto } from './fotos.mjs';
+
+const ARCHIVO = 'public/data/fotos-fijas.json';
+const previo = existsSync(ARCHIVO) ? JSON.parse(readFileSync(ARCHIVO, 'utf8')) : {};
+const tipos = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml' };
+const srv = createServer((q, r) => { const f = join('public', decodeURIComponent(q.url.split('?')[0]).replace(/\/$/, '/index.html')); if (!existsSync(f)) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'content-type': tipos[extname(f)] || 'application/octet-stream' }); r.end(readFileSync(f)); }).listen(8099);
+const nav = await chromium.launch(); const p = await nav.newPage();
+await p.goto('http://localhost:8099/', { waitUntil: 'domcontentloaded' }); await p.waitForTimeout(2500);
+const lista = await p.evaluate(() => EVENTS.filter(e => !e.img && !String(e.id).startsWith('db-')).map(e => ({ id: e.id, t: e.t, cat: e.cat, venue: e.venue })));
+await nav.close(); srv.close();
+const salida = {}; let nuevas = 0;
+for (const e of lista) {
+  if (e.id in previo) { salida[e.id] = previo[e.id]; continue; }
+  const artista = e.t.split(/\s[-–|@]\s|:|\(/)[0];
+  let r = ['concierto', 'musica', 'teatro', 'danza'].includes(e.cat) ? await buscarFoto(artista) : null;
+  if (!r && e.venue) r = await buscarFoto(e.venue.split(',')[0] + ' Monterrey');
+  salida[e.id] = r; if (r) nuevas++;
+}
+writeFileSync(ARCHIVO, JSON.stringify(salida, null, 1));
+console.log(`::notice::Eventos fijos sin foto: ${lista.length} · fotos nuevas: ${nuevas} · con foto en total: ${Object.values(salida).filter(Boolean).length}`);
