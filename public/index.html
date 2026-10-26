@@ -82,7 +82,7 @@ a{color:var(--accent)}
 .user-btn{flex:none;border:0;background:var(--lila-bg);color:var(--lila-ink);border-radius:999px;padding:6px 14px 6px 6px;display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
 .user-btn:hover{filter:brightness(1.05)}
 .avatar{width:28px;height:28px;border-radius:50%;background:var(--lila-ink);color:var(--lila-bg);display:grid;place-items:center;font-size:12px;font-weight:700}
-.burger{display:none;flex:none;width:42px;height:42px;border-radius:12px;border:0;background:rgba(255,255,255,.16);color:var(--on-brand);place-items:center;padding:0}
+.burger{display:none;flex:none;width:42px;height:42px;border-radius:12px;border:0;background:var(--lila-bg);color:var(--lila-ink);place-items:center;padding:0}
 .burger span{display:block;width:20px;height:2px;border-radius:2px;background:currentColor;position:relative;transition:background .2s}
 .burger span::before,.burger span::after{content:"";position:absolute;left:0;width:20px;height:2px;border-radius:2px;background:currentColor;transition:transform .2s}
 .burger span::before{top:-6px}.burger span::after{top:6px}
@@ -347,6 +347,35 @@ textarea.inp{resize:vertical;min-height:90px}
 .empty{background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:32px;text-align:center;color:var(--muted)}
 .empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
 
+
+/* ¿Qué hago? */
+.hoycard h1 .dia{font-family:var(--f-script);font-weight:700;color:var(--lila-bg);font-size:1.12em;letter-spacing:0}
+.daytabs{display:flex;flex-wrap:wrap;gap:6px;position:relative}
+.daytabs button{border:0;border-radius:999px;padding:8px 14px;font-weight:700;font-size:14px;background:rgba(255,255,255,.16);color:var(--on-brand)}
+.daytabs button:hover{background:rgba(255,255,255,.26)}
+.daytabs button[aria-pressed="true"]{background:var(--lila-bg);color:var(--lila-ink)}
+a.stat{text-decoration:none}
+.stat b svg{width:34px;height:34px}
+.h2plan{font-family:var(--f-display);font-weight:700;font-size:clamp(24px,3.4vw,36px);letter-spacing:-.02em;line-height:1.05}
+#plan-armado{scroll-margin-top:80px}
+/* Inicio en celular: los 3 planes caben en una pantalla */
+@media (max-width:640px){
+  .plans3{gap:10px}
+  .plans3 .pc{border-radius:16px}
+  .plans3 .pc-main{display:grid;grid-template-columns:96px minmax(0,1fr)}
+  .plans3 .pc-img{aspect-ratio:auto;height:100%;min-height:118px}
+  .plans3 .mood{left:6px;top:6px;font-size:11px;padding:3px 8px;white-space:nowrap;max-width:calc(100% - 12px);overflow:hidden;text-overflow:ellipsis}
+  .plans3 .recb,.plans3 .pc-body .catdot,.plans3 .pc .why,.plans3 .pc .comp{display:none}
+  .plans3 .pc-body{padding:10px 12px;gap:2px}
+  .plans3 .pc-when{font-size:12px}
+  .plans3 .pc h3{font-size:16px;line-height:1.15;min-height:0}
+  .plans3 .pc .meta{-webkit-line-clamp:1;min-height:0;font-size:13px}
+  .plans3 .pc .row{margin-top:6px;gap:6px}
+  .plans3 .pc .btn.small{padding:6px 10px;font-size:13px;gap:5px}
+  .plans3 .pc .chg{margin-top:6px}
+  .plans3 .alts{padding:10px}
+}
+
 /* Mapa */
 .mapbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;overflow-x:auto}
 .mapbox svg{display:block;width:100%;min-width:520px;height:auto}
@@ -527,9 +556,8 @@ form.card .full{grid-column:1/-1}
     </button>
     <nav class="nav" id="mainNav" aria-label="Secciones">
       <a href="#inicio" data-view="inicio">Inicio</a>
-      <a href="#plan" data-view="plan" class="hoy">Ármame un plan</a>
+      <a href="#plan" data-view="plan" class="hoy">¿Qué hago?</a>
       <a href="#eventos" data-view="eventos">Eventos</a>
-      <a href="#hoy" data-view="hoy">¿Qué hago hoy?</a>
       <a href="#calendario" data-view="calendario">Mi calendario</a>
       <a href="#atracciones" data-view="atracciones">Atracciones</a>
       <a href="#agregar" data-view="agregar">Agrega tu evento</a>
@@ -771,7 +799,9 @@ const CATS = {
 const ZONAS = {
   centro:{n:'Monterrey Centro',x:300,y:228}, sanpedro:{n:'San Pedro',x:212,y:300}, sannicolas:{n:'San Nicolás',x:318,y:146},
   guadalupe:{n:'Guadalupe',x:420,y:232}, apodaca:{n:'Apodaca',x:436,y:92}, escobedo:{n:'Escobedo',x:268,y:68},
-  santacatarina:{n:'Santa Catarina',x:132,y:252}, garcia:{n:'García',x:80,y:150}, juarez:{n:'Juárez',x:530,y:256}, santiago:{n:'Santiago',x:390,y:378}
+  santacatarina:{n:'Santa Catarina',x:132,y:252}, garcia:{n:'García',x:80,y:150}, juarez:{n:'Juárez',x:530,y:256}, santiago:{n:'Santiago',x:390,y:378},
+  cadereyta:{n:'Cadereyta',x:566,y:322}, pesqueria:{n:'Pesquería',x:548,y:150}, salinas:{n:'Salinas Victoria',x:360,y:28}, elcarmen:{n:'El Carmen',x:180,y:40},
+  cienega:{n:'Ciénega de Flores',x:520,y:36}, allende:{n:'Allende',x:500,y:392}, otros:{n:'Resto de Nuevo León',x:110,y:384}
 };
 const EXTRAS = {ninos:'Apto para niños', mascotas:'Pet friendly', accesible:'Accesible en silla de ruedas', mayores:'Solo +18', metro:'Cerca del Metro', estac:'Con estacionamiento'};
 const MOMENTOS = {manana:'Mañana', tarde:'Tarde', noche:'Noche'};
@@ -960,24 +990,7 @@ const OTROS_RAW=[
  ['mp4','metapatio','2026-12-04',null,'19:00','Mustard Service','concierto','Metapatio, Melchor Ocampo 222A, Centro','centro','exterior',null,['metro'],'Concierto en Metapatio. La hora es la de apertura de puertas.',SK(9607599),'https://www.songkick.com/concerts/43425877-mustard-service-at-metapatio'],
  ['bl1','bloom','2026-11-01',null,'17:30','Karol G Fest Monterrey: Pre-Party','fandoms','El Unicornio Azul 2, 5a. Avenida 2278','centro','interior',216,['mayores'],'Tercera edición de la fiesta temática para fans de Karol G, de 17:30 a 22:30 h. Para mayores de 18 años. La artista no participa en la organización.','https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1195343737%2F1435880775353%2F1%2Foriginal.20261008-054723?crop=focalpoint&fit=crop&w=940&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.398&fp-y=0.313&s=d5e048683715f0d47fb0a5263b8e9cc4','https://www.eventbrite.com.mx/e/karol-g-fest-monterrey-pre-party-tickets-2002914219347'],
  ['ft1','futur','2026-11-13','2026-11-14','','Kappa Futur Festival México 2026','concierto','Parque Fundidora (Nave Lewis, Grúa y Horno 3)','centro','exterior',1610,['metro','estac'],'Festival de música techno en el Parque Fundidora. Boletos desde $1,610 (general del viernes); hay pase de dos días.',null,'https://www.futurfestival.mx/en'],
- ['fo1','foro13','2026-10-01','2026-10-29','20:30','Sé lo que hicieron el Halloween pasado','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Comedia en temporada. Última función el jueves 29 de octubre.',F13('267/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo2','foro13','2026-10-09','2026-10-30','20:30','El Telar','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Obra en temporada los viernes. Última función el 30 de octubre.',F13('256/slider.webp'),'https://foro13.primetickets.mx/',1],
  ['fo3','foro13','2026-10-22','2026-11-20','20:00','Incendios, de Wajdi Mouawad','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',550,['metro'],'Funciones jueves y viernes.',null,'https://foro13.primetickets.mx/',1],
- ['fo4','foro13','2026-10-16','2026-11-06','20:30','The Rocky Horror Show','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'El musical de Richard O’Brien. Funciones los viernes.',F13('269/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo5','foro13','2026-10-18','2026-11-29','13:00','Un cuento de Navidad','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['ninos','metro'],'La magia de la Navidad en el País de los Juguetes. Funciones los domingos.',F13('277/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo6','foro13','2026-10-04','2026-11-01','18:00','Los ojos del General','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Obra en temporada. Última función el 1 de noviembre.',F13('264/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo7','foro13','2026-10-04','2026-11-02','','La Sepultada','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Basada en la leyenda de la mujer emparedada. Funciones el 1 de noviembre a las 17:00 h y el 2 de noviembre a las 19:00 h.',F13('273/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo8','foro13','2026-11-03','2026-11-10','20:30','Sentencia de Muerte','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Regresa el clásico de terror psicológico. Funciones los martes 3 y 10 de noviembre.',F13('275/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo9','foro13','2026-11-08','2026-11-29','18:00','Firebringer: el origen del fuego','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Musical. Funciones los domingos y el sábado 21 de noviembre a las 19:00 h.',F13('276/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo10','foro13','2026-11-08','2026-11-29','18:00','Bajo el Farol: historias cruzadas','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Funciones los domingos.',F13('270/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo11','foro13','2026-11-13','2026-12-30','20:30','¿El anillo pa’ cuándo?','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Comedia. Funciones los viernes.',F13('278/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo12','foro13','2026-11-14','2026-11-20','','El silencio de Júpiter','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'El sábado 14 de noviembre hay funciones a las 17:00 y 19:00 h.',F13('280/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo13','foro13','2026-11-14','2026-11-20','','Damas de Horror: el musical','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Musical. El sábado 14 de noviembre hay funciones a las 17:00 y 20:00 h.',F13('279/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo14','foro13','2026-11-16','2026-11-30','20:30','Archivo muerto','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Funciones los lunes.',F13('272/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo15','foro13','2026-05-06','2026-11-16','','Rapsodia de Natalia Virgen','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Obra en temporada hasta el 16 de noviembre.',F13('237/slider.webp'),'https://foro13.primetickets.mx/',1],
- ['fo16','foro13','2025-10-28','2026-11-24','','La historia de México según nosotros','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Obra en temporada hasta el 24 de noviembre.',F13('189/slider.jpg'),'https://foro13.primetickets.mx/',1],
- ['fo17','foro13','2026-08-04','2026-11-05','','Duele el amor','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Todos tenemos secretos. Próxima función: 5 de noviembre.',F13('248/slider2.webp'),'https://foro13.primetickets.mx/',1],
- ['fo18','foro13','2026-11-25',null,'','Natasha','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Función única.',F13('186/slider.webp'),'https://foro13.primetickets.mx/']
 ];
 (function(){
   const t=new Date(); t.setHours(0,0,0,0);
@@ -1007,7 +1020,7 @@ function conFit(e,c){ if(!c) return 1; if(c==='familia') return e.tags.includes(
 function inWhen(e,w){ const o=e.off, d=dOf(o).getDay(); if(o<0||o>MAXOFF) return false;
   if(w==='hoy') return o===0; if(w==='manana') return o===1; if(w==='finde') return o<=6&&(d===0||d===6||(d===5&&momentoOf(e.h)==='noche')); return o<=6; }
 function candidates(ctx){
-  return EVENTS.filter(e=>{ if(!inWhen(e,ctx.cuando)) return false; if(ctx.presu==='gratis'&&e.price>0) return false; if(ctx.presu==='p200'&&(e.price==null||e.price>200)) return false; return conFit(e,ctx.con)>=0 && moodsOf(e).has(ctx.mood); })
+  return EVENTS.filter(e=>{ if(!inWhen(e,ctx.cuando)) return false; if(ctx.presu==='gratis'&&e.price!==0) return false; if(ctx.presu==='p200'&&(e.price==null||e.price>200)) return false; return conFit(e,ctx.con)>=0 && moodsOf(e).has(ctx.mood); })
     .map(e=>({e,sc:conFit(e,ctx.con)*1.5+(e.rec?1:0)+Math.min(e.going,400)/400+(S.user&&S.followCats.includes(e.cat)?2:0)+(S.user&&S.prefZonas.includes(e.zona)?.7:0)+(S.user&&S.prefMom.includes(momentoOf(e.h))?.5:0)})).sort((a,b)=>b.sc-a.sc).map(x=>x.e);
 }
 function whyOf(e,ctx){ return [ctx.con?CON[ctx.con].why:(S.user&&S.followCats.includes(e.cat)?'Te gusta: '+CATS[e.cat].n.toLowerCase():'Va con tu mood: '+MOODS[ctx.mood].s.toLowerCase()), e.price===0?'gratis':null].filter(Boolean).join(' · '); }
@@ -1354,20 +1367,54 @@ function quick(q){ clearFiltersSilent();
   if(q==='hoy') F.cuando='hoy'; if(q==='gratis'){F.cuando='hoy';F.precio='gratis';} if(q==='exterior'){F.cuando='hoy';F.amb.add('exterior');} if(q==='finde') F.cuando='finde'; if(q==='mes') F.cuando='todo';
   go('eventos'); }
 
-/* ---------- Vista: Ármame un plan ---------- */
+/* ---------- Vista: ¿Qué hago? (Ármame un plan + lo que hay ese día) ---------- */
+const DIA_TXT={hoy:'hoy',manana:'mañana',finde:'este fin',semana:'esta semana'};
+const DIA_TABS={hoy:'Hoy',manana:'Mañana',finde:'Este fin',semana:'Esta semana'};
 function viewPlan(){
-  const st=slot('w',{...PA});
+  if(!WHEN[PA.cuando]) PA.cuando='hoy';
+  const st=slot('w',{...PA}), dia=DIA_TXT[PA.cuando];
   const grp=(key,title,obj)=>`<div class="fgroup"><h4>${title}</h4><div class="chips">${Object.entries(obj).map(([k,v])=>`<button class="chip" data-pa="${key}" data-v="${k}" aria-pressed="${PA[key]===k}">${typeof v==='string'?v:v.n}</button>`).join('')}</div></div>`;
+  const list=EVENTS.filter(e=>inWhen(e,PA.cuando)).sort((a,b)=>a.off-b.off||(a.h||'99').localeCompare(b.h||'99'));
+  const free=list.filter(e=>e.price===0).length, outdoor=list.filter(e=>e.amb==='exterior').length;
+  const nowH=new Date().getHours();
   let result;
   if(!st.cur) result=`<div class="empty"><b>No encontramos un plan con esas respuestas</b>Prueba con otro día, otro presupuesto u otro mood.</div>`;
-  else result=`${st.widened==='semana'?`<div class="notice">Para ${WHEN[PA.cuando].toLowerCase()} no hay nada con ese mood. Este plan es para otro día de la semana.</div>`:st.widened==='presu'?`<div class="notice">No encontramos algo con ese presupuesto. Este plan cuesta un poco más.</div>`:''}
-    <span class="eyebrow" style="display:block;margin-bottom:10px">Tu plan</span>${planCard('w',true)}`;
-  return `<div class="wrap page"><div class="phead"><div><span class="script">Tú dime el mood</span><h1>¿Qué se te antoja hacer?</h1><p>Contesta cuatro preguntas y te damos un solo plan. Si no te convence, cámbialo por uno parecido.</p></div></div>
-    <div class="wiz"><aside class="panel">${grp('mood','¿Qué mood traes?',MOODS)}${grp('con','¿Con quién vas?',CON)}${grp('cuando','¿Cuándo?',WHEN)}${grp('presu','¿Cuánto quieres gastar?',PRESU)}</aside>
-    <section style="min-width:0">${result}</section></div></div>`;
+  else result=`${st.widened==='semana'?`<div class="notice">Para ${dia} no hay nada con ese mood. Este plan es para otro día de la semana.</div>`:st.widened==='presu'?`<div class="notice">No encontramos algo con ese presupuesto. Este plan cuesta un poco más.</div>`:''}
+    ${planCard('w',true)}`;
+  let groups;
+  if(PA.cuando==='hoy'||PA.cuando==='manana') groups=['manana','tarde','noche'].map(m=>{ const l=list.filter(e=>momentoOf(e.h)===m); if(!l.length) return '';
+      const label=MOMENTOS[m]+(PA.cuando==='hoy'&&((m==='manana'&&nowH>=12)||(m==='tarde'&&nowH>=19))?' · ya pasó':'');
+      return `<section class="momento"><h2>${label}</h2><div class="evgrid">${l.map(card).join('')}</div></section>`; }).join('')
+    + (list.some(e=>!e.h)?`<section class="momento"><h2>Todo el día u horario por confirmar</h2><div class="evgrid">${list.filter(e=>!e.h).map(card).join('')}</div></section>`:'');
+  else groups=[...new Set(list.map(e=>e.off))].map(o=>`<section class="momento"><h2>${relDay(o)}</h2><div class="evgrid">${list.filter(e=>e.off===o).map(card).join('')}</div></section>`).join('');
+  const quiet=ATR.filter(a=>['fundidora','santalucia','barrio'].includes(a.id));
+  return `<div class="wrap page">
+    <div class="hoyhero">
+      <div class="hoycard">${SILLA}<span class="eyebrow" style="color:inherit;opacity:.8">${PA.cuando==='hoy'?longDate(0):PA.cuando==='manana'?longDate(1):'Elige el día'}</span>
+        <h1>¿Qué hago <span class="dia">${dia}</span>?</h1>
+        <div class="daytabs" role="group" aria-label="¿Para cuándo?">${Object.entries(DIA_TABS).map(([k,v])=>`<button data-pa="cuando" data-v="${k}" aria-pressed="${PA.cuando===k}">${v}</button>`).join('')}</div>
+        <p>${list.length?`Hay ${list.length} eventos ${dia}.`:`No hay eventos registrados para ${dia}.`} Dinos tu mood y te armamos un plan, o deja que la página elija por ti.</p>
+        <button class="btn lila" id="surprise">${I.dice}Sorpréndeme</button></div>
+      <div class="hoystats">
+        <button class="stat" data-qd="todo"><b>${list.length}</b><span>eventos ${dia}</span></button>
+        <button class="stat" data-qd="gratis"><b>${free}</b><span>gratis</span></button>
+        <button class="stat" data-qd="exterior"><b>${outdoor}</b><span>al aire libre</span></button>
+        <a class="stat" href="#plan-armado"><b>${I.dice}</b><span>Ármame un plan</span></a>
+      </div>
+    </div>
+    <div class="phead" id="plan-armado"><div><span class="script">Tú dime el mood</span><h2 class="h2plan">Ármame un plan para ${dia}</h2><p>Contesta tres preguntas y te damos un solo plan. Si no te convence, cámbialo por uno parecido.</p></div></div>
+    <div class="wiz"><aside class="panel">${grp('mood','¿Qué mood traes?',MOODS)}${grp('con','¿Con quién vas?',CON)}${grp('presu','¿Cuánto quieres gastar?',PRESU)}</aside>
+    <section style="min-width:0">${result}</section></div>
+    <div class="sechead"><h2>Todo lo que hay ${dia}</h2><a class="btn small" href="#eventos" data-qd="todo">Ver con filtros</a></div>
+    ${groups||'<div class="empty"><b>No hay eventos registrados</b>Prueba con otro día o visita una atracción.</div>'}
+    <section class="momento"><h2>Si prefieres un plan sin horario</h2><div class="atrgrid">${quiet.map(atrCard).join('')}</div></section>
+  </div>`;
 }
 function bindPlan(){
-  document.querySelectorAll('[data-pa]').forEach(b=>b.onclick=()=>{ PA[b.dataset.pa]=b.dataset.v; try{ localStorage.setItem('mtymovida-pa',JSON.stringify(PA)); }catch(e){} render(); });
+  document.querySelectorAll('[data-pa]').forEach(b=>b.onclick=()=>{ PA[b.dataset.pa]=b.dataset.v; try{ localStorage.setItem('mtymovida-pa',JSON.stringify(PA)); }catch(e){} const y=window.scrollY; render(); window.scrollTo(0,y); });
+  document.querySelectorAll('[data-qd]').forEach(b=>b.onclick=ev=>{ ev.preventDefault(); clearFiltersSilent(); F.cuando=PA.cuando; if(b.dataset.qd==='gratis') F.precio='gratis'; if(b.dataset.qd==='exterior') F.amb.add('exterior'); go('eventos'); });
+  const sp=document.getElementById('surprise'); if(sp) sp.onclick=()=>{ const nowH=new Date().getHours(); let pool=EVENTS.filter(e=>inWhen(e,PA.cuando)&&(PA.cuando!=='hoy'||!e.h||parseInt(e.h)>=nowH)); if(!pool.length) pool=EVENTS.filter(e=>e.off>=0&&e.off<=2); if(pool.length) openEvent(pool[Math.floor(Math.random()*pool.length)].id); };
+  const pa=document.querySelector('a[href="#plan-armado"]'); if(pa) pa.onclick=ev=>{ ev.preventDefault(); document.getElementById('plan-armado').scrollIntoView({behavior:'smooth',block:'start'}); };
   bindPlans(document.getElementById('app'));
 }
 
@@ -1394,7 +1441,7 @@ function filtered(){
     if(F.amb.size && !F.amb.has(e.amb)) return false;
     if(F.mod.size && !F.mod.has(e.mod)) return false;
     if(F.zona && (e.zona!==F.zona||e.mod==='linea')) return false;
-    if(F.precio==='gratis'&&e.price>0) return false;
+    if(F.precio==='gratis'&&e.price!==0) return false;
     if(F.precio==='paga'&&e.price===0) return false;
     for(const x of F.extras) if(!e.tags.includes(x)) return false;
     return true;
@@ -1486,7 +1533,7 @@ function clearFiltersSilent(){ F.q='';F.cats.clear();F.mom.clear();F.amb.clear()
 function hoyBlock(){
   const today=EVENTS.filter(e=>e.off===0), free=today.filter(e=>e.price===0).length, outdoor=today.filter(e=>e.amb==='exterior').length;
   const fin=EVENTS.filter(e=>{const o=e.off,d=dOf(o).getDay();return o>=0&&o<=6&&(d===0||d===6);}).length;
-  return `<div class="sechead"><h2>¿Qué hago hoy?</h2><a class="btn small" href="#hoy">Ver todo lo de hoy</a></div>
+  return `<div class="sechead"><h2>¿Qué hago hoy?</h2><a class="btn small" href="#hoy">Ver todo lo de hoy y armar un plan</a></div>
     <div class="hoystats hs4">
         <button class="stat" data-quick="hoy"><b>${today.length}</b><span>eventos hoy</span></button>
         <button class="stat" data-quick="gratis"><b>${free}</b><span>gratis hoy</span></button>
@@ -1498,35 +1545,6 @@ function bindHoyBlock(){
   const b=document.getElementById('surprise'); if(b) b.onclick=()=>{ const nowH=new Date().getHours(); let pool=EVENTS.filter(e=>e.off===0&&parseInt(e.h)>=nowH); if(!pool.length) pool=EVENTS.filter(e=>e.off>=0&&e.off<=2); openEvent(pool[Math.floor(Math.random()*pool.length)].id); };
   document.querySelectorAll('[data-quick]').forEach(x=>x.onclick=()=>quick(x.dataset.quick));
 }
-function viewHoy(){
-  const today=EVENTS.filter(e=>e.off===0).sort((a,b)=>a.h.localeCompare(b.h));
-  const nowH=new Date().getHours();
-  const free=today.filter(e=>e.price===0).length, outdoor=today.filter(e=>e.amb==='exterior').length;
-  const groups=['manana','tarde','noche'].map(m=>{ const l=today.filter(e=>momentoOf(e.h)===m); if(!l.length) return '';
-    const label = MOMENTOS[m] + ((m==='manana'&&nowH>=12)||(m==='tarde'&&nowH>=19)?' · ya pasó':'');
-    return `<section class="momento"><h2>${label}</h2><div class="evgrid">${l.map(card).join('')}</div></section>`; }).join('');
-  const tomorrow=EVENTS.filter(e=>e.off===1);
-  const quiet=ATR.filter(a=>['fundidora','santalucia','barrio'].includes(a.id));
-  return `<div class="wrap page">
-    <div class="hoyhero">
-      <div class="hoycard">${SILLA}<span class="eyebrow" style="color:inherit;opacity:.8">${longDate(0)}</span><h1>Hoy no tengo nada que hacer. ¿Qué hay?</h1><p>Hay ${today.length} eventos hoy en la zona metropolitana. Si no te decides, deja que la página elija por ti.</p><button class="btn lila" id="surprise">${I.dice}Sorpréndeme</button></div>
-      <div class="hoystats">
-        <button class="stat" data-quick="hoy"><b>${today.length}</b><span>eventos hoy</span></button>
-        <button class="stat" data-quick="gratis"><b>${free}</b><span>gratis hoy</span></button>
-        <button class="stat" data-quick="exterior"><b>${outdoor}</b><span>al aire libre</span></button>
-        <button class="stat" data-quick="finde"><b>${EVENTS.filter(e=>{const o=e.off,d=dOf(o).getDay();return o>=0&&o<=6&&(d===0||d===6);}).length}</b><span>este fin de semana</span></button>
-      </div>
-    </div>
-    ${groups||'<div class="empty"><b>Hoy no hay eventos registrados</b>Revisa los de mañana o visita una atracción.</div>'}
-    <section class="momento"><h2>Mañana</h2><div class="evgrid">${tomorrow.map(card).join('')}</div></section>
-    <section class="momento"><h2>Si prefieres un plan sin horario</h2><div class="atrgrid">${quiet.map(atrCard).join('')}</div></section>
-  </div>`;
-}
-function bindHoy(){
-  document.getElementById('surprise').onclick=()=>{ const nowH=new Date().getHours(); let pool=EVENTS.filter(e=>e.off===0&&parseInt(e.h)>=nowH); if(!pool.length) pool=EVENTS.filter(e=>e.off>=0&&e.off<=2); openEvent(pool[Math.floor(Math.random()*pool.length)].id); };
-  document.querySelectorAll('[data-quick]').forEach(b=>b.onclick=()=>quick(b.dataset.quick));
-}
-
 /* ---------- Vista: Mi calendario ---------- */
 function viewCal(){
   if(!S.user) return `<div class="wrap page"><div class="gate"><span class="eyebrow">Mi calendario</span><h2>Arma tu semana de eventos</h2><p>Inicia sesión para guardar eventos, crear planes con tus amigos y ver tu agenda en cualquier dispositivo.</p><button class="btn lila" id="gateLogin">Iniciar sesión</button></div></div>`;
@@ -1834,7 +1852,7 @@ function bindCommon(root){
 }
 
 /* ---------- Navegación ---------- */
-const VIEWS={inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],hoy:[viewHoy,bindHoy],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],agregar:[viewAgregar,bindAgregar]};
+const VIEWS={inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],agregar:[viewAgregar,bindAgregar]};
 let current='inicio';
 function go(v){ if(location.hash!=='#'+v) location.hash=v; else { current=v; render(); } window.scrollTo(0,0); }
 function render(){
@@ -1843,7 +1861,7 @@ function render(){
   document.querySelectorAll('.nav a').forEach(a=>a.setAttribute('aria-current',a.dataset.view===current?'page':'false'));
   renderEd();
 }
-function fromHash(){ const h=location.hash.replace('#',''); current=VIEWS[h]?h:'inicio'; render(); }
+function fromHash(){ let h=location.hash.replace('#',''); if(h==='hoy'){ PA.cuando='hoy'; h='plan'; } current=VIEWS[h]?h:'inicio'; render(); }
 window.addEventListener('hashchange',()=>{ fromHash(); window.scrollTo(0,0); });
 document.getElementById('brandBtn').onclick=()=>go('inicio');
 /* ---------- Nube (Supabase): cuentas y datos de cada persona ---------- */
@@ -1935,7 +1953,8 @@ async function loadApproved(){
     if(!ORGS[orgKey]) ORGS[orgKey]={n:orgName,c:'#7F95E4',d:''};
     let off=offOfDate(new Date(d.fecha+'T00:00')), range=null;
     // Si ya está en la agenda (agregado a mano), no se repite
-    if(EVENTS.some(x=>norm(x.t)===norm(d.nombre)&&(x.off===off||x.range))) return;
+    const nn=norm(d.nombre), parecido=t=>{ const a=norm(t); return a===nn||(Math.min(a.length,nn.length)>=6&&(a.startsWith(nn)||nn.startsWith(a))); };
+    if(EVENTS.some(x=>parecido(x.t)&&(x.off===off||x.range))) return;
     if(d.hasta&&/^\d{4}-\d{2}-\d{2}$/.test(d.hasta)){ const end=offOfDate(new Date(d.hasta+'T00:00')); if(off<0&&end>=0) off=0; const h=new Date(d.hasta+'T00:00'); range=`Hasta el ${h.getDate()} de ${MESL[h.getMonth()]}`; }
     const linea=d.municipio==='linea';
     EVENTS.push({id,t:d.nombre,cat:CAT_OK(d.categoria),org:orgKey,venue:d.lugar||(linea?'En línea':'Por confirmar'),zona:ZONAS[d.municipio]?d.municipio:'centro',

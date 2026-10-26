@@ -99,7 +99,10 @@ function categoria(t) {
 function municipio(t, porDefecto) {
   t = t.toLowerCase();
   const r = [['sanpedro', /san pedro/], ['sannicolas', /san nicol/], ['guadalupe', /guadalupe/], ['apodaca', /apodaca/], ['escobedo', /escobedo/],
-    ['santacatarina', /santa catarina/], ['garcia', /garc[ií]a/], ['juarez', /ju[aá]rez/], ['santiago', /santiago/]].find(([, x]) => x.test(t));
+    ['santacatarina', /santa catarina/], ['garcia', /garc[ií]a/], ['juarez', /ju[aá]rez/], ['santiago', /santiago/],
+    ['cadereyta', /cadereyta/], ['pesqueria', /pesquer[ií]a/], ['salinas', /salinas victoria/], ['elcarmen', /el carmen/], ['cienega', /ci[eé]nega de flores/],
+    ['allende', /^allende$|ciudad allende|allende,\s*n/], ['otros', /montemorelos|linares|zuazua|abasolo|bustamante|sabinas|villaldama|lampazos|an[aá]huac|galeana|iturbide|aramberri|doctor arroyo|rayones|general ter[aá]n|cerralvo|higueras|hualahuises|el ca[ñn]ón/],
+    ['centro', /monterrey/]].find(([, x]) => x.test(t));
   return r ? r[0] : porDefecto;
 }
 function fechaHora(iso) {
@@ -235,6 +238,14 @@ async function filasPrimeTickets(f) {
     }
     const unicas = [...new Map(funciones.map(x => [x.fecha + x.hora, x])).values()].sort((a, b) => (a.fecha + a.hora).localeCompare(b.fecha + b.hora));
     if (!unicas.length) continue;
+    // El precio está en la página de cada función ("Buscar boletos")
+    let precio = null;
+    const funcion = (html.match(/href="(https?:\/\/[^"]+\/evnt\d+)"/) || [])[1];
+    if (funcion) {
+      const pf = await traer(funcion) || '';
+      const precios = [...pf.matchAll(/"price"\s*:\s*"?(\d+(?:\.\d+)?)/g)].map(m => Number(m[1]));
+      if (precios.length) precio = Math.min(...precios);
+    }
     const i = texto.indexOf('Información general'), j = texto.indexOf(f.lugarCorto || 'FORO 13', i + 1);
     let desc = i >= 0 ? texto.slice(i + 19, j > i ? j : i + 600).replace(o.nombre, '').trim() : '';
     const fechaTxt = x => { const d = new Date(x.fecha + 'T00:00'); return `${d.getDate()} de ${Object.keys(MESES)[d.getMonth()]} a las ${x.hora} h`; };
@@ -244,7 +255,7 @@ async function filasPrimeTickets(f) {
       datos: {
         nombre: o.nombre, organizador: f.nombre, categoria: categoria(o.tipo + ' ' + o.nombre + ' ' + desc), municipio: f.municipio,
         fecha: unicas[0].fecha, hora: unicas[0].hora, hasta: unicas.at(-1).fecha !== unicas[0].fecha ? unicas.at(-1).fecha : null,
-        lugar: f.lugar || f.nombre, espacio: 'interior', precio: null, caracteristicas: [], descripcion: desc, enlace: url, fuente: f.nombre,
+        lugar: f.lugar || f.nombre, espacio: 'interior', precio, caracteristicas: [], descripcion: desc, enlace: url, fuente: f.nombre,
       },
     });
   }
@@ -252,16 +263,17 @@ async function filasPrimeTickets(f) {
 }
 
 async function guardar(filas) {
-  // Se envía uno por uno: si ya existe (misma dirección), Supabase responde 409 y se ignora
+  // Se envía uno por uno: si ya existe (misma dirección), Supabase responde 409.
+  // Con la llave secreta, a los que ya existen se les actualizan fecha, precio, foto y descripción.
   let nuevos = 0;
+  const h = { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}`, 'content-type': 'application/json', prefer: 'return=minimal' };
   for (const fila of filas) {
-    const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados`, {
-      method: 'POST',
-      headers: { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}`, 'content-type': 'application/json', prefer: 'return=minimal' },
-      body: JSON.stringify(fila),
+    const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados`, { method: 'POST', headers: h, body: JSON.stringify(fila) });
+    if (r.ok) { nuevos++; continue; }
+    if (r.status !== 409) throw new Error(`Supabase respondió ${r.status}: ${await r.text()}`);
+    if (SECRETA) await fetch(`${SB_URL}/rest/v1/eventos_enviados?fuente_url=eq.${encodeURIComponent(fila.fuente_url)}&estado=eq.aprobado`, {
+      method: 'PATCH', headers: h, body: JSON.stringify({ datos: fila.datos, foto: fila.foto }),
     });
-    if (r.ok) nuevos++;
-    else if (r.status !== 409) throw new Error(`Supabase respondió ${r.status}: ${await r.text()}`);
   }
   return nuevos;
 }
@@ -306,7 +318,7 @@ for (const f of FUENTES) {
         fuente_url: `${limpiaUrl(e.url || url)}#${e.startDate}`, estado: ESTADO,
         foto: [].concat(e.image || [])[0]?.url || [].concat(e.image || [])[0] || null,
         datos: {
-          nombre, organizador: (f.organizadorDelEvento && limpiar([].concat(e.organizer || [])[0]?.name)) || f.nombre, categoria: categoria(nombre + ' ' + desc), municipio: enLinea ? 'linea' : municipio(lugar + ' ' + ciudad, f.municipio),
+          nombre, organizador: (f.organizadorDelEvento && limpiar([].concat(e.organizer || [])[0]?.name)) || f.nombre, categoria: categoria(nombre + ' ' + desc), municipio: enLinea ? 'linea' : ciudad ? municipio(ciudad, 'otros') : municipio(lugar, f.municipio),
           fecha: ini.fecha, hora: ini.hora, hasta: fin.fecha !== ini.fecha ? fin.fecha : null, lugar, espacio: null, precio,
           caracteristicas: [], descripcion: desc, enlace: limpiaUrl(e.url || url), fuente: f.nombre,
         },
