@@ -1344,7 +1344,7 @@ function card(e){
 /* ---------- Diseño editable ---------- */
 const LOGO_DEF={fig:42,mty:16,mov:27,gap:6,dy:0,line:1};
 const PZ_DEF={cerro:{x:0,y:66,w:44},arch:{x:34,y:0,w:66,h:100},half:{x:6,y:78,w:30},pill:{x:22,y:54,w:16},ring:{x:30,y:2,w:9},dot:{x:8,y:36,w:3.4},sol:{x:85,y:1,w:13},nube:{x:2,y:12,w:22},nube2:{x:64,y:5,w:15},msg:{x:0,y:20,w:26}};
-const PZ_ORDER=['half','pill','nube','arch','nube2','sol','ring','dot'];
+const PZ_ORDER=['half','pill','nube','arch','sol','ring','dot'];
 const PZ_NAMES={nube:'Figuras celestes',nube2:'Figuras celestes pequeñas',sol:'Círculo amarillo',cerro:'Cerro de la Silla',arch:'Arco con monitos',half:'Medio círculo lila',pill:'Píldora turquesa',ring:'Aro',dot:'Punto rosa',msg:'Texto "sal y únete"'};
 let LAY={logo:{...LOGO_DEF},pz:JSON.parse(JSON.stringify(PZ_DEF))};
 try{ const l=JSON.parse(localStorage.getItem('mtymovida-layout7')||'null'); if(l){ LAY.logo={...LOGO_DEF,...l.logo}; for(const k in PZ_DEF) LAY.pz[k]={...PZ_DEF[k],...(l.pz||{})[k]}; } }catch(e){}
