@@ -1776,7 +1776,7 @@ function viewCal(){
       <div class="calnavrow">${calView==='mes'?monthNav():`<div class="calnav"><button class="iconbtn" id="wPrev" aria-label="Semana anterior" ${weekOff<=-2?'disabled':''}>${I.left}</button><b>${weekOff===0?'Esta semana · ':''}${range}</b><button class="iconbtn" id="wNext" aria-label="Semana siguiente" ${weekOff>=maxWeek?'disabled':''}>${I.right}</button></div>
       ${weekOff!==0?'<button class="btn small" id="wNow">Volver a esta semana</button>':''}`}</div></div>
     ${calView==='mes'?monthGrid(saved):week}
-    <div class="gcalrow"><button class="btn" id="gcal">${I.cal}Conectar con Google Calendar</button><span>Para ver tus eventos agendados también en tu celular o en Outlook.</span></div>
+    <div class="gcalrow"><button class="btn lila" id="gcal">${I.cal}Conectar con Google Calendar</button><span>Para ver tus eventos agendados también en tu celular o en Outlook.</span></div>
     ${!saved.length?`<div class="empty" style="margin-bottom:24px"><b>Tu calendario está vacío</b>Toca el ícono de guardar en cualquier evento para agregarlo aquí.<div style="margin-top:12px"><a class="btn small" href="#eventos">Ver eventos</a></div></div>`:''}
     <div class="calcols">
       <div style="display:flex;flex-direction:column;gap:20px">
