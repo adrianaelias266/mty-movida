@@ -590,7 +590,8 @@ form.card .full{grid-column:1/-1}
 .sheet-body .plain-top{padding-top:34px}
 .mhero{margin:-22px -22px 0;position:relative}
 .mhero img{width:100%;aspect-ratio:16/8;max-width:100%;object-fit:cover;display:block}
-.mhero figcaption{position:absolute;right:10px;bottom:8px;font-size:11px;color:#fff;background:rgba(0,0,0,.45);padding:2px 8px;border-radius:6px}
+.mhero figcaption{position:absolute;right:10px;bottom:8px;left:auto;max-width:calc(100% - 20px);font-size:11px;color:#fff;background:rgba(0,0,0,.55);padding:2px 8px;border-radius:6px}
+.mhero figcaption a{color:#fff}
 .dhead{display:flex;flex-direction:column;gap:8px}
 .dhead h2{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,3.2vw,32px);line-height:1.08;letter-spacing:-.03em}
 .facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -1993,7 +1994,7 @@ function eventHTML(e){
         :`<div class="panel" style="background:var(--sunk);border:0"><p style="margin:0;font-size:14px">Solo quienes agendaron este evento pueden calificarlo. Así evitamos reseñas falsas.</p></div>`)}
     </div>`;
   }
-  return `<figure class="mhero"><img src="${evImg(e)}" alt=""${fitAttr(e)}><figcaption>${e.img?(e.fisl?'Foto: agenda FISL 2026':'Foto: '+esc(ORGS[e.org]?ORGS[e.org].n:'organizador')):'Imagen ilustrativa'}</figcaption></figure>
+  return `<figure class="mhero"><img src="${evImg(e)}" alt=""${fitAttr(e)}><figcaption>${e.credit?`Foto: <a href="${esc(e.credit.url||'#')}" target="_blank" rel="noopener">${esc(e.credit.autor)}</a> · ${esc(e.credit.licencia)} · ${esc(e.credit.fuente)} · Imagen de referencia`:e.img?(e.fisl?'Foto: agenda FISL 2026':'Foto: '+esc(ORGS[e.org]?ORGS[e.org].n:'organizador')):'Imagen ilustrativa'}</figcaption></figure>
     <div class="dhead"><div class="ev-cat" style="font-size:13px;gap:10px">${catDot(e.cat)}${c.n}${past?' · Evento pasado':''}${e.rec&&!past?' · <b style="color:var(--accent)">Recomendado por Mty Movida</b>':''}</div><h2>${esc(e.t)}</h2></div>
     <div class="facts">
       <div class="fact">${I.cal}<div><small>Fecha y hora</small>${e.range?e.range+' · '+hh(e):relDay(e.off)+(e.off>=0&&e.off<=1?', '+longDate(e.off):'')+' · '+hh(e)}</div></div>
@@ -2174,7 +2175,7 @@ async function loadApproved(){
     EVENTS.push({id,t:d.nombre,cat:CAT_OK(d.categoria),org:orgKey,venue:d.lugar||(linea?'En línea':'Por confirmar'),zona:ZONAS[d.municipio]?d.municipio:'centro',
       amb:d.espacio==='exterior'?'exterior':'interior',mod:linea?'linea':'presencial',off,h:/^\d{1,2}:\d{2}/.test(d.hora||'')?d.hora.slice(0,5).padStart(5,'0'):'',
       price:typeof d.precio==='number'?d.precio:null,tags:Array.isArray(d.caracteristicas)?d.caracteristicas:[],going:0,desc:d.descripcion||'',range,
-      img:r.foto||undefined,url:d.enlace||undefined,src:r.fuente&&r.fuente!=='Organizador'?r.fuente:undefined});
+      img:r.foto||undefined,url:d.enlace||undefined,src:r.fuente&&r.fuente!=='Organizador'?r.fuente:undefined,credit:d.credito&&d.credito.autor?d.credito:undefined});
     n++;
   });
   if(n){ Object.keys(PS).forEach(k=>delete PS[k]); render(); }

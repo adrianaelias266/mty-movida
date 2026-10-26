@@ -14,7 +14,16 @@ export const FUENTES = [
   { nombre: 'Festival Internacional de Santa Lucía', sitio: 'https://festivalsantalucia.gob.mx', filtro: /(evento|event|programa|agenda)/, municipio: 'centro' },
   { nombre: 'Casa Motis', sitio: 'https://www.casamotis.com', filtro: /\/detalles-y-registro\//, municipio: 'centro' },
   // "paginas": se leen directo, sin buscar en el mapa del sitio
-  { nombre: 'Metapatio', sitio: 'https://www.songkick.com', paginas: ['https://www.songkick.com/venues/3675169-metapatio'], filtro: /./, municipio: 'centro' },
+  { nombre: 'Metapatio', sitio: 'https://www.songkick.com', paginas: ['https://www.songkick.com/venues/3675169-metapatio'], filtro: /./, municipio: 'centro', limpiarNombre: /\s+@\s+.*$/ },
+  // Todos los conciertos de la zona de Monterrey en Songkick (la lista ya trae cada evento completo)
+  { nombre: 'Songkick', sitio: 'https://www.songkick.com', lista: 'https://www.songkick.com/metro-areas/31051-mexico-monterrey', listaDirecta: true, paginasLista: 6, filtro: /./, municipio: 'centro', cat: 'concierto', limpiarNombre: /\s+@\s+.*$/ },
+  // Cultura UANL (Colegio Civil, Teatro Universitario y más): calendario de WordPress
+  { nombre: 'Cultura UANL', sitio: 'https://cultura.uanl.mx', lector: 'tribe', lugar: 'UANL, Monterrey', municipio: 'centro' },
+  // Fever (conciertos a la luz de las velas y experiencias): se siguen los enlaces de cada plan
+  { nombre: 'Fever', sitio: 'https://feverup.com', paginas: ['https://feverup.com/es/monterrey/eventos-musicales'], enlaces: /feverup\.com\/m\/\d+/, filtro: /./, municipio: 'centro' },
+  // Meetup: comunidades y grupos de Monterrey
+  { nombre: 'Meetup', sitio: 'https://www.meetup.com', paginas: ['https://www.meetup.com/find/?location=mx--Monterrey&source=EVENTS'], filtro: /./, municipio: 'centro', cat: 'fandoms',
+    excluir: /negocio|emprend|inversi|ventas|marketing|networking|trading|cripto|bienes ra[ií]ces/i },
   { nombre: 'Bloom Entertainment', sitio: 'https://www.eventbrite.com.mx', paginas: ['https://www.eventbrite.com.mx/o/bloom-entertainment-62162028433'], enlaces: /eventbrite\.com\.mx\/e\//, filtro: /./, municipio: 'centro' },
   { nombre: 'Casa Padre Mier', sitio: 'https://www.eventbrite.com.mx', paginas: ['https://www.eventbrite.com.mx/o/casa-padre-mier-34353364941'], enlaces: /eventbrite\.com\.mx\/e\//, filtro: /./, municipio: 'centro' },
   { nombre: 'San Pedro Parques', sitio: 'https://sanpedroparques.mx', paginas: ['https://sanpedroparques.mx/calendario-eventos/'], navegador: true, filtro: /./, municipio: 'sanpedro',

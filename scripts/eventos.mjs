@@ -32,6 +32,7 @@ const locs = xml => [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>(?:[\s\S]*?<las
 const limpiaUrl = u => /eventbrite\.com/.test(u) ? u.replace(/^https:\/\/www\.eventbrite\.com(\.mx)?\//, 'https://www.eventbrite.com.mx/').split('?')[0] : u;
 
 async function paginasDe(f) {
+  if (f.lista && f.listaDirecta) return [...Array(f.paginasLista || 5)].map((_, i) => `${f.lista}?page=${i + 1}`);
   if (f.lista) {                     // listado con varias páginas (por ejemplo, Eventbrite en Nuevo León)
     const urls = [];
     for (let n = 1; n <= (f.paginasLista || 40); n++) {
@@ -286,11 +287,63 @@ if (SECRETA) {
   console.log(r.ok ? '::notice::Los pendientes del recolector quedaron aprobados' : `::warning::No se pudieron aprobar los pendientes: ${r.status}`);
 } else console.log('::notice::Sin llave secreta: los eventos entran como pendientes');
 
+// ---------- Fotos libres para eventos sin foto (Wikimedia Commons y Openverse) ----------
+const CACHE_FOTOS = new Map(); let busquedas = 0;
+const MAX_BUSQUEDAS = 120;
+const normTxt = t => String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+const VACIAS = new Set('de la el los las del en y con para por un una a al gira tour concierto presenta show live mty monterrey 2026 2027 noche fiesta festival taller club evento'.split(' '));
+function claves(q) { return normTxt(q).split(' ').filter(w => w.length >= 4 && !VACIAS.has(w)); }
+async function fotoCommons(q) {
+  const u = `https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrnamespace=6&gsrlimit=8&gsrsearch=${encodeURIComponent(q + ' filetype:bitmap')}&prop=imageinfo&iiprop=url|extmetadata|size&iiurlwidth=960`;
+  const d = await json(u); const pages = Object.values(d?.query?.pages || {}).sort((a, b) => (a.index || 0) - (b.index || 0));
+  const k = claves(q);
+  for (const p of pages) {
+    const ii = (p.imageinfo || [])[0]; if (!ii || !ii.thumburl || ii.width < 500) continue;
+    const m = ii.extmetadata || {}, lic = m.LicenseShortName?.value, autor = limpiar(m.Artist?.value || '');
+    if (!lic || !autor || /fair use|non-free/i.test(lic)) continue;
+    const t = normTxt(p.title); if (!k.length || !k.every(w => t.includes(w))) continue;   // el nombre del archivo debe mencionar lo que buscamos
+    return { foto: ii.thumburl, credito: { autor: autor.slice(0, 80), licencia: lic, url: ii.descriptionurl, fuente: 'Wikimedia Commons' } };
+  }
+  return null;
+}
+async function fotoOpenverse(q) {
+  const d = await json(`https://api.openverse.org/v1/images/?q=${encodeURIComponent(q)}&page_size=10&mature=false`);
+  const k = claves(q);
+  for (const r of d?.results || []) {
+    if (!r.url || !r.creator || !r.license || /nc|nd/.test(r.license) || (r.width && r.width < 500)) continue;
+    const t = normTxt(r.title + ' ' + (r.tags || []).map(x => x.name).join(' ')); if (!k.length || !k.every(w => t.includes(w))) continue;
+    return { foto: r.url, credito: { autor: limpiar(r.creator).slice(0, 80), licencia: `CC ${r.license.toUpperCase()} ${r.license_version || ''}`.trim(), url: r.foreign_landing_url, fuente: 'Openverse' } };
+  }
+  return null;
+}
+async function buscarFoto(q) {
+  q = q.trim(); if (claves(q).length === 0) return null;
+  if (CACHE_FOTOS.has(q)) return CACHE_FOTOS.get(q);
+  if (busquedas >= MAX_BUSQUEDAS) return null; busquedas++;
+  const r = (await fotoCommons(q).catch(() => null)) || (await fotoOpenverse(q).catch(() => null));
+  CACHE_FOTOS.set(q, r); return r;
+}
+async function completarFotos(filas) {
+  let n = 0;
+  for (const x of filas) {
+    if (x.foto) continue;
+    const d = x.datos, cat = d.categoria;
+    // 1) el artista o la obra (lo que va antes de ":" o " - "), solo para música, conciertos, teatro y danza
+    const artista = d.nombre.split(/\s[-–|@]\s|:|\(/)[0];
+    let r = ['concierto', 'musica', 'teatro', 'danza'].includes(cat) ? await buscarFoto(artista) : null;
+    // 2) el lugar del evento
+    if (!r && d.lugar) r = await buscarFoto(d.lugar.split(',')[0] + ' Monterrey');
+    if (r) { x.foto = r.foto; d.credito = r.credito; n++; }
+  }
+  return n;
+}
+
 let total = 0, fallas = 0;
 for (const f of FUENTES) {
  try {
   if (f.lector) {
     const filas = (await LECTORES[f.lector](f)).filter(x => !(f.excluir && f.excluir.test(x.datos.nombre)));
+    const nf = await completarFotos(filas); if (nf) console.log(`::notice::${f.nombre}: ${nf} fotos libres encontradas`);
     const n = await guardar([...new Map(filas.map(x => [x.fuente_url, x])).values()]);
     console.log(`::notice::${f.nombre}: ${filas.length} eventos encontrados, ${n} nuevos`);
     total += n; continue;
@@ -310,7 +363,7 @@ for (const f of FUENTES) {
       const oferta = [].concat(e.offers || [])[0] || {};
       const p0 = oferta.price ?? oferta.lowPrice;
       const precio = p0 != null && !isNaN(Number(p0)) ? Number(p0) : (/gratis|libre|free/i.test(JSON.stringify(e)) ? 0 : null);
-      const nombre = limpiar(e.name), desc = limpiar(e.description).slice(0, 400);
+      const nombre = limpiar(e.name).replace(f.limpiarNombre || /$^/, '').trim(), desc = limpiar(e.description).slice(0, 400);
       if (f.excluir && f.excluir.test(nombre)) continue;   // por ejemplo, clases deportivas que se repiten cada semana
       const enLinea = /Online/.test(String(e.eventAttendanceMode || ''));
       filas.push({
@@ -318,14 +371,16 @@ for (const f of FUENTES) {
         fuente_url: `${limpiaUrl(e.url || url)}#${e.startDate}`, estado: ESTADO,
         foto: [].concat(e.image || [])[0]?.url || [].concat(e.image || [])[0] || null,
         datos: {
-          nombre, organizador: (f.organizadorDelEvento && limpiar([].concat(e.organizer || [])[0]?.name)) || f.nombre, categoria: categoria(nombre + ' ' + desc), municipio: enLinea ? 'linea' : ciudad ? municipio(ciudad, 'otros') : municipio(lugar, f.municipio),
+          nombre, organizador: (f.organizadorDelEvento && limpiar([].concat(e.organizer || [])[0]?.name)) || f.nombre, categoria: f.cat || categoria(nombre + ' ' + desc), municipio: enLinea ? 'linea' : ciudad ? municipio(ciudad, 'otros') : municipio(lugar, f.municipio),
           fecha: ini.fecha, hora: ini.hora, hasta: fin.fecha !== ini.fecha ? fin.fecha : null, lugar, espacio: null, precio,
           caracteristicas: [], descripcion: desc, enlace: limpiaUrl(e.url || url), fuente: f.nombre,
         },
       });
     }
   }
-  const n = await guardar([...new Map(filas.map(x => [x.fuente_url, x])).values()]);
+  const unicas = [...new Map(filas.map(x => [x.fuente_url, x])).values()];
+  const nf = await completarFotos(unicas); if (nf) console.log(`::notice::${f.nombre}: ${nf} fotos libres encontradas`);
+  const n = await guardar(unicas);
   console.log(`::notice::${f.nombre}: ${paginas.length} páginas revisadas, ${n} eventos nuevos`);
   total += n;
  } catch (err) {
