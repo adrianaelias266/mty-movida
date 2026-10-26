@@ -10,7 +10,7 @@
 //   excluir:  nombres de eventos que no se toman en cuenta
 export const FUENTES = [
   { nombre: 'CONARTE', sitio: 'https://conarte.org.mx', filtro: /\/(agenda|exposiciones|cineteca)\//, municipio: 'centro' },
-  { nombre: 'Parque Fundidora', sitio: 'https://www.parquefundidora.org', filtro: /(evento|event|agenda)/, municipio: 'centro' },
+  { nombre: 'Parque Fundidora', sitio: 'https://www.parquefundidora.org', lector: 'tribe', lugar: 'Parque Fundidora, Monterrey', municipio: 'centro' },
   { nombre: 'Festival Internacional de Santa Lucía', sitio: 'https://festivalsantalucia.gob.mx', filtro: /(evento|event|programa|agenda)/, municipio: 'centro' },
   { nombre: 'Casa Motis', sitio: 'https://www.casamotis.com', filtro: /\/detalles-y-registro\//, municipio: 'centro' },
   // "paginas": se leen directo, sin buscar en el mapa del sitio
@@ -19,9 +19,38 @@ export const FUENTES = [
   { nombre: 'Casa Padre Mier', sitio: 'https://www.eventbrite.com.mx', paginas: ['https://www.eventbrite.com.mx/o/casa-padre-mier-34353364941'], enlaces: /eventbrite\.com\.mx\/e\//, filtro: /./, municipio: 'centro' },
   { nombre: 'San Pedro Parques', sitio: 'https://sanpedroparques.mx', paginas: ['https://sanpedroparques.mx/calendario-eventos/'], navegador: true, filtro: /./, municipio: 'sanpedro',
     excluir: /cobro|yoga|pilates|tenis|tai ?chi|basquet|b[aá]squet|atletismo|roundnet|disc golf|skate|falun|hipopresivos|meditaci|mindfulness|sonidoterapia|cuencos|salsa con|rollerdance|running|esgrima|futb|adiestramiento|huerto|academia|zumba|entrenamiento|funcional|softbol|b[eé]isbol|soccer|corredores|patines|ritmos latinos/i },
-  // Todo lo que Eventbrite tiene en Nuevo León (sin congresos, cursos de negocios ni eventos médicos)
-  { nombre: 'Eventbrite', sitio: 'https://www.eventbrite.com.mx', lista: 'https://www.eventbrite.com.mx/d/mexico--nuevo-leon--85686681/all-events/', max: 300, filtro: /./, municipio: 'centro', soloEstado: /^(NLE|NL|Nuevo Le[oó]n)$/i,
-    excluir: /cumbre|congreso|summit|convenci[oó]n|diplomado|certificaci|webinar|capacitaci|negocio|empresari|emprend|inversi|bienes ra[ií]ces|inmobiliari|liderazgo|recursos humanos|compensaciones|n[oó]mina|fiscal|contab|m[eé]dic|c[aá]ncer|cl[ií]nic|oncolog|odontolog|dental|nutrici[oó]n cl|networking|b2b|reclutamiento|empleo|ventas|marketing|finanzas|trading|cripto|seguros|inteligencia artificial|\bIA\b|\bAI\b|ciberseguridad|software|log[ií]stica|industrial|manufactura/i },
+  // Organizadores de Nuevo León en Eventbrite (Eventbrite no deja leer su buscador, pero sí la página de cada organizador).
+  // Para sumar uno, copia la parte final de su dirección: eventbrite.com.mx/o/ESTA-PARTE
+  { nombre: 'Eventbrite', sitio: 'https://www.eventbrite.com.mx', organizadorDelEvento: true, enlaces: /eventbrite\.com(\.mx)?\/e\//, filtro: /./, municipio: 'centro', soloEstado: /^(NLE|NL|Nuevo Le[oó]n)$/i,
+    paginas: [
+      'saturno-120681931210',
+      'princeso-114136685981',
+      'portales-agency-77726180153',
+      'kindergarden-56530109043',
+      'clasificacion-c-95899791113',
+      'neo-entretainment-97631639783',
+      'bassalto-115649149631',
+      'rezzet-haus-108911604661',
+      'emiliano-hernandez-79509093793',
+      'tumba2-crew-121047906227',
+      'geronimo-coronado-69363880963',
+      'resonar-74000773583',
+      'dialogo-en-la-oscuridad-monterrey-31294209711',
+      'techno-monterrey-120808265402',
+      'san-palma-studiomonterrey-120050414321',
+      'omar-marquez-120861329267',
+      'benjamin-franklin-innovation-center-121845102812',
+      'sol-sonoro-121841035539',
+      'yonder-nutrition-108145801301',
+      'relaciones-culturales-120656419872'
+    ].map(o => `https://www.eventbrite.com.mx/o/${o}`),
+    excluir: /cumbre|congreso nacional de|summit|diplomado|certificaci|webinar|capacitaci|negocio|emprend|inversi|bienes ra[ií]ces|liderazgo|n[oó]mina|m[eé]dic|c[aá]ncer|networking|ventas|marketing|finanzas/i },
+  // Centro Cívitas: su página de eventos lee esta lista de datos
+  { nombre: 'Centro Cívitas', sitio: 'https://ccivitas.mx/eventos/', lector: 'civitas', datos: 'https://ccivitas-events.esbeto.deno.net/events', municipio: 'centro' },
+  // LABNL Lab Cultural Ciudadano
+  { nombre: 'LABNL', sitio: 'https://www.labnuevoleon.mx', lector: 'payload', lugar: 'LABNL Lab Cultural Ciudadano, Centro, Monterrey', municipio: 'centro' },
+  // Eventos del Gobierno de Nuevo León
+  { nombre: 'Gobierno de Nuevo León', sitio: 'https://beta.nl.gob.mx/es/eventos', lector: 'nlgob', lista: 'https://beta.nl.gob.mx/es/eventos', municipio: 'centro' },
   // Boletera PrimeTickets: se lee la portada y la página de cada obra
   { nombre: 'Foro 13', sitio: 'https://foro13.primetickets.mx/', lector: 'primetickets', lugar: 'Foro 13, Hidalgo 511, Centro', lugarCorto: 'FORO 13', municipio: 'centro' },
 ];
