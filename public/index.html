@@ -9,7 +9,7 @@
 <title>Mty Movida</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700&family=Figtree:wght@400;500;600;700&family=Allura&family=Big+Shoulders+Display:wght@700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700&family=Figtree:wght@400;500;600;700&family=Sacramento&family=Big+Shoulders+Display:wght@700;800&display=swap">
 <style>
 /* Layout: cartelera urbana con franja naranja de la marca, carrusel de portada y tarjetas con imagen; naranja quemado y lila de Mty Movida sobre neutros cálidos */
 :root{
@@ -23,7 +23,7 @@
   --f-display:"Plus Jakarta Sans","Figtree",system-ui,sans-serif;
   --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"Plus Jakarta Sans","Figtree",system-ui,sans-serif;
-  --f-script:"Allura","Brush Script MT",cursive;
+  --f-script:"Sacramento","Brush Script MT",cursive;
   --f-wm:"Big Shoulders Display","Bebas Neue","Arial Narrow",sans-serif;
   --r:16px;
 }
@@ -118,7 +118,7 @@ a{color:var(--accent)}
 .tag{font-size:12px;font-weight:600;color:var(--muted);background:var(--sunk);border-radius:6px;padding:2px 8px;white-space:nowrap}
 .tag.free{background:var(--green-soft);color:var(--green)}
 .eyebrow{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.script{font-family:var(--f-script);font-size:clamp(30px,3.4vw,40px);line-height:1;color:var(--accent);font-weight:400;display:block;margin-bottom:2px}
+.script{font-family:var(--f-script);font-size:clamp(36px,4vw,48px);line-height:1;color:var(--accent);font-weight:400;-webkit-text-stroke:1.1px currentColor;display:block;margin-bottom:2px}
 
 /* Encabezados de página */
 .page{padding-block:28px 64px}
@@ -186,7 +186,7 @@ a{color:var(--accent)}
 .pz.ring{aspect-ratio:1;border:3px solid var(--ink);border-radius:50%}
 .pz.dot{aspect-ratio:1;border-radius:50%;background:#F9447F}
 .pz.msg{font-family:var(--f-display);font-weight:700;line-height:1.02;letter-spacing:-.02em;color:var(--ink);z-index:3}
-.pz.msg i{font-family:var(--f-script);font-style:normal;font-weight:400;font-size:1.5em;display:block;color:var(--accent);line-height:.85;letter-spacing:0}
+.pz.msg i{font-family:var(--f-script);font-style:normal;font-weight:400;-webkit-text-stroke:1px currentColor;font-size:1.5em;display:block;color:var(--accent);line-height:.85;letter-spacing:0}
 body.editing .pz{outline:2px dashed var(--lila);outline-offset:3px;cursor:move;touch-action:none}
 body.editing .pz.sel{outline:3px solid var(--accent)}
 /* Panel de edición */
