@@ -183,15 +183,16 @@ a{color:var(--accent)}
 .pz{position:absolute;display:block}
 .pz.arch{background:#BF4718;border-radius:999px 999px 28px 28px;overflow:hidden}
 .pz.arch{container-type:size}
-.figbox{position:absolute;left:50%;bottom:4%;width:min(80%,60cqh);aspect-ratio:1;transform:translateX(-50%);pointer-events:none}
+.figbox{position:absolute;left:50%;bottom:4%;width:min(88%,80cqh);aspect-ratio:1;transform:translateX(-50%);pointer-events:none}
 .figbox img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
-.ntag{position:absolute;bottom:97%;width:22%;display:flex;flex-direction:column;align-items:center;color:#fff;font-family:var(--f-script);font-weight:700;font-size:clamp(14px,6.4cqi,24px);line-height:1}
-.ntag b{font:inherit;color:var(--lila-bg);white-space:nowrap}
-.ntag svg{width:1.05em;height:auto;margin-top:.15em;overflow:visible}
-.ntag svg path{vector-effect:non-scaling-stroke;stroke-width:.14em}
-.ntag.nL{left:9%}
-.ntag.nR{left:57%}
-.ntag.nR svg{transform:scaleX(-1)}
+.figbox{font-family:var(--f-script);font-weight:700;font-size:clamp(13px,5.6cqi,22px);line-height:1;color:#fff}
+.nm{position:absolute;white-space:nowrap;color:#fff}
+.nm-l{left:1%;top:20%}
+.nm-r{left:73%;top:71%}
+.nar{position:absolute;width:1.45em;height:1.45em;overflow:visible}
+.nar path{vector-effect:non-scaling-stroke;stroke-width:.13em}
+.nar-l{left:12%;top:27%}
+.nar-r{left:76%;top:55%}
 .pz.cerro{aspect-ratio:200/90}
 .pz.cerro svg{display:block;width:100%;height:100%}
 .pz.half{aspect-ratio:2/1;border-radius:999px 999px 0 0;background:#CBA6FF}
@@ -1349,7 +1350,7 @@ const saveLay=()=>{ try{ localStorage.setItem('mtymovida-layout3',JSON.stringify
 function applyLogo(){ const r=document.documentElement.style, L=LAY.logo; r.setProperty('--lg-fig',L.fig+'px'); r.setProperty('--lg-mty',L.mty+'px'); r.setProperty('--lg-mov',L.mov+'px'); r.setProperty('--lg-gap',L.gap+'px'); r.setProperty('--lg-dy',L.dy+'px'); r.setProperty('--lg-line',L.line+'px'); }
 function pieceStyle(k){ const p=LAY.pz[k]; return `left:${p.x}%;top:${p.y}%;`+(k==='msg'?`font-size:${p.w}px;width:${Math.max(30,p.w*.42)}%`:`width:${p.w}%;`+(k==='arch'?`height:${p.h}%`:'')); }
 function pieceHTML(k){
-  const inner = k==='cerro'?'<svg viewBox="0 0 200 90" preserveAspectRatio="none"><path d="M0 90 L30 60 L48 66 L78 22 L98 48 L114 40 L130 52 L152 12 L200 90 Z" fill="#FDBD1A"/><path d="M78 22 L86 34 L80 38 L72 32 Z M152 12 L161 28 L154 32 L146 26 Z" fill="#fff" opacity=".85"/></svg>' : k==='arch'?`<div class="figbox"><img src="${BIGLOGO}" alt=""><span class="ntag nL"><b>Sharon</b><svg viewBox="0 0 60 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M52 4C32 12 15 29 13 45c-1 10 6 16 16 15 10-1 14-9 6-12-12-4-20 9-21 22-1 9 0 17 3 25"/><path d="M8 83l9 12 8-11"/></svg></span><span class="ntag nR"><b>Adriana</b><svg viewBox="0 0 60 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M52 4C32 12 15 29 13 45c-1 10 6 16 16 15 10-1 14-9 6-12-12-4-20 9-21 22-1 9 0 17 3 25"/><path d="M8 83l9 12 8-11"/></svg></span></div>` : k==='msg'?'<i>sal y</i>únete a la movida':'';
+  const inner = k==='cerro'?'<svg viewBox="0 0 200 90" preserveAspectRatio="none"><path d="M0 90 L30 60 L48 66 L78 22 L98 48 L114 40 L130 52 L152 12 L200 90 Z" fill="#FDBD1A"/><path d="M78 22 L86 34 L80 38 L72 32 Z M152 12 L161 28 L154 32 L146 26 Z" fill="#fff" opacity=".85"/></svg>' : k==='arch'?`<div class="figbox"><img src="${BIGLOGO}" alt=""><span class="nm nm-l">Sharon</span><svg class="nar nar-l" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3C5 11 6 19 12 23c5 3 10 1 8-3-2-3-7-1-7 3 0 5 7 9 19 8"/><path d="M27 26l6 5-6 4"/></svg><span class="nm nm-r">Adriana</span><svg class="nar nar-r" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M27 37c5-6 6-13 1-17-4-3-9-1-7 2 2 3 7 1 7-3 0-6-8-11-20-12"/><path d="M12 3L6 7l5 5"/></svg></div>` : k==='msg'?'<i>sal y</i>únete a la movida':'';
   return `<div class="pz ${k}" data-pz="${k}" style="${pieceStyle(k)}">${inner}</div>`;
 }
 let EDIT=false, SEL='arch';
