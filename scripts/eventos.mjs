@@ -391,4 +391,4 @@ for (const f of FUENTES) {
 }
 if (navegador) await navegador.close();
 console.log(`Listo: ${total} eventos revisados en total.`);
-if (fallas === FUENTES.length) process.exit(1);
+if (FUENTES.length && fallas === FUENTES.length) process.exit(1);
