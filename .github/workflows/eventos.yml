@@ -13,4 +13,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Preparar el navegador para las páginas que usan JavaScript
+        run: npm install --no-save playwright@1.48.2 && npx playwright install --with-deps chromium
       - run: node scripts/eventos.mjs

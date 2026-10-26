@@ -22,6 +22,14 @@ async function traer(url) {
 const locs = xml => [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>(?:[\s\S]*?<lastmod>([^<]+)<\/lastmod>)?/g)].map(m => ({ url: m[1].replace(/&amp;/g, '&'), mod: m[2] }));
 
 async function paginasDe(f) {
+  if (f.paginas && f.enlaces) {      // páginas con la lista de eventos: se siguen los enlaces a cada evento
+    const urls = [];
+    for (const p of f.paginas) {
+      const html = await traer(p); if (!html) continue;
+      for (const m of html.matchAll(/href="([^"#?]+)/g)) if (f.enlaces.test(m[1])) urls.push(new URL(m[1], p).href);
+    }
+    return [...new Set(urls)].slice(0, MAX_PAGINAS);
+  }
   if (f.paginas) return f.paginas;  // páginas que ya traen los eventos (por ejemplo, la agenda de un lugar en Songkick)
   const vistos = new Set(), paginas = [];
   let pendientes = [`${f.sitio}/sitemap_index.xml`, `${f.sitio}/sitemap.xml`, `${f.sitio}/wp-sitemap.xml`];
@@ -71,8 +79,58 @@ function municipio(t, porDefecto) {
   return r ? r[0] : porDefecto;
 }
 function fechaHora(iso) {
-  const m = String(iso).match(/^(\d{4}-\d{2}-\d{2})(?:T(\d{2}:\d{2}))?/);
-  return m ? { fecha: m[1], hora: m[2] || null } : null;
+  const m = String(iso).match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:T(\d{1,2}):(\d{2}))?/);
+  const d = n => String(n).padStart(2, '0');
+  return m ? { fecha: `${m[1]}-${d(m[2])}-${d(m[3])}`, hora: m[4] ? `${d(m[4])}:${m[5]}` : null } : null;
+}
+
+// Páginas que arman su calendario con JavaScript: se abren en un navegador real (Chromium)
+let navegador = null;
+async function htmlConNavegador(url) {
+  if (!navegador) { const { chromium } = await import('playwright'); navegador = await chromium.launch(); }
+  const p = await navegador.newPage({ userAgent: AGENTE });
+  try {
+    await p.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+    await p.waitForTimeout(3000);
+    return await p.content();
+  } catch { return null; } finally { await p.close(); }
+}
+
+// Boletera PrimeTickets (Foro 13): la portada trae cada obra y su página trae las funciones
+const MESES = { enero: 1, febrero: 2, marzo: 3, abril: 4, mayo: 5, junio: 6, julio: 7, agosto: 8, septiembre: 9, octubre: 10, noviembre: 11, diciembre: 12 };
+async function filasPrimeTickets(f) {
+  const portada = await traer(f.sitio); if (!portada) return [];
+  const obras = new Map();
+  for (const m of portada.matchAll(/background-image:\s*url\('([^']+)'\)[\s\S]*?pt-category-chip-text">([^<]*)<[\s\S]*?pt-title">([^<]+)<[\s\S]*?href="([^"]+)"/g)) {
+    if (!obras.has(m[4])) obras.set(m[4], { foto: new URL(m[1], f.sitio).href, tipo: limpiar(m[2]), nombre: limpiar(m[3]) });
+  }
+  const filas = [];
+  for (const [url, o] of obras) {
+    const html = await traer(url); if (!html) continue;
+    const texto = limpiar(html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' '));
+    const funciones = [];
+    for (const m of texto.matchAll(/(?:lunes|martes|miércoles|jueves|viernes|sábado|domingo) (\d{1,2}) de (\w+) (\d{4}) (\d{1,2}):(\d{2}) (AM|PM)/gi)) {
+      const mes = MESES[m[2].toLowerCase()]; if (!mes) continue;
+      let h = Number(m[4]) % 12; if (m[6].toUpperCase() === 'PM') h += 12;
+      const fecha = `${m[3]}-${String(mes).padStart(2, '0')}-${m[1].padStart(2, '0')}`;
+      if (new Date(fecha + 'T00:00') >= hoy && new Date(fecha + 'T00:00') <= limite) funciones.push({ fecha, hora: `${String(h).padStart(2, '0')}:${m[5]}` });
+    }
+    const unicas = [...new Map(funciones.map(x => [x.fecha + x.hora, x])).values()].sort((a, b) => (a.fecha + a.hora).localeCompare(b.fecha + b.hora));
+    if (!unicas.length) continue;
+    const i = texto.indexOf('Información general'), j = texto.indexOf(f.lugarCorto || 'FORO 13', i + 1);
+    let desc = i >= 0 ? texto.slice(i + 19, j > i ? j : i + 600).replace(o.nombre, '').trim() : '';
+    const fechaTxt = x => { const d = new Date(x.fecha + 'T00:00'); return `${d.getDate()} de ${Object.keys(MESES)[d.getMonth()]} a las ${x.hora} h`; };
+    desc = ((desc.length > 320 ? desc.slice(0, 320).replace(/\s+\S*$/, '') + '…' : desc) + (unicas.length > 1 ? ` Funciones: ${unicas.slice(0, 6).map(fechaTxt).join('; ')}.` : '')).trim();
+    filas.push({
+      fuente: f.nombre, fuente_url: url, foto: o.foto,
+      datos: {
+        nombre: o.nombre, organizador: f.nombre, categoria: categoria(o.tipo + ' ' + o.nombre + ' ' + desc), municipio: f.municipio,
+        fecha: unicas[0].fecha, hora: unicas[0].hora, hasta: unicas.at(-1).fecha !== unicas[0].fecha ? unicas.at(-1).fecha : null,
+        lugar: f.lugar || f.nombre, espacio: 'interior', precio: null, caracteristicas: [], descripcion: desc, enlace: url, fuente: f.nombre,
+      },
+    });
+  }
+  return filas;
 }
 
 async function guardar(filas) {
@@ -88,10 +146,16 @@ async function guardar(filas) {
 
 let total = 0;
 for (const f of FUENTES) {
+  if (f.lector === 'primetickets') {
+    const filas = await filasPrimeTickets(f);
+    const n = await guardar(filas);
+    console.log(`::notice::${f.nombre}: ${n} obras enviadas a revisión (las repetidas se ignoran)`);
+    total += n; continue;
+  }
   const paginas = await paginasDe(f);
   const filas = [];
   for (const url of paginas) {
-    const html = await traer(url); if (!html) continue;
+    const html = f.navegador ? await htmlConNavegador(url) : await traer(url); if (!html) continue;
     for (const e of eventosLD(html)) {
       const ini = fechaHora(e.startDate), fin = fechaHora(e.endDate || e.startDate); if (!ini) continue;
       const dIni = new Date(ini.fecha + 'T00:00'), dFin = new Date(fin.fecha + 'T00:00');
@@ -101,6 +165,7 @@ for (const f of FUENTES) {
       const oferta = [].concat(e.offers || [])[0] || {};
       const precio = oferta.price != null && !isNaN(Number(oferta.price)) ? Number(oferta.price) : (/gratis|libre|free/i.test(JSON.stringify(e)) ? 0 : null);
       const nombre = limpiar(e.name), desc = limpiar(e.description).slice(0, 400);
+      if (f.excluir && f.excluir.test(nombre)) continue;   // por ejemplo, clases deportivas que se repiten cada semana
       const enLinea = /Online/.test(String(e.eventAttendanceMode || ''));
       filas.push({
         fuente: f.nombre,
@@ -114,8 +179,9 @@ for (const f of FUENTES) {
       });
     }
   }
-  const n = await guardar(filas);
-  console.log(`${f.nombre}: ${paginas.length} páginas revisadas, ${n} eventos enviados a revisión (los repetidos se ignoran)`);
+  const n = await guardar([...new Map(filas.map(x => [x.fuente_url, x])).values()]);
+  console.log(`::notice::${f.nombre}: ${paginas.length} páginas revisadas, ${n} eventos enviados a revisión (los repetidos se ignoran)`);
   total += n;
 }
+if (navegador) await navegador.close();
 console.log(`Listo: ${total} eventos revisados en total.`);
