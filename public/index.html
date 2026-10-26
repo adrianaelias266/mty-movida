@@ -353,7 +353,7 @@ textarea.inp{resize:vertical;min-height:90px}
 
 
 /* ¿Qué plan? */
-.hoycard h1 .dia{font-family:var(--f-script);font-weight:700;color:var(--lila-bg);font-size:1.15em;letter-spacing:0;line-height:.9}
+.hoycard h1 .dia{font-family:var(--f-script);font-weight:700;color:var(--lila-bg);font-size:1.15em;letter-spacing:0;line-height:.9;margin-left:.18em;margin-right:.06em}
 .daytabs{display:flex;flex-wrap:wrap;gap:6px;position:relative}
 .daytabs button{border:0;border-radius:999px;padding:8px 14px;font-weight:700;font-size:14px;background:rgba(255,255,255,.16);color:var(--on-brand)}
 .daytabs button:hover{background:rgba(255,255,255,.26)}
@@ -442,6 +442,9 @@ a.stat{text-decoration:none}
 
 .dayinp input{border:0;border-radius:999px;padding:7px 14px;font-weight:700;font-size:14px;background:var(--surface);color:var(--ink);font-family:var(--f-body)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+.fgroup h4 .opt{font-weight:500;text-transform:none;letter-spacing:0;color:var(--muted);font-size:12px;margin-left:6px}
+.wiz .chip i{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px}
 
 /* Mapa */
 .mapbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;overflow-x:auto}
@@ -1080,6 +1083,7 @@ const MOODS={tranquilo:{n:'Algo tranquilo',s:'Tranquilo',c:'#1AC1B9'},salir:{n:'
 const CON={solo:{n:'Solo',why:'Ideal para ir solo'},amiga:{n:'Con una amiga o amigo',why:'Buen plan con una amiga o amigo'},pareja:{n:'En pareja o en una cita',why:'Buen plan para una cita'},amigos:{n:'Con mi grupo de amigos',why:'Para ir en grupo'},familia:{n:'En familia con niños',why:'Apto para ir con niños'}};
 const WHEN={hoy:'Hoy',manana:'Mañana',finde:'Este fin de semana',semana:'Esta semana'};
 const PRESU={gratis:'Gratis',p200:'Hasta $200',todo:'No importa'};
+const HORA={todo:'A cualquier hora',manana:'Mañana',tarde:'Tarde',noche:'Noche'};
 const MOOD_CAT={danza:['cultural','romantico','diferente'],charlas:['cultural','tranquilo','diferente'],letras:['tranquilo','cultural','romantico'],expo:['tranquilo','cultural','romantico'],cine:['tranquilo','romantico','salir'],musica:['salir','romantico','tranquilo'],concierto:['salir','cultural'],teatro:['cultural','salir','diferente'],talleres:['diferente','tranquilo','cultural'],fandoms:['diferente','salir'],fiestas:['salir'],gastro:['salir','tranquilo'],deporte:['activo','diferente']};
 const CON_FIT={solo:{fandoms:2,talleres:2,letras:2,expo:2,deporte:2,fiestas:0},pareja:{cine:2,musica:2,expo:2,letras:2,teatro:2,gastro:2,fandoms:0},amigos:{fiestas:2,concierto:2,gastro:2,fandoms:2,teatro:2},amiga:{musica:2,gastro:2,expo:2,cine:2,talleres:2,letras:2}};
 function moodsOf(e){ const m=new Set(MOOD_CAT[e.cat]); if(e.amb==='exterior'&&e.mod==='presencial'&&['gastro','cine'].includes(e.cat)) m.add('activo'); return m; }
@@ -1087,10 +1091,10 @@ function conFit(e,c){ if(!c) return 1; if(c==='familia') return e.tags.includes(
 function inWhen(e,w){ const o=e.off, d=dOf(o).getDay(); if(o<0||o>MAXOFF) return false; if(w==='fecha') return o===(PA.foff??2);
   if(w==='hoy') return o===0; if(w==='manana') return o===1; if(w==='finde') return o<=6&&(d===0||d===6||(d===5&&momentoOf(e.h)==='noche')); return o<=6; }
 function candidates(ctx){
-  return EVENTS.filter(e=>{ if(!inWhen(e,ctx.cuando)) return false; if(ctx.presu==='gratis'&&e.price!==0) return false; if(ctx.presu==='p200'&&(e.price==null||e.price>200)) return false; return conFit(e,ctx.con)>=0 && moodsOf(e).has(ctx.mood); })
-    .map(e=>({e,sc:conFit(e,ctx.con)*1.5+(e.rec?1:0)+Math.min(e.going,400)/400+(S.user&&S.followCats.includes(e.cat)?2:0)+(S.user&&S.prefZonas.includes(e.zona)?.7:0)+(S.user&&S.prefMom.includes(momentoOf(e.h))?.5:0)})).sort((a,b)=>b.sc-a.sc).map(x=>x.e);
+  return EVENTS.filter(e=>{ if(!inWhen(e,ctx.cuando)) return false; if(ctx.presu==='gratis'&&e.price!==0) return false; if(ctx.presu==='p200'&&(e.price==null||e.price>200)) return false; if(ctx.mom&&ctx.mom!=='todo'&&momentoOf(e.h)!==ctx.mom) return false; return conFit(e,ctx.con)>=0 && (ctx.cats&&ctx.cats.length?ctx.cats.includes(e.cat):moodsOf(e).has(ctx.mood)); })
+    .map(e=>({e,sc:(ctx.cats&&ctx.cats.length&&moodsOf(e).has(ctx.mood)?1:0)+conFit(e,ctx.con)*1.5+(e.rec?1:0)+Math.min(e.going,400)/400+(S.user&&S.followCats.includes(e.cat)?2:0)+(S.user&&S.prefZonas.includes(e.zona)?.7:0)+(S.user&&S.prefMom.includes(momentoOf(e.h))?.5:0)})).sort((a,b)=>b.sc-a.sc).map(x=>x.e);
 }
-function whyOf(e,ctx){ return [ctx.con?CON[ctx.con].why:(S.user&&S.followCats.includes(e.cat)?'Te gusta: '+CATS[e.cat].n.toLowerCase():'Va con tu mood: '+MOODS[ctx.mood].s.toLowerCase()), e.price===0?'gratis':null].filter(Boolean).join(' · '); }
+function whyOf(e,ctx){ return [ctx.cats&&ctx.cats.length?'Elegiste: '+CATS[e.cat].n.toLowerCase():null, ctx.con?CON[ctx.con].why:(S.user&&S.followCats.includes(e.cat)?'Te gusta: '+CATS[e.cat].n.toLowerCase():'Va con tu mood: '+MOODS[ctx.mood].s.toLowerCase()), e.price===0?'gratis':null].filter(Boolean).join(' · '); }
 function compOf(e){
   if(e.mod==='linea') return null;
   const own=ATR.find(a=>a.id===e.place); if(own) return {a:own,t:'Llega antes y recorre'};
@@ -1101,6 +1105,7 @@ function slot(id,ctx){
   const key=JSON.stringify(ctx); let st=PS[id];
   if(!st||st.key!==key){
     let list=candidates(ctx), widened=null;
+    if(!list.length&&ctx.mom&&ctx.mom!=='todo'){ list=candidates({...ctx,mom:'todo'}); widened='hora'; }
     if(!list.length&&ctx.cuando!=='semana'){ list=candidates({...ctx,cuando:'semana'}); widened='semana'; }
     if(!list.length&&ctx.presu!=='todo'){ list=candidates({...ctx,cuando:'semana',presu:'todo'}); widened='presu'; }
     const used=Object.entries(PS).filter(([k,v])=>k!==id&&k[0]===id[0]&&v.cur).map(([,v])=>v.cur);
@@ -1134,7 +1139,7 @@ function bindPlans(root){
   root.querySelectorAll('[data-psave]').forEach(b=>b.onclick=()=>requireLogin(()=>{ const st=PS[b.dataset.psave], e=ev(st.cur);
     if(!isSaved(e.id)) S.saved.push(e.id); S.plans.push({id:crypto.randomUUID(),name:`Plan ${MOODS[st.ctx.mood].s.toLowerCase()}${st.ctx.con?' · '+CON[st.ctx.con].n.toLowerCase():''}`,ids:[e.id]}); persist(); toast('Guardado en Mis planes'); render(); }));
 }
-let PA={mood:'tranquilo',con:'amiga',cuando:'hoy',presu:'todo'};
+let PA={mood:'tranquilo',con:'amiga',cuando:'hoy',presu:'todo',mom:'todo',cats:[]};
 try{ const pa=JSON.parse(localStorage.getItem('mtymovida-pa')||'null'); if(pa) PA=Object.assign(PA,pa); }catch(e){}
 const HOME_CTX=[{mood:'tranquilo',cuando:'hoy',presu:'todo'},{mood:'salir',cuando:'hoy',presu:'todo'},{mood:'diferente',cuando:'hoy',presu:'todo'}];
 const SEED_REVIEWS = {};
@@ -1465,7 +1470,7 @@ function viewPlan(){
   const nowH=new Date().getHours();
   let result;
   if(!st.cur) result=`<div class="empty"><b>No encontramos un plan con esas respuestas</b>Prueba con otro día, otro presupuesto u otro mood.</div>`;
-  else result=`${st.widened==='semana'?`<div class="notice">Para ${dia} no hay nada con ese mood. Este plan es para otro día de la semana.</div>`:st.widened==='presu'?`<div class="notice">No encontramos algo con ese presupuesto. Este plan cuesta un poco más.</div>`:''}
+  else result=`${st.widened==='hora'?`<div class="notice">${dia.replace(/^./,c=>c.toUpperCase())} no encontramos algo en la ${HORA[PA.mom].toLowerCase()}. Este plan es a otra hora.</div>`:''}${st.widened==='semana'?`<div class="notice">Para ${dia} no hay nada con ese mood. Este plan es para otro día de la semana.</div>`:st.widened==='presu'?`<div class="notice">No encontramos algo con ese presupuesto. Este plan cuesta un poco más.</div>`:''}
     ${planCard('w',true)}`;
   let groups;
   if(PA.cuando==='hoy'||PA.cuando==='manana') groups=['manana','tarde','noche'].map(m=>{ const l=list.filter(e=>momentoOf(e.h)===m); if(!l.length) return '';
@@ -1488,8 +1493,10 @@ function viewPlan(){
         <button class="stat" id="surprise"><b>${I.dice}</b><span>Sorpréndeme</span></button>
       </div>
     </div>
-    <div class="phead" id="plan-armado"><div><span class="script">Tú dime el mood</span><h2 class="h2plan">Ármame un plan para ${dia}</h2><p>Contesta tres preguntas y te damos un solo plan. Si no te convence, cámbialo por uno parecido.</p></div></div>
-    <div class="wiz"><aside class="panel">${grp('mood','¿Qué mood traes?',MOODS)}${grp('con','¿Con quién vas?',CON)}${grp('presu','¿Cuánto quieres gastar?',PRESU)}</aside>
+    <div class="phead" id="plan-armado"><div><span class="script">Tú dime el mood</span><h2 class="h2plan">Ármame un plan para ${dia}</h2><p>Contesta unas preguntas y te damos un solo plan. Si no te convence, cámbialo por uno parecido.</p></div></div>
+    <div class="wiz"><aside class="panel">${grp('mood','¿Qué mood traes?',MOODS)}${grp('con','¿Con quién vas?',CON)}${grp('mom','¿A qué hora?',HORA)}
+      <div class="fgroup"><h4>¿Qué tipo de actividad? <span class="opt">Opcional · puedes elegir varias</span></h4><div class="chips">${Object.entries(CATS).map(([k,c])=>`<button class="chip" data-pcat="${k}" aria-pressed="${(PA.cats||[]).includes(k)}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div>${(PA.cats||[]).length?'<button class="linkish" id="pcatClear" style="align-self:flex-start;margin-top:6px">Quitar tipos de actividad</button>':''}</div>
+      ${grp('presu','¿Cuánto quieres gastar?',PRESU)}</aside>
     <section style="min-width:0">${result}</section></div>
     <div class="sechead"><h2>Todo lo que hay ${dia}</h2><a class="btn small" href="#eventos" data-qd="todo">Ver con filtros</a></div>
     ${groups||'<div class="empty"><b>No hay eventos registrados</b>Prueba con otro día o visita una atracción.</div>'}
@@ -1499,6 +1506,9 @@ function viewPlan(){
 function bindPlan(){
   document.querySelectorAll('[data-pa]').forEach(b=>b.onclick=()=>{ PA[b.dataset.pa]=b.dataset.v; try{ localStorage.setItem('mtymovida-pa',JSON.stringify(PA)); }catch(e){} const y=window.scrollY; render(); window.scrollTo(0,y);
     if(b.dataset.v==='fecha'){ const f=document.getElementById('paFecha'); if(f){ f.focus(); try{ f.showPicker(); }catch(e){} } } });
+  const savePA=()=>{ try{ localStorage.setItem('mtymovida-pa',JSON.stringify(PA)); }catch(e){} };
+  document.querySelectorAll('[data-pcat]').forEach(b=>b.onclick=()=>{ const k=b.dataset.pcat; PA.cats=(PA.cats||[]).includes(k)?PA.cats.filter(x=>x!==k):[...(PA.cats||[]),k]; savePA(); const y=window.scrollY; render(); window.scrollTo(0,y); });
+  const pcc=document.getElementById('pcatClear'); if(pcc) pcc.onclick=()=>{ PA.cats=[]; savePA(); const y=window.scrollY; render(); window.scrollTo(0,y); };
   const fi=document.getElementById('paFecha'); if(fi) fi.onchange=()=>{ if(!fi.value) return; const o=offOfDate(new Date(fi.value+'T00:00')); if(o<0||o>MAXOFF) return; PA.foff=o; try{ localStorage.setItem('mtymovida-pa',JSON.stringify(PA)); }catch(e){} const y=window.scrollY; render(); window.scrollTo(0,y); };
   document.querySelectorAll('[data-qd]').forEach(b=>b.onclick=ev=>{ ev.preventDefault(); clearFiltersSilent(); F.cuando=PA.cuando; if(PA.cuando==='fecha') F.fecha=isoOf(PA.foff); if(b.dataset.qd==='gratis') F.precio='gratis'; if(b.dataset.qd==='exterior') F.amb.add('exterior'); go('eventos'); });
   const sp=document.getElementById('surprise'); if(sp) sp.onclick=()=>{ const nowH=new Date().getHours(); let pool=EVENTS.filter(e=>inWhen(e,PA.cuando)&&(PA.cuando!=='hoy'||!e.h||parseInt(e.h)>=nowH)); if(!pool.length) pool=EVENTS.filter(e=>e.off>=0&&e.off<=2); if(pool.length) openEvent(pool[Math.floor(Math.random()*pool.length)].id); };
