@@ -446,6 +446,10 @@ a.stat{text-decoration:none}
 .fgroup h4 .opt{font-weight:500;text-transform:none;letter-spacing:0;color:var(--muted);font-size:12px;margin-left:6px}
 .wiz .chip i{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px}
 
+.gcalrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:0 0 28px}
+.gcalrow span{font-size:13px;color:var(--muted)}
+.logoutrow{display:flex;justify-content:center;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
+
 /* Mapa */
 .mapbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;overflow-x:auto}
 .mapbox svg{display:block;width:100%;min-width:520px;height:auto}
@@ -1664,11 +1668,12 @@ function viewCal(){
   const maxWeek=Math.floor((MAXOFF+((dow+6)%7))/7);
   return `<div class="wrap page">
     <div class="phead"><div><span class="script">Hola, ${esc(S.user.name.split(' ')[0])}</span><h1>Mi calendario</h1><p>${upcoming.length} ${upcoming.length===1?'evento agendado':'eventos agendados'} en los próximos 30 días.</p></div>
-      <div class="row"><button class="btn" id="gcal">${I.cal}Conectar con Google Calendar</button><button class="btn ghost small" id="logout">Cerrar sesión</button></div></div>
+</div>
     <div class="calbar">${calView==='mes'?monthNav():`<div class="calnav"><button class="iconbtn" id="wPrev" aria-label="Semana anterior" ${weekOff<=-2?'disabled':''}>${I.left}</button><b>${weekOff===0?'Esta semana · ':''}${range}</b><button class="iconbtn" id="wNext" aria-label="Semana siguiente" ${weekOff>=maxWeek?'disabled':''}>${I.right}</button></div>
       ${weekOff!==0?'<button class="btn small" id="wNow">Volver a esta semana</button>':''}`}
       <div class="seg" role="group" aria-label="Vista del calendario"><button data-calv="semana" aria-pressed="${calView==='semana'}">Semana</button><button data-calv="mes" aria-pressed="${calView==='mes'}">Mes</button></div></div>
     ${calView==='mes'?monthGrid(saved):week}
+    <div class="gcalrow"><button class="btn" id="gcal">${I.cal}Conectar con Google Calendar</button><span>Para ver tus eventos agendados también en tu celular o en Outlook.</span></div>
     ${!saved.length?`<div class="empty" style="margin-bottom:24px"><b>Tu calendario está vacío</b>Toca el ícono de guardar en cualquier evento para agregarlo aquí.<div style="margin-top:12px"><a class="btn small" href="#eventos">Ver eventos</a></div></div>`:''}
     <div class="calcols">
       <div style="display:flex;flex-direction:column;gap:20px">
@@ -1692,7 +1697,8 @@ function viewCal(){
           ${S.follows.length?S.follows.map(o=>`<div class="row" style="justify-content:space-between"><button class="linkish" data-org="${o}">${ORGS[o].n}</button><span style="font-size:13px;color:var(--muted)">${EVENTS.filter(e=>e.org===o&&e.off>=0).length} próximos</span></div>`).join(''):'<p style="margin:0;color:var(--muted);font-size:14px">Sigue a un organizador desde la página de cualquier evento para enterarte de lo nuevo que publique.</p>'}
         </div>
       </div>
-    </div></div>`;
+    </div>
+    <div class="logoutrow"><button class="btn ghost" id="logout">Cerrar sesión</button></div></div>`;
 }
 function bindCal(){
   const g=id=>document.getElementById(id);
