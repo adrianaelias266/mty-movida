@@ -19,11 +19,13 @@ const AGENTE = 'MtyMovidaBot/1.0 (+agenda cultural de Monterrey)';
 const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
 const limite = new Date(hoy.getTime() + DIAS_ADELANTE * 864e5);
 
+let ultimoEstado = '';
 async function traer(url) {
   try {
-    const r = await fetch(url, { headers: { 'user-agent': AGENTE, accept: 'text/html,application/xml' }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
+    const r = await fetch(url, { headers: { 'user-agent': AGENTE, accept: 'text/html,application/xml', 'accept-language': 'es-MX,es;q=0.9' }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
+    ultimoEstado = r.status;
     return r.ok ? await r.text() : null;
-  } catch { return null; }
+  } catch (e) { ultimoEstado = String(e?.name || e); return null; }
 }
 const locs = xml => [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>(?:[\s\S]*?<lastmod>([^<]+)<\/lastmod>)?/g)].map(m => ({ url: m[1].replace(/&amp;/g, '&'), mod: m[2] }));
 
@@ -33,7 +35,12 @@ async function paginasDe(f) {
   if (f.lista) {                     // listado con varias páginas (por ejemplo, Eventbrite en Nuevo León)
     const urls = [];
     for (let n = 1; n <= (f.paginasLista || 40); n++) {
-      const html = await traer(`${f.lista}?page=${n}`); if (!html) break;
+      let html = await traer(`${f.lista}?page=${n}`);
+      if (!html || !eventosLD(html).length) {           // si la página no responde bien, se intenta con el navegador
+        console.log(`::warning::${f.nombre}: página ${n} sin eventos (respuesta ${ultimoEstado}); se intenta con navegador`);
+        html = await htmlConNavegador(`${f.lista}?page=${n}`);
+      }
+      if (!html) break;
       const evs = eventosLD(html); if (!evs.length) break;
       for (const e of evs) if (e.url && !(f.excluir && f.excluir.test(limpiar(e.name)))) urls.push(limpiaUrl(e.url));
     }
