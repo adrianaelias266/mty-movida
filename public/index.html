@@ -197,6 +197,7 @@ a{color:var(--accent)}
 .pz.pill{aspect-ratio:4/1;border-radius:999px;background:#1AC1B9;transform:rotate(-24deg)}
 .pz.ring{aspect-ratio:1;border:3px solid var(--ink);border-radius:50%}
 .pz.dot{aspect-ratio:1;border-radius:50%;background:#F9447F}
+.pz.sol{aspect-ratio:1;border-radius:50%;background:#FDBD1A;z-index:2}
 
 .pz.msg{font-family:var(--f-display);font-weight:700;line-height:1.02;letter-spacing:-.02em;color:var(--ink);z-index:3}
 .pz.msg i{font-family:var(--f-script);font-style:normal;font-weight:600;font-size:1.5em;display:block;color:var(--accent);line-height:.85;letter-spacing:0}
@@ -1339,12 +1340,12 @@ function card(e){
 
 /* ---------- Diseño editable ---------- */
 const LOGO_DEF={fig:42,mty:16,mov:27,gap:6,dy:0,line:1};
-const PZ_DEF={cerro:{x:0,y:66,w:44},arch:{x:34,y:0,w:66,h:100},half:{x:6,y:78,w:30},pill:{x:22,y:54,w:16},ring:{x:30,y:2,w:9},dot:{x:94,y:6,w:3.4},msg:{x:0,y:20,w:26}};
-const PZ_ORDER=['half','pill','arch','ring','dot'];
-const PZ_NAMES={cerro:'Cerro de la Silla',arch:'Arco con monitos',half:'Medio círculo lila',pill:'Píldora turquesa',ring:'Aro',dot:'Punto rosa',msg:'Texto "sal y únete"'};
+const PZ_DEF={cerro:{x:0,y:66,w:44},arch:{x:34,y:0,w:66,h:100},half:{x:12,y:84,w:22},pill:{x:21,y:60,w:12},ring:{x:27,y:6,w:7},dot:{x:6,y:40,w:3},sol:{x:85,y:1,w:13},msg:{x:0,y:20,w:26}};
+const PZ_ORDER=['half','pill','arch','sol','ring','dot'];
+const PZ_NAMES={sol:'Círculo amarillo',cerro:'Cerro de la Silla',arch:'Arco con monitos',half:'Medio círculo lila',pill:'Píldora turquesa',ring:'Aro',dot:'Punto rosa',msg:'Texto "sal y únete"'};
 let LAY={logo:{...LOGO_DEF},pz:JSON.parse(JSON.stringify(PZ_DEF))};
-try{ const l=JSON.parse(localStorage.getItem('mtymovida-layout3')||'null'); if(l){ LAY.logo={...LOGO_DEF,...l.logo}; for(const k in PZ_DEF) LAY.pz[k]={...PZ_DEF[k],...(l.pz||{})[k]}; } }catch(e){}
-const saveLay=()=>{ try{ localStorage.setItem('mtymovida-layout3',JSON.stringify(LAY)); }catch(e){} };
+try{ const l=JSON.parse(localStorage.getItem('mtymovida-layout4')||'null'); if(l){ LAY.logo={...LOGO_DEF,...l.logo}; for(const k in PZ_DEF) LAY.pz[k]={...PZ_DEF[k],...(l.pz||{})[k]}; } }catch(e){}
+const saveLay=()=>{ try{ localStorage.setItem('mtymovida-layout4',JSON.stringify(LAY)); }catch(e){} };
 function applyLogo(){ const r=document.documentElement.style, L=LAY.logo; r.setProperty('--lg-fig',L.fig+'px'); r.setProperty('--lg-mty',L.mty+'px'); r.setProperty('--lg-mov',L.mov+'px'); r.setProperty('--lg-gap',L.gap+'px'); r.setProperty('--lg-dy',L.dy+'px'); r.setProperty('--lg-line',L.line+'px'); }
 function pieceStyle(k){ const p=LAY.pz[k]; return `left:${p.x}%;top:${p.y}%;`+(k==='msg'?`font-size:${p.w}px;width:${Math.max(30,p.w*.42)}%`:`width:${p.w}%;`+(k==='arch'?`height:${p.h}%`:'')); }
 function pieceHTML(k){
