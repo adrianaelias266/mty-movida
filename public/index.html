@@ -518,6 +518,8 @@ a.stat{text-decoration:none}
 .gate p{margin:0;color:var(--muted)}
 .calbar{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:14px}
 .calnavrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.calnavrow.center{align-self:stretch;justify-content:center}
+.calnavrow.center .calnav b{min-width:0;padding:0 12px}
 .calnav{display:flex;align-items:center;gap:8px}
 .calnav b{font-family:var(--f-display);font-weight:500;font-size:15px;min-width:200px;text-align:center}
 .iconbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center}
@@ -1788,7 +1790,7 @@ function viewCal(){
     <div class="phead"><div><span class="script">Hola, ${esc(S.user.name.split(' ')[0])}</span><h1>Mi calendario</h1><p>${upcoming.length} ${upcoming.length===1?'evento agendado':'eventos agendados'} en los próximos 30 días.</p></div>
 </div>
     <div class="calbar"><div class="seg" role="group" aria-label="Vista del calendario"><button data-calv="semana" aria-pressed="${calView==='semana'}">Semana</button><button data-calv="mes" aria-pressed="${calView==='mes'}">Mes</button></div>
-      <div class="calnavrow">${calView==='mes'?monthNav():`<div class="calnav"><button class="iconbtn" id="wPrev" aria-label="Semana anterior" ${weekOff<=-2?'disabled':''}>${I.left}</button><b>${weekOff===0?'Esta semana · ':''}${range}</b><button class="iconbtn" id="wNext" aria-label="Semana siguiente" ${weekOff>=maxWeek?'disabled':''}>${I.right}</button></div>
+      <div class="calnavrow ${calView==='mes'?'center':''}">${calView==='mes'?monthNav():`<div class="calnav"><button class="iconbtn" id="wPrev" aria-label="Semana anterior" ${weekOff<=-2?'disabled':''}>${I.left}</button><b>${weekOff===0?'Esta semana · ':''}${range}</b><button class="iconbtn" id="wNext" aria-label="Semana siguiente" ${weekOff>=maxWeek?'disabled':''}>${I.right}</button></div>
       ${weekOff!==0?'<button class="btn small" id="wNow">Volver a esta semana</button>':''}`}</div></div>
     ${calView==='mes'?monthGrid(saved):week}
     <div class="gcalrow"><button class="btn lila" id="gcal">${I.cal}Conectar con Google Calendar</button><span>Para ver tus eventos agendados también en tu celular o en Outlook.</span></div>
