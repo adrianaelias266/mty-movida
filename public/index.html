@@ -724,7 +724,26 @@ function cover(scene,seed,variant){
 }
 const evImg = e => e.img || cover(CAT_SCENE[e.cat], e.id, e.cat==='deporte'?(e.place==='silla'?'silla':'hiker'):undefined);
 const ATR_VARIANT = {fundidora:'horno',horno3:'horno',silla:'silla',cola:'cascada',grutas:'cueva',huasteca:'hiker'};
-const atrImg = a => a.img || cover(a.tipo==='montana'?'mountain':a.id==='grutas'?'mountain':a.tipo, a.id, ATR_VARIANT[a.id]);
+const WM='https://upload.wikimedia.org/wikipedia/commons/thumb/';
+const ATR_FOTO={
+  fundidora:['f/fc/Parque_Fundidora_%282%29.jpg/960px-Parque_Fundidora_%282%29.jpg','Pato Garza','CC BY 2.0','File:Parque_Fundidora_(2).jpg'],
+  santalucia:['e/e8/Paseo_Santa_Luc%C3%ADa_-_Santa_Luc%C3%ADa_Riverwalk.jpg/960px-Paseo_Santa_Luc%C3%ADa_-_Santa_Luc%C3%ADa_Riverwalk.jpg','México en Fotos, A.C.','CC BY-SA 2.0','File:Paseo_Santa_Lucía_-_Santa_Lucía_Riverwalk.jpg'],
+  horno3:['5/5e/Horno_3_Parque_Fundidora_Nublado.jpg/960px-Horno_3_Parque_Fundidora_Nublado.jpg','Jorge ATF','CC BY-SA 4.0','File:Horno_3_Parque_Fundidora_Nublado.jpg'],
+  marco:['7/7b/Museo_de_Arte_Contempor%C3%A1neo_desde_el_r%C3%ADo.JPG/960px-Museo_de_Arte_Contempor%C3%A1neo_desde_el_r%C3%ADo.JPG','Lin linao','CC BY-SA 3.0','File:Museo_de_Arte_Contemporáneo_desde_el_río.JPG'],
+  mhm:['9/99/Museo_Historia_Mexicana_Monterrey.jpg/960px-Museo_Historia_Mexicana_Monterrey.jpg','autor en Wikimedia Commons','CC BY-SA 2.5','File:Museo_Historia_Mexicana_Monterrey.jpg'],
+  barrio:['9/91/Monterrey_Barrio_Antiguo.JPG/960px-Monterrey_Barrio_Antiguo.JPG','Ivanmartinez','CC BY-SA 4.0','File:Monterrey_Barrio_Antiguo.JPG'],
+  chipinque:['0/05/Chipinque_-_panoramio_-_Tereso_Hern%C3%A1ndez.jpg/960px-Chipinque_-_panoramio_-_Tereso_Hern%C3%A1ndez.jpg','Tereso Hernández','CC BY-SA 3.0','File:Chipinque_-_panoramio_-_Tereso_Hernández.jpg'],
+  huasteca:['!9/99/La_Huasteca.jpg','Patriciogv1998','CC BY-SA 4.0','File:La_Huasteca.jpg'],
+  silla:['2/20/Cerro_de_la_Silla.jpg/960px-Cerro_de_la_Silla.jpg','Nathaniel C. Sheetz','CC BY-SA 3.0','File:Cerro_de_la_Silla.jpg'],
+  grutas:['!1/11/Grutas_de_Garc%C3%ADa%2C_El_Teatro.jpg','Alan Claptxn','CC BY-SA 4.0','File:Grutas_de_García,_El_Teatro.jpg'],
+  cola:['9/9d/Cascada_Cola_de_Caballo%2C_Nuevo_Leon.JPG/960px-Cascada_Cola_de_Caballo%2C_Nuevo_Leon.JPG','Fernando2812l','CC BY-SA 4.0','File:Cascada_Cola_de_Caballo,_Nuevo_Leon.JPG'],
+  santiago:['3/3d/Parroquia_de_Santiago_Ap%C3%B3stol_%28_Villa_de_Santiago%2C_Nuevo_le%C3%B3n%29.jpg/960px-Parroquia_de_Santiago_Ap%C3%B3stol_%28_Villa_de_Santiago%2C_Nuevo_le%C3%B3n%29.jpg','Bestgustavo30','CC BY-SA 3.0','File:Parroquia_de_Santiago_Apóstol_(_Villa_de_Santiago,_Nuevo_león).jpg'],
+  bustamante:['c/c0/Bustamante_Canyon.JPG/960px-Bustamante_Canyon.JPG','MaxWeininger','CC BY-SA 3.0','File:Bustamante_Canyon.JPG'],
+  linares:['c/c7/Catedral_de_Linares.JPG/960px-Catedral_de_Linares.JPG','Claudio Filippi','CC BY-SA 3.0','File:Catedral_de_Linares.JPG']
+};
+const fotoUrl=f=>f[0][0]==='!'?'https://upload.wikimedia.org/wikipedia/commons/'+f[0].slice(1):WM+f[0];
+const atrCredit=a=>{ const f=ATR_FOTO[a.id]; return f?`Foto: ${esc(f[1])} · ${f[2]} · <a href="https://commons.wikimedia.org/wiki/${encodeURI(f[3])}" target="_blank" rel="noopener" style="color:#fff">Wikimedia Commons</a>`:'Imagen ilustrativa'; };
+const atrImg = a => (ATR_FOTO[a.id]&&fotoUrl(ATR_FOTO[a.id])) || a.img || cover(a.tipo==='montana'?'mountain':a.id==='grutas'?'mountain':a.tipo, a.id, ATR_VARIANT[a.id]);
 
 const CI={
   danza:'<circle cx="13" cy="4" r="2"/><path d="M13 7l-3 5 4 2-1 7M10 12l-5-2M13 7l5 4M14 14l4 6"/>',
@@ -904,6 +923,73 @@ const SB_RAW=[
     EVENTS.push({id,t:tt,cat,org:'arena',venue:'Arena Monterrey',zona:'centro',amb:'interior',mod:'presencial',off:offOf(date),h,price:null,tags:[...tags,'metro','estac'],going,desc,src:'Superboletos',url:SB+code});
   });
 })();
+/* ---------- Otros organizadores (datos de prueba revisados en sus sitios el 26 de octubre de 2026) ---------- */
+const WIX=id=>`https://static.wixstatic.com/media/${id}/v1/fill/w_960,h_540,al_c,q_80/${id.split('~')[0]}.jpg`;
+const F13=n=>`https://foro13.primetickets.mx/storage/event_files/6/${n}`;
+const SK=n=>`https://images.sk-static.com/images/media/profile_images/artists/${n}/huge_avatar`;
+Object.assign(ORGS,{
+  casamotis:{n:'Casa Motis',c:'#B9531B',d:'Centro cultural en el Centro de Monterrey con café, librería, galería y teatro, en un antiguo teatro de títeres recuperado.'},
+  sppar:{n:'San Pedro Parques',c:'#2DB37A',d:'Organismo que administra los parques públicos de San Pedro Garza García y organiza actividades gratuitas, mercados y talleres.'},
+  metapatio:{n:'Metapatio',c:'#12A39C',d:'Jardín y espacio comunitario en el Centro de Monterrey con cerveza artesanal, café, comida y conciertos.'},
+  bloom:{n:'Bloom Entertainment',c:'#F9447F',d:'Organiza fiestas temáticas para fans de artistas en Monterrey.'},
+  foro13:{n:'Foro 13',c:'#A23F96',d:'Foro de teatro independiente en el Centro de Monterrey, con varias obras en temporada a la vez.'},
+  futur:{n:'Futur Festival',c:'#24123F',d:'Festival de música techno.'}
+});
+// [id, org, fecha, hasta, hora, nombre, categoría, lugar, municipio, espacio, precio, características, descripción, foto, enlace, temporada]
+const OTROS_RAW=[
+ ['cm1','casamotis','2026-10-27',null,'19:00','Artes los Martes: Bodegones','talleres','Casa Motis, Padre Raymundo Jardón 910, Centro','centro','interior',95,['metro'],'Recorrido por la casa para dibujar o transformar objetos en piezas propias. Para cualquier nivel. $95 bebida y entrada; $195 con rol.',WIX('0a1b03_35e493a4bae643efabcec396a64002d6~mv2.jpg'),'https://www.casamotis.com/detalles-y-registro/artes-los-martes-bodegones-casa-motis'],
+ ['cm2','casamotis','2026-10-30','2026-11-01','14:00','Vesicular: recorridos guiados','expo','Galería de Casa Motis, Centro','centro','interior',0,['metro'],'Recorridos guiados por la exposición Vesicular de Maru González, de dibujo a cerámica. Grupos de 14:00 y 15:00 h.',WIX('0a1b03_137af6a8c2a3460db176d63d8375b8cd~mv2.png'),'https://www.casamotis.com/detalles-y-registro/vesicular-recorridos-guiados-2026-10-30-14-00'],
+ ['cm3','casamotis','2026-10-30',null,'16:00','Murciélago','talleres','Casa Motis, Centro','centro','interior',120,['metro'],'Tarde con tema de Halloween para conocer a los murciélagos. Lo recaudado apoya al Departamento de Murciélagos de la Facultad de Ciencias Biológicas de la UANL.',WIX('0a1b03_ece6dd7dbbc54caf859bec350bd6f8a3~mv2.png'),'https://www.casamotis.com/detalles-y-registro/murcielago'],
+ ['cm4','casamotis','2026-10-31',null,'19:00',"Halloween '66",'fiestas','Casa Motis, Centro','centro','interior',180,['metro'],'Noche de música y disfraces que recrea un Halloween de los años sesenta, con Andrik y Wild Honey Hunters. $180 preventa, $200 general.',WIX('0a1b03_f72e85bed1ba438dbceaf9b876c795e0~mv2.png'),'https://www.casamotis.com/detalles-y-registro/halloween-66'],
+ ['cm5','casamotis','2026-11-13',null,'20:00','Tony True: acústico en concierto','musica','Casa Motis, Centro','centro','interior',250,['metro'],'Concierto acústico en el que el público elige las canciones del repertorio.',WIX('0a1b03_79fb66e0133a4daaa44688b1ba4dee41~mv2.jpg'),'https://www.casamotis.com/detalles-y-registro/tony-true-acustico-en-concierto'],
+ ['cm6','casamotis','2026-11-14',null,'18:00','Aldana: El cuarto que gira Tour','concierto','Casa Motis, Centro','centro','interior',250,['metro'],'Primera presentación de Aldana en Monterrey (pop, R&B e indie) con su álbum El cuarto que gira. $350 con encuentro con la artista.',WIX('0a1b03_6d937aee6de4438b9ee9ea352b33af32~mv2.png'),'https://www.casamotis.com/detalles-y-registro/aldana-el-cuarto-que-gira-tour'],
+ ['cm7','casamotis','2026-11-20',null,'18:00','Indie Emergente','concierto','Casa Motis, Centro','centro','interior',50,['metro'],'Bandas emergentes de la escena indie independiente. $50 preventa, $70 general.',WIX('0a1b03_d478e0bf7f3c446bbce9ef1f26d93bcc~mv2.jpeg'),'https://www.casamotis.com/detalles-y-registro/indie-emergente'],
+ ['cm8','casamotis','2026-11-22',null,'19:00','EVÍC: Crecer Tour','musica','Casa Motis, Centro','centro','interior',250,['metro'],'El cantautor regiomontano EVÍC presenta su álbum CRECER en formato acústico.',WIX('0a1b03_81010bf1db7b494885e5c555fec85e7b~mv2.jpeg'),'https://www.casamotis.com/detalles-y-registro/evic-crecer-tour'],
+ ['cm9','casamotis','2026-11-30',null,'20:30','En su lugar','teatro','Casa Motis, Centro','centro','interior',300,['metro'],'Comedia de enredos: Matilde prepara una cena importante cuando un ladrón armado entra a su casa.',WIX('0a1b03_b5e182c9b7ca4eaf9de8a3b54b1e6b3b~mv2.jpeg'),'https://www.casamotis.com/detalles-y-registro/en-su-lugar-1'],
+ ['sp1','sppar','2026-10-29',null,'16:00','Gericare: grupo de apoyo a cuidadores','charlas','Parque Mississippi','sanpedro','exterior',null,[],'Grupo de apoyo para personas que cuidan a familiares.',null,'https://sanpedroparques.mx/calendario-eventos/'],
+ ['sp2','sppar','2026-10-30',null,'15:30','Juega y aprende sobre murciélagos','talleres','Parque Rufino Tamayo','sanpedro','exterior',0,['ninos'],'Actividad infantil para conocer a los murciélagos.',null,'https://sanpedroparques.mx/calendario-eventos/'],
+ ['sp3','sppar','2026-10-30',null,'17:30','Ecolocalización de los murciélagos','talleres','Parque Rufino Tamayo','sanpedro','exterior',0,[],'Actividad sobre cómo se orientan los murciélagos con el sonido.',null,'https://sanpedroparques.mx/calendario-eventos/'],
+ ['sp4','sppar','2026-10-30',null,'18:00','Murciélagos urbanos: conversación con la Dra. Emma Gómez','charlas','Parque Rufino Tamayo','sanpedro','exterior',0,[],'Charla sobre los murciélagos en la ciudad. Se repite el 31 de octubre a las 18:00 h en el Parque El Capitán.',null,'https://sanpedroparques.mx/calendario-eventos/'],
+ ['sp5','sppar','2026-10-31',null,'10:00','Experiencias musicales','musica','Parque Mirador Garza Ayala y Parque Mississippi','sanpedro','exterior',null,[],'Actividad musical a la misma hora en dos parques de San Pedro.',null,'https://sanpedroparques.mx/calendario-eventos/'],
+ ['sp6','sppar','2026-10-31',null,'13:00','Hallow Win: Festival de Luz','fiestas','Plaza Fátima','sanpedro','exterior',null,[],'Festival de luz por Halloween.',null,'https://sanpedroparques.mx/calendario-eventos/'],
+ ['sp7','sppar','2026-10-31',null,'14:00','Lucky Bazar','gastro','Parque Mirador Garza Ayala','sanpedro','exterior',null,[],'Bazar de 14:00 a 21:00 h.',null,'https://sanpedroparques.mx/calendario-eventos/'],
+ ['sp8','sppar','2026-10-31',null,'15:00','Mercado Mx','gastro','Parque Rufino Tamayo','sanpedro','exterior',null,[],'Mercado de 15:00 a 22:00 h.',null,'https://sanpedroparques.mx/calendario-eventos/'],
+ ['mp1','metapatio','2026-10-29',null,'19:00','Strawberry Pom','concierto','Metapatio, Melchor Ocampo 222A, Centro','centro','exterior',474,['metro'],'Concierto en el jardín de Metapatio. La hora es la de apertura de puertas. Boletos desde $474 en Ticketmania.',SK(10254942),'https://www.songkick.com/concerts/43400915-strawberry-pom-at-metapatio'],
+ ['mp2','metapatio','2026-11-06',null,'19:00','Los Aptos','concierto','Metapatio, Melchor Ocampo 222A, Centro','centro','exterior',400,['metro'],'Concierto. Las fuentes no coinciden en la apertura de puertas (19:00 o 20:00 h); el show empieza a las 21:00 h. Boletos en Arema.',SK(10204461),'https://arema.mx/e/21173'],
+ ['mp3','metapatio','2026-11-14',null,'19:00','Costa de Ámbar','concierto','Metapatio, Melchor Ocampo 222A, Centro','centro','exterior',350,['metro'],'Concierto. La hora es la de apertura de puertas. Boletos desde $350 en Boletia.',SK(9501939),'https://www.songkick.com/concerts/43465001-costa-de-ambar-at-metapatio'],
+ ['mp4','metapatio','2026-12-04',null,'19:00','Mustard Service','concierto','Metapatio, Melchor Ocampo 222A, Centro','centro','exterior',null,['metro'],'Concierto en Metapatio. La hora es la de apertura de puertas.',SK(9607599),'https://www.songkick.com/concerts/43425877-mustard-service-at-metapatio'],
+ ['bl1','bloom','2026-11-01',null,'17:30','Karol G Fest Monterrey: Pre-Party','fandoms','El Unicornio Azul 2, 5a. Avenida 2278','centro','interior',216,['mayores'],'Tercera edición de la fiesta temática para fans de Karol G, de 17:30 a 22:30 h. Para mayores de 18 años. La artista no participa en la organización.','https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1195343737%2F1435880775353%2F1%2Foriginal.20261008-054723?crop=focalpoint&fit=crop&w=940&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.398&fp-y=0.313&s=d5e048683715f0d47fb0a5263b8e9cc4','https://www.eventbrite.com.mx/e/karol-g-fest-monterrey-pre-party-tickets-2002914219347'],
+ ['ft1','futur','2026-11-13','2026-11-14','','Kappa Futur Festival México 2026','concierto','Parque Fundidora (Nave Lewis, Grúa y Horno 3)','centro','exterior',1610,['metro','estac'],'Festival de música techno en el Parque Fundidora. Boletos desde $1,610 (general del viernes); hay pase de dos días.',null,'https://www.futurfestival.mx/en'],
+ ['fo1','foro13','2026-10-01','2026-10-29','20:30','Sé lo que hicieron el Halloween pasado','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Comedia en temporada. Última función el jueves 29 de octubre.',F13('267/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo2','foro13','2026-10-09','2026-10-30','20:30','El Telar','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Obra en temporada los viernes. Última función el 30 de octubre.',F13('256/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo3','foro13','2026-10-22','2026-11-20','20:00','Incendios, de Wajdi Mouawad','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',550,['metro'],'Funciones jueves y viernes.',null,'https://foro13.primetickets.mx/',1],
+ ['fo4','foro13','2026-10-16','2026-11-06','20:30','The Rocky Horror Show','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'El musical de Richard O’Brien. Funciones los viernes.',F13('269/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo5','foro13','2026-10-18','2026-11-29','13:00','Un cuento de Navidad','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['ninos','metro'],'La magia de la Navidad en el País de los Juguetes. Funciones los domingos.',F13('277/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo6','foro13','2026-10-04','2026-11-01','18:00','Los ojos del General','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Obra en temporada. Última función el 1 de noviembre.',F13('264/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo7','foro13','2026-10-04','2026-11-02','','La Sepultada','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Basada en la leyenda de la mujer emparedada. Funciones el 1 de noviembre a las 17:00 h y el 2 de noviembre a las 19:00 h.',F13('273/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo8','foro13','2026-11-03','2026-11-10','20:30','Sentencia de Muerte','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Regresa el clásico de terror psicológico. Funciones los martes 3 y 10 de noviembre.',F13('275/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo9','foro13','2026-11-08','2026-11-29','18:00','Firebringer: el origen del fuego','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Musical. Funciones los domingos y el sábado 21 de noviembre a las 19:00 h.',F13('276/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo10','foro13','2026-11-08','2026-11-29','18:00','Bajo el Farol: historias cruzadas','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Funciones los domingos.',F13('270/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo11','foro13','2026-11-13','2026-12-30','20:30','¿El anillo pa’ cuándo?','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Comedia. Funciones los viernes.',F13('278/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo12','foro13','2026-11-14','2026-11-20','','El silencio de Júpiter','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'El sábado 14 de noviembre hay funciones a las 17:00 y 19:00 h.',F13('280/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo13','foro13','2026-11-14','2026-11-20','','Damas de Horror: el musical','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Musical. El sábado 14 de noviembre hay funciones a las 17:00 y 20:00 h.',F13('279/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo14','foro13','2026-11-16','2026-11-30','20:30','Archivo muerto','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Funciones los lunes.',F13('272/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo15','foro13','2026-05-06','2026-11-16','','Rapsodia de Natalia Virgen','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Obra en temporada hasta el 16 de noviembre.',F13('237/slider.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo16','foro13','2025-10-28','2026-11-24','','La historia de México según nosotros','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Obra en temporada hasta el 24 de noviembre.',F13('189/slider.jpg'),'https://foro13.primetickets.mx/',1],
+ ['fo17','foro13','2026-08-04','2026-11-05','','Duele el amor','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Todos tenemos secretos. Próxima función: 5 de noviembre.',F13('248/slider2.webp'),'https://foro13.primetickets.mx/',1],
+ ['fo18','foro13','2026-11-25',null,'','Natasha','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',null,['metro'],'Función única.',F13('186/slider.webp'),'https://foro13.primetickets.mx/']
+];
+(function(){
+  const t=new Date(); t.setHours(0,0,0,0);
+  const offOf=iso=>{ const [y,m,d]=iso.split('-').map(Number); return Math.round((new Date(y,m-1,d)-t)/864e5); };
+  const fmt=iso=>{ const [y,m,d]=iso.split('-').map(Number); return `${d} de ${['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][m-1]}`; };
+  OTROS_RAW.forEach(([id,org,fecha,hasta,hora,nombre,cat,venue,zona,amb,precio,tags,desc,img,url,season])=>{
+    let off=offOf(fecha), range=null;
+    if(hasta){ const end=offOf(hasta); if(end<0) return; range=`Hasta el ${fmt(hasta)}`; if(off<0) off=0; }
+    EVENTS.push({id,t:nombre,cat,org,venue,zona,amb,mod:'presencial',off,h:hora,price:precio,tags,going:0,desc,range,season:!!season,img:img||undefined,url,src:ORGS[org].n});
+  });
+})();
+
 
 
 
@@ -949,13 +1035,13 @@ function planCard(id,big){
   const others=st.list.filter(x=>x!==st.cur), pages=Math.max(1,Math.ceil(others.length/3)), alts=others.slice((st.page%pages)*3,(st.page%pages)*3+3).map(ev);
   return `<article class="pc ${big?'big':''}">
     <div class="pc-main"><div class="pc-img" data-open="${e.id}"><img src="${evImg(e)}" alt=""><span class="mood" style="--mc:${MOODS[ctx.mood].c}">${MOODS[ctx.mood].s}</span>${e.rec?'<span class="recb">Recomendado por Mty Movida</span>':''}</div>
-    <div class="pc-body">${catDot(e.cat,big)}<span class="pc-when">${relDay(e.off)} · ${e.h} h · ${priceTxt(e.price)}</span><h3>${esc(e.t)}</h3><p class="meta">${esc(e.venue)}${e.mod==='linea'?'':' · '+ZONAS[e.zona].n}</p>
+    <div class="pc-body">${catDot(e.cat,big)}<span class="pc-when">${relDay(e.off)} · ${hh(e)} · ${priceTxt(e.price)}</span><h3>${esc(e.t)}</h3><p class="meta">${esc(e.venue)}${e.mod==='linea'?'':' · '+ZONAS[e.zona].n}</p>
       <p class="why">${I.ok}<span>${whyOf(e,ctx)}</span></p>
       ${c?`<div class="comp"><span>${c.t} <button class="linkish" data-atr="${c.a.id}">${esc(c.a.n)}</button>.</span></div>`:`<div class="comp"><span>${e.mod==='linea'?'Conéctate cinco minutos antes para no perderte el inicio.':'Llega 15 minutos antes para encontrar buen lugar.'}</span></div>`}
       <div class="row"><button class="btn primary small" data-open="${e.id}">Ver plan</button><button class="btn small ${s?'on':''}" data-save="${e.id}">${s?I.ok+'Agendado':I.cal+'Agendar'}</button></div><button class="btn small chg" data-pchange="${id}" aria-expanded="${st.open}">${st.open?'Cerrar opciones':'↻ Cambiar plan'}</button>
       ${big?`<div class="row"><button class="btn small" data-pshare="${id}">${I.share}Compartir por WhatsApp</button><button class="btn small" data-psave="${id}">Guardar en Mis planes</button></div>`:''}
     </div></div>
-    ${st.open?`<div class="alts"><span class="eyebrow">Opciones parecidas</span>${alts.length?alts.map(a=>`<div class="alt"><img src="${evImg(a)}" alt=""><div style="min-width:0"><b>${esc(a.t)}</b><span>${relDay(a.off)} · ${a.h} h · ${priceTxt(a.price)} · ${ZONAS[a.zona].n}</span></div><button class="btn small" data-ppick="${id}:${a.id}">Elegir</button></div>`).join(''):'<span style="font-size:13px;color:var(--muted)">No hay más opciones con este mood. Prueba con otro día o presupuesto.</span>'}
+    ${st.open?`<div class="alts"><span class="eyebrow">Opciones parecidas</span>${alts.length?alts.map(a=>`<div class="alt"><img src="${evImg(a)}" alt=""><div style="min-width:0"><b>${esc(a.t)}</b><span>${relDay(a.off)} · ${hh(a)} · ${priceTxt(a.price)} · ${ZONAS[a.zona].n}</span></div><button class="btn small" data-ppick="${id}:${a.id}">Elegir</button></div>`).join(''):'<span style="font-size:13px;color:var(--muted)">No hay más opciones con este mood. Prueba con otro día o presupuesto.</span>'}
       ${pages>1?`<button class="btn ghost small" data-pmore="${id}" style="align-self:flex-start">Ver otras opciones</button>`:''}</div>`:''}
   </article>`;
 }
@@ -964,7 +1050,7 @@ function bindPlans(root){
   root.querySelectorAll('[data-pmore]').forEach(b=>b.onclick=()=>{ PS[b.dataset.pmore].page++; render(); });
   root.querySelectorAll('[data-ppick]').forEach(b=>b.onclick=()=>{ const [id,eid]=b.dataset.ppick.split(':'); const st=PS[id]; st.cur=eid; st.open=false; st.page=0; render(); toast('Plan cambiado'); });
   root.querySelectorAll('[data-pshare]').forEach(b=>b.onclick=()=>{ const st=PS[b.dataset.pshare], e=ev(st.cur), c=compOf(e);
-    copy(`Plan ${MOODS[st.ctx.mood].s.toLowerCase()}: ${e.t}\n${relDay(e.off)} ${e.h} h · ${e.venue}${c?`\n${c.t} ${c.a.n}`:''}\n¿Vamos? Visto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); });
+    copy(`Plan ${MOODS[st.ctx.mood].s.toLowerCase()}: ${e.t}\n${relDay(e.off)} ${hh(e)} · ${e.venue}${c?`\n${c.t} ${c.a.n}`:''}\n¿Vamos? Visto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); });
   root.querySelectorAll('[data-psave]').forEach(b=>b.onclick=()=>requireLogin(()=>{ const st=PS[b.dataset.psave], e=ev(st.cur);
     if(!isSaved(e.id)) S.saved.push(e.id); S.plans.push({id:crypto.randomUUID(),name:`Plan ${MOODS[st.ctx.mood].s.toLowerCase()}${st.ctx.con?' · '+CON[st.ctx.con].n.toLowerCase():''}`,ids:[e.id]}); persist(); toast('Guardado en Mis planes'); render(); }));
 }
@@ -1000,7 +1086,8 @@ const DOW = ['dom','lun','mar','mié','jue','vie','sáb'], DOWL=['domingo','lune
 const MES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'], MESL=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 const longDate = o => { const d=dOf(o); return `${DOWL[d.getDay()]} ${d.getDate()} de ${MESL[d.getMonth()]}`; };
 const relDay = o => o===0?'Hoy':o===1?'Mañana':o===-1?'Ayer':longDate(o).replace(/^./,c=>c.toUpperCase());
-const momentoOf = h => { const n=parseInt(h,10); return n<12?'manana':n<19?'tarde':'noche'; };
+const momentoOf = h => { if(!h) return ''; const n=parseInt(h,10); return n<12?'manana':n<19?'tarde':'noche'; };
+const hh = e => e.h?e.h+' h':'Horario por confirmar';
 const offOfDate = d => Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-T0)/864e5);
 const isoOf = o => { const d=dOf(o); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
 const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -1114,11 +1201,11 @@ function toggleSave(id,cb){ requireLogin(()=>{ const added=toggleIn(S.saved,id);
 /* ---------- Tarjeta de evento ---------- */
 function card(e){
   const d=dOf(e.off), c=CATS[e.cat], s=isSaved(e.id);
-  const tags=[...(e.src?[`<span class="tag" style="background:var(--accent-soft);color:var(--accent)">${e.src}</span>`]:[]),...(e.rec&&e.off>=0?['<span class="tag rec-t">Recomendado</span>']:[]),`<span class="tag ${e.price===0?'free':''}">${priceTxt(e.price)}</span>`, `<span class="tag">${e.mod==='linea'?'En línea':e.amb==='exterior'?'Exterior':'Interior'}</span>`, `<span class="tag">${MOMENTOS[momentoOf(e.h)]}</span>`];
+  const tags=[...(e.src?[`<span class="tag" style="background:var(--accent-soft);color:var(--accent)">${e.src}</span>`]:[]),...(e.rec&&e.off>=0?['<span class="tag rec-t">Recomendado</span>']:[]),`<span class="tag ${e.price===0?'free':''}">${priceTxt(e.price)}</span>`, `<span class="tag">${e.mod==='linea'?'En línea':e.amb==='exterior'?'Exterior':'Interior'}</span>`, ...(e.h?[`<span class="tag">${(MOMENTOS[momentoOf(e.h)]||"Horario por confirmar")}</span>`]:[])];
   let extra='';
   if(e.off<0){ const r=reviewsOf(e.id), a=avgOf(r); extra = a?`<span class="rating">${I.star.replace('<svg','<svg width="13" height="13"')} ${a.toFixed(1)} · ${r.length} reseñas</span>`:''; }
   return `<article class="ev" data-open="${e.id}" tabindex="0">
-    <div class="ev-img"><img src="${evImg(e)}" alt="" loading="lazy"><div class="ev-date"><span class="dow">${DOW[d.getDay()]}</span><span class="num">${d.getDate()}</span><span class="mon">${MES[d.getMonth()]}</span></div><span class="ev-hr">${e.h} h</span>
+    <div class="ev-img"><img src="${evImg(e)}" alt="" loading="lazy"><div class="ev-date"><span class="dow">${DOW[d.getDay()]}</span><span class="num">${d.getDate()}</span><span class="mon">${MES[d.getMonth()]}</span></div><span class="ev-hr">${hh(e)}</span>
     ${e.off>=0?`<button class="savebtn" data-save="${e.id}" aria-pressed="${s}" aria-label="${s?'Quitar de':'Agregar a'} Mi calendario">${s?I.bmf:I.bm}</button>`:''}</div>
     <div class="ev-body">${catDot(e.cat)}<div class="ev-cat">${c.n}</div><h3>${esc(e.t)}</h3><p class="ev-meta">${esc(e.venue)} · ${ZONAS[e.zona].n}</p>${extra}<div class="ev-tags">${tags.join('')}</div></div>
   </article>`;
@@ -1203,8 +1290,8 @@ function buildRows(){
   return rows.filter(r=>r.items.length>=3).slice(0,8).map(r=>({...r,items:r.top?r.items:r.items.sort((a,b)=>a.off-b.off||a.h.localeCompare(b.h)).slice(0,10)}));
 }
 function rowCard(e){ const s=isSaved(e.id);
-  return `<article class="rc" data-open="${e.id}" tabindex="0"><div class="rc-img"><img src="${evImg(e)}" alt="" loading="lazy"><span class="ev-hr">${e.h} h</span></div>
-    <div class="rc-b">${catDot(e.cat)}<b>${esc(e.t)}</b><small>${e.range&&e.off===0?'Todos los días':relDay(e.off)} · ${priceTxt(e.price)} · ${e.mod==='linea'?'En línea':ZONAS[e.zona].n}</small>
+  return `<article class="rc" data-open="${e.id}" tabindex="0"><div class="rc-img"><img src="${evImg(e)}" alt="" loading="lazy"><span class="ev-hr">${hh(e)}</span></div>
+    <div class="rc-b">${catDot(e.cat)}<b>${esc(e.t)}</b><small>${e.range&&e.off===0?(e.season?'En temporada':'Todos los días'):relDay(e.off)} · ${priceTxt(e.price)} · ${e.mod==='linea'?'En línea':ZONAS[e.zona].n}</small>
     <div class="qa"><button class="btn primary small" data-save="${e.id}">${s?'Agendado':'Agendar'}</button><button class="btn small" data-open="${e.id}">Ver</button></div></div></article>`; }
 function rowsHTML(){
   return buildRows().map((r,i)=>`<section class="rowsec"><div class="rh"><h3>${r.t}</h3><span>${r.s}</span></div>
@@ -1221,7 +1308,7 @@ function viewInicio(){
   HOME_CTX.forEach((c,i)=>slot('h'+i,c));
   const slides=top.map((e,i)=>`<div class="slide ${i===0?'on':''}" data-i="${i}" aria-hidden="${i!==0}">
       <img src="${evImg(e)}" alt="">
-      <div class="cap"><span class="kick">${relDay(e.off)} · ${e.h} h</span><h2>${esc(e.t)}</h2><p>${esc(e.venue)} · ${ZONAS[e.zona].n} · ${priceTxt(e.price)}</p>
+      <div class="cap"><span class="kick">${relDay(e.off)} · ${hh(e)}</span><h2>${esc(e.t)}</h2><p>${esc(e.venue)} · ${ZONAS[e.zona].n} · ${priceTxt(e.price)}</p>
       <div class="row"><button class="btn primary" data-open="${e.id}">Ver evento</button><button class="btn" data-save="${e.id}">${isSaved(e.id)?I.ok+'Agendado':I.cal+'Agendar'}</button></div></div></div>`).join('');
   return `<div class="wrap page" style="padding-top:28px">
     <section class="homehero"><div class="lead"><span class="script">Sal y únete a la movida</span><h1>Tus 3 planes para hoy</h1>
@@ -1449,13 +1536,13 @@ function viewCal(){
   const saved=S.saved.map(ev).filter(Boolean);
   const week=days.map(o=>{ const d=dOf(o), l=saved.filter(e=>e.off===o).sort((a,b)=>a.h.localeCompare(b.h));
     return `<div class="wday ${o===0?'today':''} ${o<0?'past':''}"><header><span>${DOW[d.getDay()]}</span><b>${d.getDate()}</b></header>
-      ${l.map(e=>`<button class="mini" style="--c:${CATS[e.cat].c}" data-open="${e.id}"><span>${e.h}</span><b>${esc(e.t)}</b></button>`).join('')}
+      ${l.map(e=>`<button class="mini" style="--c:${CATS[e.cat].c}" data-open="${e.id}"><span>${e.h||"—"}</span><b>${esc(e.t)}</b></button>`).join('')}
       ${l.length?'':`<span class="none">${o<0?'—':'Libre'}</span>`}</div>`; }).join('');
   const upcoming=saved.filter(e=>e.off>=0).sort((a,b)=>a.off-b.off||a.h.localeCompare(b.h));
   const toReview=saved.filter(e=>e.off<0&&!(S.reviews[e.id]||[]).some(r=>r.mine));
   const plans=S.plans.map((p,i)=>{ const es=p.ids.map(ev).filter(Boolean).sort((a,b)=>a.off-b.off||a.h.localeCompare(b.h));
     return `<div class="plan"><div class="row" style="justify-content:space-between"><b>${esc(p.name)}</b><button class="btn ghost small" data-delplan="${i}">Eliminar</button></div>
-    <ol>${es.map(e=>`<li>${relDay(e.off)}, ${e.h} · ${esc(e.t)}</li>`).join('')}</ol>
+    <ol>${es.map(e=>`<li>${relDay(e.off)}, ${e.h||"—"} · ${esc(e.t)}</li>`).join('')}</ol>
     <div class="row"><button class="btn small" data-shareplan="${i}">${I.share}Copiar para WhatsApp</button></div></div>`; }).join('');
   const maxWeek=Math.floor((MAXOFF+((dow+6)%7))/7);
   return `<div class="wrap page">
@@ -1472,7 +1559,7 @@ function viewCal(){
           ${plans||'<p style="margin:0;color:var(--muted);font-size:14px">Aún no tienes planes.</p>'}
           ${upcoming.length?`<details><summary class="linkish" style="cursor:pointer;list-style:none">+ Crear un plan</summary>
             <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px"><div class="field"><label for="planName">Nombre del plan</label><input class="inp" id="planName" placeholder="Ej. Cita del sábado"></div>
-            <div class="checklist">${upcoming.map(e=>`<label><input type="checkbox" value="${e.id}" class="planchk"> <span>${relDay(e.off)}, ${e.h} · ${esc(e.t)}</span></label>`).join('')}</div>
+            <div class="checklist">${upcoming.map(e=>`<label><input type="checkbox" value="${e.id}" class="planchk"> <span>${relDay(e.off)}, ${e.h||"—"} · ${esc(e.t)}</span></label>`).join('')}</div>
             <div class="err" id="planErr" hidden></div><button class="btn primary small" id="planSave" style="align-self:flex-start">Guardar plan</button></div></details>`:''}
         </div>
         ${toReview.length?`<div class="panel"><h3>¿Cómo te fue?</h3><p class="sub">Califica los eventos a los que fuiste. Tu opinión ayuda a otras personas a decidir.</p>${toReview.map(e=>`<div class="row" style="justify-content:space-between"><span style="font-size:14px">${esc(e.t)} <span style="color:var(--muted)">· ${relDay(e.off)}</span></span><button class="btn small" data-open="${e.id}">Calificar</button></div>`).join('')}</div>`:''}
@@ -1506,7 +1593,7 @@ function bindCal(){
   document.querySelectorAll('[data-fcat]').forEach(b=>b.onclick=()=>{toggleIn(S.followCats,b.dataset.fcat);persist();Object.keys(PS).forEach(k=>delete PS[k]);render();});
   document.querySelectorAll('[data-delplan]').forEach(b=>b.onclick=()=>{S.plans.splice(+b.dataset.delplan,1);persist();render();toast('Plan eliminado');});
   document.querySelectorAll('[data-shareplan]').forEach(b=>b.onclick=()=>{ const p=S.plans[+b.dataset.shareplan]; const es=p.ids.map(ev).filter(Boolean).sort((a,b)=>a.off-b.off||a.h.localeCompare(b.h));
-    copy(`${p.name}\n`+es.map(e=>`• ${relDay(e.off)} ${e.h} – ${e.t} (${e.venue})`).join('\n')+`\nVisto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); });
+    copy(`${p.name}\n`+es.map(e=>`• ${relDay(e.off)} ${e.h||"—"} – ${e.t} (${e.venue})`).join('\n')+`\nVisto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); });
   if(g('planSave')) g('planSave').onclick=()=>{ const n=g('planName').value.trim(), ids=[...document.querySelectorAll('.planchk:checked')].map(c=>c.value), er=g('planErr');
     if(!n||!ids.length){ er.hidden=false; er.textContent='Escribe un nombre y elige al menos un evento.'; return; }
     S.plans.push({id:crypto.randomUUID(),name:n,ids}); persist(); render(); toast('Plan guardado'); };
@@ -1524,7 +1611,7 @@ function monthGrid(saved){
     const o=startOff+i, d=dOf(o), inM=d.getMonth()===mon, l=saved.filter(e=>e.off===o).sort((a,b)=>a.h.localeCompare(b.h));
     cells+=`<div class="mday ${inM?'':'out'} ${o===0?'today':''} ${o<0?'past':''} ${calSel===o?'sel':''}" data-mday="${o}" tabindex="0" aria-label="${longDate(o)}, ${l.length} eventos">
       <span class="mnum">${d.getDate()}</span>
-      ${l.slice(0,3).map(e=>`<button class="mchip" style="--c:${CATS[e.cat].c}" data-open="${e.id}"><i></i><span>${e.h} ${esc(e.t)}</span></button>`).join('')}
+      ${l.slice(0,3).map(e=>`<button class="mchip" style="--c:${CATS[e.cat].c}" data-open="${e.id}"><i></i><span>${e.h||"—"} ${esc(e.t)}</span></button>`).join('')}
       ${l.length>3?`<span class="mmore">+${l.length-3} más</span>`:''}
       ${l.length?`<span class="mdots">${l.slice(0,4).map(e=>`<i style="background:${CATS[e.cat].c}"></i>`).join('')}</span>`:''}</div>`;
   }
@@ -1532,7 +1619,7 @@ function monthGrid(saved){
   if(calSel!=null){
     const l=saved.filter(e=>e.off===calSel).sort((a,b)=>a.h.localeCompare(b.h));
     detail=`<div class="panel mdetail"><div class="row" style="justify-content:space-between"><h3>${relDay(calSel)}${calSel>=0&&calSel<=1?', '+longDate(calSel):''}</h3>${calSel>=0&&calSel<=MAXOFF?'<button class="btn small" id="mSeeDay">Ver qué hay este día</button>':''}</div>
-      ${l.length?l.map(e=>`<button class="mini" style="--c:${CATS[e.cat].c}" data-open="${e.id}"><span>${e.h} · ${esc(e.venue)}</span><b>${esc(e.t)}</b></button>`).join(''):`<p style="margin:0;color:var(--muted);font-size:14px">No tienes eventos agendados este día.</p>`}</div>`;
+      ${l.length?l.map(e=>`<button class="mini" style="--c:${CATS[e.cat].c}" data-open="${e.id}"><span>${e.h||"—"} · ${esc(e.venue)}</span><b>${esc(e.t)}</b></button>`).join(''):`<p style="margin:0;color:var(--muted);font-size:14px">No tienes eventos agendados este día.</p>`}</div>`;
   }
   return `<div class="month"><div class="mhead">${['lun','mar','mié','jue','vie','sáb','dom'].map(x=>`<span>${x}</span>`).join('')}</div><div class="mgrid">${cells}</div></div>${detail}`;
 }
@@ -1552,13 +1639,13 @@ function viewAtr(){
   const list=ATR.filter(a=>!atrTipo||tipoOf(a)===atrTipo);
   return `<div class="wrap page"><div class="phead"><div><span class="script">Para cualquier día</span><h1>Atracciones de Monterrey y sus alrededores</h1><p>Museos, parques, montañas, paseos y Pueblos Mágicos para planear una salida sin depender de un horario.</p></div></div>
     <div class="chips" style="margin-bottom:16px"><button class="chip" data-tipo="" aria-pressed="${!atrTipo}">Todas</button>${Object.entries(TIPOS).map(([k,n])=>`<button class="chip" data-tipo="${k}" aria-pressed="${atrTipo===k}">${n}</button>`).join('')}</div>
-    <div class="note">Imágenes ilustrativas e información de ejemplo. Antes de publicar hay que poner fotos reales y verificar horarios y costos.</div>
+    <div class="note">Fotos de Wikimedia Commons con licencia libre (el crédito aparece en cada ficha). Verifica horarios y costos antes de ir.</div>
     <div class="atrgrid">${list.map(atrCard).join('')}</div></div>`;
 }
 function bindAtr(){ document.querySelectorAll('[data-tipo]').forEach(b=>b.onclick=()=>{atrTipo=b.dataset.tipo;render();}); }
 function openAtr(id){
   const a=ATR.find(x=>x.id===id), evs=EVENTS.filter(e=>e.place===id&&e.off>=0&&e.off<=MAXOFF);
-  openModal(`<figure class="mhero" style="margin:-22px -22px 0"><img src="${atrImg(a)}" alt=""><figcaption>Imagen ilustrativa</figcaption></figure>
+  openModal(`<figure class="mhero" style="margin:-22px -22px 0"><img src="${atrImg(a)}" alt="${esc(a.n)}"><figcaption>${atrCredit(a)}</figcaption></figure>
     <div class="dhead"><span class="eyebrow">${TIPOS[tipoOf(a)]} · ${ZONAS[a.zona].n}</span><h2>${esc(a.n)}</h2><p style="margin:0">${esc(a.d)}</p></div>
     <div class="facts">
       <div class="fact">${I.cal}<div><small>Horario</small>${esc(a.hor)}</div></div>
@@ -1673,12 +1760,12 @@ function eventHTML(e){
         :`<div class="panel" style="background:var(--sunk);border:0"><p style="margin:0;font-size:14px">Solo quienes agendaron este evento pueden calificarlo. Así evitamos reseñas falsas.</p></div>`)}
     </div>`;
   }
-  return `<figure class="mhero"><img src="${evImg(e)}" alt=""><figcaption>${e.img?'Foto: agenda FISL 2026':'Imagen ilustrativa'}</figcaption></figure>
+  return `<figure class="mhero"><img src="${evImg(e)}" alt=""><figcaption>${e.img?(e.fisl?'Foto: agenda FISL 2026':'Foto: '+esc(ORGS[e.org]?ORGS[e.org].n:'organizador')):'Imagen ilustrativa'}</figcaption></figure>
     <div class="dhead"><div class="ev-cat" style="font-size:13px;gap:10px">${catDot(e.cat)}${c.n}${past?' · Evento pasado':''}${e.rec&&!past?' · <b style="color:var(--accent)">Recomendado por Mty Movida</b>':''}</div><h2>${esc(e.t)}</h2></div>
     <div class="facts">
-      <div class="fact">${I.cal}<div><small>Fecha y hora</small>${e.range?e.range+' · '+e.h+' h':relDay(e.off)+(e.off>=0&&e.off<=1?', '+longDate(e.off):'')+' · '+e.h+' h'}</div></div>
+      <div class="fact">${I.cal}<div><small>Fecha y hora</small>${e.range?e.range+' · '+hh(e):relDay(e.off)+(e.off>=0&&e.off<=1?', '+longDate(e.off):'')+' · '+hh(e)}</div></div>
       <div class="fact">${I.pin}<div><small>${e.mod==='linea'?'Modalidad':'Lugar'}</small>${esc(e.venue)}${e.mod==='linea'?'':`<br>${ZONAS[e.zona].n}`}</div></div>
-      <div class="fact">${I.home}<div><small>Espacio</small>${e.mod==='linea'?'En línea':(e.amb==='exterior'?'Al aire libre':'Interior')} · ${MOMENTOS[momentoOf(e.h)]}</div></div>
+      <div class="fact">${I.home}<div><small>Espacio</small>${e.mod==='linea'?'En línea':(e.amb==='exterior'?'Al aire libre':'Interior')} · ${(MOMENTOS[momentoOf(e.h)]||"Horario por confirmar")}</div></div>
       <div class="fact">${I.money}<div><small>Precio</small>${priceTxt(e.price)}</div></div>
     </div>
     ${e.tags.length?`<div class="chips">${e.tags.map(t=>`<span class="tag">${EXTRAS[t]}</span>`).join('')}</div>`:''}
@@ -1702,7 +1789,7 @@ function bindEvent(e){
   const g=id=>document.getElementById(id);
   if(g('dSave')) g('dSave').onclick=()=>toggleSave(e.id,()=>{ reopen(e.id); render(); });
   if(g('dGoing')) g('dGoing').onclick=()=>requireLogin(()=>{ const a=toggleIn(S.going,e.id); if(a&&!isSaved(e.id)) S.saved.push(e.id); persist(); toast(a?'¡Qué bien! Lo agregamos a tu calendario':'Ya no aparece que vas'); reopen(e.id); render(); });
-  if(g('dShare')) g('dShare').onclick=()=>copy(`¿Vamos? ${e.t}\n${relDay(e.off)} ${e.h} h · ${e.venue}\nVisto en Mty Movida`,'Copiado. Pégalo en WhatsApp o donde quieras');
+  if(g('dShare')) g('dShare').onclick=()=>copy(`¿Vamos? ${e.t}\n${relDay(e.off)} ${hh(e)} · ${e.venue}\nVisto en Mty Movida`,'Copiado. Pégalo en WhatsApp o donde quieras');
   if(g('rpSend')) g('rpSend').onclick=()=>{ toast('Gracias. Revisaremos este evento.'); g('rpSend').closest('details').open=false; };
   if(g('rvAttend')) g('rvAttend').onclick=()=>requireLogin(()=>{ if(!isSaved(e.id)) S.saved.push(e.id); persist(); reopen(e.id); });
   const rating={};
