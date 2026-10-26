@@ -76,13 +76,13 @@ a{color:var(--accent)}
 .nav::-webkit-scrollbar{display:none}
 .nav a{white-space:nowrap;text-decoration:none;color:var(--brand-dim);font-weight:600;padding:8px 12px;border-radius:999px;font-size:14px}
 .nav a:hover{color:var(--on-brand);background:rgba(255,255,255,.14)}
-.nav a[aria-current="page"]{color:var(--on-brand);background:rgba(255,255,255,.22)}
+.nav a[aria-current="page"]{color:var(--lila-ink);background:var(--lila-bg)}
 .nav a.hoy{color:var(--lila-bg)}
 .nav a.hoy[aria-current="page"]{background:var(--lila-bg);color:var(--lila-ink)}
 .user-btn{flex:none;border:0;background:var(--lila-bg);color:var(--lila-ink);border-radius:999px;padding:6px 14px 6px 6px;display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
 .user-btn:hover{filter:brightness(1.05)}
 .avatar{width:28px;height:28px;border-radius:50%;background:var(--lila-ink);color:var(--lila-bg);display:grid;place-items:center;font-size:12px;font-weight:700}
-.burger{display:none;flex:none;width:42px;height:42px;border-radius:12px;border:0;background:var(--lila-bg);color:var(--lila-ink);place-items:center;padding:0}
+.burger{display:none;flex:none;width:42px;height:42px;border-radius:12px;border:0;background:rgba(255,255,255,.16);color:var(--on-brand);place-items:center;padding:0}
 .burger span{display:block;width:20px;height:2px;border-radius:2px;background:currentColor;position:relative;transition:background .2s}
 .burger span::before,.burger span::after{content:"";position:absolute;left:0;width:20px;height:2px;border-radius:2px;background:currentColor;transition:transform .2s}
 .burger span::before{top:-6px}.burger span::after{top:6px}
@@ -267,11 +267,15 @@ body.editing .pz.sel{outline:3px solid var(--accent)}
 .rowsec h3{font-family:var(--f-display);font-weight:700;font-size:clamp(18px,2.2vw,22px);letter-spacing:-.02em}
 .rowsec .rh span{color:var(--muted);font-size:13px}
 .rwrap{position:relative}
-.rscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:6px 2px 12px;scrollbar-width:none}
+.rscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-inline:2px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;padding:6px 2px 12px;scrollbar-width:none;cursor:grab}
+.rscroll.drag{cursor:grabbing;scroll-snap-type:none;user-select:none}
+.rscroll.drag .rc{pointer-events:none}
+.rc{contain:layout paint}
 .rscroll::-webkit-scrollbar{display:none}
 .rc{flex:0 0 228px;scroll-snap-align:start;background:var(--surface);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;display:flex;flex-direction:column}
 .rc:hover,.rc:focus-within{transform:translateY(-4px) scale(1.03);box-shadow:0 14px 34px rgba(30,23,20,.16)}
 @media (prefers-reduced-motion:reduce){.rc,.rc:hover{transition:none;transform:none}}
+@media (hover:none){.rc:hover,.rc:focus-within{transform:none;box-shadow:var(--shadow)}}
 .rc-img{position:relative;aspect-ratio:16/10;max-width:100%}
 .rc-img img{width:100%;height:100%;object-fit:cover;display:block}
 .rc-img .ev-hr{right:8px;bottom:8px}
@@ -348,7 +352,7 @@ textarea.inp{resize:vertical;min-height:90px}
 .empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
 
 
-/* ¿Qué hago? */
+/* ¿Qué plan? */
 .hoycard h1 .dia{font-family:var(--f-script);font-weight:700;color:var(--lila-bg);font-size:1.12em;letter-spacing:0}
 .daytabs{display:flex;flex-wrap:wrap;gap:6px;position:relative}
 .daytabs button{border:0;border-radius:999px;padding:8px 14px;font-weight:700;font-size:14px;background:rgba(255,255,255,.16);color:var(--on-brand)}
@@ -375,6 +379,21 @@ a.stat{text-decoration:none}
   .plans3 .pc .chg{margin-top:6px}
   .plans3 .alts{padding:10px}
 }
+
+
+/* Tarjetas de evento compactas (foto a un lado) */
+.evgrid{grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+@media (max-width:640px){.evgrid{grid-template-columns:minmax(0,1fr);gap:10px}}
+.ev{display:grid;grid-template-columns:112px minmax(0,1fr);border-radius:16px}
+.ev-img{aspect-ratio:auto;height:100%;min-height:126px}
+.ev-cattag{position:absolute;left:6px;top:6px;background:var(--cc);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;max-width:calc(100% - 12px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev .savebtn{top:auto;bottom:6px;right:6px;padding:6px}
+.ev .savebtn svg{width:16px;height:16px}
+.ev-body{padding:10px 12px;gap:2px}
+.ev-when{font-family:var(--f-mono);font-size:12px;font-weight:700;color:var(--accent)}
+.ev-when .free-t{color:var(--green)}
+.ev h3{font-size:16px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ev-tags{padding-top:4px}
 
 /* Mapa */
 .mapbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;overflow-x:auto}
@@ -556,7 +575,7 @@ form.card .full{grid-column:1/-1}
     </button>
     <nav class="nav" id="mainNav" aria-label="Secciones">
       <a href="#inicio" data-view="inicio">Inicio</a>
-      <a href="#plan" data-view="plan" class="hoy">¿Qué hago?</a>
+      <a href="#plan" data-view="plan" class="hoy">¿Qué plan?</a>
       <a href="#eventos" data-view="eventos">Eventos</a>
       <a href="#calendario" data-view="calendario">Mi calendario</a>
       <a href="#atracciones" data-view="atracciones">Atracciones</a>
@@ -1215,13 +1234,14 @@ function toggleSave(id,cb){ requireLogin(()=>{ const added=toggleIn(S.saved,id);
 /* ---------- Tarjeta de evento ---------- */
 function card(e){
   const d=dOf(e.off), c=CATS[e.cat], s=isSaved(e.id);
-  const tags=[...(e.src?[`<span class="tag" style="background:var(--accent-soft);color:var(--accent)">${e.src}</span>`]:[]),...(e.rec&&e.off>=0?['<span class="tag rec-t">Recomendado</span>']:[]),`<span class="tag ${e.price===0?'free':''}">${priceTxt(e.price)}</span>`, `<span class="tag">${e.mod==='linea'?'En línea':e.amb==='exterior'?'Exterior':'Interior'}</span>`, ...(e.h?[`<span class="tag">${(MOMENTOS[momentoOf(e.h)]||"Horario por confirmar")}</span>`]:[])];
+  const cuando=e.range&&e.off===0?(e.season?'En temporada':e.range):e.off===0?'Hoy':e.off===1?'Mañana':`${DOW[d.getDay()]} ${d.getDate()} ${MES[d.getMonth()]}`;
+  const tags=[...(e.src?[`<span class="tag" style="background:var(--accent-soft);color:var(--accent)">${e.src}</span>`]:[]),...(e.rec&&e.off>=0?['<span class="tag rec-t">Recomendado</span>']:[]),`<span class="tag">${e.mod==='linea'?'En línea':e.amb==='exterior'?'Exterior':'Interior'}</span>`];
   let extra='';
   if(e.off<0){ const r=reviewsOf(e.id), a=avgOf(r); extra = a?`<span class="rating">${I.star.replace('<svg','<svg width="13" height="13"')} ${a.toFixed(1)} · ${r.length} reseñas</span>`:''; }
   return `<article class="ev" data-open="${e.id}" tabindex="0">
-    <div class="ev-img"><img src="${evImg(e)}" alt=""${fitAttr(e)} loading="lazy"><div class="ev-date"><span class="dow">${DOW[d.getDay()]}</span><span class="num">${d.getDate()}</span><span class="mon">${MES[d.getMonth()]}</span></div><span class="ev-hr">${hh(e)}</span>
+    <div class="ev-img"><img src="${evImg(e)}" alt=""${fitAttr(e)} loading="lazy" decoding="async"><span class="ev-cattag" style="--cc:${c.c}">${c.n}</span>
     ${e.off>=0?`<button class="savebtn" data-save="${e.id}" aria-pressed="${s}" aria-label="${s?'Quitar de':'Agregar a'} Mi calendario">${s?I.bmf:I.bm}</button>`:''}</div>
-    <div class="ev-body">${catDot(e.cat)}<div class="ev-cat">${c.n}</div><h3>${esc(e.t)}</h3><p class="ev-meta">${esc(e.venue)} · ${ZONAS[e.zona].n}</p>${extra}<div class="ev-tags">${tags.join('')}</div></div>
+    <div class="ev-body"><span class="ev-when">${cuando} · ${hh(e)} · <span class="${e.price===0?'free-t':''}">${priceTxt(e.price)}</span></span><h3>${esc(e.t)}</h3><p class="ev-meta">${esc(e.venue)}${e.mod==='linea'?'':' · '+ZONAS[e.zona].n}</p>${extra}<div class="ev-tags">${tags.join('')}</div></div>
   </article>`;
 }
 
@@ -1304,7 +1324,7 @@ function buildRows(){
   return rows.filter(r=>r.items.length>=3).slice(0,8).map(r=>({...r,items:r.top?r.items:r.items.sort((a,b)=>a.off-b.off||a.h.localeCompare(b.h)).slice(0,10)}));
 }
 function rowCard(e){ const s=isSaved(e.id);
-  return `<article class="rc" data-open="${e.id}" tabindex="0"><div class="rc-img"><img src="${evImg(e)}" alt=""${fitAttr(e)} loading="lazy"><span class="ev-hr">${hh(e)}</span></div>
+  return `<article class="rc" data-open="${e.id}" tabindex="0"><div class="rc-img"><img src="${evImg(e)}" alt=""${fitAttr(e)} loading="lazy" decoding="async"><span class="ev-hr">${hh(e)}</span></div>
     <div class="rc-b">${catDot(e.cat)}<b>${esc(e.t)}</b><small>${e.range&&e.off===0?(e.season?'En temporada':'Todos los días'):relDay(e.off)} · ${priceTxt(e.price)} · ${e.mod==='linea'?'En línea':ZONAS[e.zona].n}</small>
     <div class="qa"><button class="btn primary small" data-save="${e.id}">${s?'Agendado':'Agendar'}</button><button class="btn small" data-open="${e.id}">Ver</button></div></div></article>`; }
 function rowsHTML(){
@@ -1313,7 +1333,24 @@ function rowsHTML(){
     <div class="rscroll" id="rs${i}">${r.items.map((e,k)=>r.top?`<div class="rtop"><span class="n">${k+1}</span>${rowCard(e)}</div>`:rowCard(e)).join('')}</div>
     <button class="rarrow r" data-rs="${i}" data-dir="1" aria-label="Siguiente">${I.right}</button></div></section>`).join('');
 }
-function bindRows(){ document.querySelectorAll('[data-rs]').forEach(b=>b.onclick=()=>{ const el=document.getElementById('rs'+b.dataset.rs); el.scrollBy({left:+b.dataset.dir*el.clientWidth*.85,behavior:'smooth'}); }); }
+function bindRows(){
+  document.querySelectorAll('[data-rs]').forEach(b=>b.onclick=()=>{ const el=document.getElementById('rs'+b.dataset.rs); el.scrollBy({left:+b.dataset.dir*el.clientWidth*.85,behavior:'smooth'}); });
+  // Con el mouse: arrastrar y soltar con impulso (en el celular se usa el deslizamiento natural)
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.rscroll').forEach(el=>{
+    let down=false, moved=false, x0=0, s0=0, lastX=0, lastT=0, v=0, raf=0;
+    el.addEventListener('pointerdown',ev=>{ if(ev.pointerType!=='mouse'||ev.button!==0) return; cancelAnimationFrame(raf); down=true; moved=false; x0=lastX=ev.clientX; s0=el.scrollLeft; lastT=performance.now(); v=0; try{ el.setPointerCapture(ev.pointerId); }catch(e){} });
+    el.addEventListener('pointermove',ev=>{ if(!down) return; const dx=ev.clientX-x0; if(!moved&&Math.abs(dx)>5){ moved=true; el.classList.add('drag'); }
+      if(moved){ el.scrollLeft=s0-dx; const t=performance.now(); v=(ev.clientX-lastX)/Math.max(1,t-lastT); lastX=ev.clientX; lastT=t; } });
+    const up=()=>{ if(!down) return; down=false; if(!moved) return;
+      const fin=()=>setTimeout(()=>el.classList.remove('drag'),0);
+      if(reduce) return fin(); let vel=-v*16;
+      const step=()=>{ vel*=0.94; el.scrollLeft+=vel; if(Math.abs(vel)>0.4) raf=requestAnimationFrame(step); else fin(); };
+      raf=requestAnimationFrame(step); };
+    el.addEventListener('pointerup',up); el.addEventListener('pointercancel',up);
+    el.addEventListener('click',ev=>{ if(moved){ ev.stopPropagation(); ev.preventDefault(); moved=false; } },true);
+  });
+}
 
 /* ---------- Vista: Inicio ---------- */
 function topWeek(){ return EVENTS.filter(e=>e.off>=0&&e.off<=6).sort((a,b)=>b.going-a.going).slice(0,6); }
@@ -1367,7 +1404,7 @@ function quick(q){ clearFiltersSilent();
   if(q==='hoy') F.cuando='hoy'; if(q==='gratis'){F.cuando='hoy';F.precio='gratis';} if(q==='exterior'){F.cuando='hoy';F.amb.add('exterior');} if(q==='finde') F.cuando='finde'; if(q==='mes') F.cuando='todo';
   go('eventos'); }
 
-/* ---------- Vista: ¿Qué hago? (Ármame un plan + lo que hay ese día) ---------- */
+/* ---------- Vista: ¿Qué plan? (Ármame un plan + lo que hay ese día) ---------- */
 const DIA_TXT={hoy:'hoy',manana:'mañana',finde:'este fin',semana:'esta semana'};
 const DIA_TABS={hoy:'Hoy',manana:'Mañana',finde:'Este fin',semana:'Esta semana'};
 function viewPlan(){
@@ -1391,7 +1428,7 @@ function viewPlan(){
   return `<div class="wrap page">
     <div class="hoyhero">
       <div class="hoycard">${SILLA}<span class="eyebrow" style="color:inherit;opacity:.8">${PA.cuando==='hoy'?longDate(0):PA.cuando==='manana'?longDate(1):'Elige el día'}</span>
-        <h1>¿Qué hago <span class="dia">${dia}</span>?</h1>
+        <h1>¿Qué plan <span class="dia">${dia}</span>?</h1>
         <div class="daytabs" role="group" aria-label="¿Para cuándo?">${Object.entries(DIA_TABS).map(([k,v])=>`<button data-pa="cuando" data-v="${k}" aria-pressed="${PA.cuando===k}">${v}</button>`).join('')}</div>
         <p>${list.length?`Hay ${list.length} eventos ${dia}.`:`No hay eventos registrados para ${dia}.`} Dinos tu mood y te armamos un plan, o deja que la página elija por ti.</p>
         <button class="btn lila" id="surprise">${I.dice}Sorpréndeme</button></div>
@@ -1533,7 +1570,7 @@ function clearFiltersSilent(){ F.q='';F.cats.clear();F.mom.clear();F.amb.clear()
 function hoyBlock(){
   const today=EVENTS.filter(e=>e.off===0), free=today.filter(e=>e.price===0).length, outdoor=today.filter(e=>e.amb==='exterior').length;
   const fin=EVENTS.filter(e=>{const o=e.off,d=dOf(o).getDay();return o>=0&&o<=6&&(d===0||d===6);}).length;
-  return `<div class="sechead"><h2>¿Qué hago hoy?</h2><a class="btn small" href="#hoy">Ver todo lo de hoy y armar un plan</a></div>
+  return `<div class="sechead"><h2>¿Qué plan hoy?</h2><a class="btn small" href="#hoy">Ver todo lo de hoy y armar un plan</a></div>
     <div class="hoystats hs4">
         <button class="stat" data-quick="hoy"><b>${today.length}</b><span>eventos hoy</span></button>
         <button class="stat" data-quick="gratis"><b>${free}</b><span>gratis hoy</span></button>
