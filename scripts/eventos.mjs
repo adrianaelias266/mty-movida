@@ -27,8 +27,8 @@ async function paginasDe(f) {
   if (f.paginas && f.enlaces) {      // páginas con la lista de eventos: se siguen los enlaces a cada evento
     const urls = [];
     for (const p of f.paginas) {
-      const html = await traer(p); if (!html) continue;
-      for (const m of html.matchAll(/href="([^"#?]+)/g)) if (f.enlaces.test(m[1])) urls.push(new URL(m[1], p).href);
+      const html = await traer(p); if (!html) { console.log(`::warning::${f.nombre}: no se pudo abrir ${p}`); continue; }
+      for (const m of html.matchAll(/(?:href=")?(https?:\/\/[^"'\s<>#?\\]+)/g)) if (f.enlaces.test(m[1])) urls.push(m[1]);
     }
     return [...new Set(urls)].slice(0, MAX_PAGINAS);
   }
@@ -136,14 +136,18 @@ async function filasPrimeTickets(f) {
 }
 
 async function guardar(filas) {
-  if (!filas.length) return 0;
-  const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados?on_conflict=fuente_url`, {
-    method: 'POST',
-    headers: { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}`, 'content-type': 'application/json', prefer: 'resolution=ignore-duplicates,return=minimal' },
-    body: JSON.stringify(filas),
-  });
-  if (!r.ok) throw new Error(`Supabase respondió ${r.status}: ${await r.text()}`);
-  return filas.length;
+  // Se envía uno por uno: si ya existe (misma dirección), Supabase responde 409 y se ignora
+  let nuevos = 0;
+  for (const fila of filas) {
+    const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados`, {
+      method: 'POST',
+      headers: { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}`, 'content-type': 'application/json', prefer: 'return=minimal' },
+      body: JSON.stringify(fila),
+    });
+    if (r.ok) nuevos++;
+    else if (r.status !== 409) throw new Error(`Supabase respondió ${r.status}: ${await r.text()}`);
+  }
+  return nuevos;
 }
 
 let total = 0, fallas = 0;
@@ -152,7 +156,7 @@ for (const f of FUENTES) {
   if (f.lector === 'primetickets') {
     const filas = await filasPrimeTickets(f);
     const n = await guardar(filas);
-    console.log(`::notice::${f.nombre}: ${n} obras enviadas a revisión (las repetidas se ignoran)`);
+    console.log(`::notice::${f.nombre}: ${n} obras nuevas enviadas a revisión`);
     total += n; continue;
   }
   const paginas = await paginasDe(f);
@@ -183,7 +187,7 @@ for (const f of FUENTES) {
     }
   }
   const n = await guardar([...new Map(filas.map(x => [x.fuente_url, x])).values()]);
-  console.log(`::notice::${f.nombre}: ${paginas.length} páginas revisadas, ${n} eventos enviados a revisión (los repetidos se ignoran)`);
+  console.log(`::notice::${f.nombre}: ${paginas.length} páginas revisadas, ${n} eventos nuevos enviados a revisión`);
   total += n;
  } catch (err) {
   fallas++;
