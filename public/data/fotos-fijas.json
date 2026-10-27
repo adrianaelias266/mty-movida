@@ -261,8 +261,6 @@
  },
  "ft1": null,
  "fo3": null,
- "atr:mune": null,
- "atr:palacio": null,
  "atr:obispado": {
   "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Museo_Regional_de_Nuevo_Le%C3%B3n_%28_El_Obispado_%29_08.jpg/960px-Museo_Regional_de_Nuevo_Le%C3%B3n_%28_El_Obispado_%29_08.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
   "credito": {
@@ -281,14 +279,9 @@
    "fuente": "Wikimedia Commons"
   }
  },
- "atr:culturaspop": null,
  "atr:vidrio": null,
  "atr:autos": null,
- "atr:estaciongolfo": null,
  "atr:ciencias": null,
- "atr:colegiocivil": null,
- "atr:papalote": null,
- "atr:ninosconarte": null,
  "atr:milarca": null,
  "atr:antiguosmex": null,
  "atr:museoguadalupe": null,
@@ -296,7 +289,6 @@
  "atr:museoescobedo": null,
  "atr:blanqueo": null,
  "atr:museosantiago": null,
- "atr:museolinares": null,
  "atr:pilon": null,
  "atr:memoriaviva": null,
  "atr:cosassimples": null,
