@@ -2149,8 +2149,8 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!document.getEleme
 
 /* ---------- Clima real (pronóstico consultado el 25 de octubre de 2026 para Monterrey) ---------- */
 let WX={updated:null,days:{}};
-fetch('data/fotos-fijas.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(!d) return; let n=0; EVENTS.forEach(e=>{ const f=d[e.id]; if(f&&!e.img){ e.img=f.foto; e.credit=f.credito; n++; } }); ATR.forEach(a=>{ const f=d['atr:'+a.id]; if(f&&!ATR_FOTO[a.id]){ a.img=f.foto; a.credit=f.credito; n++; } }); if(n&&typeof render==='function') render(); }).catch(()=>{});
-fetch('data/fama-fijas.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(!d) return; EVENTS.forEach(e=>{ if(d[e.id]) e.fama=d[e.id]; }); if(typeof render==='function'&&/^#?(inicio)?$/.test(location.hash)) render(); }).catch(()=>{});
+fetch('data/fotos-fijas.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(!d) return; let n=0; [...EVENTS,...Object.values(SES)].forEach(e=>{ const f=d[e.id]; if(f&&!e.img){ e.img=f.foto; e.credit=f.credito; n++; } }); ATR.forEach(a=>{ const f=d['atr:'+a.id]; if(f&&!ATR_FOTO[a.id]){ a.img=f.foto; a.credit=f.credito; n++; } }); if(n&&typeof render==='function') render(); }).catch(()=>{});
+fetch('data/fama-fijas.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(!d) return; [...EVENTS,...Object.values(SES)].forEach(e=>{ if(d[e.id]) e.fama=d[e.id]; }); if(typeof render==='function'&&/^#?(inicio)?$/.test(location.hash)) render(); }).catch(()=>{});
 fetch('data/clima.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(d&&d.days){ WX=d; if(typeof render==='function') render(); } }).catch(()=>{});
 function fmtUpd(iso){ const d=new Date(iso); return isNaN(d)?'':`el ${d.getDate()} de ${MESL[d.getMonth()]}`; }
 function weather(e){

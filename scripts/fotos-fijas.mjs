@@ -16,8 +16,8 @@ const tipos = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'applic
 const srv = createServer((q, r) => { const f = join('public', decodeURIComponent(q.url.split('?')[0]).replace(/\/$/, '/index.html')); if (!existsSync(f)) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'content-type': tipos[extname(f)] || 'application/octet-stream' }); r.end(readFileSync(f)); }).listen(8099);
 const nav = await chromium.launch({ channel: 'chrome' }).catch(() => chromium.launch()); const p = await nav.newPage();
 await p.goto('http://localhost:8099/', { waitUntil: 'domcontentloaded' }); await p.waitForTimeout(2500);
-const lista = await p.evaluate(() => EVENTS.filter(e => (!e.img || e.credit) && !String(e.id).startsWith('db-')).map(e => ({ id: e.id, t: e.t, cat: e.cat, venue: e.venue })));
-const musicales = await p.evaluate(() => EVENTS.filter(e => !String(e.id).startsWith('db-') && ['concierto', 'musica', 'teatro', 'danza'].includes(e.cat)).map(e => ({ id: e.id, t: e.t })));
+const lista = await p.evaluate(() => [...EVENTS, ...Object.values(typeof SES !== 'undefined' ? SES : {})].filter(e => (!e.img || e.credit) && !String(e.id).startsWith('db-')).map(e => ({ id: e.id, t: e.t, cat: e.cat, venue: e.venue })));
+const musicales = await p.evaluate(() => [...EVENTS, ...Object.values(typeof SES !== 'undefined' ? SES : {})].filter(e => !String(e.id).startsWith('db-') && ['concierto', 'musica', 'teatro', 'danza'].includes(e.cat)).map(e => ({ id: e.id, t: e.t })));
 const atracciones = await p.evaluate(() => ATR.filter(a => !ATR_FOTO[a.id]).map(a => ({ id: 'atr:' + a.id, n: a.n })));
 await nav.close(); srv.close();
 const salida = { _reglas: REGLAS }; let nuevas = 0;
