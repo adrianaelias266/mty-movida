@@ -1,6 +1,8 @@
 {
   // Configuración para Cloudflare: publica la carpeta "public" como sitio
+  // y usa worker.js solo para lo que no es un archivo (por ejemplo, /cal/<id>.ics)
   "name": "mty-movida",
   "compatibility_date": "2026-10-01",
-  "assets": { "directory": "./public" }
+  "main": "worker.js",
+  "assets": { "directory": "./public", "binding": "ASSETS" }
 }

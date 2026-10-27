@@ -641,6 +641,8 @@ a.stat{text-decoration:none}
 .solimg img{width:100%;border-radius:12px;display:block}.solimg span{display:grid;place-items:center;height:120px;border-radius:12px;background:var(--sunk);color:var(--muted);font-size:13px}
 .solb{display:flex;flex-direction:column;gap:8px;min-width:0}.solb h3{margin:0;font-family:var(--f-display);font-size:20px}.solb p{margin:0}.solm{font-size:13.5px;color:var(--muted)}
 .solf{display:flex;flex-direction:column;gap:10px}.solf label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;color:var(--muted)}.sol2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.calbtns{display:flex;flex-direction:column;gap:8px}.calbtns .btn{justify-content:center}
+.calmas summary{cursor:pointer;font-size:14px;font-weight:600}
 .merlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px}
 .merrow{display:flex;gap:10px;align-items:flex-start;text-align:left;background:var(--surface);border:0;border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);font:inherit;color:inherit;cursor:pointer}
 .merrow b{display:block;font-size:14.5px}.merrow small{color:var(--muted);font-size:12.5px}
@@ -1377,7 +1379,7 @@ const KEY='mtymovida-v1';
 let S0 = {user:null,saved:[],going:[],follows:[],followCats:[],prefZonas:[],prefMom:[],onboarded:false,reviews:{},plans:[],prefs:{reminders:true,weekly:false}};
 let S=JSON.parse(JSON.stringify(S0)); try{ const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(S,JSON.parse(raw)); }catch(e){}
 S.follows=(S.follows||[]).filter(o=>ORGS[o]);
-const persist = () => { try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} if(typeof syncCloud==='function') syncCloud(); };
+const persist = () => { try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} if(typeof syncCloud==='function') syncCloud(); if(typeof programarCalendario==='function') programarCalendario(); };
 const F = {all:false,q:'',cats:new Set(),mom:new Set(),amb:new Set(),mod:new Set(),extras:new Set(),zona:'',precio:'',cuando:'todo',fecha:'',vista:'lista',open:false};
 let weekOff=0, calView='semana', monthOff=0, calSel=null, pendingAfterLogin=null, heroTimer=null;
 const SES={};   // funciones extra de eventos con varias fechas (no aparecen en las listas)
@@ -2314,7 +2316,7 @@ function viewCal(){
       <div class="calnavrow ${calView==='mes'?'center':''}">${calView==='mes'?monthNav():`<div class="calnav"><button class="iconbtn" id="wPrev" aria-label="Semana anterior" ${weekOff<=-2?'disabled':''}>${I.left}</button><b>${weekOff===0?'Esta semana · ':''}${range}</b><button class="iconbtn" id="wNext" aria-label="Semana siguiente" ${weekOff>=maxWeek?'disabled':''}>${I.right}</button></div>
       ${weekOff!==0?'<button class="btn small" id="wNow">Volver a esta semana</button>':''}`}</div></div>
     ${calView==='mes'?monthGrid(saved):week}
-    <div class="gcalrow"><button class="btn lila" id="gcal">${I.cal}Conectar con Google Calendar</button><span>Para ver tus eventos agendados también en tu celular o en Outlook.</span></div>
+    <div class="gcalrow"><button class="btn lila" id="gcal">${I.cal}Conectar con mi calendario</button><span>Para ver lo que agendas también en Google Calendar, Outlook o tu iPhone.</span></div>
     ${!saved.length?`<div class="empty" style="margin-bottom:24px"><b>Tu calendario está vacío</b>Toca el ícono de guardar en cualquier evento para agregarlo aquí.<div style="margin-top:12px"><a class="btn small" href="#eventos">Ver eventos</a></div></div>`:''}
     <div class="calcols">
       <div style="display:flex;flex-direction:column;gap:20px">
@@ -2395,13 +2397,57 @@ function monthGrid(saved){
     <div class="subhead" style="margin-top:22px"><h2>Tus planes del mes</h2><span>${delMes.length} ${delMes.length===1?'evento':'eventos'}</span></div>
     ${calList(delMes,'este mes')}`;
 }
+/* ---------- Calendario para Google, Outlook y iPhone ----------
+   Cada persona tiene un archivo de calendario (formato .ics) con lo que agendó. Se guarda en Supabase cada que agenda algo
+   y se publica en mtymovida.com/cal/<su id>.ics. Google, Outlook y el iPhone lo consultan solos cada cierto tiempo. */
+const calUrl=()=>S.user?`https://mtymovida.com/cal/${S.user.id}.ics`:'';
+function icsTexto(){
+  const escI=t=>String(t||'').replace(/\\/g,'\\\\').replace(/;/g,'\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n');
+  const doblar=l=>{ const out=[]; while(l.length>74){ out.push(l.slice(0,74)); l=' '+l.slice(74); } out.push(l); return out.join('\r\n'); };
+  const f2=n=>String(n).padStart(2,'0'), ymd=d=>`${d.getFullYear()}${f2(d.getMonth()+1)}${f2(d.getDate())}`;
+  const utc=d=>`${d.getUTCFullYear()}${f2(d.getUTCMonth()+1)}${f2(d.getUTCDate())}T${f2(d.getUTCHours())}${f2(d.getUTCMinutes())}00Z`;
+  const ahora=utc(new Date()), L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Mty Movida//Mi calendario//ES','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:Mty Movida','X-WR-TIMEZONE:America/Monterrey','REFRESH-INTERVAL;VALUE=DURATION:PT4H','X-PUBLISHED-TTL:PT4H'];
+  [...new Set(S.saved)].map(ev).filter(Boolean).forEach(e=>{
+    const d=dOf(e.off); if(isNaN(d)) return;
+    L.push('BEGIN:VEVENT',`UID:${String(e.id).replace(/[^\w~-]/g,'')}@mtymovida.com`,`DTSTAMP:${ahora}`);
+    const m=String(e.h||'').match(/^(\d{1,2}):(\d{2})/);
+    if(m&&!e.range){ const ini=new Date(d.getFullYear(),d.getMonth(),d.getDate(),+m[1],+m[2]); // Monterrey: UTC-6 todo el año
+      const a=new Date(Date.UTC(ini.getFullYear(),ini.getMonth(),ini.getDate(),ini.getHours()+6,ini.getMinutes()));
+      L.push(`DTSTART:${utc(a)}`,`DTEND:${utc(new Date(a.getTime()+2*36e5))}`); }
+    else { const fin=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1); L.push(`DTSTART;VALUE=DATE:${ymd(d)}`,`DTEND;VALUE=DATE:${ymd(fin)}`); }
+    const lugar=e.mod==='linea'?'En línea':[e.venue,ZONAS[e.zona]?.n,'Nuevo León'].filter(Boolean).join(', ');
+    L.push(`SUMMARY:${escI(e.t)}`,`LOCATION:${escI(lugar)}`,`DESCRIPTION:${escI([e.desc&&String(e.desc).slice(0,600),e.price===0?'Gratis':e.price!=null?'Desde $'+e.price:'',e.url?'Boletos e información: '+e.url:'','Visto en Mty Movida: https://mtymovida.com'].filter(Boolean).join('\n\n'))}`);
+    if(e.url) L.push(`URL:${e.url}`);
+    L.push('END:VEVENT'); });
+  L.push('END:VCALENDAR'); return L.map(doblar).join('\r\n')+'\r\n';
+}
+let CAL_T=null, CAL_OK=null;
+function programarCalendario(){ clearTimeout(CAL_T); CAL_T=setTimeout(subirCalendario,1500); }
+async function subirCalendario(){
+  if(!sb||!S.user) return false;
+  try{ const r=await sb.storage.from('calendarios').upload(`${S.user.id}.ics`,new Blob([icsTexto()],{type:'text/calendar'}),{upsert:true,contentType:'text/calendar',cacheControl:'60'});
+    CAL_OK=!r.error; if(r.error) console.warn('Calendario:',r.error.message); return CAL_OK; }catch(e){ CAL_OK=false; return false; }
+}
 function openGcal(){
-  const slug=(S.user?.name||'usuario').toLowerCase().normalize('NFD').replace(/[^a-z]/g,'').slice(0,10);
-  const url=`https://mtymovida.mx/cal/${slug}-7f3k.ics`;
-  openModal(`<div class="dhead plain-top"><span class="eyebrow">Google Calendar</span><h2>Conecta tu calendario</h2><p style="margin:0;color:var(--muted)">Con este enlace, los eventos que agendes aquí aparecen solos en Google Calendar. También funciona con el calendario del iPhone y Outlook.</p></div>
-    <div class="copyline"><span>${url}</span><button class="btn small" id="cpCal">Copiar</button></div>
-    <div><div class="section-t" style="margin-bottom:8px">En Google Calendar (computadora)</div><ol class="steps"><li>Abre Google Calendar y, en el panel izquierdo, junto a "Otros calendarios", toca el signo +.</li><li>Elige "Desde URL" y pega el enlace.</li><li>Toca "Agregar calendario". Tus eventos se actualizan automáticamente.</li></ol></div>
-    <p style="margin:0;font-size:12px;color:var(--muted)">Próximamente: esta conexión todavía está en preparación.</p>`,()=>{ document.getElementById('cpCal').onclick=()=>copy(url,'Enlace copiado'); });
+  if(!S.user) return requireLogin(openGcal);
+  const url=calUrl(), web=url.replace(/^https:/,'webcal:');
+  const google='https://calendar.google.com/calendar/render?cid='+encodeURIComponent(web);
+  const outlook='https://outlook.live.com/calendar/0/addfromweb?url='+encodeURIComponent(url)+'&name='+encodeURIComponent('Mty Movida');
+  const office='https://outlook.office.com/calendar/0/addfromweb?url='+encodeURIComponent(url)+'&name='+encodeURIComponent('Mty Movida');
+  openModal(`<div class="dhead plain-top"><span class="eyebrow">Mi calendario</span><h2>Conecta tu calendario</h2><p style="margin:0;color:var(--muted)">Elige tu calendario y confirma. Desde ese momento, lo que agendes en Mty Movida aparece ahí solo, también en tu celular.</p></div>
+    <div class="calbtns">
+      <a class="btn primary" href="${google}" target="_blank" rel="noopener">${I.cal}Google Calendar</a>
+      <a class="btn" href="${outlook}" target="_blank" rel="noopener">${I.cal}Outlook (Hotmail, Outlook.com)</a>
+      <a class="btn" href="${office}" target="_blank" rel="noopener">${I.cal}Outlook del trabajo o escuela</a>
+      <a class="btn" href="${web}">${I.cal}iPhone, iPad o Mac</a>
+    </div>
+    <p id="calEstado" style="margin:0;font-size:13px;color:var(--muted)">Preparando tu calendario…</p>
+    <details class="calmas"><summary>¿Otro calendario? Copia el enlace</summary><div class="copyline"><span>${esc(url)}</span><button class="btn small" id="cpCal">Copiar</button></div>
+      <p style="margin:6px 0 0;font-size:13px;color:var(--muted)">En tu aplicación de calendario busca "Agregar calendario desde URL" o "Suscribirse" y pega el enlace.</p></details>
+    <p style="margin:0;font-size:12px;color:var(--muted)">Google y Outlook revisan tu calendario cada pocas horas, así que un evento recién agendado puede tardar un poco en aparecer allá. Si quitas un evento aquí, también se quita allá.</p>`,()=>{
+      document.getElementById('cpCal').onclick=()=>copy(url,'Enlace copiado');
+      subirCalendario().then(ok=>{ const el=document.getElementById('calEstado'); if(el) el.textContent=ok?`Listo: tu calendario tiene ${new Set(S.saved).size} ${new Set(S.saved).size===1?'evento':'eventos'}.`:'No pudimos preparar tu calendario. Intenta de nuevo en un momento.'; });
+    });
 }
 
 /* ---------- Vista: Atracciones ---------- */
@@ -2768,7 +2814,7 @@ async function loadCloud(session){
   await loadReviews();
   Object.keys(PS).forEach(k=>delete PS[k]);
   renderUser(); render();
-  revisarAdmin();
+  revisarAdmin(); programarCalendario();
   if(!S.onboarded) openOnboarding();
 }
 if(sb){
