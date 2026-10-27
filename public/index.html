@@ -503,6 +503,11 @@ a.stat{text-decoration:none}
 .dcbar{height:6px;border-radius:99px;background:var(--sunk);overflow:hidden}.dcbar i{display:block;height:100%;background:var(--brand);border-radius:99px;transition:width .3s}
 .dchoras{display:grid;grid-template-columns:1fr 1fr;gap:12px}.dchoras label,.dcfecha{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--muted)}
 .dcnav{justify-content:space-between;margin-top:6px}
+.dcsub{margin:6px 0 0;font-size:16px}
+.semtabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 0 14px;padding-bottom:2px}.semtabs::-webkit-scrollbar{display:none}
+.semtabs button{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:8px 12px;font:inherit;font-size:13px;font-weight:600;color:var(--ink);text-align:left;line-height:1.2}
+.semtabs button small{display:block;font-weight:500;color:var(--muted);font-size:11.5px}
+.semtabs button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}.semtabs button[aria-pressed="true"] small{color:rgba(255,255,255,.8)}
 .it-food{display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;border:1.5px dashed var(--line);border-radius:18px;padding:12px;align-items:start}
 .it-food>span{font-size:24px;line-height:40px;text-align:center}
 .it-food>div{display:flex;flex-direction:column;gap:4px;align-items:flex-start}.it-food small{color:var(--muted);font-size:13px}
@@ -1818,7 +1823,6 @@ function offDePA(){ const c=PA.cuando; if(c==='manana') return 1; if(c==='fecha'
 // Sin personalizar: plan automático del día elegido, de la siguiente hora a las 11 de la noche, con comida y cena
 function dcSync(){ DC.off=offDePA(); const n=new Date().getHours()+1;
   if(!DC.custom){ DC.desde=DC.off===0?Math.min(Math.max(n,10),22):12; DC.hasta=23; DC.con=''; DC.zonas=[]; DC.cats=[]; DC.presu='todo'; DC.comidas=['comida','cena']; }
-  else if(DC.off===0&&DC.desde<n){ DC.desde=Math.min(n,23); if(DC.hasta<=DC.desde) DC.hasta=Math.min(24,DC.desde+3); }
   DC.listo=true; }
 function dcDefaults(){ if(DC.desde==null||(DC.off===0&&DC.desde<new Date().getHours())){ const n=new Date().getHours()+1; DC.desde=DC.off===0?Math.min(Math.max(n,9),22):12; if(DC.hasta<=DC.desde) DC.hasta=Math.min(24,DC.desde+4); } }
 function dcPasoHTML(){
@@ -1831,7 +1835,8 @@ function dcPasoHTML(){
     <p class="hint">${DC.hasta-DC.desde>=5?'Con este tiempo te proponemos dos eventos con horario y una visita a algún lugar.':'Con este tiempo te proponemos hasta tres eventos con horario.'}</p>`; }
   if(p===2) body=`<div class="chips">${Object.entries(CON).map(([k,c])=>chip('data-dccon',k,DC.con===k,c.n)).join('')}</div>`;
   if(p===3) body=`<div class="chips">${chip('data-dctur','0',!DC.turista,'Vivo en Monterrey')}${chip('data-dctur','1',!!DC.turista,'Soy turista o estoy de visita')}</div>
-    <p class="hint">${DC.turista?'Te armamos un plan con los lugares más emblemáticos de la ciudad y con eventos que pasan en ellos.':'Te proponemos lo mejor de lo que pasa ese día, cerca de donde quieras.'}</p>`;
+    <p class="hint">${DC.turista?'Te armamos un plan con los lugares más emblemáticos de la ciudad y con eventos que pasan en ellos.':'Te proponemos lo mejor de lo que pasa ese día, cerca de donde quieras.'}</p>
+    ${DC.turista?`<h3 class="dcsub">¿Cuántos días vas a estar?</h3><div class="chips">${[1,2,3,4,5,6,7].map(n=>chip('data-dcdias',n,(DC.dias||1)===n,n===1?'1 día':n===7?'Una semana':n+' días')).join('')}</div><p class="hint">Te armamos un plan para cada día, empezando el día que elegiste, sin repetir lugares.</p>`:''}`;
   if(p===4) body=`<p class="hint" style="margin:0 0 10px">Elige las que te queden bien. Puedes elegir varias.</p><div class="chips">${chip('data-dczona','',!DC.zonas.length,'Cualquier zona')}${Object.entries(ZONAS).filter(([k])=>k!=='linea').map(([k,z])=>chip('data-dczona',k,DC.zonas.includes(k),z.n)).join('')}</div>`;
   if(p===5) body=`<p class="hint" style="margin:0 0 10px">Marca las que quieras considerar. Puedes elegir varias.</p><div class="chips">${chip('data-dccat','',!DC.cats.length,'De todo un poco')}${Object.entries(CATS).map(([k,c])=>`<button class="chip" data-dccat="${k}" aria-pressed="${DC.cats.includes(k)}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div>`;
   if(p===6) body=`<p class="hint" style="margin:0 0 10px">Elige las que quieras y las acomodamos en los huecos de tu plan. Puedes elegir varias.</p><div class="chips">${chip('data-dccom','',!DC.comidas.length,'Sin comida')}${Object.entries(DC_COMIDAS).map(([k,c])=>chip('data-dccom',k,DC.comidas.includes(k),c.ico+' '+c.n)).join('')}</div>`;
@@ -1853,12 +1858,13 @@ function bindDC(){
   if(h) h.onchange=()=>{ DC.hasta=+h.value; again(); };
   q('[data-dccon]').forEach(b=>b.onclick=()=>{ DC.con=b.dataset.dccon; again(); });
   q('[data-dctur]').forEach(b=>b.onclick=()=>{ DC.turista=b.dataset.dctur==='1'; again(); });
+  q('[data-dcdias]').forEach(b=>b.onclick=()=>{ DC.dias=+b.dataset.dcdias; again(); });
   const multi=(attr,key)=>q(`[${attr}]`).forEach(b=>b.onclick=()=>{ const v=b.getAttribute(attr); DC[key]=!v?[]:DC[key].includes(v)?DC[key].filter(x=>x!==v):[...DC[key],v]; again(); });
   multi('data-dczona','zonas'); multi('data-dccat','cats'); multi('data-dccom','comidas');
   q('[data-dcpresu]').forEach(b=>b.onclick=()=>{ DC.presu=b.dataset.dcpresu; again(); });
   const a=document.getElementById('dcAtras'); if(a) a.onclick=()=>{ DC.paso--; again(); };
   const n=document.getElementById('dcSig'); if(n) n.onclick=()=>{ DC.paso++; again(); };
-  const ar=document.getElementById('dcArmar'); if(ar) ar.onclick=()=>{ DC.listo=true; DC.custom=true; DC.pick={}; DC.fuera=[]; saveDC(); closeModal(); render(); setTimeout(()=>{ const t=document.getElementById('dia-completo'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); },60); };
+  const ar=document.getElementById('dcArmar'); if(ar) ar.onclick=()=>{ DC.listo=true; DC.custom=true; DC.diaSel=0; DC.pick={}; DC.fuera=[]; saveDC(); closeModal(); render(); setTimeout(()=>{ const t=document.getElementById('dia-completo'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); },60); };
 }
 // Funciones del día elegido (un evento con varias fechas cuenta con la función de ese día)
 function eventosDelDia(off){
@@ -1872,7 +1878,7 @@ const dcDur=e=>['concierto','teatro','danza','cine'].includes(e.cat)?2:1.5;
 function dcPuntos(e){ return esperado(e)+(DC.turista?(esIcono(e)?9:0)+(['cine','talleres','charlas','fandoms'].includes(e.cat)?-4:0):0)+(DC.cats.length&&DC.cats.includes(e.cat)?6:0)+(DC.con?conFit(e,DC.con)*1.5:0)+(e.rec?1:0); }
 function armarDC(){
   const lapso=DC.hasta-DC.desde, meta=DC.turista?2:(lapso>=5?2:3);
-  const ops=eventosDelDia(DC.off).filter(e=>{ const h=hNum(e.h); return h!=null&&h>=DC.desde&&h+1<=DC.hasta&&dcPasa(e)&&!DC.fuera.includes(e.id)&&(!DC.cats.length||DC.cats.includes(e.cat)); })
+  const ops=eventosDelDia(DC.off).filter(e=>{ const h=hNum(e.h); return h!=null&&h>=DC.desde&&h+1<=DC.hasta&&dcPasa(e)&&!DC.fuera.includes(e.id)&&!(DC._tit&&DC._tit.has(e.t))&&(!DC.cats.length||DC.cats.includes(e.cat))&&!(DC.turista&&!DC.cats.length&&['charlas','talleres','fandoms'].includes(e.cat)); })
     .map(e=>({e,h:hNum(e.h),p:dcPuntos(e)})).sort((a,b)=>b.p-a.p);
   const elegidos=[], cabe=(x)=>elegidos.every(y=>x.h>=y.h+dcDur(y.e)+.5||x.h+dcDur(x.e)+.5<=y.h), tipos=()=>elegidos.map(y=>y.e.cat);
   Object.values(DC.pick).forEach(id=>{ const x=ops.find(o=>o.e.id===id); if(x&&cabe(x)) elegidos.push(x); });
@@ -1898,8 +1904,8 @@ function armarDC(){
         if(tp==='montana') return ini<=13&&b-a>=3; if(tp==='pueblo') return lapso>=7&&ini<14; if(tp==='museo') return fin<=18.5&&dOf(DC.off).getDay()!==1; return true; })
         .filter(x=>!paradas.some(p=>p.a&&p.a.id===x.id)&&!DC.fuera.includes('atr:'+x.id))
         .sort((x,y)=>(DC.turista?ICONOS.indexOf(x.id)-ICONOS.indexOf(y.id):0)||(nat?({montana:2,parque:1}[tipoOf(y)]||0)-({montana:2,parque:1}[tipoOf(x)]||0):0)||(y.zona===zonaRef)-(x.zona===zonaRef)||(ATR_FOTO[y.id]?1:0)-(ATR_FOTO[x.id]?1:0));
-      const temporada=EVENTS.filter(e=>e.range&&e.mod!=='linea'&&e.off<=DC.off&&dcPasa(e)&&(UNAVEZ.test(e.t)||esFest(e)||(DC.turista&&esIcono(e)))&&!DC.fuera.includes(e.id)&&!paradas.some(p=>p.e&&p.e.id===e.id));
-      const k='hueco'+Math.round(ini*2), elegido=DC.pick[k];
+      const temporada=EVENTS.filter(e=>e.range&&e.mod!=='linea'&&e.off<=DC.off&&dcPasa(e)&&(UNAVEZ.test(e.t)||esFest(e)||(DC.turista&&esIcono(e)))&&!DC.fuera.includes(e.id)&&!(DC._tit&&DC._tit.has(e.t))&&!paradas.some(p=>p.e&&p.e.id===e.id));
+      const k='hueco'+DC.off+'_'+Math.round(ini*2), elegido=DC.pick[k];
       const cand=DC.turista&&vuelta===0?[...lugares.map(a=>({a})),...temporada.map(e=>({e}))]:[...temporada.map(e=>({e})),...lugares.map(a=>({a}))];
       let c=cand.find(o=>(o.e&&o.e.id===elegido)||(o.a&&'atr:'+o.a.id===elegido))||cand[0];
       if(c) paradas.push({tipo:c.e?'ev':'atr',e:c.e,a:c.a,ini,fin:c.a&&tipoOf(c.a)==='montana'?largo:fin,libre:true,k,alt:cand.filter(o=>o!==c)});
@@ -1929,14 +1935,29 @@ function comidaDC(paradas){
   }
   return out;
 }
+// Turistas con varios días: un plan por día, sin repetir lugares ni eventos
+const dcMulti=()=>DC.custom&&DC.turista&&(DC.dias||1)>1;
+function semanaDC(){
+  const base=DC.fuera.slice(), off0=DC.off, d0=DC.desde, out=[], usados=[], tit=new Set();
+  for(let i=0;i<(dcMulti()?DC.dias:1);i++){ const off=Math.min(MAXOFF,off0+i); if(i&&off===out.at(-1).off) break;
+    DC.off=off; DC.fuera=[...base,...usados]; DC._tit=new Set(tit); DC.desde=off===0?Math.min(23,Math.max(d0,new Date().getHours()+1)):d0;
+    const paradas=armarDC(), comidas=comidaDC(paradas), ctx={fuera:DC.fuera.slice(),tit:new Set(DC._tit),desde:DC.desde};
+    paradas.forEach(p=>{ if(p.e){ usados.push(p.e.id); tit.add(p.e.t); } if(p.a) usados.push('atr:'+p.a.id); });
+    out.push({off,paradas,comidas,ctx}); }
+  DC.off=off0; DC.fuera=base; DC._tit=null; DC.desde=d0; return out;
+}
+function enDia(d,fn){ const o=DC.off, f=DC.fuera, h=DC.desde; DC.off=d.off; DC.fuera=d.ctx.fuera; DC._tit=d.ctx.tit; DC.desde=d.ctx.desde; try{ return fn(); } finally { DC.off=o; DC.fuera=f; DC._tit=null; DC.desde=h; } }
+function diaSel(){ const sem=semanaDC(); const i=Math.min(DC.diaSel||0,sem.length-1); return {sem,i,d:sem[i]}; }
 function diaDCHTML(){
   if(!DC.listo) return '';
-  const paradas=armarDC(), comidas=comidaDC(paradas), dia=DC.off===0?'Hoy':DC.off===1?'Mañana':relDay(DC.off);
+  const {sem,i:si,d:dsel}=diaSel(), multi=sem.length>1, paradas=dsel.paradas, comidas=dsel.comidas, offD=dsel.off, dia=offD===0?'Hoy':offD===1?'Mañana':relDay(offD);
   const precios=paradas.filter(p=>p.e).map(p=>p.e.price), total=precios.filter(x=>typeof x==='number').reduce((a,b)=>a+b,0), sinPrecio=precios.some(x=>x==null);
   const items=[...paradas.map(p=>({h:p.ini,p})),...comidas.map(c=>({h:c.hora,c}))].sort((a,b)=>a.h-b.h);
   const resumen=[DC.turista?'De visita en Monterrey':'',CON[DC.con]?.n,DC.zonas.length?DC.zonas.map(z=>ZONAS[z].n).join(', '):'cualquier zona',DC.presu==='todo'?'cualquier presupuesto':DC_PRESU[DC.presu].toLowerCase()].filter(Boolean).join(' · ');
   return `<div class="itin" id="dia-completo">
-    <div class="itin-h"><span class="eyebrow">${DC.custom?'Tu plan completo, a tu medida':'Tu plan completo · armado automáticamente'}</span><h3>${dia}${DC.off>1?'':', '+longDate(DC.off)} · de ${hTxt(DC.desde)} a ${DC.hasta===24?'medianoche':hTxt(DC.hasta)}</h3>
+    <div class="itin-h"><span class="eyebrow">${multi?`Tu semana en Monterrey · ${sem.length} días`:DC.custom?'Tu plan completo, a tu medida':'Tu plan completo · armado automáticamente'}</span>
+      ${multi?`<div class="semtabs" role="group" aria-label="Días">${sem.map((d,k)=>{ const x=dOf(d.off); return `<button data-dcdia="${k}" aria-pressed="${k===si}">Día ${k+1}<small>${DOW[x.getDay()]} ${x.getDate()} ${MES[x.getMonth()]}</small></button>`; }).join('')}</div>`:''}
+      <h3>${dia}${offD>1?'':', '+longDate(offD)} · de ${hTxt(dsel.ctx.desde)} a ${DC.hasta===24?'medianoche':hTxt(DC.hasta)}</h3>
       <p>${esc(resumen)}${paradas.length?` · ${total?`desde $${total} por persona`:sinPrecio?'revisa los precios':'todo gratis'}`:''}</p></div>
     ${!paradas.length?`<div class="it-none">No encontramos eventos con lo que elegiste en ese horario. Prueba con más zonas, otro tipo de actividad u otro presupuesto.</div>`:''}
     <div class="tl itin-tl">${items.map(({p,c})=>{
@@ -1948,23 +1969,24 @@ function diaDCHTML(){
           <img src="${img}" alt=""${p.e?fitAttr(p.e):''} loading="lazy" ${open}>
           <div class="it-b"><span class="ev-when">${p.e?(p.libre?'En temporada · ':'')+priceTxt(p.e.price):TIPOS[tipoOf(p.a)]+' · '+esc(p.a.cos)}</span><b>${esc(p.e?p.e.t:p.a.n)}</b><small>${esc(p.e?p.e.venue:p.a.d.split('. ')[0])}${' · '+(ZONAS[x.zona]?.n||'')}</small>
             <div class="row"><button class="btn small" ${open}>Ver</button><button class="btn small" data-dcch="${p.libre?p.k:p.e.id}" ${p.alt&&p.alt.length?'':'disabled'}>↻ Cambiar</button><button class="btn ghost small" data-dcx="${p.e?p.e.id:'atr:'+p.a.id}">Quitar</button></div></div></div>`; }).join('')}</div>
-    <div class="row itin-act">${paradas.some(p=>p.e)?`<button class="btn primary" id="dcSave">${I.cal}Guardar el día en mi calendario</button>`:''}<button class="btn" id="dcShare">${I.share}Compartir por WhatsApp</button><button class="btn ghost" id="dcEditar">${DC.custom?'Cambiar respuestas':'Personalizar mi plan'}</button>${DC.custom?'<button class="btn ghost" id="dcAuto">Volver al plan automático</button>':''}</div>
+    <div class="row itin-act">${paradas.some(p=>p.e)?`<button class="btn primary" id="dcSave">${I.cal}${multi?'Guardar toda la semana en mi calendario':'Guardar el día en mi calendario'}</button>`:''}<button class="btn" id="dcShare">${I.share}Compartir por WhatsApp</button><button class="btn ghost" id="dcEditar">${DC.custom?'Cambiar respuestas':'Personalizar mi plan'}</button>${DC.custom?'<button class="btn ghost" id="dcAuto">Volver al plan automático</button>':''}</div>
   </div>`;
 }
 function bindDiaDC(){
   const keep=()=>{ saveDC(); const y=window.scrollY; render(); window.scrollTo(0,y); };
-  document.querySelectorAll('[data-dcch]').forEach(b=>b.onclick=()=>{ const k=b.dataset.dcch, ps=armarDC(), p=ps.find(x=>(x.libre?x.k:x.e&&x.e.id)===k); if(!p||!p.alt.length) return;
+  document.querySelectorAll('[data-dcdia]').forEach(b=>b.onclick=()=>{ DC.diaSel=+b.dataset.dcdia; keep(); });
+  document.querySelectorAll('[data-dcch]').forEach(b=>b.onclick=()=>{ const k=b.dataset.dcch, ps=enDia(diaSel().d,()=>armarDC()), p=ps.find(x=>(x.libre?x.k:x.e&&x.e.id)===k); if(!p||!p.alt.length) return;
     if(p.libre){ const o=p.alt[0]; DC.pick[k]=o.e?o.e.id:'atr:'+o.a.id; DC.fuera.push(p.e?p.e.id:'atr:'+p.a.id); }
     else { const o=p.alt[0]; DC.fuera.push(p.e.id); Object.keys(DC.pick).forEach(z=>{ if(DC.pick[z]===p.e.id) delete DC.pick[z]; }); DC.pick['e'+o.id]=o.id; }
     keep(); toast('Parada cambiada'); });
   document.querySelectorAll('[data-dcx]').forEach(b=>b.onclick=()=>{ DC.fuera.push(b.dataset.dcx); keep(); });
   const ed=document.getElementById('dcEditar'); if(ed) ed.onclick=abrirDC;
   const au=document.getElementById('dcAuto'); if(au) au.onclick=()=>{ DC.custom=false; DC.pick={}; DC.fuera=[]; keep(); };
-  const sv=document.getElementById('dcSave'); if(sv) sv.onclick=()=>requireLogin(()=>{ const ids=armarDC().filter(p=>p.e&&!p.libre).map(p=>p.e.id);
+  const sv=document.getElementById('dcSave'); if(sv) sv.onclick=()=>requireLogin(()=>{ const ids=semanaDC().flatMap(d=>d.paradas).filter(p=>p.e&&!p.libre).map(p=>p.e.id);
     ids.forEach(id=>{ if(!S.saved.includes(id)) S.saved.push(id); });
-    S.plans.push({id:crypto.randomUUID(),name:`Día completo · ${relDay(DC.off)}${DC.con?' · '+CON[DC.con].n.toLowerCase():''}`,ids}); persist(); toast('Guardado en tu calendario y en Mis planes'); render(); });
-  const sh=document.getElementById('dcShare'); if(sh) sh.onclick=()=>{ const ps=armarDC();
-    copy(`Plan para ${relDay(DC.off).toLowerCase()}:\n`+ps.map(p=>`• ${hTxt(p.ini)}: ${p.e?p.e.t+' – '+p.e.venue:'Visita '+p.a.n}`).join('\n')+`\n¿Vamos? Visto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); };
+    S.plans.push({id:crypto.randomUUID(),name:`${dcMulti()?'Semana en Monterrey':'Día completo'} · ${relDay(DC.off)}${DC.con?' · '+CON[DC.con].n.toLowerCase():''}`,ids}); persist(); toast('Guardado en tu calendario y en Mis planes'); render(); });
+  const sh=document.getElementById('dcShare'); if(sh) sh.onclick=()=>{ const sem=semanaDC();
+    copy(sem.map(d=>`Plan para ${relDay(d.off).toLowerCase()}:\n`+d.paradas.map(p=>`• ${hTxt(p.ini)}: ${p.e?p.e.t+' – '+p.e.venue:'Visita '+p.a.n}`).join('\n')).join('\n\n')+`\n¿Vamos? Visto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); };
 }
 
 /* ---------- Vista: ¿Qué plan? (Ármame un plan + lo que hay ese día) ---------- */
