@@ -233,6 +233,34 @@
  },
  "ft1": null,
  "fo3": null,
+ "k08": null,
+ "s08": {
+  "foto": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Arena_Monterrey.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "credito": {
+   "autor": "Hector Martínez",
+   "licencia": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Arena_Monterrey.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s14": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Morat_en_concierto.jpg/960px-Morat_en_concierto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Andrea Herrera / Secretaría de Cultura de la Ciudad de México",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Morat_en_concierto.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "s13": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Morat_en_concierto.jpg/960px-Morat_en_concierto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Andrea Herrera / Secretaría de Cultura de la Ciudad de México",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Morat_en_concierto.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
  "atr:obispado": {
   "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Museo_Regional_de_Nuevo_Le%C3%B3n_%28_El_Obispado_%29_08.jpg/960px-Museo_Regional_de_Nuevo_Le%C3%B3n_%28_El_Obispado_%29_08.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
   "credito": {
