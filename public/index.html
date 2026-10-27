@@ -183,7 +183,8 @@ a{color:var(--accent)}
 .nosbar{display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;color:inherit;background:var(--surface);box-shadow:var(--shadow);border-radius:18px;padding:16px 20px;margin:28px 0 0;font-size:14px}
 .nosbar b{display:block;font-family:var(--f-display);font-size:18px}
 .nospage{display:flex;flex-direction:column;align-items:center;gap:22px}
-.nos-t{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,5vw,56px);letter-spacing:-.035em;margin:0;text-align:center}
+.nos-t.script{font-size:clamp(34px,4.5vw,48px);margin:0;text-align:left}
+.foot-logo{display:flex;align-items:center;gap:14px}.foot-logo a{text-decoration:none;display:inline-flex}
 .nos-art{width:min(100%,520px);aspect-ratio:1/0.82;display:flex}.nos-art .blk{flex:1}
 .nos-tx{max-width:62ch;display:flex;flex-direction:column;gap:14px}.nos-tx p{margin:0;font-size:17px;line-height:1.6}
 .homehero.solo{grid-template-columns:minmax(0,1fr)}
@@ -724,7 +725,7 @@ form.card .full{grid-column:1/-1}
 </header>
 
 <main id="app"></main>
-<footer class="foot"><div class="wrap"><span><b style="font-family:var(--f-wm);font-weight:800;text-transform:uppercase;font-size:18px;letter-spacing:.03em">Mty Movida</b> · Versión de prueba</span><span><a href="#nosotros" style="color:inherit">Quiénes somos</a> · Hecho para la comunidad regia</span></div></footer>
+<footer class="foot"><div class="wrap"><span class="foot-logo"><a href="#inicio" aria-label="Mty Movida, ir al inicio"><span class="lockup"><span class="lk-row"><span class="lk-name"><span class="lk-mty"><i>M</i><i>T</i><i>Y</i></span><span class="lk-mov"><i>M</i><i>O</i><i>V</i><i>I</i><i>D</i><i>A</i></span><span class="c" style="left:-5px;top:2px;background:#FDBD1A;transform:rotate(30deg)"></span><span class="c" style="left:34px;top:0;background:#1AC1B9;transform:rotate(-20deg)"></span><span class="c" style="right:-7px;top:12px;background:#FCB8D9;transform:rotate(50deg)"></span><span class="c" style="right:8px;top:1px;background:#7F95E4;transform:rotate(-40deg)"></span></span></span></span></a><span>Versión de prueba</span></span><span><a href="#nosotros" style="color:inherit">Quiénes somos</a> · Hecho para la comunidad regia</span></div></footer>
 
 <div class="modal" id="modal" hidden>
   <div class="scrim" data-close></div>
@@ -1733,9 +1734,9 @@ function bindDiaCompleto(){
 /* ---------- Vista: Quiénes somos ---------- */
 function viewNos(){
   return `<div class="wrap page nospage">
-    <h1 class="nos-t">Quiénes somos</h1>
     <div class="nos-art"><div class="blk" id="blk" aria-hidden="true">${PZ_ORDER.map(k=>pieceHTML(k)).join("")}</div></div>
     <div class="nos-tx">
+      <h1 class="script nos-t">Quiénes somos</h1>
       <p>Nosotras somos Adriana y Sharon. Somos amigas y nos encanta salir, hacer planes improvisados y disfrutar de los eventos, aunque a veces no sepamos muy bien de qué se tratan.</p>
       <p>Creemos que en Monterrey hay mucho más que ir a comer o por un café, por eso creamos Mty Movida, para que conozcas todo lo que pasa en la ciudad, que salgas y vivas la cultura y el entretenimiento. Aquí te juntamos los conciertos, el teatro, las exposiciones, los festivales y los planes al aire libre de toda la zona metropolitana, porque salir es la mejor excusa para encontrarte con los demás, ya sea con tus amigos de siempre o con quien está a tu lado disfrutando lo mismo.</p>
       <div class="row"><a class="btn primary" href="#hoy">¿Qué plan hoy?</a><a class="btn" href="#agregar">Agrega tu evento</a></div>
