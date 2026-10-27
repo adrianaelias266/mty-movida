@@ -1399,41 +1399,118 @@ function renderUser(){
   if(S.user){ b.innerHTML=`<span class="avatar">${esc(S.user.name[0].toUpperCase())}</span><span class="ub-t">${esc(S.user.name.split(' ')[0])}</span>`; b.setAttribute('aria-label','Mi calendario de '+S.user.name); b.onclick=()=>go('calendario'); }
   else { b.innerHTML=`<span class="avatar">${I.people.replace('<svg','<svg width="15" height="15"')}</span><span class="ub-t">Iniciar sesión</span>`; b.setAttribute('aria-label','Iniciar sesión'); b.onclick=()=>openLogin(); }
 }
-/* ---------- Ilustraciones de monitos (bolitas y palitos, colores suaves) ---------- */
-function stick(o){
-  const c=o.c, w=6, P=a=>a.map(p=>p.join(' ')).join(' L');
-  const L=pts=>`<path d="M${P(pts)}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
-  const [hx,hy]=o.head, r=15;
-  const hat=`<path d="M${hx-r*.72} ${hy-r*.82} Q${hx-r*.6} ${hy-r*1.85} ${hx} ${hy-r*1.62} Q${hx+r*.6} ${hy-r*1.85} ${hx+r*.72} ${hy-r*.82} Z" fill="${o.hat}"/><path d="M${hx-r*1.7} ${hy-r*.5} Q${hx} ${hy-r*1.3} ${hx+r*1.7} ${hy-r*.9} Q${hx+r*1.9} ${hy-r*.55} ${hx+r*1.4} ${hy-r*.55} Q${hx} ${hy-r*.9} ${hx-r*1.4} ${hy-r*.28} Z" fill="${o.hat}"/>`;
-  return L([o.neck,o.hip])+L([o.neck,...o.armL])+L([o.neck,...o.armR])+L([o.hip,...o.legL])+L([o.hip,...o.legR])+
-    `<circle cx="${hx}" cy="${hy}" r="${r}" fill="${c}"/><path d="M${hx-6} ${hy+2} Q${hx} ${hy+8} ${hx+6} ${hy+2}" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>`+hat;
+/* ---------- Ilustraciones de monitos, con las proporciones y principios del logo ---------- */
+// Monito al estilo del logo de Mty Movida. Unidad = radio de la cabeza (R).
+// Principios del logo: sin cara · trazos rectos y gruesos (0.6R) con puntas redondas · cuerpo de 6.4R ·
+// piernas de 6R · brazos de 4.6 a 4.9R · pies en gancho de 0.9R · sombrero vaquero lila (el mismo trazo del logo) ·
+// el brazo y la pierna de enfrente se separan del resto con un corte del color del fondo.
+const HAT_PATH = 'M-1.12 -1.46 C-1.24 -1.43 -1.16 -1.44 -1.18 -1.47 C-1.20 -1.50 -1.22 -1.58 -1.22 -1.64 C-1.23 -1.70 -1.23 -1.79 -1.22 -1.85 C-1.21 -1.91 -1.23 -1.98 -1.15 -2.00 C-1.07 -2.02 -0.83 -1.98 -0.73 -1.99 C-0.64 -1.99 -0.70 -1.97 -0.58 -2.02 C-0.47 -2.08 -0.16 -2.29 -0.04 -2.34 C0.07 -2.39 0.04 -2.36 0.10 -2.33 C0.17 -2.31 0.27 -2.25 0.34 -2.19 C0.41 -2.13 0.47 -2.05 0.53 -1.97 C0.58 -1.89 0.66 -1.75 0.68 -1.70 C0.69 -1.65 0.70 -1.66 0.61 -1.66 C0.53 -1.66 0.34 -1.69 0.16 -1.69 C-0.01 -1.68 -0.22 -1.66 -0.43 -1.62 C-0.65 -1.59 -1.00 -1.48 -1.12 -1.46 Z M1.99 -1.34 C1.94 -1.32 1.93 -1.30 1.81 -1.34 C1.68 -1.38 1.38 -1.52 1.24 -1.57 C1.09 -1.62 1.00 -1.62 0.94 -1.64 C0.88 -1.66 0.87 -1.68 0.89 -1.70 C0.91 -1.73 0.98 -1.77 1.06 -1.80 C1.14 -1.82 1.25 -1.86 1.36 -1.86 C1.47 -1.87 1.62 -1.85 1.72 -1.83 C1.81 -1.80 1.87 -1.75 1.93 -1.71 C1.98 -1.67 2.00 -1.63 2.02 -1.58 C2.04 -1.54 2.06 -1.47 2.06 -1.43 C2.05 -1.39 2.03 -1.36 1.99 -1.34 Z M-1.93 0.12 C-2.00 0.16 -2.02 0.15 -2.07 0.12 C-2.13 0.10 -2.19 0.05 -2.23 0.00 C-2.27 -0.05 -2.29 -0.08 -2.30 -0.15 C-2.30 -0.22 -2.29 -0.33 -2.26 -0.42 C-2.22 -0.51 -2.15 -0.61 -2.09 -0.69 C-2.03 -0.76 -1.98 -0.81 -1.90 -0.88 C-1.81 -0.95 -1.68 -1.05 -1.57 -1.11 C-1.46 -1.17 -1.40 -1.20 -1.24 -1.26 C-1.08 -1.31 -0.79 -1.40 -0.61 -1.44 C-0.44 -1.48 -0.42 -1.49 -0.19 -1.50 C0.03 -1.52 0.49 -1.53 0.73 -1.51 C0.98 -1.49 1.11 -1.43 1.27 -1.38 C1.42 -1.33 1.59 -1.26 1.67 -1.22 C1.75 -1.19 1.74 -1.18 1.73 -1.16 C1.72 -1.14 1.68 -1.12 1.63 -1.10 C1.57 -1.08 1.55 -1.06 1.42 -1.06 C1.29 -1.06 1.00 -1.09 0.85 -1.09 C0.70 -1.09 0.67 -1.09 0.49 -1.06 C0.31 -1.03 0.02 -0.99 -0.22 -0.90 C-0.47 -0.82 -0.77 -0.68 -1.00 -0.54 C-1.23 -0.40 -1.46 -0.17 -1.62 -0.06 C-1.77 0.05 -1.85 0.09 -1.93 0.12 Z';
+const rad = d => d * Math.PI / 180;
+
+// Calcula los puntos. Ángulos en grados desde "hacia abajo"; positivo = hacia donde mira la figura.
+function monitoPts(o) {
+  const R = o.R || 15, s = o.dir || 1, w = 0.6 * R, gap = 0.36 * R;
+  const [hx, hy] = o.at;
+  const seg = (p, ang, len) => [p[0] + Math.sin(rad(ang) * s) * len, p[1] + Math.cos(rad(ang) * s) * len];
+  const tA = o.torso || 0;
+  const neck = seg([hx, hy], tA, R + gap + w / 2);
+  const hip = seg(neck, tA, 6.4 * R - w / 2);
+  const sh = seg(neck, tA, 0.15 * R);
+  const cadena = (p, lista) => lista.map(([a, l]) => (p = seg(p, a, l * R)));
+  const LF = cadena(hip, o.legF || [[36, 6], [92, 0.9]]);
+  const LB = cadena(hip, o.legB || [[-31, 5.8], [57, 0.9]]);
+  const AF = cadena(sh, o.armF || [[29, 4.6]]);
+  const AB = cadena(sh, o.armB || [[-34, 4.9]]);
+  const armFstart = seg(sh, (o.armF || [[29]])[0][0], 0.9 * R);
+  return { R, s, w, hx, hy, neck, hip, sh, LF, LB, AF, AB, armFstart };
 }
-const SOFT_LINE='#E3D9D4';
-const conf=a=>a.map(([x,y,c,r])=>`<rect x="${x}" y="${y}" width="11" height="6" rx="2" fill="${c}" transform="rotate(${r} ${x} ${y})"/>`).join('');
+
+function monito(o) {
+  let G = monitoPts(o);
+  if (o.ground != null) {   // sube o baja la figura para que el pie más bajo toque el piso
+    const low = Math.max(G.LF.at(-1)[1], G.LB.at(-1)[1]);
+    G = monitoPts({ ...o, at: [o.at[0], o.at[1] + (o.ground - G.w / 2 - low)] });
+  }
+  const { R, s, w, hx, hy, neck, hip, sh, LF, LB, AF, AB, armFstart } = G;
+  const c = o.c || '#BF4718', bg = o.bg || '#fff', hatC = o.hat || '#CBA6FF', halo = w + 0.62 * R;
+  const P = a => a.map(p => p.map(v => v.toFixed(1)).join(' ')).join(' L');
+  const ln = (pts, conCorte) => (conCorte ? `<path d="M${P(pts)}" fill="none" style="stroke:${bg}" stroke-width="${halo.toFixed(1)}" stroke-linecap="round" stroke-linejoin="round"/>` : '') +
+    `<path d="M${P(pts)}" fill="none" stroke="${c}" stroke-width="${w.toFixed(1)}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  let out = '';
+  // Orden del logo: el cuerpo pasa por encima de un brazo y de una pierna y los "corta" con el color del fondo
+  if (!o.brazoArriba) out += ln([sh, ...AF]);    // brazo cortado por el cuerpo (queda separado del hombro)
+  out += ln([hip, ...LB]);                       // pierna de atrás, también cortada por el cuerpo
+  if (o.antesCuerpo) out += o.antesCuerpo(G);    // objetos que van detrás del cuerpo
+  out += ln([neck, hip, ...LF], true);           // cuerpo y pierna de enfrente: un solo trazo, como en el logo
+  if (o.sobreCuerpo) out += o.sobreCuerpo(G);    // objetos sobre el cuerpo pero bajo los brazos (guitarra)
+  out += ln([sh, ...AB]);                        // brazo unido al hombro
+  if (o.brazoArriba) out += ln([armFstart, ...AF], true); // si el brazo va sobre un objeto, se separa con un corte
+  if (o.enfrente) out += o.enfrente(G);          // objetos que van enfrente (helado…)
+  out += `<circle cx="${hx.toFixed(1)}" cy="${hy.toFixed(1)}" r="${R}" fill="${c}"/>`;
+  out += `<path d="${HAT_PATH}" transform="translate(${hx.toFixed(1)} ${hy.toFixed(1)}) scale(${(s * R).toFixed(2)} ${R})" fill="${hatC}"/>`;
+  return { svg: out, G };
+}
+
+
+// Escenas de la ventana de registro, con los monitos al estilo del logo
+const mDeg=r=>r*180/Math.PI;
+// ángulo (convención del monito: grados desde "abajo", positivo hacia donde mira) de p a q
+const mAng=(p,q,s=1)=>mDeg(Math.atan2((q[0]-p[0])*s,q[1]-p[1]));
+const mDist=(p,q)=>Math.hypot(q[0]-p[0],q[1]-p[1]);
+// dos tramos (muslo y espinilla, o brazo y antebrazo) que van de p a q; flex=+1 dobla hacia el frente
+function mIk(p,q,l1,l2,s=1,flex=1){ const d=Math.min(mDist(p,q),l1+l2-0.01), a=mAng(p,q,s), b=mDeg(Math.acos((l1*l1+d*d-l2*l2)/(2*l1*d)));
+  const a1=a+flex*b, k=[p[0]+Math.sin(a1*Math.PI/180*s)*l1, p[1]+Math.cos(a1*Math.PI/180*s)*l1]; return [[a1,l1],[mAng(k,q,s),l2]]; }
+const MR=14, M_BG='var(--bg)', M_TINTA='#B9AEA8';
+const col=c=>c, som=h=>h;
+const mConf=a=>a.map(([x,y,c,r])=>`<rect x="${x}" y="${y}" width="11" height="6" rx="2" fill="${c}" transform="rotate(${r} ${x} ${y})"/>`).join('');
+const mPiso=(a,b)=>`<path d="M${a} 410 L${b} 410" stroke="#E3D9D4" stroke-width="3" stroke-linecap="round"/>`;
+const mEnR=(lst)=>lst.map(([a,l])=>[a,l/MR]);
+
 function illLeft(){
+  // 1) Caminando con un helado y saludando
+  const m1=monito({R:MR,at:[96,0],ground:410,c:col('#F9447F'),hat:som('#FDBD1A'),bg:M_BG,
+    armB:[[-138,4.9]], armF:[[62,4.6]], legF:[[22,6],[92,0.9]], legB:[[-18,5.9],[70,0.9]],
+    enfrente:G=>{ const [x,y]=G.AF.at(-1); return `<path d="M${x-7} ${y-6} L${x+7} ${y-6} L${x} ${y+16} Z" fill="#FFA057"/><circle cx="${x}" cy="${y-11}" r="9" fill="#FCB8D9"/>`; }});
+  // 2) En bici
+  const s=1, t=20, seat=[244,300], wr=[204,368], wf=[356,368], crank=[276,370], bar=[338,280], k=7.76*MR;
+  const head=[seat[0]+Math.sin(t*Math.PI/180)*k, seat[1]-Math.cos(t*Math.PI/180)*k];   // se inclina hacia el manubrio
+  const G0=monitoPts({R:MR,at:head,torso:-t});
+  const pedalF=[crank[0]+10,crank[1]+12], pedalB=[crank[0]-10,crank[1]-12];
+  const m2=monito({R:MR,at:head,torso:-t,c:col('#7F95E4'),hat:som('#CBA6FF'),bg:M_BG,
+    legF:mEnR(mIk(G0.hip,pedalF,3.3*MR,3.1*MR,s,1)).concat([[95,0.8]]), legB:mEnR(mIk(G0.hip,pedalB,3.3*MR,3.1*MR,s,1)).concat([[95,0.8]]),
+    armF:[[mAng(G0.sh,bar),mDist(G0.sh,bar)/MR]], armB:[[mAng(G0.sh,[bar[0]-6,bar[1]+4]),mDist(G0.sh,[bar[0]-6,bar[1]+4])/MR]],
+    antesCuerpo:()=>`<path d="M${crank[0]} ${crank[1]} L${seat[0]} ${seat[1]+8}" stroke="#1AC1B9" stroke-width="7" stroke-linecap="round"/>`});
+  const bici=`<circle cx="${wr[0]}" cy="${wr[1]}" r="40" fill="none" stroke="${M_TINTA}" stroke-width="5"/><circle cx="${wf[0]}" cy="${wf[1]}" r="40" fill="none" stroke="${M_TINTA}" stroke-width="5"/>
+    <path d="M${wr[0]} ${wr[1]} L${crank[0]} ${crank[1]} L${bar[0]-8} ${bar[1]+22} L${seat[0]+2} ${seat[1]+12} Z M${crank[0]} ${crank[1]} L${seat[0]} ${seat[1]+10} M${bar[0]-8} ${bar[1]+22} L${wf[0]} ${wf[1]} M${bar[0]-8} ${bar[1]+22} L${bar[0]} ${bar[1]}" fill="none" stroke="#1AC1B9" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M${seat[0]-12} ${seat[1]+2} L${seat[0]+10} ${seat[1]+2}" stroke="${M_TINTA}" stroke-width="7" stroke-linecap="round"/>
+    <path d="M${bar[0]} ${bar[1]} L${bar[0]+12} ${bar[1]-6}" stroke="${M_TINTA}" stroke-width="6" stroke-linecap="round"/>`;
   return `<svg class="ill left" viewBox="0 0 400 440" aria-hidden="true">
-    ${conf([[40,120,'#FDBD1A',20],[150,90,'#1AC1B9',-30],[270,140,'#FCB8D9',40],[360,110,'#7F95E4',-15]])}
-    ${stick({c:'#F9447F',hat:'#FDBD1A',head:[92,214],neck:[92,232],hip:[92,316],armL:[[68,224],[60,194]],armR:[[114,262],[126,246]],legL:[[82,362],[74,408],[62,408]],legR:[[104,362],[112,408],[124,408]]})}
-    <path d="M118 236 L134 236 L126 258 Z" fill="#FFA057"/><circle cx="126" cy="230" r="9" fill="#FCB8D9"/>
-    <circle cx="205" cy="370" r="36" fill="none" stroke="#B9AEA8" stroke-width="4"/><circle cx="335" cy="370" r="36" fill="none" stroke="#B9AEA8" stroke-width="4"/>
-    <path d="M205 370 L262 370 L245 318 Z M262 370 L316 312 M245 322 L314 316 M316 312 L335 370" fill="none" stroke="#1AC1B9" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
-    <path d="M314 312 L320 298 L332 300" fill="none" stroke="#B9AEA8" stroke-width="4" stroke-linecap="round"/><path d="M234 314 L256 314" stroke="#B9AEA8" stroke-width="6" stroke-linecap="round"/>
-    ${stick({c:'#7F95E4',hat:'#CBA6FF',head:[300,236],neck:[292,254],hip:[248,306],armL:[[312,276],[326,298]],armR:[[306,280],[324,300]],legL:[[284,330],[266,370]],legR:[[270,344],[256,368]]})}
-    <path d="M20 410 L390 410" stroke="${SOFT_LINE}" stroke-width="3" stroke-linecap="round"/>
-  </svg>`;
+    ${mConf([[40,96,'#FDBD1A',20],[150,70,'#1AC1B9',-30],[270,120,'#FCB8D9',40],[360,90,'#7F95E4',-15]])}
+    ${m1.svg}${bici}${m2.svg}${mPiso(20,390)}</svg>`;
 }
 function illRight(){
+  // 3) Señalando el cuadro
+  const m3=monito({R:MR,at:[118,0],ground:410,c:col('#FF8017'),hat:som('#CBA6FF'),bg:M_BG,
+    armF:[[128,4.6]], armB:[[-14,4.8]], legF:[[14,6],[92,0.9]], legB:[[-14,6],[72,0.9]]});
+  // 4) Tocando la guitarra (mira hacia la izquierda)
+  const s=-1, P0=monitoPts({R:MR,at:[278,0],dir:s,legF:[[12,6],[92,0.9]],legB:[[-12,6],[72,0.9]]});
+  const low=Math.max(P0.LF.at(-1)[1],P0.LB.at(-1)[1]), dy=410-0.3*MR-low, at=[278,dy];
+  const G0=monitoPts({R:MR,at,dir:s});
+  const cuerpo=[G0.hip[0]-12,G0.hip[1]-14], mastil=[G0.hip[0]-70,G0.hip[1]-62];
+  const guitarra=()=>`<g><path d="M${cuerpo[0]} ${cuerpo[1]} L${mastil[0]} ${mastil[1]}" stroke="${M_TINTA}" stroke-width="7" stroke-linecap="round"/>
+    <ellipse cx="${cuerpo[0]+6}" cy="${cuerpo[1]+4}" rx="25" ry="20" transform="rotate(38 ${cuerpo[0]+6} ${cuerpo[1]+4})" fill="#FDBD1A"/><ellipse cx="${cuerpo[0]-12}" cy="${cuerpo[1]-12}" rx="16" ry="13" transform="rotate(38 ${cuerpo[0]-12} ${cuerpo[1]-12})" fill="#FDBD1A"/><circle cx="${cuerpo[0]-4}" cy="${cuerpo[1]-3}" r="5.5" fill="#fff"/></g>`;
+  const m4=monito({R:MR,at,dir:s,c:col('#12A39C'),hat:som('#F9447F'),bg:M_BG,legF:[[12,6],[92,0.9]],legB:[[-12,6],[72,0.9]],brazoArriba:true,
+    armB:mEnR(mIk(G0.sh,[mastil[0]+14,mastil[1]+10],2.5*MR,2.4*MR,s,-1)), armF:mEnR(mIk(G0.sh,[cuerpo[0]+2,cuerpo[1]+2],2.4*MR,2.4*MR,s,-1)),
+    sobreCuerpo:guitarra});
   return `<svg class="ill right" viewBox="0 0 400 440" aria-hidden="true">
-    <path d="M295 50 L270 74 M295 50 L320 74" stroke="#B9AEA8" stroke-width="2" fill="none"/>
-    <g transform="translate(228 74)"><rect width="134" height="94" rx="4" fill="#FCB8D9" stroke="#B9AEA8" stroke-width="4"/><circle cx="100" cy="28" r="12" fill="#FDBD1A"/><path d="M2 92 L28 60 L44 70 L66 36 L82 56 L96 50 L108 62 L120 30 L132 50 L132 92 Z" fill="#1AC1B9"/></g>
-    ${conf([[40,110,'#7F95E4',30],[120,150,'#FDBD1A',-20],[30,280,'#F9447F',50]])}
-    ${stick({c:'#FF8017',hat:'#CBA6FF',head:[122,222],neck:[122,240],hip:[122,322],armL:[[106,276],[102,304]],armR:[[150,226],[172,198]],legL:[[112,366],[106,408],[94,408]],legR:[[134,366],[140,408],[152,408]]})}
-    <g transform="rotate(-30 258 296)"><ellipse cx="252" cy="300" rx="24" ry="19" fill="#FDBD1A"/><ellipse cx="270" cy="292" rx="16" ry="14" fill="#FDBD1A"/><circle cx="262" cy="296" r="5" fill="#fff"/><rect x="284" y="288" width="54" height="7" rx="3" fill="#B9AEA8"/></g>
-    ${stick({c:'#12A39C',hat:'#F9447F',head:[262,222],neck:[262,240],hip:[262,324],armL:[[244,272],[254,296]],armR:[[288,262],[304,250]],legL:[[252,368],[246,408],[234,408]],legR:[[274,368],[280,408],[292,408]]})}
-    <text x="310" y="214" font-size="28" fill="#12A39C" font-family="serif">♪</text><text x="338" y="190" font-size="20" fill="#7F95E4" font-family="serif">♫</text>
-    <path d="M10 410 L390 410" stroke="${SOFT_LINE}" stroke-width="3" stroke-linecap="round"/>
-  </svg>`;
+    <path d="M295 30 L270 54 M295 30 L320 54" stroke="${M_TINTA}" stroke-width="2" fill="none"/>
+    <g transform="translate(228 54)"><rect width="134" height="94" rx="4" fill="#FCB8D9" stroke="${M_TINTA}" stroke-width="4"/><circle cx="100" cy="28" r="12" fill="#FDBD1A"/><path d="M2 92 L28 60 L44 70 L66 36 L82 56 L96 50 L108 62 L120 30 L132 50 L132 92 Z" fill="#1AC1B9"/></g>
+    ${mConf([[40,90,'#7F95E4',30],[120,130,'#FDBD1A',-20],[30,260,'#F9447F',50]])}
+    ${m3.svg}${m4.svg}
+    <text x="190" y="226" font-size="28" fill="#12A39C" font-family="serif">♪</text><text x="168" y="196" font-size="20" fill="#7F95E4" font-family="serif">♫</text>
+    ${mPiso(10,390)}</svg>`;
 }
+
 function requireLogin(fn){ if(S.user) return fn(); pendingAfterLogin=fn; openLogin(); }
 function openLogin(){
   openModal(`<div class="auth-grid">${illLeft()}
