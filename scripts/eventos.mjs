@@ -378,6 +378,15 @@ if (SECRETA) {
   });
   console.log(r.ok ? '::notice::Los pendientes del recolector quedaron aprobados' : `::warning::No se pudieron aprobar los pendientes: ${r.status}`);
 } else console.log('::notice::Sin llave secreta: los eventos entran como pendientes');
+// Fuentes que se dejaron de usar: sus eventos se retiran de la página
+const RETIRADAS = ['Meetup'];
+if (SECRETA) {
+  const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados?fuente=in.(${RETIRADAS.map(encodeURIComponent).join(',')})&estado=eq.aprobado`, {
+    method: 'PATCH', headers: { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}`, 'content-type': 'application/json', prefer: 'return=minimal' },
+    body: JSON.stringify({ estado: 'rechazado' }),
+  });
+  if (!r.ok) console.log(`::warning::No se pudieron retirar las fuentes viejas: ${r.status}`);
+}
 
 import { buscarFoto } from './fotos.mjs';
 
