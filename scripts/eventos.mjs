@@ -14,7 +14,7 @@ const SB_KEY = SECRETA || process.env.SUPABASE_KEY || 'sb_publishable_LfR-ayNY5b
 const ESTADO = SECRETA ? 'aprobado' : 'pendiente';
 const MAX_PAGINAS = 80;          // páginas por fuente en cada corrida
 const DIAS_ADELANTE = 90;        // solo eventos de hoy a 90 días
-const AGENTE = 'MtyMovidaBot/1.0 (+agenda cultural de Monterrey)';
+const AGENTE = 'MtyMovidaBot/1.0 (https://mty-movida.adrianaelias266.workers.dev; agenda cultural de Monterrey)';
 
 const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
 const limite = new Date(hoy.getTime() + DIAS_ADELANTE * 864e5);
@@ -453,11 +453,14 @@ async function famaDe(artista) {
   const v = total > 0 ? Math.round(Math.log10(total) * 10) / 10 : 0;
   FAMA.set(k, v); return v;
 }
+let FALLA_FAMA = '';
 async function completarFama(filas) {
+  let n = 0, c = 0;
   for (const x of filas) {
     if (!/concierto|musica|teatro|danza/.test(x.datos.categoria || '')) continue;
-    try { x.datos.fama = await famaDe(artistaDe(x.datos.nombre)); } catch { x.datos.fama = 0; }
+    c++; try { x.datos.fama = await famaDe(artistaDe(x.datos.nombre)); if (x.datos.fama) n++; } catch (e) { x.datos.fama = 0; FALLA_FAMA = String(e); }
   }
+  if (c) console.log(`::notice::${filas[0]?.fuente}: reconocimiento medido en ${n} de ${c}${FALLA_FAMA ? ' · error: ' + FALLA_FAMA.slice(0, 120) : ''}${ultimoEstado ? ' · última respuesta: ' + ultimoEstado : ''}`);
 }
 
 async function completarFotos(filas) {
