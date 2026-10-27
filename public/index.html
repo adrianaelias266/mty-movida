@@ -80,7 +80,7 @@ a{color:var(--accent)}
 .nav a:hover{color:var(--on-brand);background:rgba(255,255,255,.14)}
 .nav a[aria-current="page"]{color:var(--lila-ink);background:var(--lila-bg)}
 .nav a.hoy{color:var(--lila-bg)}
-@media (min-width:901px) and (max-width:1440px){.nav a{padding:7px 9px;font-size:13px}}
+@media (min-width:901px) and (max-width:1440px){.nav a{padding:7px 6px;font-size:12.5px}.nav{gap:0}}
 .nav a.hoy[aria-current="page"]{background:var(--lila-bg);color:var(--lila-ink)}
 .user-btn{flex:none;border:0;background:var(--lila-bg);color:var(--lila-ink);border-radius:999px;padding:6px 14px 6px 6px;display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
 .user-btn:hover{filter:brightness(1.05)}
@@ -713,6 +713,7 @@ form.card .full{grid-column:1/-1}
       <a href="#calendario" data-view="calendario">Mi calendario</a>
       <a href="#atracciones" data-view="atracciones">Atracciones</a>
       <a href="#agregar" data-view="agregar">Agrega tu evento</a>
+      <a href="#nosotros" data-view="nosotros">Quiénes somos</a>
     </nav>
     <button class="user-btn" id="userBtn"></button>
     <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><span></span></button>
