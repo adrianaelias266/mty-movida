@@ -885,7 +885,7 @@ const SCENES = {
     for(let t=0;t<8;t++){ const s=t/8, y=h*.62+s*h*.38, xl=w*.38-s*w*.33, xr=w*.62+s*w*.33; g.globalCompositeOperation='lighter'; glow(g,xl,y-8,12+s*10,'rgba(255,200,110,A)',.9); glow(g,xr,y-8,12+s*10,'rgba(255,200,110,A)',.9); g.globalCompositeOperation='source-over'; }
     g.fillStyle='#0f0d18'; g.beginPath(); g.moveTo(w*.44,h*.8); g.lineTo(w*.58,h*.8); g.lineTo(w*.55,h*.85); g.lineTo(w*.46,h*.85); g.fill(); vignette(g,w,h); }
 };
-const CAT_SCENE = {danza:'teatro',charlas:'bokeh',musica:'stage',concierto:'stage',letras:'bokeh',expo:'gallery',cine:'cine',teatro:'teatro',talleres:'talleres',fandoms:'fandoms',fiestas:'party',gastro:'market',deporte:'mountain'};
+const CAT_SCENE = {danza:'teatro',charlas:'bokeh',musica:'stage',concierto:'stage',letras:'bokeh',expo:'gallery',cine:'cine',teatro:'teatro',talleres:'talleres',fandoms:'fandoms',fiestas:'party',gastro:'market',deporte:'mountain',naturaleza:'mountain'};
 function cover(scene,seed,variant){
   const k=scene+'|'+seed+'|'+(variant||''); if(COVER[k]) return COVER[k];
   try{ const c=document.createElement('canvas'); c.width=640; c.height=400; const g=c.getContext('2d'); const r=rnd(seed);
@@ -938,6 +938,7 @@ const CI={
   fandoms:'<circle cx="9" cy="8" r="3.5"/><path d="M2 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17.5 14c2.5 0 4.5 2 4.5 4.5"/>',
   fiestas:'<path d="M3 21l5-14 9 9z"/><path d="M14 3c0 2 2 2 2 4M19 8c1 0 2 1 2 2M17 2.5l1 1M21.5 4l-1 1M10 2l.5 2"/>',
   gastro:'<path d="M6 2v8a2 2 0 002 2v10M4 2v6M8 2v6"/><path d="M18 2c-2 1-3 4-3 7h3v13"/>',
+  naturaleza:'<path d="M3 20l6-10 4 6 3-4 5 8z"/><path d="M12 4c2 2 2 4 0 6-2-2-2-4 0-6z"/>',
   deporte:'<circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M15 6h2l1.5 11M5.5 17L9 9h6l-3.5 8M9 9L8 6H6"/>'
 };
 const catDot=(k,big)=>`<span class="catdot ${big?'big':''}" style="--cc:${CATS[k].c}" title="${CATS[k].n}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${CI[k]}</svg></span>`;
@@ -946,7 +947,7 @@ const CATS = {
   musica:{n:'Música',c:'#7F95E4'}, concierto:{n:'Conciertos',c:'#F9447F'}, letras:{n:'Poesía y letras',c:'#FF8017'},
   expo:{n:'Exposiciones',c:'#1AC1B9'}, cine:{n:'Cine',c:'#5B72D8'}, teatro:{n:'Teatro y comedia',c:'#E55FA6'},
   talleres:{n:'Dinámicas y talleres',c:'#E8A800'}, fandoms:{n:'Comunidades y fandoms',c:'#12A39C'},
-  fiestas:{n:'Fiestas temáticas',c:'#F9447F'}, gastro:{n:'Mercados y gastronomía',c:'#FF8017'}, deporte:{n:'Deporte y bienestar',c:'#2DB37A'}, danza:{n:'Danza',c:'#9B6BF2'}, charlas:{n:'Charlas y conferencias',c:'#0E8580'}
+  fiestas:{n:'Fiestas temáticas',c:'#F9447F'}, gastro:{n:'Mercados y gastronomía',c:'#FF8017'}, deporte:{n:'Deporte y bienestar',c:'#2DB37A'}, danza:{n:'Danza',c:'#9B6BF2'}, charlas:{n:'Charlas y conferencias',c:'#0E8580'}, naturaleza:{n:'Naturaleza y senderismo',c:'#3FA34D'}
 };
 const ZONAS = {
   centro:{n:'Monterrey Centro',x:300,y:228}, sanpedro:{n:'San Pedro',x:212,y:300}, sannicolas:{n:'San Nicolás',x:318,y:146},
@@ -1166,7 +1167,7 @@ const CON={solo:{n:'Solo',why:'Ideal para ir solo'},amiga:{n:'Con una amiga o am
 const WHEN={hoy:'Hoy',manana:'Mañana',finde:'Este fin de semana',semana:'Esta semana'};
 const PRESU={gratis:'Gratis',p200:'Hasta $200',todo:'No importa'};
 const HORA={todo:'A cualquier hora',manana:'Mañana',tarde:'Tarde',noche:'Noche'};
-const MOOD_CAT={danza:['cultural','romantico','diferente'],charlas:['cultural','tranquilo','diferente'],letras:['tranquilo','cultural','romantico'],expo:['tranquilo','cultural','romantico'],cine:['tranquilo','romantico','salir'],musica:['salir','romantico','tranquilo'],concierto:['salir','cultural'],teatro:['cultural','salir','diferente'],talleres:['diferente','tranquilo','cultural'],fandoms:['diferente','salir'],fiestas:['salir'],gastro:['salir','tranquilo'],deporte:['activo','diferente']};
+const MOOD_CAT={danza:['cultural','romantico','diferente'],charlas:['cultural','tranquilo','diferente'],letras:['tranquilo','cultural','romantico'],expo:['tranquilo','cultural','romantico'],cine:['tranquilo','romantico','salir'],musica:['salir','romantico','tranquilo'],concierto:['salir','cultural'],teatro:['cultural','salir','diferente'],talleres:['diferente','tranquilo','cultural'],fandoms:['diferente','salir'],fiestas:['salir'],gastro:['salir','tranquilo'],deporte:['activo','diferente'],naturaleza:['activo','tranquilo','romantico']};
 const CON_FIT={solo:{fandoms:2,talleres:2,letras:2,expo:2,deporte:2,fiestas:0},pareja:{cine:2,musica:2,expo:2,letras:2,teatro:2,gastro:2,fandoms:0},amigos:{fiestas:2,concierto:2,gastro:2,fandoms:2,teatro:2},amiga:{musica:2,gastro:2,expo:2,cine:2,talleres:2,letras:2}};
 function moodsOf(e){ const m=new Set(MOOD_CAT[e.cat]); if(e.amb==='exterior'&&e.mod==='presencial'&&['gastro','cine'].includes(e.cat)) m.add('activo'); return m; }
 function conFit(e,c){ if(!c) return 1; if(c==='familia') return e.tags.includes('mayores')?-1:(e.tags.includes('ninos')?2:.4); if(e.mod==='linea'&&c!=='solo') return .3; const v=CON_FIT[c][e.cat]; return v===undefined?1:v; }
@@ -1266,7 +1267,30 @@ const ATR = [
   {id:'memoriaviva',n:'Museo de la Memoria Viva',tipo:'museo',zona:'otros',d:'Museo del Pueblo Mágico de Bustamante dedicado a la historia y la vida cotidiana del pueblo.',hor:'Viernes a domingo',cos:'Cuota baja',lle:'En el centro de Bustamante',epo:'Todo el año'},
   {id:'cosassimples',n:'Museo de las Cosas Simples',tipo:'museo',zona:'otros',d:'Pequeño museo de Bustamante con ropa tradicional, costumbres y utensilios antiguos de Nuevo León.',hor:'Consulta horarios antes de ir',cos:'Cuota baja',lle:'En el centro de Bustamante',epo:'Todo el año'},
   {id:'bernabe',n:'Bernabé Museo de las Casas',tipo:'museo',zona:'otros',d:'Antigua casona tipo hacienda en Mina, con un recorrido por la historia natural y humana del norte de México, desde los fósiles hasta la vida en el siglo XX.',hor:'Martes a domingo',cos:'Con costo de entrada',lle:'En el centro de Mina, al noroeste de Monterrey',epo:'Todo el año'},
-  {id:'linares',n:'Linares, Pueblo Mágico',tipo:'pueblo',zona:'santiago',d:'Pueblo del sur del estado, famoso por sus glorias (dulce de leche y nuez) y su centro histórico.',hor:'Abierto',cos:'Gratis recorrerlo',lle:'Carretera Nacional, unas dos horas al sur',epo:'Todo el año'}
+  {id:'linares',n:'Linares, Pueblo Mágico',tipo:'pueblo',zona:'santiago',d:'Pueblo del sur del estado, famoso por sus glorias (dulce de leche y nuez) y su centro histórico.',hor:'Abierto',cos:'Gratis recorrerlo',lle:'Carretera Nacional, unas dos horas al sur',epo:'Todo el año'},
+  // Parques de Nuevo León
+  {id:'estanzuela',n:'Parque Ecológico La Estanzuela',tipo:'montana',zona:'centro',d:'Área natural al sur de Monterrey con senderos entre el bosque que suben hasta varias cascadas pequeñas. El camino tiene partes empinadas y con piedras.',hor:'Abre temprano por la mañana; consulta el horario antes de ir',cos:'Cuota de entrada',lle:'En auto, por la carretera Nacional, rumbo a Valle Alto',epo:'Por la mañana, sobre todo después de las lluvias',dif:'Moderada'},
+  {id:'rioLaSilla',n:'Gran Parque Río La Silla',tipo:'parque',zona:'guadalupe',d:'Parque lineal a la orilla del río La Silla, con senderos, ciclovía y áreas verdes para caminar o correr.',hor:'Todos los días, de mañana a noche',cos:'Gratis',lle:'Por la avenida Eloy Cavazos, junto al zoológico La Pastora',epo:'Por la mañana o al atardecer'},
+  {id:'pastora',n:'Parque Zoológico La Pastora',tipo:'parque',zona:'guadalupe',d:'Zoológico y parque con áreas verdes en Guadalupe. Tiene leones, tigres, elefantes, un aviario y un trenecito para recorrerlo.',hor:'Martes a domingo',cos:'Con costo de entrada',lle:'Por la avenida Eloy Cavazos, Guadalupe',epo:'Por la mañana, antes del calor'},
+  {id:'tolteca',n:'Parque Tolteca',tipo:'parque',zona:'guadalupe',d:'Parque con un arroyo, puentes y patos, sendero para caminar y alberca con toboganes en temporada.',hor:'Martes a domingo',cos:'Entrada libre; la alberca tiene costo',lle:'Avenida Tolteca, Guadalupe',epo:'Fines de semana en familia'},
+  {id:'capitan',n:'Parque El Capitán',tipo:'parque',zona:'sanpedro',d:'Parque grande con pista para correr, fuentes iluminadas de noche, muro para escalar, juegos y canchas.',hor:'Todos los días, de mañana a noche',cos:'Gratis',lle:'Avenida Fuentes del Valle, San Pedro',epo:'Al atardecer, para ver las fuentes'},
+  {id:'rufino',n:'Parque Rufino Tamayo',tipo:'parque',zona:'sanpedro',d:'Parque con pasto amplio, pista para caminar, golf de disco, área cercada para perros y una cafetería. Ahí está también el Centro Cultural Plaza Fátima.',hor:'Todos los días, de mañana a noche',cos:'Gratis',lle:'Avenida Rufino Tamayo, San Pedro',epo:'Tardes y fines de semana'},
+  {id:'bosquesvalle',n:'Parque Bosques del Valle',tipo:'parque',zona:'sanpedro',d:'Parque arbolado con senderos de subidas y bajadas, aparatos para hacer ejercicio y música en vivo algunos domingos.',hor:'Todos los días',cos:'Gratis',lle:'Avenida Bosques del Valle, San Pedro',epo:'Por la mañana, con la sombra de los árboles'},
+  {id:'clouthier',n:'Parque Clouthier',tipo:'parque',zona:'santacatarina',d:'Parque deportivo con pista para correr, skatepark, canchas, juegos para niños y área para perros.',hor:'Todos los días',cos:'Gratis',lle:'Avenida Cuauhtémoc, colonia Fama, Santa Catarina',epo:'Fines de semana'},
+  {id:'ninosheroes',n:'Parque Niños Héroes',tipo:'parque',zona:'centro',d:'Uno de los parques más grandes de Monterrey, con lago, áreas verdes, la Pinacoteca de Nuevo León y otros museos dentro.',hor:'Martes a domingo',cos:'Cuota de entrada baja',lle:'Avenida Alfonso Reyes y Manuel L. Barragán, Monterrey',epo:'Fines de semana en familia'},
+  {id:'tucan',n:'Parque Tucán',tipo:'parque',zona:'centro',d:'Parque del poniente de Monterrey con pista de un kilómetro, aparatos para ejercicio, alberca y vista a los cerros.',hor:'Todos los días',cos:'Gratis; la alberca tiene costo',lle:'Colonia Valle de Infonavit, Monterrey',epo:'Por la mañana'},
+  {id:'roma',n:'Parque Ecológico Roma',tipo:'parque',zona:'centro',d:'Parque de barrio en el Distrito Tec con un circuito de un kilómetro para correr, juegos y cancha.',hor:'Abierto todo el día',cos:'Gratis',lle:'Colonia Roma, cerca del Tec de Monterrey',epo:'Por la mañana o al atardecer'},
+  {id:'linealescobedo',n:'Parque Lineal de Escobedo',tipo:'parque',zona:'escobedo',d:'Parque largo a lo largo de la avenida Las Torres, con ciclovía, pista para correr, canchas y vista a los cerros.',hor:'Abierto todo el día',cos:'Gratis',lle:'Avenida Las Torres, Escobedo',epo:'Al atardecer'},
+  {id:'divertiparque',n:'Divertiparque Escobedo',tipo:'parque',zona:'escobedo',d:'Parque acuático municipal con alberca de olas, toboganes y mesas con sombra.',hor:'Martes a domingo, en temporada',cos:'Cuota de entrada baja',lle:'Carretera a Colombia, Escobedo',epo:'Verano'},
+  {id:'fundadores',n:'Parque Fundadores',tipo:'parque',zona:'apodaca',d:'Parque de Apodaca con lago para pescar, asadores y áreas verdes. No se permiten mascotas.',hor:'Martes a domingo',cos:'Gratis',lle:'Colonia Moderno Apodaca, Apodaca',epo:'Fines de semana en familia'},
+  {id:'acuaticosanfco',n:'Parque Acuático San Francisco',tipo:'parque',zona:'apodaca',d:'Parque municipal con albercas para niños y adultos, asadores y salvavidas.',hor:'Martes a domingo, en temporada',cos:'Gratis',lle:'Centro de Apodaca',epo:'Verano'},
+  {id:'xenpal',n:'Xenpal, Centro de Conservación de Fauna',tipo:'parque',zona:'garcia',d:'Centro de conservación con animales que se pueden ver de cerca y un recorrido tipo safari, rumbo a las Grutas de García.',hor:'Todos los días',cos:'Con costo de entrada',lle:'Carretera a Grutas de García, García',epo:'Por la mañana'},
+  {id:'presaboca',n:'Presa de la Boca',tipo:'parque',zona:'santiago',d:'Presa con malecón, paseos en lancha y catamarán, renta de caballos y restaurantes de mariscos.',hor:'Todos los días',cos:'Cuota de entrada que incluye estacionamiento',lle:'Por la carretera Nacional, en Santiago',epo:'De día, en familia'},
+  {id:'cumbres',n:'Parque Nacional Cumbres de Monterrey',tipo:'montana',zona:'santacatarina',d:'Área natural protegida que rodea Monterrey, con montañas, cañones y muchos senderos para todos los niveles.',hor:'Todo el año',cos:'Depende de la zona que visites',lle:'Por Santa Catarina (Huasteca) o por Santiago',epo:'Otoño, invierno y primavera',dif:'De fácil a difícil'},
+  {id:'potrerochico',n:'Parque Potrero Chico',tipo:'montana',zona:'otros',d:'Cañón de paredes de roca, famoso en el mundo para escalar. También tiene caminatas con muy buenas vistas.',hor:'Todos los días',cos:'Con costo de entrada',lle:'En Hidalgo, a una hora al norte de Monterrey',epo:'Otoño e invierno',dif:'De moderada a difícil'},
+  {id:'elcielito',n:'El Cielito',tipo:'montana',zona:'santiago',d:'Sendero corto y sencillo en Santiago que lleva a pozas y pequeñas cascadas, que tienen agua solo en temporada de lluvias.',hor:'Todo el día',cos:'Gratis',lle:'Santiago, rumbo a la Presa de la Boca',epo:'Después de las lluvias',dif:'Fácil'},
+  {id:'puertogringo',n:'Mirador Puerto Gringo',tipo:'montana',zona:'santiago',d:'Caminata de subida en la sierra de Santiago hasta un mirador con vista al valle, entre robles y pinos.',hor:'Todo el día',cos:'Gratis',lle:'Desde El Cercado o Cieneguilla, Santiago',epo:'Por la mañana, en días sin lluvia',dif:'Moderada'},
+  {id:'chipitin',n:'Cascadas del Chipitín',tipo:'montana',zona:'santiago',d:'Cascada en la sierra de Santiago a la que se llega por camino de terracería y una caminata.',hor:'Consulta el horario antes de ir',cos:'Cuota de entrada',lle:'Desde Santiago, rumbo a Laguna de Sánchez y Potrero Redondo',epo:'Primavera y verano',dif:'Moderada'},
 ];
 const TIPOS = {museo:'Museos',parque:'Parques',montana:'Montaña y senderismo',pueblo:'Pueblos Mágicos',paseo:'Paseos'};
 const tipoOf = a => a.tipoLabel || a.tipo;
@@ -1670,7 +1694,7 @@ function diaCompletoHTML(){
   const precios=con.map(p=>p.e.price), total=precios.filter(x=>typeof x==='number').reduce((a,b)=>a+b,0), sinPrecio=precios.some(x=>x==null);
   const otroDia=!['hoy','manana','fecha'].includes(PA.cuando);
   return `<div class="itin">
-    <div class="itin-h"><span class="eyebrow">Tu día completo</span><h3>${relDay(CP.off)}${CP.off>1?'':', '+longDate(CP.off)}</h3>
+    <div class="itin-h"><span class="eyebrow">Tu plan completo</span><h3>${relDay(CP.off)}${CP.off>1?'':', '+longDate(CP.off)}</h3>
       <p>${con.length} ${con.length===1?'parada':'paradas'}${con.length?` · ${total?`desde $${total} por persona`:sinPrecio?'revisa los precios':'todo gratis'}${total&&sinPrecio?' más lo que cueste lo demás':''}`:''}${otroDia?' · elegimos el día con más opciones':''}</p></div>
     <div class="tl itin-tl">${paradas.map((p,i)=>{ const c=MOM_COL[p.m];
       if(!p.e) return `<div class="tl-day">${MOMENTOS[p.m]}</div><div class="it-none">No encontramos algo para la ${MOMENTOS[p.m].toLowerCase()} con lo que elegiste. Prueba con otro presupuesto o tipo de actividad.</div>`;
@@ -1719,7 +1743,7 @@ function dcPasoHTML(){
   if(p===4) body=`<p class="hint" style="margin:0 0 10px">Marca las que quieras considerar. Puedes elegir varias.</p><div class="chips">${chip('data-dccat','',!DC.cats.length,'De todo un poco')}${Object.entries(CATS).map(([k,c])=>`<button class="chip" data-dccat="${k}" aria-pressed="${DC.cats.includes(k)}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div>`;
   if(p===5) body=`<div class="chips">${Object.entries(DC_PRESU).map(([k,v])=>chip('data-dcpresu',k,DC.presu===k,v)).join('')}</div>`;
   const listo=p!==2||DC.con;
-  return `<div class="dcwiz"><span class="eyebrow">Ármame un día completo · Paso ${p+1} de ${DC_PASOS.length}</span>
+  return `<div class="dcwiz"><span class="eyebrow">Ármame un plan completo · Paso ${p+1} de ${DC_PASOS.length}</span>
     <div class="dcbar"><i style="width:${(p+1)/DC_PASOS.length*100}%"></i></div>
     <h2>${DC_PASOS[p]}</h2>${body}
     <div class="row dcnav">${p?'<button class="btn" id="dcAtras">← Atrás</button>':'<span></span>'}${p<DC_PASOS.length-1?`<button class="btn primary" id="dcSig" ${listo?'':'disabled'}>Siguiente →</button>`:`<button class="btn primary" id="dcArmar">${I.dice}Armar mi día</button>`}</div></div>`;
@@ -1761,20 +1785,26 @@ function armarDC(){
   elegidos.sort((a,b)=>a.h-b.h);
   const paradas=elegidos.map(x=>({tipo:'ev',e:x.e,ini:x.h,fin:Math.min(DC.hasta,x.h+dcDur(x.e)),alt:ops.filter(o=>o!==x&&!elegidos.includes(o)).map(o=>o.e)}));
   // Un lugar para visitar en el hueco más grande (o para completar las tres paradas)
-  if(paradas.length<3){
+  for(let vuelta=0;vuelta<2&&paradas.length<3;vuelta++){
+    paradas.sort((a,b)=>a.ini-b.ini);
     const huecos=[]; let t=DC.desde; paradas.forEach(p=>{ if(p.ini-t>=1.5) huecos.push([t,p.ini]); t=p.fin+.5; }); if(DC.hasta-t>=1.5) huecos.push([t,DC.hasta]);
+    if(!huecos.length) break;
     huecos.sort((a,b)=>(b[1]-b[0])-(a[1]-a[0]));
-    const zonaRef=(paradas[0]&&paradas[0].e.zona)||DC.zonas[0]||'centro';
-    for(const [a,b] of huecos){ if(paradas.length>=3) break;
-      const ini=a, fin=Math.min(b,a+(b-a>=3?2.5:1.5));
-      const lugares=ATR.filter(x=>{ const tp=tipoOf(x); if(DC.zonas.length&&!DC.zonas.includes(x.zona)) return false; if(tp==='pueblo'||tp==='montana') return lapso>=7&&ini<14; if(tp==='museo') return fin<=18.5&&dOf(DC.off).getDay()!==1; return true; })
+    const zonaRef=(paradas[0]&&(paradas[0].e||paradas[0].a).zona)||DC.zonas[0]||'centro';
+    for(const [a,b] of huecos.slice(0,1)){
+      const ini=a, fin=Math.min(b,a+(b-a>=3?2.5:1.5)), largo=Math.min(b,a+3);
+      const nat=DC.cats.includes('naturaleza'), soloNat=nat&&DC.cats.length===1;
+      const lugares=ATR.filter(x=>{ const tp=tipoOf(x); if(DC.zonas.length&&!DC.zonas.includes(x.zona)) return false;
+        if(soloNat&&!['parque','montana'].includes(tp)) return false;
+        if(tp==='montana'&&paradas.some(p=>p.a&&tipoOf(p.a)==='montana')) return false;
+        if(tp==='montana') return ini<=13&&b-a>=3; if(tp==='pueblo') return lapso>=7&&ini<14; if(tp==='museo') return fin<=18.5&&dOf(DC.off).getDay()!==1; return true; })
         .filter(x=>!paradas.some(p=>p.a&&p.a.id===x.id)&&!DC.fuera.includes('atr:'+x.id))
-        .sort((x,y)=>(y.zona===zonaRef)-(x.zona===zonaRef)||(ATR_FOTO[y.id]?1:0)-(ATR_FOTO[x.id]?1:0));
+        .sort((x,y)=>(nat?({montana:2,parque:1}[tipoOf(y)]||0)-({montana:2,parque:1}[tipoOf(x)]||0):0)||(y.zona===zonaRef)-(x.zona===zonaRef)||(ATR_FOTO[y.id]?1:0)-(ATR_FOTO[x.id]?1:0));
       const temporada=EVENTS.filter(e=>e.range&&e.mod!=='linea'&&e.off<=DC.off&&dcPasa(e)&&(UNAVEZ.test(e.t)||esFest(e))&&!DC.fuera.includes(e.id));
       const k='hueco'+Math.round(ini*2), elegido=DC.pick[k];
       const cand=[...temporada.map(e=>({e})),...lugares.map(a=>({a}))];
       let c=cand.find(o=>(o.e&&o.e.id===elegido)||(o.a&&'atr:'+o.a.id===elegido))||cand[0];
-      if(c) paradas.push({tipo:c.e?'ev':'atr',e:c.e,a:c.a,ini,fin,libre:true,k,alt:cand.filter(o=>o!==c)});
+      if(c) paradas.push({tipo:c.e?'ev':'atr',e:c.e,a:c.a,ini,fin:c.a&&tipoOf(c.a)==='montana'?largo:fin,libre:true,k,alt:cand.filter(o=>o!==c)});
     }
     paradas.sort((a,b)=>a.ini-b.ini);
   }
@@ -1859,7 +1889,7 @@ function viewPlan(){
         <h1>¿Qué plan <span class="dia">${dia}</span>?</h1>
         <div class="daytabs" role="group" aria-label="¿Para cuándo?">${Object.entries(DIA_TABS).map(([k,v])=>`<button data-pa="cuando" data-v="${k}" aria-pressed="${PA.cuando===k}">${v}</button>`).join('')}${PA.cuando==='fecha'?`<label class="dayinp"><span class="sr">Fecha</span><input type="date" id="paFecha" value="${isoOf(PA.foff)}" min="${isoOf(0)}" max="${isoOf(MAXOFF)}"></label>`:''}</div>
         <p>${list.length?`Hay ${list.length} eventos ${dia}.`:`No hay eventos registrados para ${dia}.`} Te armamos un día completo con horarios.</p>
-        <button class="btn lila" id="dcAbrir">${I.dice}Ármame un día completo</button></div>
+        <button class="btn lila" id="dcAbrir">${I.dice}Ármame un plan completo</button></div>
       <div class="hoystats">
         <button class="stat" data-qd="todo"><b>${list.length}</b><span>eventos ${PA.cuando==='fecha'?'ese día':dia}</span></button>
         <button class="stat" data-qd="gratis"><b>${free}</b><span>gratis</span></button>

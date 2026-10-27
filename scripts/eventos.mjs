@@ -95,7 +95,7 @@ function categoria(t) {
   const reglas = [['charlas', /charla|conferencia|conversatorio|diálogo|panel|club/], ['talleres', /taller|clase|curso|seminario/], ['danza', /danza|ballet|flamenco|baile/],
     ['teatro', /teatro|obra|comedia|títeres|clown|inmersiv|jurado/], ['cine', /cine|película|cortometraje|proyección|cineteca/], ['expo', /exposición|muestra|galería|museo|inauguración/],
     ['letras', /lectura|poesía|libro|literatura|cuento/], ['concierto', /concierto|orquesta|sinfónic|banda|tour/], ['musica', /música|musical|canto|coro/],
-    ['fiestas', /fiesta|festival de calaveras|noche de/], ['gastro', /mercado|bazar|gastronom|comida/], ['deporte', /carrera|rodada|yoga|senderismo/]];
+    ['fiestas', /fiesta|festival de calaveras|noche de/], ['gastro', /mercado|bazar|gastronom|comida/], ['naturaleza', /senderismo|caminata|hiking|naturaleza|observaci[oó]n de aves|bosque|cascada|murci[eé]lago|reserva natural|ecol[oó]gic/], ['deporte', /carrera|rodada|yoga/]];
   return (reglas.find(([, r]) => r.test(t)) || ['expo'])[0];
 }
 function municipio(t, porDefecto) {
@@ -348,7 +348,7 @@ async function filasChipinque(f) {
     return fila(f, {
       id: `${f.datos}#${e.id}#${fecha}`, nombre: limpiar(e.title), fecha, hora: hora12(e.time), lugar: `${limpiar(e.location)}, Reserva Natural Chipinque`.replace(/^Reserva Natural Chipinque, /, ''),
       desc: limpiar([e.subtitle && e.subtitle + '.', e.description, e.frequency === 'semanal' && `${e.schedule}.`, e.time && `Horario: ${e.time}.`].filter(Boolean).join(' ')),
-      cat: categoria(`${e.categoryLabel || ''} ${e.title}`), precio: precio ? Number(precio.replace(/,/g, '')) : null, espacio: 'exterior', municipio: 'sanpedro',
+      cat: /taller|infantil/i.test(e.category || '') ? categoria(`${e.categoryLabel || ''} ${e.title}`) : /yoga|sound|medita/i.test(e.title) ? 'deporte' : 'naturaleza', precio: precio ? Number(precio.replace(/,/g, '')) : null, espacio: 'exterior', municipio: 'sanpedro',
       organizador: 'Reserva Natural Chipinque', url: f.sitio, foto: e.imageUrl ? f.medios + e.imageUrl : null,
     });
   }).filter(Boolean);
