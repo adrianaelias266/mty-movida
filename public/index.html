@@ -1878,7 +1878,7 @@ const dcDur=e=>['concierto','teatro','danza','cine'].includes(e.cat)?2:1.5;
 function dcPuntos(e){ return esperado(e)+(DC.turista?(esIcono(e)?9:0)+(['cine','talleres','charlas','fandoms'].includes(e.cat)?-4:0):0)+(DC.cats.length&&DC.cats.includes(e.cat)?6:0)+(DC.con?conFit(e,DC.con)*1.5:0)+(e.rec?1:0); }
 function armarDC(){
   const lapso=DC.hasta-DC.desde, meta=DC.turista?2:(lapso>=5?2:3);
-  const ops=eventosDelDia(DC.off).filter(e=>{ const h=hNum(e.h); return h!=null&&h>=DC.desde&&h+1<=DC.hasta&&dcPasa(e)&&!DC.fuera.includes(e.id)&&!(DC._tit&&DC._tit.has(e.t))&&(!DC.cats.length||DC.cats.includes(e.cat))&&!(DC.turista&&!DC.cats.length&&['charlas','talleres','fandoms'].includes(e.cat)); })
+  const ops=eventosDelDia(DC.off).filter(e=>{ const h=hNum(e.h); return h!=null&&h>=DC.desde&&h+1<=DC.hasta&&dcPasa(e)&&!DC.fuera.includes(e.id)&&!(DC._tit&&DC._tit.has(e.t))&&(!DC.cats.length||DC.cats.includes(e.cat))&&!(DC.turista&&!DC.cats.length&&['charlas','talleres','fandoms','letras'].includes(e.cat)); })
     .map(e=>({e,h:hNum(e.h),p:dcPuntos(e)})).sort((a,b)=>b.p-a.p);
   const elegidos=[], cabe=(x)=>elegidos.every(y=>x.h>=y.h+dcDur(y.e)+.5||x.h+dcDur(x.e)+.5<=y.h), tipos=()=>elegidos.map(y=>y.e.cat);
   Object.values(DC.pick).forEach(id=>{ const x=ops.find(o=>o.e.id===id); if(x&&cabe(x)) elegidos.push(x); });
