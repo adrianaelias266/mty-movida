@@ -38,7 +38,7 @@ export const FUENTES = [
   { nombre: 'Cultura UANL', sitio: 'https://cultura.uanl.mx', lector: 'tribe', lugar: 'UANL, Monterrey', municipio: 'centro' },
   // Fever (conciertos a la luz de las velas, obras y experiencias): se siguen los enlaces de cada plan; solo planes a menos de 60 km de Monterrey
   { nombre: 'Fever', sitio: 'https://feverup.com', paginas: ['https://feverup.com/es/monterrey', 'https://feverup.com/es/monterrey/eventos-musicales', 'https://feverup.com/es/monterrey/teatro'], enlaces: /feverup\.com\/m\/\d+/, filtro: /./, municipio: 'centro', organizadorDelEvento: true, organizadorLugar: true,
-    planFever: true, radioKm: 60, excluir: /tarjeta regalo|lista de espera/i },
+    planFever: true, radioKm: 60, excluir: /tarjeta regalo|lista de espera/i, limpiarNombre: /^(Boletos|Entradas)\s+|\s+-\s+Monterrey$/gi },
   { nombre: 'Bloom Entertainment', sitio: 'https://www.eventbrite.com.mx', paginas: ['https://www.eventbrite.com.mx/o/bloom-entertainment-62162028433'], enlaces: /eventbrite\.com\.mx\/e\//, filtro: /./, municipio: 'centro' },
   { nombre: 'Casa Padre Mier', sitio: 'https://www.eventbrite.com.mx', paginas: ['https://www.eventbrite.com.mx/o/casa-padre-mier-34353364941'], enlaces: /eventbrite\.com\.mx\/e\//, filtro: /./, municipio: 'centro' },
   { nombre: 'San Pedro Parques', sitio: 'https://sanpedroparques.mx', paginas: ['https://sanpedroparques.mx/calendario-eventos/'], navegador: true, filtro: /./, municipio: 'sanpedro',

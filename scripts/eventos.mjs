@@ -93,7 +93,7 @@ const limpiar = t => String(t || '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g,
 function categoria(t) {
   t = t.toLowerCase();
   const reglas = [['charlas', /charla|conferencia|conversatorio|diálogo|panel|club/], ['talleres', /taller|clase|curso|seminario/], ['danza', /danza|ballet|flamenco|baile/],
-    ['teatro', /teatro|obra|comedia|títeres|clown/], ['cine', /cine|película|cortometraje|proyección|cineteca/], ['expo', /exposición|muestra|galería|museo|inauguración/],
+    ['teatro', /teatro|obra|comedia|títeres|clown|inmersiv|jurado/], ['cine', /cine|película|cortometraje|proyección|cineteca/], ['expo', /exposición|muestra|galería|museo|inauguración/],
     ['letras', /lectura|poesía|libro|literatura|cuento/], ['concierto', /concierto|orquesta|sinfónic|banda|tour/], ['musica', /música|musical|canto|coro/],
     ['fiestas', /fiesta|festival de calaveras|noche de/], ['gastro', /mercado|bazar|gastronom|comida/], ['deporte', /carrera|rodada|yoga|senderismo/]];
   return (reglas.find(([, r]) => r.test(t)) || ['expo'])[0];
