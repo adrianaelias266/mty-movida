@@ -30,10 +30,14 @@ jobs:
           TICKETMASTER_KEY: ${{ secrets.TICKETMASTER_KEY }}
       - name: Fotos libres para los eventos fijos de la página
         run: node scripts/fotos-fijas.mjs
-      - name: Guardar fotos encontradas
+      - name: Revisar si los festivales ya anunciaron fechas
+        run: node scripts/festivales.mjs
+        env:
+          TICKETMASTER_KEY: ${{ secrets.TICKETMASTER_KEY }}
+      - name: Guardar fotos y festivales
         run: |
           git config user.name "mty-movida-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add public/data/fotos-fijas.json
-          git diff --cached --quiet || git commit -m "Fotos libres para eventos de la agenda"
+          git add public/data/fotos-fijas.json public/data/festivales-auto.json
+          git diff --cached --quiet || git commit -m "Fotos libres y revisión de festivales"
           git pull --rebase -q && git push

@@ -580,6 +580,17 @@ a.stat{text-decoration:none}
 .atr h3{font-size:16px}
 .atr p{margin:0;color:var(--muted);font-size:13px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .pie{margin:28px 0 0;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);text-align:center}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.fest{position:relative;background:var(--surface);box-shadow:var(--shadow);border-radius:var(--r);padding:16px 16px 14px;display:flex;flex-direction:column;gap:8px;text-align:left;border:0;cursor:pointer;overflow:hidden;font:inherit;color:inherit}
+.fest::before{content:"";position:absolute;inset:0 0 auto;height:6px;background:var(--fc)}
+.fest .fmes{display:flex;align-items:center;gap:8px}
+.fest .fdot{width:34px;height:34px;border-radius:50%;background:var(--fc);display:grid;place-items:center;font-family:var(--f-wm);font-weight:800;font-size:12px;text-transform:uppercase;color:var(--fi);flex:none}
+.fest h3{margin:0;font-size:18px;line-height:1.2}
+.fest p{margin:0;font-size:14px;color:var(--muted)}
+.fest .fst{align-self:flex-start;font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 10px;background:var(--sunk)}
+.fest .fst.ahora{background:#F9447F;color:#fff}.fest .fst.fechas{background:#1AC1B9;color:#06302E}
+.fmonth{grid-column:1/-1;margin:14px 0 0;font-family:var(--f-display);font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.fmonth:first-child{margin-top:0}
 .note{background:var(--sun-soft);color:var(--sun);border-radius:8px;padding:10px 14px;font-size:13px;font-weight:500;margin-bottom:18px}
 
 /* Formulario */
@@ -676,6 +687,7 @@ form.card .full{grid-column:1/-1}
       <a href="#inicio" data-view="inicio">Inicio</a>
       <a href="#plan" data-view="plan" class="hoy">¿Qué plan?</a>
       <a href="#eventos" data-view="eventos">Eventos</a>
+      <a href="#festivales" data-view="festivales">Festivales</a>
       <a href="#calendario" data-view="calendario">Mi calendario</a>
       <a href="#atracciones" data-view="atracciones">Atracciones</a>
       <a href="#agregar" data-view="agregar">Agrega tu evento</a>
@@ -1944,6 +1956,59 @@ function openAtr(id){
     <p style="margin:0;font-size:12px;color:var(--muted)">Información de ejemplo. Verifica horarios y costos antes de ir.</p>`);
 }
 
+/* ---------- Vista: Festivales ---------- */
+let FEST=[], festTipo='';
+const FTIPOS={musica:'Música',electronica:'Electrónica',gastro:'Comida',bebidas:'Cerveza, vino y mezcal',cultura:'Arte y cultura',cine:'Cine',familia:'En familia','cultura-pop':'Cómics y anime',otro:'Otros'};
+const FCOL={musica:'#F9447F',electronica:'#7F95E4',gastro:'#FF8017',bebidas:'#FDBD1A',cultura:'#CBA6FF',cine:'#1AC1B9',familia:'#FDBD1A','cultura-pop':'#7F95E4',otro:'#CBA6FF'};
+let FAUTO={}; fetch('data/festivales-auto.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(d){ FAUTO=d; if(typeof render==='function'&&/festivales/.test(location.hash)) render(); } }).catch(()=>{});
+fetch('data/festivales.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(d&&d.festivales){ FEST=d.festivales; if(typeof render==='function'&&/festivales/.test(location.hash)) render(); } }).catch(()=>{});
+function festEvs(f){ if(!f.claves) return []; let r; try{ r=new RegExp(f.claves,'i'); }catch(e){ return []; } return EVENTS.filter(e=>e.off>=0&&e.off<=MAXOFF&&r.test(e.t)).sort((a,b)=>a.off-b.off); }
+function fRango(a,b){ const d=new Date(a+'T00:00'), e=new Date((b||a)+'T00:00'); if(!b||a===b) return `${d.getDate()} de ${MESL[d.getMonth()]} de ${d.getFullYear()}`;
+  return d.getMonth()===e.getMonth()&&d.getFullYear()===e.getFullYear()?`${d.getDate()} al ${e.getDate()} de ${MESL[e.getMonth()]} de ${e.getFullYear()}`:`${d.getDate()} de ${MESL[d.getMonth()]} al ${e.getDate()} de ${MESL[e.getMonth()]} de ${e.getFullYear()}`; }
+function festInfo(f){
+  const hoyI=isoOf(0), evs=festEvs(f), pp=f.proxima||(FAUTO[f.id]&&FAUTO[f.id].detectado), px=pp&&(pp.fin||pp.inicio)>=hoyI?pp:null;
+  if(px&&px.inicio<=hoyI) return {k:'ahora',t:'¡Es ahora! Hasta el '+fRango(px.fin||px.inicio).replace(/ de \d{4}$/,''),orden:0,mes:null,evs};
+  if(evs.length&&evs[0].off<=0) return {k:'ahora',t:'¡Es hoy!',orden:0,mes:null,evs};
+  if(px) return {k:'fechas',t:'Próxima edición: '+fRango(px.inicio,px.fin),orden:1+(new Date(px.inicio+'T00:00')-new Date(hoyI+'T00:00'))/864e5,mes:new Date(px.inicio+'T00:00').getMonth(),evs};
+  if(evs.length) return {k:'fechas',t:'Ya hay fechas: '+relDay(evs[0].off),orden:1+evs[0].off,mes:dOf(evs[0].off).getMonth(),evs};
+  const m=new Date().getMonth(), ms=(f.meses||[]).map(x=>x-1), sig=ms.length?ms.map(x=>(x-m+12)%12).sort((a,b)=>a-b)[0]:99;
+  return {k:'temporada',t:f.temporada?'Suele ser en '+f.temporada:'Fecha por anunciar',orden:1000+sig,mes:ms.length?(m+sig)%12:null,evs};
+}
+function festCard(f){
+  const x=festInfo(f), c=FCOL[f.tipo]||'#CBA6FF', m=x.mes!=null?MES[x.mes]:'¿?';
+  return `<button class="fest" data-fest="${esc(f.id)}" style="--fc:${c};--fi:${inkOn?inkOn(c):'#1E1714'}">
+    <span class="fmes"><span class="fdot">${m}</span><span class="eyebrow">${esc(FTIPOS[f.tipo]||'Festival')} · ${esc(f.lugar||'')}</span></span>
+    <h3>${esc(f.nombre)}</h3><p>${esc(f.desc||'')}</p><span class="fst ${x.k}">${esc(x.t)}</span>${x.evs.length?`<span style="font-size:13px;font-weight:600">${x.evs.length} ${x.evs.length===1?'evento':'eventos'} en la agenda →</span>`:''}</button>`;
+}
+function viewFest(){
+  const lista=FEST.filter(f=>!festTipo||f.tipo===festTipo).map(f=>({f,x:festInfo(f)})).sort((a,b)=>a.x.orden-b.x.orden);
+  const ya=lista.filter(o=>o.x.k!=='temporada'), luego=lista.filter(o=>o.x.k==='temporada');
+  let mesAnt=null; const porMes=luego.map(o=>{ const h=o.x.mes!==mesAnt?`<h3 class="fmonth">${o.x.mes!=null?MESL[o.x.mes]:'Sin fecha fija'}</h3>`:''; mesAnt=o.x.mes; return h+festCard(o.f); }).join('');
+  const usados=[...new Set(FEST.map(f=>f.tipo))];
+  return `<div class="wrap page"><div class="phead"><div><span class="script">Para no perdértelos</span><h1>Festivales de Monterrey</h1><p>Música, comida, cine, arte y más. Cuando un festival anuncia fechas o abre su venta de boletos, aparece aquí arriba y en la agenda.</p></div></div>
+    <div class="chips" style="margin-bottom:16px"><button class="chip" data-ftipo="" aria-pressed="${!festTipo}">Todos</button>${usados.filter(k=>FTIPOS[k]).map(k=>`<button class="chip" data-ftipo="${k}" aria-pressed="${festTipo===k}">${FTIPOS[k]}</button>`).join('')}</div>
+    ${!FEST.length?'<p>Estamos preparando la lista de festivales.</p>':''}
+    ${ya.length?`<div class="sechead"><h2>Ya tienen fechas</h2></div><div class="fgrid" style="margin-bottom:28px">${ya.map(o=>festCard(o.f)).join('')}</div>`:''}
+    ${luego.length?`<div class="sechead"><h2>Durante el año</h2></div><div class="fgrid">${porMes}</div>`:''}
+    <p class="pie">Las fechas de cada temporada son aproximadas, según ediciones anteriores. Confirma en la página oficial de cada festival.</p></div>`;
+}
+function bindFest(){
+  document.querySelectorAll('[data-ftipo]').forEach(b=>b.onclick=()=>{ festTipo=b.dataset.ftipo; render(); });
+  document.querySelectorAll('[data-fest]').forEach(b=>b.onclick=()=>openFest(b.dataset.fest));
+}
+function openFest(id){
+  const f=FEST.find(x=>x.id===id); if(!f) return; const x=festInfo(f);
+  const ult=f.ultima&&f.ultima.inicio?fRango(f.ultima.inicio,f.ultima.fin):null;
+  openModal(`<div class="dhead"><span class="eyebrow">${esc(FTIPOS[f.tipo]||'Festival')}</span><h2>${esc(f.nombre)}</h2><p style="margin:0">${esc(f.desc||'')}</p></div>
+    <div class="facts">
+      <div class="fact">${I.cal}<div><small>${x.k==='temporada'?'Temporada':'Fechas'}</small>${esc(x.k==='temporada'?(f.temporada||'Por anunciar'):x.t.replace(/^Próxima edición: /,''))}</div></div>
+      <div class="fact">${I.pin}<div><small>Dónde</small>${esc(f.lugar||'Por anunciar')}</div></div>
+      ${ult?`<div class="fact">${I.sun}<div><small>Edición anterior</small>${esc(ult)}</div></div>`:''}
+    </div>
+    <div class="row">${f.sitio?`<a class="btn primary small" href="${esc(f.sitio)}" target="_blank" rel="noopener">Página oficial</a>`:''}${f.redes?`<a class="btn small" href="${esc(f.redes)}" target="_blank" rel="noopener">Redes sociales</a>`:''}</div>
+    ${x.evs.length?`<div><div class="section-t" style="margin-bottom:10px">En la agenda</div><div class="evgrid">${x.evs.map(card).join('')}</div></div>`:'<p style="margin:0;font-size:13px;color:var(--muted)">Todavía no hay eventos de este festival en la agenda. En cuanto abran su venta de boletos o anuncien su programa, aparecerán aquí.</p>'}`);
+}
+
 /* ---------- Vista: Agrega tu evento ---------- */
 function viewAgregar(){
   return `<div class="wrap page"><div class="phead"><div><span class="script">Para organizadores</span><h1>Agrega tu evento</h1><p>Llena el formulario y lo revisamos antes de publicarlo. Es gratis.</p></div></div>
@@ -2120,7 +2185,7 @@ function bindCommon(root){
 }
 
 /* ---------- Navegación ---------- */
-const VIEWS={inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],agregar:[viewAgregar,bindAgregar]};
+const VIEWS={inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],festivales:[viewFest,bindFest],agregar:[viewAgregar,bindAgregar]};
 let current='inicio';
 function go(v){ if(location.hash!=='#'+v) location.hash=v; else { current=v; render(); } window.scrollTo(0,0); }
 function render(){
