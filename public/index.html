@@ -182,7 +182,10 @@ a{color:var(--accent)}
 @media (max-width:820px){.homehero{grid-template-columns:minmax(0,1fr)}}
 .nosbar{display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;color:inherit;background:var(--surface);box-shadow:var(--shadow);border-radius:18px;padding:16px 20px;margin:28px 0 0;font-size:14px}
 .nosbar b{display:block;font-family:var(--f-display);font-size:18px}
-.homehero.nos p{max-width:52ch}
+.nospage{display:flex;flex-direction:column;align-items:center;gap:22px}
+.nos-t{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,5vw,56px);letter-spacing:-.035em;margin:0;text-align:center}
+.nos-art{width:min(100%,520px);aspect-ratio:1/0.82;display:flex}.nos-art .blk{flex:1}
+.nos-tx{max-width:62ch;display:flex;flex-direction:column;gap:14px}.nos-tx p{margin:0;font-size:17px;line-height:1.6}
 .homehero.solo{grid-template-columns:minmax(0,1fr)}
 .homehero .lead{display:flex;flex-direction:column;justify-content:center;gap:14px;padding-block:10px}
 .homehero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,5vw,60px);letter-spacing:-.035em;line-height:1.02}
@@ -1729,13 +1732,15 @@ function bindDiaCompleto(){
 
 /* ---------- Vista: Quiénes somos ---------- */
 function viewNos(){
-  return `<div class="wrap page">
-    <section class="homehero nos"><div class="lead"><span class="script">Quiénes somos</span><h1>Somos Adriana y Sharon</h1>
-      <p>Somos amigas y nos encanta salir, hacer planes improvisados y disfrutar de los eventos, aunque a veces no sepamos muy bien de qué se tratan.</p>
+  return `<div class="wrap page nospage">
+    <h1 class="nos-t">Quiénes somos</h1>
+    <div class="nos-art"><div class="blk" id="blk" aria-hidden="true">${PZ_ORDER.map(k=>pieceHTML(k)).join("")}</div></div>
+    <div class="nos-tx">
+      <p>Nosotras somos Adriana y Sharon. Somos amigas y nos encanta salir, hacer planes improvisados y disfrutar de los eventos, aunque a veces no sepamos muy bien de qué se tratan.</p>
       <p>Creemos que en Monterrey hay mucho más que ir a comer o por un café, pero casi siempre los planes se quedan ahí. Cuando Adriana conoció a Sharon, descubrió que la ciudad está llena de eventos, y muchos son gratis.</p>
       <p>Esa es la esencia de Mty Movida: que conozcas todo lo que pasa en la ciudad, que salgas y vivas la cultura y el entretenimiento. Aquí te juntamos los conciertos, el teatro, las exposiciones, los festivales y los planes al aire libre de toda la zona metropolitana, porque salir es la mejor excusa para encontrarte con los demás, ya sea con tus amigos de siempre o con quien está a tu lado disfrutando lo mismo.</p>
-      <div class="row"><a class="btn primary" href="#hoy">¿Qué plan hoy?</a><a class="btn" href="#agregar">Agrega tu evento</a></div></div>
-      <div class="blk" id="blk" aria-hidden="true">${PZ_ORDER.map(k=>pieceHTML(k)).join("")}</div></section>
+      <div class="row"><a class="btn primary" href="#hoy">¿Qué plan hoy?</a><a class="btn" href="#agregar">Agrega tu evento</a></div>
+    </div>
   </div>`;
 }
 function bindNos(){ bindPieces(); }
