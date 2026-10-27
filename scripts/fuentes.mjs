@@ -24,6 +24,8 @@ export const FUENTES = [
     excluir: /estacionamiento|parking|vip|paquete|upgrade|meet ?(and|&) ?greet|abono/i },
   // Passline: no deja leer su buscador; los eventos se guardan cada semana desde el navegador en este archivo
   { nombre: 'Passline', sitio: 'https://www.passline.com', lector: 'archivo', archivo: 'public/data/passline.json', municipio: 'centro' },
+  // Monterrey Secreto: publica notas, no eventos; los datos se toman de sus notas desde el navegador y se guardan aquí (con enlace a la nota)
+  { nombre: 'Monterrey Secreto', sitio: 'https://monterreysecreto.com', lector: 'archivo', archivo: 'public/data/monterrey-secreto.json', municipio: 'centro' },
   // Todos los conciertos de la zona de Monterrey en Songkick (la lista ya trae cada evento completo)
   { nombre: 'Songkick', sitio: 'https://www.songkick.com', lista: 'https://www.songkick.com/metro-areas/31051-mexico-monterrey', listaDirecta: true, paginasLista: 6, filtro: /./, municipio: 'centro', cat: 'concierto', organizadorLugar: true, limpiarNombre: /\s+@\s+.*$/ },
   // MARCO, Museo de Arte Contemporáneo: exposiciones vigentes
