@@ -1992,17 +1992,48 @@ function viewHoy(){
     ${HOME_CTX.some((_,i)=>PS['h'+i]&&PS['h'+i].cur)?`<div class="plans3">${HOME_CTX.map((_,i)=>planCard('h'+i)).join('')}</div>`:`<div class="empty"><b>No encontramos planes con esas preferencias</b>Prueba quitando alguna, o ${HP.cats.includes('naturaleza')?'visita un parque o una montaña en <a href="#atracciones">Atracciones</a>':'arma un <a href="#plan">plan completo</a>'}.</div>`}
     <section class="panel perso" id="personaliza">
       <div class="sechead" style="margin:0"><h2>Personalízalo</h2>${hay?'<button class="btn ghost small" id="hpReset">Quitar preferencias</button>':''}</div>
-      <p class="hint" style="margin:0">Dinos qué buscas y volvemos a elegir los tres planes.</p>
+      <p class="hint" style="margin:0">${hay?'Tus 3 planes ya están elegidos con tus preferencias: '+esc(hpResumen())+'.':'Contesta 5 preguntas rápidas y volvemos a elegir tus tres planes.'}</p>
+      <div class="row"><button class="btn primary" id="hpWiz">${hay?'Volver a contestar':'Personalizar mis 3 planes'}</button></div>
+      <details class="prefs" id="hpAjustes" style="margin:4px 0 0;box-shadow:none;background:var(--sunk)"${HP_AJ?' open':''}><summary>Ajustar preferencias <span class="opt">Cambia una por una</span></summary>
+      <div class="perso" style="margin:0;padding:0 18px 18px">
       <div class="fgroup"><h4>¿Con quién vas?</h4><div class="chips">${chip('data-hpcon','',!HP.con,'Me da igual')}${Object.entries(CON).map(([k,c])=>chip('data-hpcon',k,HP.con===k,c.n)).join('')}</div></div>
       <div class="fgroup"><h4>¿A qué hora?</h4><div class="chips">${Object.entries(HORA).map(([k,v])=>chip('data-hpmom',k,HP.mom===k,v)).join('')}</div></div>
       <div class="fgroup"><h4>¿En qué zona? <span class="opt">Puedes elegir varias</span></h4><div class="chips">${chip('data-hpzona','',!HP.zonas.length,'Cualquier zona')}${Object.entries(ZONAS).map(([k,z])=>chip('data-hpzona',k,HP.zonas.includes(k),z.n)).join('')}</div></div>
       <div class="fgroup"><h4>¿Qué tipo de actividad? <span class="opt">Puedes elegir varias</span></h4><div class="chips">${chip('data-hpcat','',!HP.cats.length,'De todo un poco')}${Object.entries(CATS).map(([k,c])=>`<button class="chip" data-hpcat="${k}" aria-pressed="${HP.cats.includes(k)}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div></div>
       <div class="fgroup"><h4>¿Cuánto quieres gastar?</h4><div class="chips">${Object.entries(PRESU).map(([k,v])=>chip('data-hppresu',k,HP.presu===k,v)).join('')}</div></div>
+      </div></details>
     </section>
     <div class="allbtn"><a class="btn primary" href="#plan">${I.dice}¿Tienes más tiempo? Ármame un plan completo</a></div>
   </div>`;
 }
+let HP_AJ=false, HW=null;
+const HP_PASOS=['¿Con quién vas?','¿A qué hora?','¿En qué zona?','¿Qué tipo de actividad?','¿Cuánto quieres gastar?'];
+function hpResumen(){ const t=[]; if(HP.con) t.push(CON[HP.con].n.toLowerCase()); if(HP.mom!=='todo') t.push('en la '+HORA[HP.mom].toLowerCase());
+  if(HP.zonas.length) t.push(HP.zonas.map(z=>ZONAS[z].n).join(', ')); if(HP.cats.length) t.push(HP.cats.map(c=>CATS[c].n.toLowerCase()).join(', ')); if(HP.presu!=='todo') t.push(PRESU[HP.presu].toLowerCase()); return t.join(' · '); }
+function hwHTML(){ const p=HW.paso, chip=(attr,v,on,txt)=>`<button class="chip" ${attr}="${v}" aria-pressed="${on}">${txt}</button>`, varias='<p class="hint" style="margin:0 0 10px">Puedes elegir varias.</p>';
+  let body='';
+  if(p===0) body=`<div class="chips">${chip('data-hwcon','',!HW.con,'Me da igual')}${Object.entries(CON).map(([k,c])=>chip('data-hwcon',k,HW.con===k,c.n)).join('')}</div>`;
+  if(p===1) body=`<div class="chips">${Object.entries(HORA).map(([k,v])=>chip('data-hwmom',k,HW.mom===k,v)).join('')}</div>`;
+  if(p===2) body=varias+`<div class="chips">${chip('data-hwzona','',!HW.zonas.length,'Cualquier zona')}${Object.entries(ZONAS).map(([k,z])=>chip('data-hwzona',k,HW.zonas.includes(k),z.n)).join('')}</div>`;
+  if(p===3) body=varias+`<div class="chips">${chip('data-hwcat','',!HW.cats.length,'De todo un poco')}${Object.entries(CATS).map(([k,c])=>`<button class="chip" data-hwcat="${k}" aria-pressed="${HW.cats.includes(k)}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div>`;
+  if(p===4) body=`<div class="chips">${Object.entries(PRESU).map(([k,v])=>chip('data-hwpresu',k,HW.presu===k,v)).join('')}</div>`;
+  return `<div class="dcwiz"><span class="eyebrow">Personaliza tus 3 planes · Paso ${p+1} de ${HP_PASOS.length}</span>
+    <div class="dcbar"><i style="width:${(p+1)/HP_PASOS.length*100}%"></i></div><h2>${HP_PASOS[p]}</h2>${body}
+    <div class="row dcnav">${p?'<button class="btn" id="hwAtras">← Atrás</button>':'<span></span>'}${p<HP_PASOS.length-1?'<button class="btn primary" id="hwSig">Siguiente →</button>':`<button class="btn primary" id="hwListo">${I.dice}Ver mis 3 planes</button>`}</div></div>`; }
+function bindHW(){ const again=()=>refreshTop(hwHTML(),bindHW), q=s=>document.querySelectorAll('#mBody '+s);
+  q('[data-hwcon]').forEach(b=>b.onclick=()=>{ HW.con=b.dataset.hwcon; again(); });
+  q('[data-hwmom]').forEach(b=>b.onclick=()=>{ HW.mom=b.dataset.hwmom; again(); });
+  q('[data-hwpresu]').forEach(b=>b.onclick=()=>{ HW.presu=b.dataset.hwpresu; again(); });
+  const multi=(attr,key)=>q(`[${attr}]`).forEach(b=>b.onclick=()=>{ const v=b.getAttribute(attr); HW[key]=!v?[]:HW[key].includes(v)?HW[key].filter(x=>x!==v):[...HW[key],v]; again(); });
+  multi('data-hwzona','zonas'); multi('data-hwcat','cats');
+  const a=document.getElementById('hwAtras'); if(a) a.onclick=()=>{ HW.paso--; again(); };
+  const n=document.getElementById('hwSig'); if(n) n.onclick=()=>{ HW.paso++; again(); };
+  const l=document.getElementById('hwListo'); if(l) l.onclick=()=>{ const {paso,...resto}=HW; HP={...HP,...resto}; try{ localStorage.setItem('mtymovida-hp',JSON.stringify(HP)); }catch(e){}
+    Object.keys(PS).filter(k=>k[0]==='h').forEach(k=>delete PS[k]); closeModal(); render(); setTimeout(()=>{ const t=document.querySelector('.plans3,.empty'); if(t) t.scrollIntoView({behavior:'smooth',block:'center'}); },60); };
+}
 function bindHoy(){
+  const w=document.getElementById('hpWiz'); if(w) w.onclick=()=>{ HW={...JSON.parse(JSON.stringify(HP)),paso:0}; openModal(hwHTML(),bindHW); };
+  const aj=document.getElementById('hpAjustes'); if(aj) aj.ontoggle=()=>{ HP_AJ=aj.open; };
   const keep=()=>{ try{ localStorage.setItem('mtymovida-hp',JSON.stringify(HP)); }catch(e){} Object.keys(PS).filter(k=>k[0]==='h').forEach(k=>delete PS[k]); const y=window.scrollY; render(); window.scrollTo(0,y); };
   const q=s=>document.querySelectorAll(s);
   q('[data-hpcon]').forEach(b=>b.onclick=()=>{ HP.con=b.dataset.hpcon; keep(); });
@@ -2011,7 +2042,7 @@ function bindHoy(){
   const multi=(attr,key)=>q(`[${attr}]`).forEach(b=>b.onclick=()=>{ const v=b.getAttribute(attr); HP[key]=!v?[]:HP[key].includes(v)?HP[key].filter(x=>x!==v):[...HP[key],v]; keep(); });
   multi('data-hpzona','zonas'); multi('data-hpcat','cats');
   const r=document.getElementById('hpReset'); if(r) r.onclick=()=>{ HP={con:'',zonas:[],cats:[],presu:'todo',mom:'todo'}; keep(); };
-  const ip=document.querySelector('[data-irperso]'); if(ip) ip.onclick=ev=>{ ev.preventDefault(); document.getElementById('personaliza').scrollIntoView({behavior:'smooth',block:'start'}); };
+  const ip=document.querySelector('[data-irperso]'); if(ip) ip.onclick=ev=>{ ev.preventDefault(); if(w) w.click(); };
   bindPlans(document.getElementById('app'));
 }
 
