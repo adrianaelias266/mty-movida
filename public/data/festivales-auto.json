@@ -1,3 +1,68 @@
 {
- "_revisado": "2026-10-27"
+ "_revisado": "2026-10-27",
+ "palnorte": {
+  "firma": "0b574b405160",
+  "menciona": "2027"
+ },
+ "machaca": {},
+ "liveout": {},
+ "seveneleven": {},
+ "panzaland": {
+  "firma": "8daa693be383",
+  "menciona": null
+ },
+ "fisl": {
+  "firma": "d3d3fd3720fd",
+  "menciona": null
+ },
+ "ficmty": {
+  "firma": "ae40088b8e2a",
+  "menciona": null
+ },
+ "xantoluz": {},
+ "calabazas": {
+  "firma": "c7401bf71b2c",
+  "menciona": null
+ },
+ "batfest": {},
+ "horrorfest": {},
+ "calaveras": {},
+ "mezcalfest": {
+  "firma": "baa2678532cb",
+  "menciona": null
+ },
+ "cervezamty": {
+  "firma": "f4e6c06f2800",
+  "menciona": null
+ },
+ "grillmaster": {
+  "firma": "d658ab9cd8c5",
+  "menciona": null
+ },
+ "tacofestsn": {},
+ "tacosp": {},
+ "paladares": {},
+ "foodtruck": {},
+ "filmty": {},
+ "uanleer": {},
+ "animex": {},
+ "nortex": {},
+ "dalemixx": {
+  "firma": "8ed565a6e4ac",
+  "menciona": null
+ },
+ "futur": {},
+ "medieval": {},
+ "luztopia": {
+  "firma": "a54fe2e92c1e",
+  "menciona": null
+ },
+ "teatronl": {},
+ "cinelatino": {},
+ "artsweek": {
+  "firma": "6de73796bad1",
+  "menciona": "2027"
+ },
+ "itinerarte": {},
+ "expoguadalupe": {}
 }
