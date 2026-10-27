@@ -1810,7 +1810,7 @@ let DC={paso:0,off:0,desde:null,hasta:22,con:'',zonas:[],cats:[],comidas:[],pres
 try{ const g=JSON.parse(localStorage.getItem('mtymovida-dc')||'null'); if(g) DC={...DC,...g,paso:0}; }catch(e){}
 const saveDC=()=>{ try{ localStorage.setItem('mtymovida-dc',JSON.stringify(DC)); }catch(e){} };
 const DC_PRESU={gratis:'Que todo sea gratis',p200:'Hasta $200 por persona',p500:'Hasta $500 por persona',todo:'No importa'};
-const DC_PASOS=['¿Qué día?','¿De qué hora a qué hora?','¿Con quién vas?','¿Vives aquí o estás de visita?','¿En qué zonas?','¿Qué te gustaría hacer?','¿Quieres agregar comida?','¿Cuánto quieres gastar?'];
+const DC_PASOS=['¿Vives aquí o estás de visita?','¿Qué día?','¿De qué hora a qué hora?','¿Con quién vas?','¿En qué zonas?','¿Qué te gustaría hacer?','¿Quieres agregar comida?','¿Cuánto quieres gastar?'];
 // Comidas: ventana de horario, duración y lo que se busca en Google Maps
 const DC_COMIDAS={cafe:{n:'Café',ico:'☕',v:[8,20],d:.75,q:'cafeterías'},desayuno:{n:'Desayuno',ico:'🍳',v:[8,12],d:1,q:'desayunos'},comida:{n:'Comida',ico:'🍽️',v:[13,17],d:1.25,q:'restaurantes'},cena:{n:'Cena',ico:'🌮',v:[19,23.5],d:1,q:'cenar'},postre:{n:'Postre',ico:'🍨',v:[15,23.5],d:.5,q:'postres'}};
 // Para turistas: lugares emblemáticos de Monterrey y sus alrededores (en orden de preferencia)
@@ -1828,23 +1828,23 @@ function dcDefaults(){ if(DC.desde==null||(DC.off===0&&DC.desde<new Date().getHo
 function dcPasoHTML(){
   dcDefaults(); const p=DC.paso, chip=(attr,v,on,txt)=>`<button class="chip" ${attr}="${v}" aria-pressed="${on}">${txt}</button>`;
   let body='';
-  if(p===0){ const dias=[...Array(7).keys()]; body=`<div class="chips">${dias.map(o=>chip('data-dcoff',o,DC.off===o,o===0?'Hoy':o===1?'Mañana':`${DOWL[dOf(o).getDay()].replace(/^./,c=>c.toUpperCase())} ${dOf(o).getDate()}`)).join('')}</div>
+  if(p===1){ const dias=[...Array(7).keys()]; body=`<div class="chips">${dias.map(o=>chip('data-dcoff',o,DC.off===o,o===0?'Hoy':o===1?'Mañana':`${DOWL[dOf(o).getDay()].replace(/^./,c=>c.toUpperCase())} ${dOf(o).getDate()}`)).join('')}</div>
     <label class="dcfecha">Otro día <input type="date" class="inp" id="dcFecha" value="${isoOf(DC.off)}" min="${isoOf(0)}" max="${isoOf(MAXOFF)}"></label>`; }
-  if(p===1){ const op=(a,b,sel)=>Array.from({length:b-a+1},(_,i)=>a+i).map(h=>`<option value="${h}" ${h===sel?'selected':''}>${h===24?'medianoche':hTxt(h)}</option>`).join('');
+  if(p===2){ const op=(a,b,sel)=>Array.from({length:b-a+1},(_,i)=>a+i).map(h=>`<option value="${h}" ${h===sel?'selected':''}>${h===24?'medianoche':hTxt(h)}</option>`).join('');
     body=`<div class="dchoras"><label>Desde<select class="inp" id="dcDesde">${op(DC.off===0?Math.min(Math.max(new Date().getHours(),7),23):7,23,DC.desde)}</select></label><label>Hasta<select class="inp" id="dcHasta">${op(DC.desde+1,24,DC.hasta)}</select></label></div>
     <p class="hint">${DC.hasta-DC.desde>=5?'Con este tiempo te proponemos dos eventos con horario y una visita a algún lugar.':'Con este tiempo te proponemos hasta tres eventos con horario.'}</p>`; }
-  if(p===2) body=`<div class="chips">${Object.entries(CON).map(([k,c])=>chip('data-dccon',k,DC.con===k,c.n)).join('')}</div>`;
-  if(p===3) body=`<div class="chips">${chip('data-dctur','0',!DC.turista,'Vivo en Monterrey')}${chip('data-dctur','1',!!DC.turista,'Soy turista o estoy de visita')}</div>
+  if(p===3) body=`<div class="chips">${Object.entries(CON).map(([k,c])=>chip('data-dccon',k,DC.con===k,c.n)).join('')}</div>`;
+  if(p===0) body=`<div class="chips">${chip('data-dctur','0',!DC.turista,'Vivo en Monterrey')}${chip('data-dctur','1',!!DC.turista,'Soy turista o estoy de visita')}</div>
     <p class="hint">${DC.turista?'Te armamos un plan con los lugares más emblemáticos de la ciudad y con eventos que pasan en ellos.':'Te proponemos lo mejor de lo que pasa ese día, cerca de donde quieras.'}</p>
     ${DC.turista?`<h3 class="dcsub">¿Cuántos días vas a estar?</h3><div class="chips">${[1,2,3,4,5,6,7].map(n=>chip('data-dcdias',n,(DC.dias||1)===n,n===1?'1 día':n===7?'Una semana':n+' días')).join('')}</div><p class="hint">Te armamos un plan para cada día, empezando el día que elegiste, sin repetir lugares.</p>`:''}`;
   if(p===4) body=`<p class="hint" style="margin:0 0 10px">Elige las que te queden bien. Puedes elegir varias.</p><div class="chips">${chip('data-dczona','',!DC.zonas.length,'Cualquier zona')}${Object.entries(ZONAS).filter(([k])=>k!=='linea').map(([k,z])=>chip('data-dczona',k,DC.zonas.includes(k),z.n)).join('')}</div>`;
   if(p===5) body=`<p class="hint" style="margin:0 0 10px">Marca las que quieras considerar. Puedes elegir varias.</p><div class="chips">${chip('data-dccat','',!DC.cats.length,'De todo un poco')}${Object.entries(CATS).map(([k,c])=>`<button class="chip" data-dccat="${k}" aria-pressed="${DC.cats.includes(k)}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div>`;
   if(p===6) body=`<p class="hint" style="margin:0 0 10px">Elige las que quieras y las acomodamos en los huecos de tu plan. Puedes elegir varias.</p><div class="chips">${chip('data-dccom','',!DC.comidas.length,'Sin comida')}${Object.entries(DC_COMIDAS).map(([k,c])=>chip('data-dccom',k,DC.comidas.includes(k),c.ico+' '+c.n)).join('')}</div>`;
   if(p===7) body=`<div class="chips">${Object.entries(DC_PRESU).map(([k,v])=>chip('data-dcpresu',k,DC.presu===k,v)).join('')}</div>`;
-  const listo=p!==2||DC.con;
+  const listo=p!==3||DC.con;
   return `<div class="dcwiz"><span class="eyebrow">Personaliza tu plan · Paso ${p+1} de ${DC_PASOS.length}</span>
     <div class="dcbar"><i style="width:${(p+1)/DC_PASOS.length*100}%"></i></div>
-    <h2>${DC_PASOS[p]}</h2>${body}
+    <h2>${p===1&&DC.turista?((DC.dias||1)>1?'¿Qué día empieza tu visita?':'¿Qué día vas a salir?'):DC_PASOS[p]}</h2>${body}
     <div class="row dcnav">${p?'<button class="btn" id="dcAtras">← Atrás</button>':'<span></span>'}${p<DC_PASOS.length-1?`<button class="btn primary" id="dcSig" ${listo?'':'disabled'}>Siguiente →</button>`:`<button class="btn primary" id="dcArmar">${I.dice}Armar mi día</button>`}</div></div>`;
 }
 function abrirDC(){ DC.paso=0; DC.off=offDePA(); if(!DC.custom){ DC.desde=null; } openModal(dcPasoHTML(),bindDC); }
