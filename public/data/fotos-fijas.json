@@ -43,7 +43,6 @@
  "k05": null,
  "k06": null,
  "k07": null,
- "k08": null,
  "k09": null,
  "k10": null,
  "k11": null,
@@ -129,15 +128,6 @@
    "fuente": "Wikimedia Commons"
   }
  },
- "s08": {
-  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Banda_MS_Cholula.jpg/960px-Banda_MS_Cholula.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-  "credito": {
-   "autor": "Gobierno de Cholula",
-   "licencia": "CC BY-SA 2.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Banda_MS_Cholula.jpg",
-   "fuente": "Wikimedia Commons"
-  }
- },
  "s09": {
   "foto": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Eden_Mu%C3%B1oz_premios_lo_nuestro.jpg",
   "credito": {
@@ -171,24 +161,6 @@
    "autor": "Hector Martínez",
    "licencia": "CC BY-SA 2.0",
    "url": "https://commons.wikimedia.org/wiki/File:Arena_Monterrey.jpg",
-   "fuente": "Wikimedia Commons"
-  }
- },
- "s13": {
-  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Morat_en_concierto.jpg/960px-Morat_en_concierto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-  "credito": {
-   "autor": "Andrea Herrera / Secretaría de Cultura de la Ciudad de México",
-   "licencia": "CC BY 2.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Morat_en_concierto.jpg",
-   "fuente": "Wikimedia Commons"
-  }
- },
- "s14": {
-  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Morat_en_concierto.jpg/960px-Morat_en_concierto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-  "credito": {
-   "autor": "Andrea Herrera / Secretaría de Cultura de la Ciudad de México",
-   "licencia": "CC BY 2.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Morat_en_concierto.jpg",
    "fuente": "Wikimedia Commons"
   }
  },
