@@ -1804,7 +1804,7 @@ function bienvenida(){
   if(location.hash&&!/^#(inicio)?$/.test(location.hash)) return;
   const d=document.createElement('div'); d.className='bienv'; d.setAttribute('role','dialog'); d.setAttribute('aria-modal','true'); d.setAttribute('aria-labelledby','bvT');
   d.innerHTML=`<div class="bx"><span class="script">Sal y únete a la movida</span><h2 id="bvT">Así funciona Mty Movida</h2>
-    <ol><li><i style="background:#CBA6FF">1</i><span><b>Mira qué hay hoy</b>En el inicio ves los eventos más esperados y cuántos hay hoy, gratis y al aire libre.</span></li>
+    <ol><li><i style="background:#CBA6FF">1</i><span><b>Mira qué hay hoy</b>En el inicio ves los eventos más esperados y cuántos hay hoy.</span></li>
     <li><i style="background:#FDBD1A">2</i><span><b>Guarda lo que te guste</b>Toca «Agendar» y aparece en tu calendario.</span></li>
     <li><i style="background:#3FA34D;color:#fff">3</i><span><b>Arma tu plan</b>En «¿Qué plan?» te organizamos el día completo, con comida y lugares.</span></li></ol>
     <div class="row"><button class="btn" data-bv="no">Ahora no</button><a class="btn primary" href="#plan" data-bv="si">Ármame un plan</a></div></div>`;
