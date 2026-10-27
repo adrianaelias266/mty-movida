@@ -1722,11 +1722,13 @@ function bindDiaCompleto(){
 }
 
 /* ---------- Ármame un día completo: formulario por pasos y plan con horario ---------- */
-let DC={paso:0,off:0,desde:null,hasta:22,con:'',zonas:[],cats:[],presu:'todo',listo:false,pick:{},fuera:[]};
+let DC={paso:0,off:0,desde:null,hasta:22,con:'',zonas:[],cats:[],comidas:[],presu:'todo',listo:false,pick:{},fuera:[]};
 try{ const g=JSON.parse(localStorage.getItem('mtymovida-dc')||'null'); if(g) DC={...DC,...g,paso:0}; }catch(e){}
 const saveDC=()=>{ try{ localStorage.setItem('mtymovida-dc',JSON.stringify(DC)); }catch(e){} };
 const DC_PRESU={gratis:'Que todo sea gratis',p200:'Hasta $200 por persona',p500:'Hasta $500 por persona',todo:'No importa'};
-const DC_PASOS=['¿Qué día?','¿De qué hora a qué hora?','¿Con quién vas?','¿En qué zonas?','¿Qué te gustaría hacer?','¿Cuánto quieres gastar?'];
+const DC_PASOS=['¿Qué día?','¿De qué hora a qué hora?','¿Con quién vas?','¿En qué zonas?','¿Qué te gustaría hacer?','¿Quieres agregar comida?','¿Cuánto quieres gastar?'];
+// Comidas: ventana de horario, duración y lo que se busca en Google Maps
+const DC_COMIDAS={cafe:{n:'Café',ico:'☕',v:[8,20],d:.75,q:'cafeterías'},desayuno:{n:'Desayuno',ico:'🍳',v:[8,12],d:1,q:'desayunos'},comida:{n:'Comida',ico:'🍽️',v:[13,17],d:1.25,q:'restaurantes'},cena:{n:'Cena',ico:'🌮',v:[19,23.5],d:1,q:'cenar'},postre:{n:'Postre',ico:'🍨',v:[15,23.5],d:.5,q:'postres'}};
 const hNum=h=>{ const m=String(h||'').match(/^(\d{1,2}):(\d{2})/); return m?+m[1]+m[2]/60:null; };
 const hTxt=x=>{ const h=Math.floor(x)%24, m=Math.round((x-Math.floor(x))*60); return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`; };
 function dcDefaults(){ if(DC.desde==null||(DC.off===0&&DC.desde<new Date().getHours())){ const n=new Date().getHours()+1; DC.desde=DC.off===0?Math.min(Math.max(n,9),22):12; if(DC.hasta<=DC.desde) DC.hasta=Math.min(24,DC.desde+4); } }
@@ -1741,7 +1743,8 @@ function dcPasoHTML(){
   if(p===2) body=`<div class="chips">${Object.entries(CON).map(([k,c])=>chip('data-dccon',k,DC.con===k,c.n)).join('')}</div>`;
   if(p===3) body=`<p class="hint" style="margin:0 0 10px">Elige las que te queden bien. Puedes elegir varias.</p><div class="chips">${chip('data-dczona','',!DC.zonas.length,'Cualquier zona')}${Object.entries(ZONAS).filter(([k])=>k!=='linea').map(([k,z])=>chip('data-dczona',k,DC.zonas.includes(k),z.n)).join('')}</div>`;
   if(p===4) body=`<p class="hint" style="margin:0 0 10px">Marca las que quieras considerar. Puedes elegir varias.</p><div class="chips">${chip('data-dccat','',!DC.cats.length,'De todo un poco')}${Object.entries(CATS).map(([k,c])=>`<button class="chip" data-dccat="${k}" aria-pressed="${DC.cats.includes(k)}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div>`;
-  if(p===5) body=`<div class="chips">${Object.entries(DC_PRESU).map(([k,v])=>chip('data-dcpresu',k,DC.presu===k,v)).join('')}</div>`;
+  if(p===5) body=`<p class="hint" style="margin:0 0 10px">Elige las que quieras y las acomodamos en los huecos de tu plan. Puedes elegir varias.</p><div class="chips">${chip('data-dccom','',!DC.comidas.length,'Sin comida')}${Object.entries(DC_COMIDAS).map(([k,c])=>chip('data-dccom',k,DC.comidas.includes(k),c.ico+' '+c.n)).join('')}</div>`;
+  if(p===6) body=`<div class="chips">${Object.entries(DC_PRESU).map(([k,v])=>chip('data-dcpresu',k,DC.presu===k,v)).join('')}</div>`;
   const listo=p!==2||DC.con;
   return `<div class="dcwiz"><span class="eyebrow">Ármame un plan completo · Paso ${p+1} de ${DC_PASOS.length}</span>
     <div class="dcbar"><i style="width:${(p+1)/DC_PASOS.length*100}%"></i></div>
@@ -1758,7 +1761,7 @@ function bindDC(){
   if(h) h.onchange=()=>{ DC.hasta=+h.value; again(); };
   q('[data-dccon]').forEach(b=>b.onclick=()=>{ DC.con=b.dataset.dccon; again(); });
   const multi=(attr,key)=>q(`[${attr}]`).forEach(b=>b.onclick=()=>{ const v=b.getAttribute(attr); DC[key]=!v?[]:DC[key].includes(v)?DC[key].filter(x=>x!==v):[...DC[key],v]; again(); });
-  multi('data-dczona','zonas'); multi('data-dccat','cats');
+  multi('data-dczona','zonas'); multi('data-dccat','cats'); multi('data-dccom','comidas');
   q('[data-dcpresu]').forEach(b=>b.onclick=()=>{ DC.presu=b.dataset.dcpresu; again(); });
   const a=document.getElementById('dcAtras'); if(a) a.onclick=()=>{ DC.paso--; again(); };
   const n=document.getElementById('dcSig'); if(n) n.onclick=()=>{ DC.paso++; again(); };
@@ -1812,17 +1815,23 @@ function armarDC(){
 }
 // Sugerencia para comer: se abre Google Maps con una búsqueda cerca de la parada (no guardamos datos de restaurantes)
 function comidaDC(paradas){
-  const out=[], cubre=(a,b)=>DC.desde<b&&DC.hasta>a;
-  const tipo=[[8,11.5,'Desayuno','desayunos'],[13,16.5,'Comida','restaurantes'],[19,23.5,'Cena','cenar']].filter(([a,b])=>cubre(a,b));
-  const ps=paradas.slice().sort((x,y)=>x.ini-y.ini), huecos=[]; let t=DC.desde, prev=null;
-  ps.forEach(p=>{ huecos.push({a:t,b:p.ini,antes:prev,despues:p}); t=Math.max(t,p.fin); prev=p; }); huecos.push({a:t,b:DC.hasta,antes:prev,despues:null});
-  tipo.forEach(([a,b,n,q])=>{
-    const h=huecos.map(g=>({...g,s:Math.max(g.a,a),e:Math.min(g.b,b)})).filter(g=>g.e-g.s>=.75).sort((x,y)=>(y.e-y.s)-(x.e-x.s))[0]; if(!h) return;
-    const cerca=h.antes||h.despues; if(!cerca) return;
-    const lugar=cerca.e?cerca.e.venue.split(',')[0]:cerca.a.n, zona=ZONAS[(cerca.e||cerca.a).zona]?.n||'Monterrey';
-    const extra=DC.presu==='gratis'||DC.presu==='p200'?' económicos':DC.con==='familia'?' familiares':DC.con==='pareja'?' para una cita':'';
-    out.push({n,hora:h.s,lugar,url:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(`${q}${extra} cerca de ${lugar}, ${zona}, Nuevo León`)});
-  });
+  const out=[], ocup=paradas.map(p=>[p.ini,p.fin,p]).sort((a,b)=>a[0]-b[0]);
+  const orden=['desayuno','comida','cena','postre','cafe'].filter(k=>(DC.comidas||[]).includes(k));
+  for(const k of orden){ const c=DC_COMIDAS[k];
+    // huecos libres (sin paradas ni otras comidas)
+    const usados=[...ocup,...out.map(o=>[o.hora,o.hora+o.d])].sort((a,b)=>a[0]-b[0]), huecos=[]; let t=DC.desde;
+    usados.forEach(([a,b])=>{ if(a>t) huecos.push([t,a]); t=Math.max(t,b); }); if(DC.hasta>t) huecos.push([t,DC.hasta]);
+    // el postre, de preferencia justo después de la comida o la cena
+    const tras=k==='postre'?(out.find(o=>o.k==='cena'&&!o.noCabe)||out.find(o=>o.k==='comida'&&!o.noCabe)||{}).hora+((out.find(o=>o.k==='cena'&&!o.noCabe)||out.find(o=>o.k==='comida'&&!o.noCabe)||{}).d||0):null;
+    const ops=huecos.map(([a,b])=>({a,b,s:Math.max(a,c.v[0]),e:Math.min(b,c.v[1])})).filter(g=>g.e-g.s>=c.d);
+    const h=(tras!=null&&ops.find(g=>g.s<=tras&&g.e>=tras+c.d))||ops.sort((x,y)=>(y.e-y.s)-(x.e-x.s))[0];
+    if(!h){ out.push({k,n:c.n,ico:c.ico,noCabe:true,hora:99,d:0}); continue; }
+    const hora=tras!=null&&h.s<=tras&&h.e>=tras+c.d?tras:h.s;
+    const antes=ocup.filter(o=>o[1]<=hora+.01).at(-1), desp=ocup.find(o=>o[0]>=hora), cerca=(antes||desp||[])[2];
+    const ref=cerca?(cerca.e?cerca.e.venue.split(',')[0]:cerca.a.n):null, zona=cerca?ZONAS[(cerca.e||cerca.a).zona]?.n:(DC.zonas[0]?ZONAS[DC.zonas[0]].n:'Monterrey');
+    const extra=DC.presu==='gratis'||DC.presu==='p200'?' económicos':DC.con==='familia'?' familiares':DC.con==='pareja'&&k!=='cafe'&&k!=='postre'?' para una cita':'';
+    out.push({k,n:c.n,ico:c.ico,hora,d:c.d,lugar:ref||zona,url:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(`${c.q}${extra} cerca de ${ref?ref+', ':''}${zona}, Nuevo León`)});
+  }
   return out;
 }
 function diaDCHTML(){
@@ -1836,7 +1845,8 @@ function diaDCHTML(){
       <p>${esc(resumen)}${paradas.length?` · ${total?`desde $${total} por persona`:sinPrecio?'revisa los precios':'todo gratis'}`:''}</p></div>
     ${!paradas.length?`<div class="it-none">No encontramos eventos con lo que elegiste en ese horario. Prueba con más zonas, otro tipo de actividad u otro presupuesto.</div>`:''}
     <div class="tl itin-tl">${items.map(({p,c})=>{
-      if(c) return `<div class="tl-day">${hTxt(c.hora)} · ${c.n}</div><div class="it-food"><span>🍽️</span><div><b>${c.n} cerca de ${esc(c.lugar)}</b><small>Te abrimos Google Maps con opciones cerca. Ahí puedes ver las calificaciones y elegir la que más te guste.</small><a class="btn small" href="${c.url}" target="_blank" rel="noopener">Ver opciones en Google Maps ↗</a></div></div>`;
+      if(c&&c.noCabe) return `<div class="it-none">${c.ico} ${c.n}: no cupo en tu horario. Amplía las horas o quita alguna parada.</div>`;
+      if(c) return `<div class="tl-day">${hTxt(c.hora)} · ${c.n}</div><div class="it-food"><span>${c.ico}</span><div><b>${c.n} cerca de ${esc(c.lugar)}</b><small>Te abrimos Google Maps con opciones cerca. Ahí puedes ver las calificaciones y elegir la que más te guste.</small><a class="btn small" href="${c.url}" target="_blank" rel="noopener">Ver opciones en Google Maps ↗</a></div></div>`;
       const col=p.libre?'#1AC1B9':p.ini<12?'#FDBD1A':p.ini<19?'#FF8017':'#CBA6FF', x=p.e||p.a, img=p.e?evImg(p.e):atrImg(p.a), open=p.e?`data-open="${p.e.id}"`:`data-atr="${p.a.id}"`;
       return `<div class="tl-day">${hTxt(p.ini)}${p.libre?' a '+hTxt(p.fin):''}${p.libre?' · Visita':''}</div>
         <div class="it-stop" style="--c:${col};--ci:${inkOn(col)}">
