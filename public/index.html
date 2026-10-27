@@ -767,8 +767,7 @@ form.card .full{grid-column:1/-1}
     <nav class="nav" id="mainNav" aria-label="Secciones">
       <a href="#inicio" data-view="inicio">Inicio</a>
       <a href="#nosotros" data-view="nosotros">Quiénes somos</a>
-      <a href="#hoy" data-view="hoy" class="hoy">¿Qué plan hoy?</a>
-      <a href="#plan" data-view="plan">Ármame un plan</a>
+      <a href="#plan" data-view="plan" class="hoy">¿Qué plan?</a>
       <div class="navgrp" id="navDesc">
         <button class="navdrop" type="button" aria-expanded="false" aria-controls="subDesc">Descubre <span class="car" aria-hidden="true">▾</span></button>
         <div class="submenu" id="subDesc">
@@ -1804,10 +1803,10 @@ function bienvenida(){
   if(location.hash&&!/^#(inicio)?$/.test(location.hash)) return;
   const d=document.createElement('div'); d.className='bienv'; d.setAttribute('role','dialog'); d.setAttribute('aria-modal','true'); d.setAttribute('aria-labelledby','bvT');
   d.innerHTML=`<div class="bx"><span class="script">¡Bienvenida, bienvenido!</span><h2 id="bvT">Así funciona Mty Movida</h2>
-    <ol><li><i style="background:#CBA6FF">1</i><span><b>Mira qué hay hoy</b>Entra a «¿Qué plan hoy?» y te damos 3 planes listos.</span></li>
+    <ol><li><i style="background:#CBA6FF">1</i><span><b>Mira qué hay hoy</b>En el inicio ves los eventos más esperados y cuántos hay hoy, gratis y al aire libre.</span></li>
     <li><i style="background:#FDBD1A">2</i><span><b>Guarda lo que te guste</b>Toca «Agendar» y aparece en tu calendario.</span></li>
-    <li><i style="background:#3FA34D;color:#fff">3</i><span><b>Arma tu plan</b>En «Ármame un plan» te organizamos el día completo, con comida y lugares.</span></li></ol>
-    <div class="row"><button class="btn" data-bv="no">Ahora no</button><a class="btn primary" href="#hoy" data-bv="si">Ver qué hay hoy</a></div></div>`;
+    <li><i style="background:#3FA34D;color:#fff">3</i><span><b>Arma tu plan</b>En «¿Qué plan?» te organizamos el día completo, con comida y lugares.</span></li></ol>
+    <div class="row"><button class="btn" data-bv="no">Ahora no</button><a class="btn primary" href="#plan" data-bv="si">Ármame un plan</a></div></div>`;
   const cerrar=()=>{ try{ localStorage.setItem('mtymovida-bienv','1'); }catch(x){} d.remove(); };
   d.addEventListener('click',x=>{ if(x.target===d||x.target.closest('[data-bv]')) cerrar(); });
   document.addEventListener('keydown',function k(x){ if(x.key==='Escape'){ cerrar(); document.removeEventListener('keydown',k); } });
@@ -1973,7 +1972,7 @@ function viewNos(){
       <p><b>Nosotras somos Adriana y Sharon.</b> Somos amigas y nos encanta salir, hacer planes improvisados y disfrutar de los eventos, aunque a veces no sepamos muy bien de qué se tratan.</p>
       <p>Creemos que en Monterrey hay mucho más que ir a comer o por un café, por eso creamos <b>Mty Movida</b>, para que conozcas todo lo que pasa en la ciudad, que salgas y vivas la cultura y el entretenimiento.</p>
       <p>Aquí te juntamos los conciertos, el teatro, las exposiciones, los festivales y los planes al aire libre de toda la zona metropolitana, <b>porque salir es la mejor excusa para encontrarte con los demás</b>, ya sea con tus amigos de siempre o con quien está a tu lado disfrutando lo mismo.</p>
-      <div class="row"><a class="btn primary" href="#hoy">¿Qué plan hoy?</a><a class="btn" href="#agregar">Agrega tu evento</a></div>
+      <div class="row"><a class="btn primary" href="#plan">¿Qué plan?</a><a class="btn" href="#agregar">Agrega tu evento</a></div>
     </div>
   </div>`;
 }
@@ -2417,7 +2416,8 @@ function clearFiltersSilent(){ F.q='';F.cats.clear();F.mom.clear();F.amb.clear()
 function hoyBlock(){
   const today=EVENTS.filter(e=>e.off===0), free=today.filter(e=>e.price===0).length, outdoor=today.filter(e=>e.amb==='exterior').length;
   const fin=EVENTS.filter(e=>{const o=e.off,d=dOf(o).getDay();return o>=0&&o<=6&&(d===0||d===6);}).length;
-  return `<div class="sechead"><h2>¿Qué plan hoy?</h2><a class="btn small" href="#hoy">Ver todo lo de hoy y armar un plan</a></div>
+  return `<span class="script" style="display:block;font-size:26px;color:var(--accent);margin:0 0 -4px">Sal y únete a la movida</span>
+    <div class="sechead"><h2>¿Qué plan hoy?</h2><a class="btn small" href="#plan">${I.dice}Ármame un plan</a></div>
     <div class="hoystats hs4">
         <button class="stat" data-quick="hoy"><b>${today.length}</b><span>eventos hoy</span></button>
         <button class="stat" data-quick="gratis"><b>${free}</b><span>gratis hoy</span></button>
@@ -2886,7 +2886,7 @@ function bindCommon(root){
 }
 
 /* ---------- Navegación ---------- */
-const VIEWS={privacidad:[viewPriv,()=>{}],terminos:[viewTerm,()=>{}],solicitudes:[viewSol,bindSol],nosotros:[viewNos,bindNos],hoy:[viewHoy,bindHoy],inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],festivales:[viewFest,bindFest],agregar:[viewAgregar,bindAgregar]};
+const VIEWS={privacidad:[viewPriv,()=>{}],terminos:[viewTerm,()=>{}],solicitudes:[viewSol,bindSol],nosotros:[viewNos,bindNos],inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],festivales:[viewFest,bindFest],agregar:[viewAgregar,bindAgregar]};
 let current='inicio';
 function go(v){ if(location.hash!=='#'+v) location.hash=v; else { current=v; render(); } window.scrollTo(0,0); }
 function render(){
@@ -2900,7 +2900,7 @@ function render(){
 let ABRIR_T=null;
 function abrirCuandoExista(id,intentos=0){ clearTimeout(ABRIR_T); const e=ev(id)||ev(String(id).split('~')[0]); if(e) return openEvent(e.id); if(intentos<40) ABRIR_T=setTimeout(()=>abrirCuandoExista(id,intentos+1),300); else toast('Este evento ya no está en la agenda'); }
 function fromHash(){ if(/^#evento\//.test(location.hash)){ const id=decodeURIComponent(location.hash.slice(8)); if(!VIEWS[current]) current='inicio'; render(); abrirCuandoExista(id); return; }
-  const [h,anc]=location.hash.replace('#','').split('#'); current=VIEWS[h]?h:'inicio'; render(); if(anc) setTimeout(()=>{ const t=document.getElementById(anc); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); },60); }
+  let [h,anc]=location.hash.replace('#','').split('#'); if(h==='hoy') h='plan'; current=VIEWS[h]?h:'inicio'; render(); if(anc) setTimeout(()=>{ const t=document.getElementById(anc); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); },60); }
 window.addEventListener('hashchange',()=>{ if(!/^#evento\//.test(location.hash)&&!document.getElementById('modal').hidden) closeModal(); fromHash(); window.scrollTo(0,0); });
 document.getElementById('brandBtn').onclick=()=>go('inicio');
 /* ---------- Nube (Supabase): cuentas y datos de cada persona ---------- */
