@@ -1499,27 +1499,47 @@ function bindRows(){
 }
 
 /* ---------- Vista: Inicio ---------- */
-function topWeek(){ return EVENTS.filter(e=>e.off>=0&&e.off<=6).sort((a,b)=>b.going-a.going).slice(0,6); }
+// Lo más esperado: artistas reconocidos (según cuánta gente busca su página de Wikipedia), conciertos gratis,
+// lugares con mucho público y cosas que pasan una vez al año (festivales, temporadas). Lo que se repite cada semana baja.
+const GRANDE=/explanada de los h[eé]roes|macroplaza|fundidora|arena monterrey|estadio|auditorio (citi)?banamex|showcenter|escenario gnp|nave lewis|explanada|parque espa[nñ]a|plaza zaragoza|gran plaza/i;
+const UNAVEZ=/festival|\bfest\b|feria|desfile|procesi[oó]n|calabazas|xantoluz|carnaval|aniversario|marat[oó]n|pal norte|pa'l norte|machaca/i;
+const SEMANAL=/candlelight|jazz room|yoga|ludoteca|recorridos guiados|cada (domingo|s[aá]bado|lunes|martes|mi[eé]rcoles|jueves|viernes)|tributo/i;
+function esFest(e){ return FEST.some(f=>{ try{ return f.claves&&new RegExp(f.claves,'i').test(e.t); }catch(x){ return false; } }); }
+function esperado(e){
+  const txt=e.t+' '+(e.venue||''), musica=e.cat==='concierto'||e.cat==='musica';
+  let p=(e.fama||0)*2;
+  if(musica&&e.price===0&&(e.fama||0)>=3) p+=5; else if(e.price===0&&GRANDE.test(txt)) p+=2;
+  if(GRANDE.test(txt)) p+=3;
+  if(esFest(e)||UNAVEZ.test(e.t)) p+=4;
+  if(e.rec) p+=3;
+  if(SEMANAL.test(txt)||e.cat==='cine') p-=5;
+  return p+(e.going||0)/1000;
+}
+function topWeek(){
+  let l=EVENTS.filter(e=>e.off>=0&&e.off<=6&&e.mod!=='linea');
+  if(l.length<8) l=EVENTS.filter(e=>e.off>=0&&e.off<=13&&e.mod!=='linea');
+  const vistos=new Set();
+  return l.map(e=>({e,p:esperado(e)})).sort((a,b)=>b.p-a.p||a.e.off-b.e.off).map(o=>o.e).filter(e=>{ const k=String(e.t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'').slice(0,18); if(vistos.has(k)) return false; vistos.add(k); return true; }).slice(0,8);
+}
 function viewInicio(){
-  const top=topWeek().slice(0,5), month=EVENTS.filter(e=>e.off>=0&&e.off<=MAXOFF).length;
+  const top=topWeek(), month=EVENTS.filter(e=>e.off>=0&&e.off<=MAXOFF).length;
   HOME_CTX.forEach((c,i)=>slot('h'+i,c));
   const slides=top.map((e,i)=>`<div class="slide ${i===0?'on':''}" data-i="${i}" aria-hidden="${i!==0}">
       <img src="${evImg(e)}" alt=""${fitAttr(e)}>
       <div class="cap"><span class="kick">${relDay(e.off)} · ${hh(e)}</span><h2>${esc(e.t)}</h2><p>${esc(e.venue)} · ${ZONAS[e.zona].n} · ${priceTxt(e.price)}</p>
       <div class="row"><button class="btn primary" data-open="${e.id}">Ver evento</button><button class="btn" data-save="${e.id}">${isSaved(e.id)?I.ok+'Agendado':I.cal+'Agendar'}</button></div></div></div>`).join('');
-  return `<div class="wrap page" style="padding-top:28px">
+  return `<div class="wrap page" style="padding-top:18px">
+    <section class="hero" id="hero" aria-roledescription="carrusel" aria-label="Lo más esperado" style="margin-bottom:28px">
+      ${slides}
+      <div class="hero-ctl"><div class="dots">${top.map((_,i)=>`<button data-dot="${i}" aria-label="Ir al evento ${i+1}" aria-current="${i===0}"></button>`).join('')}</div>
+        <button class="hbtn" id="hPrev" aria-label="Anterior">${I.left}</button><button class="hbtn" id="hNext" aria-label="Siguiente">${I.right}</button></div>
+    </section>
     <section class="homehero"><div class="lead"><span class="script">Sal y únete a la movida</span><h1>Tus 3 planes para hoy</h1>
       <p>${S.user&&S.onboarded?'Elegidos según tus gustos.':'De todo lo que pasa hoy en la ciudad elegimos tres.'} Si alguno no te convence, cámbialo por uno parecido.</p>
       <div class="row"><a class="btn primary" href="#plan">${I.dice}Ármame un plan a mi medida</a><a class="btn" href="#eventos">Ver todos los eventos</a></div></div>
       <div class="blk" id="blk" aria-hidden="true">${PZ_ORDER.map(k=>pieceHTML(k)).join("")}</div></section>
     <div class="subhead"><h2>Elegidos para hoy</h2><span>${longDate(0).replace(/^./,c=>c.toUpperCase())}</span></div>
     <div class="plans3">${HOME_CTX.map((_,i)=>planCard('h'+i)).join('')}</div>
-    <div class="sechead"><h2>Lo más esperado de la semana</h2><a class="btn small" href="#eventos">Ver los ${month} eventos del mes</a></div>
-    <section class="hero" id="hero" aria-roledescription="carrusel" aria-label="Lo más esperado de la semana">
-      ${slides}
-      <div class="hero-ctl"><div class="dots">${top.map((_,i)=>`<button data-dot="${i}" aria-label="Ir al evento ${i+1}" aria-current="${i===0}"></button>`).join('')}</div>
-        <button class="hbtn" id="hPrev" aria-label="Anterior">${I.left}</button><button class="hbtn" id="hNext" aria-label="Siguiente">${I.right}</button></div>
-    </section>
     ${hoyBlock()}
     <div class="sechead" style="margin-bottom:0"><h2>Descubre más</h2></div>
     ${rowsHTML()}
@@ -2292,7 +2312,7 @@ async function loadApproved(){
     const linea=d.municipio==='linea';
     EVENTS.push({id,t:d.nombre,cat:CAT_OK(d.categoria),org:orgKey,venue:d.lugar||(linea?'En línea':'Por confirmar'),zona:ZONAS[d.municipio]?d.municipio:'centro',
       amb:d.espacio==='exterior'?'exterior':'interior',mod:linea?'linea':'presencial',off,h:/^\d{1,2}:\d{2}/.test(d.hora||'')?d.hora.slice(0,5).padStart(5,'0'):'',
-      price:typeof d.precio==='number'?d.precio:null,tags:Array.isArray(d.caracteristicas)?d.caracteristicas:[],going:0,desc:d.descripcion||'',range,
+      price:typeof d.precio==='number'?d.precio:null,tags:Array.isArray(d.caracteristicas)?d.caracteristicas:[],going:0,fama:typeof d.fama==='number'?d.fama:0,desc:d.descripcion||'',range,
       img:r.foto||undefined,url:d.enlace||undefined,src:r.fuente&&r.fuente!=='Organizador'?r.fuente:undefined,credit:d.credito&&d.credito.autor?d.credito:undefined,fit:r.fuente==='Cinemex'?'contain':undefined});
     n++;
   });
