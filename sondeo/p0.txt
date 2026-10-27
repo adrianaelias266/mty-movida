@@ -1,0 +1,3686 @@
+https://www.google.com/maps/d/kml?mid=1nLBIRBm-yvm-g5n6u2GCNlj4xFa_7DKl&forcekml=1
+200
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Mercaditos / Pulgas / Tianguis de Monterrey</name>
+    <description><![CDATA[Actualizado: 05 abril 2021  (283 mercaditos)<br>Mapa con la ubicación de Mercaditos / Tianguis / Pulgas / Mercados rodantes en el área metropolitana de Monterrey, Nuevo León, México.<br><br>Cada ubicación incluye la dirección, día, horario y extensión de los mercaditos.<br>]]></description>
+    <Style id="icon-1899-006064-normal">
+      <IconStyle>
+        <color>ff646000</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-006064-highlight">
+      <IconStyle>
+        <color>ff646000</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-006064">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-006064-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-006064-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-0097A7-normal">
+      <IconStyle>
+        <color>ffa79700</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-0097A7-highlight">
+      <IconStyle>
+        <color>ffa79700</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-0097A7">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-0097A7-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-0097A7-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-0288D1-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-0288D1-highlight">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-0288D1">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-0288D1-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-0288D1-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-097138-normal">
+      <IconStyle>
+        <color>ff387109</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-097138-highlight">
+      <IconStyle>
+        <color>ff387109</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-097138">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-097138-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-097138-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-0F9D58-normal">
+      <IconStyle>
+        <color>ff589d0f</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-0F9D58-highlight">
+      <IconStyle>
+        <color>ff589d0f</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-0F9D58">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-0F9D58-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-0F9D58-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-1A237E-normal">
+      <IconStyle>
+        <color>ff7e231a</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-1A237E-highlight">
+      <IconStyle>
+        <color>ff7e231a</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-1A237E">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-1A237E-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-1A237E-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-4E342E-normal">
+      <IconStyle>
+        <color>ff2e344e</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-4E342E-highlight">
+      <IconStyle>
+        <color>ff2e344e</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-4E342E">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-4E342E-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-4E342E-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-673AB7-normal">
+      <IconStyle>
+        <color>ffb73a67</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-673AB7-highlight">
+      <IconStyle>
+        <color>ffb73a67</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-673AB7">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-673AB7-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-673AB7-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-795548-normal">
+      <IconStyle>
+        <color>ff485579</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-795548-highlight">
+      <IconStyle>
+        <color>ff485579</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-795548">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-795548-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-795548-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-9C27B0-normal">
+      <IconStyle>
+        <color>ffb0279c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-9C27B0-highlight">
+      <IconStyle>
+        <color>ffb0279c</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-9C27B0">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-9C27B0-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-9C27B0-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-E65100-normal">
+      <IconStyle>
+        <color>ff0051e6</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-E65100-highlight">
+      <IconStyle>
+        <color>ff0051e6</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-E65100">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-E65100-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-E65100-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-F57C00-normal">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-F57C00-highlight">
+      <IconStyle>
+        <color>ff007cf5</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-F57C00">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-F57C00-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-F57C00-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-FBC02D-normal">
+      <IconStyle>
+        <color>ff2dc0fb</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-FBC02D-highlight">
+      <IconStyle>
+        <color>ff2dc0fb</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-FBC02D">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-FBC02D-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-FBC02D-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1899-FFEA00-normal">
+      <IconStyle>
+        <color>ff00eaff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-FFEA00-highlight">
+      <IconStyle>
+        <color>ff00eaff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-FFEA00">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-FFEA00-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-FFEA00-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name><![CDATA[Lunes - matutinos & vespertinos]]></name>
+      <Placemark>
+        <name>Av Eloy Cavazos @ Av San Sebastián
+</name>
+        <description><![CDATA[Dirección:<br>Av Eloy Cavazos @ Av San Sebastián<br>(frente al Wal Mart)<br>Col Nuevo Almaguer y Colonia Valle de la Silla<br>Guadalupe<br><br>Día: Lunes<br>Hora: Matutino<br>Extensión: +15 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2098957,25.6545324,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cuitláhuac @ Calle Texcoco</name>
+        <description><![CDATA[Dirección:<br>Calle Cuitláhuac @ Calle Texcoco<br>(a una cuadra de Félix U. Gómez)<br>Colonia Azteca<br>San Nicolás de los Garza<br><br>Día: Lunes<br>Horario: Matutino<br>Extensión: +15 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2662194,25.7196936,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Lic. Santiago Roel @ Calle Profesor Plinio Ordóñez</name>
+        <description><![CDATA[Dirección:<br>Calle Lic. Santiago Roel @ Calle Profesor Plinio Ordóñez<br>Colonia Solidaridad Social<br>General Escobedo<br>(al otro lado de a las vías del tren del estadio Tigres Girasoles)<br>(también se pone Domingo - Matutino)<br><br>Día: Lunes<br>Horario: Matutino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3298754,25.7842326,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Los Llanos @ Av Azteca
+</name>
+        <description><![CDATA[Dirección:<br>Calle Los Llanos @ Av Azteca<br>Colonia Burócratas de Moctezuma<br>Monterrey<br><br>Día: Lunes<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3510844,25.7359216,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Italia @ Calle Egipto
+</name>
+        <description><![CDATA[Dirección:<br>Calle Italia @ Calle Egipto<br>Colonia Fama III<br>Santa Catarina<br><br>Día: Lunes<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4206214,25.6864111,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Paseo Arbolado Ote. @ Calle 19 Ote.</name>
+        <description><![CDATA[Dirección:<br>Calle Paseo Arbolado Ote. @ Calle 19 Ote.<br>(en derredor de Plaza La Fuente)<br>Colonia Adolfo López Mateos<br>Santa Catarina<br><br>Día: Lunes<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4433325,25.6895964,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Día del Trabajo @ Av Adolfo Ruiz Cortines</name>
+        <description><![CDATA[Dirección:<br>Calle Día del Trabajo @ Av Adolfo Ruiz Cortines<br>(a un lado del CONALEP III) (bajo Parque Tucán)<br>Col Valle de Infonavit<br>Monterrey<br><br>Día: Lunes<br>Hora: Matutino<br>Extensión: 5 cuadras<br>Locación: dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3785664,25.7356582,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Trabajadores @ Av Adolfo Ruiz Cortines </name>
+        <description><![CDATA[Dirección:<br>Calle Trabajadores @ Av Adolfo Ruiz Cortines <br> (junto a Comercial Treviño)<br>Col Valle de Infonavit<br>Monterrey<br><br>Día: Lunes<br>Hora: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3803407,25.7375525,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle General Lázaro Garza Ayala @ Calle Hermenegildo Galeana</name>
+        <description><![CDATA[Dirección:<br>Calle General Lázaro Garza Ayala @ Calle Hermenegildo Galeana<br>Centro de Juárez (Google Maps dice Colonia Joaquín Garza y Garza)<br>Juárez<br>(también se pone los Jueves - Matutino)<br><br>Día: Lunes<br>Horario: Matutino<br>Extensión 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.0971981,25.646791,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito América Obrera
+Calle Tierra Blanca @ Av Las Américas
+</name>
+        <description><![CDATA[Dirección:<br>Mercadito América Obrera<br>Calle Tierra Blanca @ Av Las Américas<br>Col América Obrera<br>Guadalupe<br><br>Día: Lunes<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2466553,25.7048386,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Agustín de Iturbide @ Calle Benito Juárez
+</name>
+        <description><![CDATA[Dirección:<br>Calle Agustín de Iturbide @ Calle Benito Juárez<br>Mina<br><br>Día: Lunes<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.5285434,26.0029825,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Tepetongo @ Calle Concepción del Oro</name>
+        <description><![CDATA[Dirección:<br>Calle Tepetongo @ Calle Concepción del Oro<br>Colonia Cañada Blanca<br>Guadalupe<br><br>Día: Lunes<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1855314,25.7282245,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Lázaro Garza Ayala
+Calle Francisco Siller @ Calle Diego Saldívar
+</name>
+        <description><![CDATA[Dirección:<br>Mercadito Lázaro Garza Ayala<br>Calle Francisco Siller @ Calle Diego Saldívar<br>Colonia Lázaro Garza Ayala<br>San Pedro Garza García<br><br>Día: Lunes<br>Horario: Matutino<br>Extensión: 1-2 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4132244,25.6639507,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Jardines de San Rafael
+Calle Ébano @ Calle Sauce</name>
+        <description><![CDATA[Mercadito Jardines de San Rafael<br>Calle Ébano @ Calle Sauce<br>Colonia Jardines de San Rafael<br>Guadalupe<br><br>Día: Lunes<br>Horario; Matutino<br>Extensión: 1-2 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FFEA00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2206487,25.69792,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle González Camarena @ Calle Orto
+</name>
+        <description><![CDATA[Dirección:<br>Calle González Camarena @ Calle Orto<br>Colonia Barrio La Moderna<br>Monterrey<br>(a una cuadra de la rotonda de Av Cabezada y Ave Luis Donaldo Colosio Murrieta)<br>(detrás de las sucursales de Elektra y HEMSA)<br>(también se pone Viernes - Vespertino)<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 10-13 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3859652,25.7812845,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercado Pedregal de la Linda Vista
+Calle del Fortín @ Calle Arroyo La Talaverna</name>
+        <description><![CDATA[Dirección:<br>Mercado Pedregal de la Linda Vista<br>Calle del Fortín @ Calle Arroyo La Talaverna<br>Col del Pedregal de la Linda Vista<br>Guadalupe<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: +10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2070867,25.7161578,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Alcanfor @ Av Concordia</name>
+        <description><![CDATA[Dirección:<br>Av Alcanfor @ Av Concordia<br>Colonia Ébanos IV y Ébanos III<br>Apodaca (también se pone Viernes - Vespertino)<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: +10 cuadras<br>Locación: sobre avenida]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2408373,25.7846324,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Las Américas
+o Mercadito de La Marte
+Calle José María Morelos @ Av Las Torres
+</name>
+        <description><![CDATA[Dirección:<br>Mercadito Las Américas<br>o Mercadito de La Marte<br>Calle José María Morelos @ Av Las Torres<br>Colonia Marte<br>Guadalupe<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2502302,25.672489,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Monterrey @ Ave México
+</name>
+        <description><![CDATA[Dirección:<br>Calle Monterrey @ Ave México<br>(frente a la Dulcería Niño Perdido)<br>Col La Noria Norte<br>Apodaca<br><br>Día: Lunes<br>Hora: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1911095,25.7325377,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Fundadores del Ejido @ Av Abraham Lincoln</name>
+        <description><![CDATA[Dirección:<br>Calle Fundadores del Ejido @ Av Abraham Lincoln<br>Colonia Lomas de Cumbres<br>Monterrey<br><br>Día: Lunes<br>Hora: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3845263,25.7464338,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av San Martín @ Av Almazán
+(Av San Martín @ Av Rodrigo Gómez)
+</name>
+        <description><![CDATA[Dirección:<br>Av San Martín @ Av Almazán<br>(Av San Martín @ Av Rodrigo Gómez)<br>Colonia Tierra y Libertad (Francisco I. Madero)<br>Monterrey<br>(a 3 cuadras de la Clínica Tierra y Libertad)<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de Colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3394021,25.7397752,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Acuario / Av Encino @ Av Concordia
+</name>
+        <description><![CDATA[Dirección:<br>Calle Acuario / Av Encino @ Av Concordia<br>Col Nuevo Las Puentes<br>Apodaca<br>(también se pone Viernes - VESPERTINO)<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia y sobre avenida]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2619382,25.7847718,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Palma de Alejandría @ Calle Palma Miraguana
+</name>
+        <description><![CDATA[Calle Palma de Alejandría @ Calle Palma Miraguana<br>(a 10 metros de Av Real de Palmas)<br>Colonia Real de Palmas<br>General Zuazua<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1733167,25.8937771,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Ing. Ángel Belares @ Calle Palacio de Justicia
+</name>
+        <description><![CDATA[Dirección:<br>Calle Ing. Ángel Belares @ Calle Palacio de Justicia<br>Colonia Ferrocarrilera<br>Monterrey<br>(también se pone Sábado - Matutino)<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3358221,25.7273741,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cuauhtémoc @ Calle 24 de febrero
+</name>
+        <description><![CDATA[Dirección:<br>Calle Cuauhtémoc @ Calle 24 de febrero<br>(Google Maps marca la calle como "Calle 13 de noviembre")<br>Colonia Fama IV<br>Santa Catarina<br>(también se pone Jueves - Vespertino)<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4234004,25.6815292,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle 20 de Octubre @ Calle Jesús M. Garza</name>
+        <description><![CDATA[Dirección:<br>Calle 20 de Octubre @ Calle Jesús M. Garza<br>(a 4 cuadras de la Estación del Metro “Y” Griega)<br>Colonia Francisco I. Madero<br>Monterrey<br><br>Día: Lunes<br>Hora: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2803788,25.6864721,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito La Noria
+Av Hector Caballero @ Calle Salvador Chávez</name>
+        <description><![CDATA[Dirección:<br>Av Hector Caballero @ Calle Salvador Chávez<br>(junto a Unidad Deportiva Noria Norte)<br>Col La Noria<br>Apodaca<br><br>Día: Lunes<br>Hora: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1925284,25.7379729,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Río Trinidad @ Calle Río Papaloapan
+</name>
+        <description><![CDATA[Dirección: <br>Calle Río Trinidad @ Calle Río Papaloapan<br>Colonia Dos Ríos Sector III<br>Guadalupe<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1631897,25.678162,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Tramoyistas @ Av. Antiguos Ejidatarios
+</name>
+        <description><![CDATA[Dirección:<br>Calle Tramoyistas @ Av. Antiguos Ejidatarios<br>Colonia La Alianza<br>Monterrey<br>(también se pone los Jueves - Vespertino)<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4070767,25.774567,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Sierra Negra @ Calle El Sabinal
+</name>
+        <description><![CDATA[Dirección:<br>Av Sierra Negra @ Calle El Sabinal<br>Colonia Terranova Residencial<br>Juárez<br>(también se pone Jueves - Vespertino y Sábado - Vespertino)<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1073794,25.6679485,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Balcones del Norte @ Av Adolfo López Mateos
+</name>
+        <description><![CDATA[Dirección:<br>Calle Balcones del Norte @ Av Adolfo López Mateos<br>Colonia Jardines de Monterrey II<br>Apodaca<br>(se pone cerca de Martes, Jueves y Sábado - Vespertino)<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2625078,25.809331,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Madrid @ Calle Pamplona
+</name>
+        <description><![CDATA[Dirección:<br>Calle Madrid @ Calle Pamplona<br>Colonia Puerta Mitras<br>Santa Catarina<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4968607,25.6925799,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Lic. Pedro Zorrilla @ Calle Lic. Augusto Gómez Villanueva
+</name>
+        <description><![CDATA[Dirección:<br>Calle Lic. Pedro Zorrilla @ Calle Lic. Augusto Gómez Villanueva<br>Colonia Valle de Santa Lucía<br>Monterrey<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.350972,25.7466936,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pulga Nogalera
+Av Sendero Divisorio
+</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZiblh_cLLdUnCQs1Md8UO_8blIYad_hqnnQfwzbmj_SWwoohDRAsRBQLjLJ-GFS61UtzgEmPbcqncL2dgzqfjPXYdsKhEUsI-YLV-FGmNIKUsagILkfLDRGgSQbDlg-j6QLind5j3fPVoe5ZXSkTI7_122OIp0_BEse7GulB1M9tJ_ypax9ZrggB3cOkgc7UUEYEdAkGO41rA?fife=s16383" height="200" width="auto" /><br><br>Dirección:<br>Pulga Nogalera<br>Av Sendero Divisorio<br>Colonia Valle de las Alamedas<br>San Nicolás de los Garza<br><br>(frente a Parque de Perros - Escobedo Oriente)<br>(a una cuadra al oriente de Walmart San Nicolás)<br>(media cuadra al poniente de Calle Prisciliano Villarreal)<br><br>(también se pone Jueves - Vespertino)<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de estacionamiento<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZgRmR3lvdi5IC0wP8mzhvC7SilLcr-6NLigTHMvR24AqaRUl_oOLGSzQBWgBlIS_HXMIGp3Kd-MPx1q0DIQfQwR_w3b5_ln2vcVvt2GsoyqeuVtpp3x7kr2iqroRip4rDrZj7xWYM2M5ZVWZW33njn59WbudDscc8i9D_qpL0-5X4PPysS0n9BczU9zJFtxC2vt-MZs9u8srQ?fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZhtU4YZZ1pu7R3OM4D5wtReHtVjwNNMWoVa5TGReakWOLyCUbWvVnzXruPUA_UCGpWyWqPBvriYR4z6ozKJoUdRdTWasVutbz8qoB3GGbjCAOhW3SfIgDBXRkVfZOEyDb0e4CSOUNTKUGfJs7iT-qOv7DvTGoxGuMjhWZAG1hGt6OlgF6NI2-el5l1VRAlHmEA_HwiiYkS5aA?fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZhaK2Vv5qGStOpMjP6MpHBUpd6HhJDHp83ZLiG2H7EtKZUDrL9icLnsML-EmB9QUATXqWTVCZveCkqAk0L6WdseTe9hiTmCxnIPr6CSZ8i1tepXr3EyIWMEVs7CcYq_gElShTUvnjdHyf4-cM0lYOBJsHewPphOEBkDEk1xlAGthsKoR9sTkU5DiZdrG2MZGl6SvQBXFDAnow?fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZjROUNvWTwvkJVbJbfuPfFQrv-gFEt9kZsor-VlSKehM-L1d_duiNZ6a_K7ggfH0ZZc4kjzPUmeCyuHdjsfn8LS0cbi1pBY1DrgA3e-vhjRglzHNT1ZJXAxoBGjeoTqU2IQPRvN4vdCaAFMJrpYf_sh6-bIyMGarV5WgKUzaO9kHGm-vX_ylIFVCGJb8waktYBL8qhSX426ag?fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZh_b7wMTtGGK7d_rRBVYw4bxNI7ZjbIlMvaNO5wCtBvpYuvejyicjTIB6tqySD0WQoj49JUkav7meRfglsvz2P46NlfEXnpgcBK5NJqbot9M5wiHGmKuniujh8DuxGWpfT-OtDCX7pFo-eNIAFs71hjs3U0xGQHotGHES3s447lgrl2AU5P1_TlbUueuLfQrXOllDLAAtJeiw?fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZiDc6UOeP-xA_vDcKMm-1dK_yqUfciXheKBfcqoLlKHNQW9fcPPLV6I3g-0wpM6EvxBor_NQUCfnkViA4SMyhc4xAiKQiUeTe59skoUP4JuMJ3J2MaYoEy5nuRQNB8qsIJLBUAP-NvJNtLufixLB18sPQcGqqm8FmrSS3DWqx03RxS4mRoZsrFW0UNAxrW4piok-MZeQyWPrw?fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZjXTZYr16PjHgmh8O-NoyO9lDPWNavB3iTck11C6FBj0VAo-NsMYWFL-yihp9orHlWF2ibG3rgZCYHU_ztSXNYkddUD1AuKUtbC36Z5oRoTHvJa4EaFx277ffXhRgEUk-AiRdK4Zaq3-EdXuTnFdYxjrI9MskJ42hNHGTS04OfmeJEfcOP9z_nQfVON0rKGOlslN2lCG_8eNg?fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZiblh_cLLdUnCQs1Md8UO_8blIYad_hqnnQfwzbmj_SWwoohDRAsRBQLjLJ-GFS61UtzgEmPbcqncL2dgzqfjPXYdsKhEUsI-YLV-FGmNIKUsagILkfLDRGgSQbDlg-j6QLind5j3fPVoe5ZXSkTI7_122OIp0_BEse7GulB1M9tJ_ypax9ZrggB3cOkgc7UUEYEdAkGO41rA?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZgRmR3lvdi5IC0wP8mzhvC7SilLcr-6NLigTHMvR24AqaRUl_oOLGSzQBWgBlIS_HXMIGp3Kd-MPx1q0DIQfQwR_w3b5_ln2vcVvt2GsoyqeuVtpp3x7kr2iqroRip4rDrZj7xWYM2M5ZVWZW33njn59WbudDscc8i9D_qpL0-5X4PPysS0n9BczU9zJFtxC2vt-MZs9u8srQ?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZhtU4YZZ1pu7R3OM4D5wtReHtVjwNNMWoVa5TGReakWOLyCUbWvVnzXruPUA_UCGpWyWqPBvriYR4z6ozKJoUdRdTWasVutbz8qoB3GGbjCAOhW3SfIgDBXRkVfZOEyDb0e4CSOUNTKUGfJs7iT-qOv7DvTGoxGuMjhWZAG1hGt6OlgF6NI2-el5l1VRAlHmEA_HwiiYkS5aA?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZhaK2Vv5qGStOpMjP6MpHBUpd6HhJDHp83ZLiG2H7EtKZUDrL9icLnsML-EmB9QUATXqWTVCZveCkqAk0L6WdseTe9hiTmCxnIPr6CSZ8i1tepXr3EyIWMEVs7CcYq_gElShTUvnjdHyf4-cM0lYOBJsHewPphOEBkDEk1xlAGthsKoR9sTkU5DiZdrG2MZGl6SvQBXFDAnow?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZjROUNvWTwvkJVbJbfuPfFQrv-gFEt9kZsor-VlSKehM-L1d_duiNZ6a_K7ggfH0ZZc4kjzPUmeCyuHdjsfn8LS0cbi1pBY1DrgA3e-vhjRglzHNT1ZJXAxoBGjeoTqU2IQPRvN4vdCaAFMJrpYf_sh6-bIyMGarV5WgKUzaO9kHGm-vX_ylIFVCGJb8waktYBL8qhSX426ag?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZh_b7wMTtGGK7d_rRBVYw4bxNI7ZjbIlMvaNO5wCtBvpYuvejyicjTIB6tqySD0WQoj49JUkav7meRfglsvz2P46NlfEXnpgcBK5NJqbot9M5wiHGmKuniujh8DuxGWpfT-OtDCX7pFo-eNIAFs71hjs3U0xGQHotGHES3s447lgrl2AU5P1_TlbUueuLfQrXOllDLAAtJeiw?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZiDc6UOeP-xA_vDcKMm-1dK_yqUfciXheKBfcqoLlKHNQW9fcPPLV6I3g-0wpM6EvxBor_NQUCfnkViA4SMyhc4xAiKQiUeTe59skoUP4JuMJ3J2MaYoEy5nuRQNB8qsIJLBUAP-NvJNtLufixLB18sPQcGqqm8FmrSS3DWqx03RxS4mRoZsrFW0UNAxrW4piok-MZeQyWPrw?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZjXTZYr16PjHgmh8O-NoyO9lDPWNavB3iTck11C6FBj0VAo-NsMYWFL-yihp9orHlWF2ibG3rgZCYHU_ztSXNYkddUD1AuKUtbC36Z5oRoTHvJa4EaFx277ffXhRgEUk-AiRdK4Zaq3-EdXuTnFdYxjrI9MskJ42hNHGTS04OfmeJEfcOP9z_nQfVON0rKGOlslN2lCG_8eNg?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -100.2671819,25.7701689,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Sierra Madre @ Av Villa Corona
+</name>
+        <description><![CDATA[Dirección:<br>Av Sierra Madre @ Av Villa Corona<br>Colonia Villas del Poniente<br>García, NL<br>(también se pone Viernes - Vespertino)<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4377645,25.7796746,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Humberto Lozano @ Calle Ángel Martínez Villarreal
+</name>
+        <description><![CDATA[Dirección:<br>Calle Humberto Lozano @ Calle Ángel Martínez Villarreal<br>Colonia Benito Juárez<br>Guadalupe<br><br>Día: Lunes<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-FBC02D</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1947548,25.7184621,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name><![CDATA[Martes - matutinos & vespertinos]]></name>
+      <Placemark>
+        <name>Calle Nuevo León @ Av Santo Domingo
+</name>
+        <description><![CDATA[Dirección:<br>Calle Nuevo León @ Av Santo Domingo<br>(se extiende por Calles Sinaloa y Río Potosí)<br>Col Nicolás Bravo y Col Rincón de los Cedros<br>San Nicolás de los Garza<br><br>Día: Martes<br>Hora: Matutino<br>Extensión: 10-15 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0F9D58</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2726245,25.7537925,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Del Bosque @ Av Pablo C. Livas
+</name>
+        <description><![CDATA[Dirección:<br>Av Del Bosque @ Av Pablo C. Livas<br>Colonia Paseo De Guadalupe <br>(frente a Colonia Valle del Sol Fomerrey 130)<br>(también le llaman "Los Independientes")<br>(también se pone sábado y domingo matutino)<br>Guadalupe<br><br>Día: Martes<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-0F9D58</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1658004,25.6539702,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle José Domínguez @ Calle General Francisco Villa
+</name>
+        <description><![CDATA[Dirección:<br>Calle José Domínguez @ Calle General Francisco Villa<br>Hidalgo Centro<br>Hidalgo<br><br>Día: Martes<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0F9D58</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4574707,25.9728391,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Thomas Alba Edison @ Calle Pedro María Anaya
+</name>
+        <description><![CDATA[Dirección<br>Calle Thomas Alba Edison @ Calle Pedro María Anaya<br>(sobre Polígono Edison)<br>Col Rubén Jaramillo<br>Monterrey<br>(también se pone Viernes - Vespertino)<br><br>Día: Martes<br>Hora: Matutino<br>Extensión: 3 - 5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0F9D58</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3319818,25.6964521,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle José María Gutiérrez L. @ Calle Juan José Garza Treviño</name>
+        <description><![CDATA[Dirección:<br>Calle José María Gutiérrez L. @ Calle Juan José Garza Treviño<br>Colonia San Ángel (Fomerrey 78) / Colonia Fray Servando Teresa de Mier<br>Monterrey<br>(frente a Escuela Primaria Vicente Guerrero)<br>(en derredor de parque)<br><br>Día: Martes<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0F9D58</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3487448,25.7457529,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Zuazua @ Calle Idelfonso Vázquez
+</name>
+        <description><![CDATA[Dirección:<br>Calle Zuazua @ Calle Idelfonso Vázquez<br>Centro de Salinas Victoria<br>Salinas Victoria<br>(junto a la Preparatoria 25 Unidad Salinas Victoria)<br><br>Día: Martes<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0F9D58</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2933319,25.9642347,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle J. M. Salas entre Calle Aureliano Ramos y Calle Oswaldo Sánchez</name>
+        <description><![CDATA[Dirección:<br>Calle J. M. Salas entre Calle Aureliano Ramos y Calle Oswaldo Sánchez<br>(frente a Parque, y Parroquia de Santo Cristo)<br>Colonia Hidalgo<br>Monterrey<br><br>Día: Martes<br>Hora: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0F9D58</styleUrl>
+        <Point>
+          <coordinates>
+            -100.322645,25.7063986,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Soldadores @ Calle Empleados
+</name>
+        <description><![CDATA[Dirección<br>Av Soldadores @ Calle Empleados<br>Colonia La Alianza<br>Monterrey<br><br>Día: Martes<br>Horario: Matutino<br>Extensión: ?<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0F9D58</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4161308,25.778984,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Adolfo López Mateos @ Calle Jardines de la Primavera</name>
+        <description><![CDATA[Dirección:<br>Av Adolfo López Mateos @ Calle Jardines de la Primavera<br>Colonia Jardines de Monterrey II<br>Apodaca<br>(también se pone Jueves - Vespertino, cerca de Lunes y Sábado - Vespertino)<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 7-10 cuadras<br>Locación: Sobre avenida y dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.259712,25.8086664,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Tréboles
+Av Del Prado @ Av Tréboles</name>
+        <description><![CDATA[Dirección:<br>Mercadito Tréboles<br>Av Del Prado @ Av Tréboles<br>Colonia Tréboles<br>Apodaca<br>(también se pone Viernes y Domingo - Vespertino)<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.146671,25.7631514,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Hilario Ayala @ Av Raúl Salinas Lozano
+</name>
+        <description><![CDATA[Dirección:<br>Calle Hilario Ayala @ Av Raúl Salinas Lozano<br>Colonia Hacienda Los Ayala<br>General Escobedo<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3317668,25.7927995,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Naranjo @ Calle Alcaldía 
+</name>
+        <description><![CDATA[Dirección:<br>Calle Naranjo @ Calle Alcaldía <br>(a una cuadra de Av Lázaro Cárdenas)<br>Colonia Los Rosales / Balcones del Mirador,<br>Monterrey<br>(también se pone los Sábados - Vespertino)<br><br>Día: Martes<br>Hora: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2942324,25.6296048,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Alabastro @ Calle Océano Ártico
+</name>
+        <description><![CDATA[Dirección:<br>Calle Alabastro @ Calle Océano Ártico<br>Colonia San Bernabé<br>(en el límite con la Colonia Villa Alegre)<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.372811,25.749136,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Julio A. Roca @ Calle Marco
+</name>
+        <description><![CDATA[Dirección:<br>Calle Julio A. Roca @ Calle Marco<br>Colonia San Bernabé X Sector<br>(junto a la Colonia Croc y la Colonia Villa Bonita)<br>Monterrey<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3722351,25.7704553,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Vista de la Anacua @ Av Vista del Huizache
+</name>
+        <description><![CDATA[Dirección:<br>Calle Vista de la Anacua @ Av Vista del Huizache<br>Colonia Vistas del Río<br>Juárez<br>(también se pone Viernes - Vespertino)<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1009958,25.6638438,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle 16 de Septiembre @ Calle Circunvalación
+</name>
+        <description><![CDATA[Dirección:<br>Calle 16 de Septiembre @ Calle Circunvalación<br>Colonia Nuevo San Rafael<br>Guadalupe<br>(en derredor de parque / lote baldío)<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2074166,25.6956168,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Colinas del Sol @ Calle Camino Real
+</name>
+        <description><![CDATA[Calle Colinas del Sol @ Calle Camino Real<br>Colonia Colinas del Sol<br>Juárez<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación Sobre avenida]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1277897,25.6663458,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Clavel @ Calle Palma
+</name>
+        <description><![CDATA[Dirección:<br>Calle Clavel @ Calle Palma<br>(a una cuadra de Calle Pablo A. de la Garza)<br>Colonia Moderna<br>Monterrey<br><br>Día: Martes<br>Hora: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2884388,25.6962926,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Camino Real a Santa Rosa @ Avenida Chopo
+</name>
+        <description><![CDATA[Dirección:<br>Calle Camino Real a Santa Rosa @ Avenida Chopo<br>Colonia Ébanos IX<br>Apodaca<br>(también se pone los Sábados - Vespertino)<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2384394,25.7817959,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Parque Tarahumara @ Av Cabezada
+</name>
+        <description><![CDATA[Dirección:<br>Calle Parque Tarahumara @ Av Cabezada<br>Colonia La Alianza<br>Monterrey<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4040328,25.7834519,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Gral. Pablo A. de la Garza @ Calle Jerónimo Treviño
+</name>
+        <description><![CDATA[Dirección:<br>Calle Gral. Pablo A. de la Garza @ Calle Jerónimo Treviño<br>Colonia El Progreso (junto a Colonia Conchita Velasco 3er Sector)<br>Ciénega de Flores<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1736532,25.9671175,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Privada A @ Calle Prolongación Morelos @ Calle Antillas Menores
+</name>
+        <description><![CDATA[Dirección:<br>Calle Privada A @ Calle Prolongación Morelos @ Calle Antillas Menores<br>(en derredor de Escuela Primaria Alfonso Reyes)<br>Colonia El Realito<br>Monterrey<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2748904,25.6642578,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cerro de la Silla @ Calle Sierra Madre
+</name>
+        <description><![CDATA[Dirección:<br>Calle Cerro de la Silla @ Calle Sierra Madre<br>Colonia Los Pilares<br>Salinas Victoria<br>(también se pone Viernes y Domingo - Vespertino)<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2475387,25.911231,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Valle Alegre @ Avenida Valle de Guadalajara
+</name>
+        <description><![CDATA[Dirección:<br>Calle Valle Alegre @ Avenida Valle de Guadalajara<br>Colonia Valle Soleado (FOMERREY 107)<br>Guadalupe<br>(también se pone Domingo - Matutino)<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.166687,25.7033772,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Rufino Tamayo @ Av Alfonso Reyes
+</name>
+        <description><![CDATA[Dirección:<br>Av Rufino Tamayo @ Av Alfonso Reyes<br>Colonia Quinta Colonial Apodaca I<br>Ex-Hacienda Santa Rosa<br>Apodaca<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2120703,25.7979597,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Insurgentes (Av Nuevo Las Puentes) @ Av Andrómeda
+</name>
+        <description><![CDATA[Dirección:<br>Calle Insurgentes (Av Nuevo Las Puentes) @ Av Andrómeda<br>Colonia Valle de Apodaca II (frente a la colonia Nuevo Las Puentes III)<br>Apodaca<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2611943,25.7908099,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Mercadito "de la Josefa"
+Calle Josefa Ortiz de Domínguez @ Calle 12]]></name>
+        <description><![CDATA[Dirección:<br>Calle Josefa Ortiz de Domínguez @ Calle 12<br>Colonia Adolfo López Mateos<br>Monterrey<br>(a cuadras de la Liga Pequeña de Béisbol Mitras AC)<br>(también se pone los Viernes - Matutino)<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3617047,25.7059557,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Río Mississipi Sur @ San Isidro
+</name>
+        <description><![CDATA[Dirección:<br>Calle Río Mississipi Sur @ San Isidro<br>Colonia San Isidro<br>Apodaca<br>(también se pone Viernes - Vespertino, pero al otro lado del parque)<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1533792,25.7596541,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Los Parques @ Calle Plata
+</name>
+        <description><![CDATA[Dirección:<br>Av Los Parques @ Calle Plata<br>Colonia Los Parques Residencial<br>García<br>(también se pone Viernes - Vespertino)<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 1-2 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4630342,25.7924495,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Villa Corona @ Calle Villa del Rey
+</name>
+        <description><![CDATA[Dirección:<br>Av Villa Corona @ Calle Villa del Rey<br>Colonia Villas del Poniente<br>García<br>(en Mitras Poniente)<br><br>Día: Martes<br>Horario: Vespertino<br>Extensión: 1 cuadra]]></description>
+        <styleUrl>#icon-1899-097138</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4246155,25.7761585,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name><![CDATA[Miércoles - matutinos & vespertinos]]></name>
+      <Placemark>
+        <name>Mercado Unidad Modelo
+Av Tlatelolco y Calle Dr. Ángel Martínez @ Av Aztlán</name>
+        <description><![CDATA[Dirección:<br>Mercado Unidad Modelo<br>Av Tlatelolco y Calle Dr. Ángel Martínez @ Av Aztlán<br>(desde Calle Zempoala hasta Luis M. Farías)<br>Colonia Unidad Modelo (se extiende hasta Valle de Santa Lucía)<br>Monterrey<br><br>Día: Miércoles<br>Horario: Matutino<br>Extensión: +15 cuadras (pequeñas)<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3597286,25.7463278,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Mezquital de Oro @ Antiguo Camino a Huinalá
+</name>
+        <description><![CDATA[Dirección:<br>Calle Mezquital de Oro @ Antiguo Camino a Huinalá<br>Colonia Cañada Blanca<br>Guadalupe<br><br>Día: Miércoles<br>Horario: Matutino<br>Extensión: aproximadamente 10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1828123,25.7256794,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Argelia @ Av Costa Rica
+</name>
+        <description><![CDATA[Dirección:<br>Calle Argelia @ Av Costa Rica<br>Colonia Nuevo Amanecer<br>Apodaca<br>(también se pone Domingo - Matutino)<br><br>Día: Miércoles<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2490703,25.7787932,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercado de La Monclovita
+Calle Monclova @ Calle Jiménez
+</name>
+        <description><![CDATA[Dirección:<br>Mercado de La Monclovita<br>Calle Monclova @ Calle Jiménez<br>Colonia Paraíso<br>Guadalupe<br><br>Día: Miércoles<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2706077,25.6752972,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Adolfo López Mateos @ Av San Sebastián
+</name>
+        <description><![CDATA[Dirección:<br>Av Adolfo López Mateos @ Av San Sebastián<br>Colonia Veintiuno de enero<br>Guadalupe<br>(a 100m de Soriana Las Quintas)<br>(también se coloca Domingos - Matutino)<br><br>Día: Miércoles<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de estacionamiento]]></description>
+        <styleUrl>#icon-1899-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2124599,25.687949,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Ciudad Ideal
+Calle Tierra Blanca @ Calle Anahuac</name>
+        <description><![CDATA[Dirección:<br>Mercadito Ciudad Ideal<br>Calle Tierra Blanca @ Calle Anahuac<br>(junto al Campo de Softbal Nueva Libertad)<br>Colonia Nueva Libertad<br>Guadalupe<br><br>Día: Miércoles<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.248934,25.7048804,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cerro de las Mitras Sur @ Calle Cerro de la Silla
+</name>
+        <description><![CDATA[Dirección:<br>Calle Cerro de las Mitras Sur @ Calle Cerro de la Silla<br>Colonia Los Pilares<br>Salinas Victoria<br>(también se pone Sábado - Vespertino y Domingo - Matutino)<br><br>Día: Miércoles<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2406733,25.9145442,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercado de la Fortuna
+Ave Juan Pablo II (Anillo Vial Metropolitano) y Calle Sierra de Picachos</name>
+        <description><![CDATA[Dirección:<br>Mercado de la Fortuna<br>Ave Juan Pablo II (Anillo Vial Metropolitano) y Calle Sierra de Picachos<br>Colonia Las Puentes 1er Sector<br>San Nicolás de los Garza<br><br>Día: Miércoles<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2930231,25.7442794,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Libertad @ Calle Laurel
+</name>
+        <description><![CDATA[Dirección:<br>Calle Libertad @ Calle Laurel<br>Colonia Moderna<br>Monterrey<br>(se pone de Miércoles a Domingo)<br><br>Día: Miércoles<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2892542,25.6998195,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Justo Sierra @ Calle Hermenegildo Galeana
+</name>
+        <description><![CDATA[Dirección:<br>Calle Justo Sierra @ Calle Hermenegildo Galeana<br>Barrio Tampiquito<br>San Pedro Garza García<br><br>Día: Miércoles<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0097A7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3821445,25.6521657,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito 3 Caminos
+Calle De la Primavera @ Calle Fresa
+</name>
+        <description><![CDATA[Dirección:<br>Calle De la Primavera @ Calle Fresa<br>(en derredor de la plaza 3 Caminos)<br>Col 3 Caminos 2do Sector<br>Guadalupe<br><br>Día: Miércoles<br>Hora: Vespertino<br>Extensión: +10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1874322,25.6632918,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Hacienda del Rey @ Av Benito Juárez
+</name>
+        <description><![CDATA[Dirección:<br>Av Hacienda del Rey @ Av Benito Juárez<br>Colonia Hacienda de Escobedo<br>General Escobedo<br><br>Día: Miércoles<br>Horario: Vespertino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3049766,25.7895497,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Canal Medular @ Av Cabezada
+</name>
+        <description><![CDATA[Dirección:<br>Calle Canal Medular @ Av Cabezada<br>Colonia Barrio del Prado<br>Monterrey<br><br>Día: Miércoles<br>Hora: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3931871,25.779298,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Camino del Milagro (o Av Cartagena) @Panamá</name>
+        <description><![CDATA[Dirección<br>Calle Camino del Milagro (o Av. Cartagena) @Panamá<br>Colonia Fresnos X<br>Apodaca<br><br>Día: Miércoles<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia, en derredor de parque]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.244177,25.7676534,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Sexta @ Av Galaxia
+</name>
+        <description><![CDATA[Dirección:<br>Calle E Sexta @ Av. Galaxia<br>Colonia Metroplex I<br>Apodaca<br>(también se pone los Sábados - Vespertino)<br><br>Día: Miércoles<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: sobre avenida]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2489191,25.7872898,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Flores Magón
+Calle Fidel Velázquez Sánchez @ Vía Monterrey-Torreón
+</name>
+        <description><![CDATA[Dirección:<br>Mercadito Flores Magón<br>Calle Fidel Velázquez Sánchez @ Vía Monterrey-Torreón<br>Fraccionamiento Jardines de Escobedo II, junto a la Colonia Ricardo Flores Magón<br>General Escobedo<br>(también se pone Sábado - Vespertino)<br><br>Día: Miércoles<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3313246,25.8044659,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Capellanía @ Calle Cedros
+</name>
+        <description><![CDATA[Dirección:<br>Calle Capellanía @ Calle Cedros<br>Colonia Las Arboledas<br>García<br>(junto al arroyo)<br><br>Día: Miércoles<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.5870577,25.7899288,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Camino Real @ Av Eloy Cavazos
+</name>
+        <description><![CDATA[Dirección:<br>Av Camino Real @ Av Eloy Cavazos<br>Colonia Camino Real <br>Guadalupe<br>(junto a la Pastelería San José)<br><br>Día: Miércoles<br>Horario: de 13:00 hrs hasta que se ponga el sol (pocos puestos se quedan más noche)<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.225589,25.6589168,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Cuauhtémoc (Calle José María Arteaga) @ Av Chapultepec</name>
+        <description><![CDATA[Dirección:<br>Av Cuauhtémoc (Calle José María Arteaga) @ Av Chapultepec<br>Colonia Santa Margarita<br>Guadalupe<br>(frente al HEB, junto al Mercado de Abastos, sobre el camellón entre Cuautémoc y José Ma Arteaga)<br><br>Día: Miércoles<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: sobre avenida]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2668731,25.6657356,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Luis Donaldo Colosio Murrieta @ Calle San Juan de Ulúa
+</name>
+        <description><![CDATA[Dirección:<br>Av Luis Donaldo Colosio Murrieta @ Calle San Juan de Ulúa<br>Colonia San Gilberto<br>Santa Catarina<br><br>Día: Miércoles<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: sobre avenida]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4647664,25.695336,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Santos Cantú Salinas @ Calle Pípila
+</name>
+        <description><![CDATA[Dirección:<br>Calle Santos Cantú Salinas @ Calle Pípila<br>Cerro de la Campana<br>Monterrey<br>(sobre Parque Los Pinos)<br><br>Día: Miércoles<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación Dentro de campos / canchas de fútbol]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3028717,25.6402681,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Alfonso Martínez Domínguez @ Calle Francisco Javier Mina
+</name>
+        <description><![CDATA[Dirección:<br>Calle Alfonso Martínez Domínguez @ Calle Francisco Javier Mina<br>Colonia Gobernadores (cerca de la Colonia Paseos de San Isidro)<br>Salinas Victoria<br><br>Día: Miércoles<br>Horario: Vespertino<br>Extensión: 1-2 cuadras<br>Locación: Sobre calle grande]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3020878,25.9610331,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Ave Lic. José López Portillo @ Calle Lic. Héctor Flores</name>
+        <description><![CDATA[Dirección:<br>Ave Lic. José López Portillo @ Calle Lic. Héctor Flores<br>Colonia Veinticinco de Noviembre<br>Guadalupe<br>(también se pone Domingo - Matutino en el lado opuesto del parque, pero de mayor extensión)<br><br>Día: Miércoles<br>Horario: Vespertino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-006064</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2688372,25.6550444,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name><![CDATA[Jueves - matutinos & vespertinos]]></name>
+      <Placemark>
+        <name>Av Nuevo México @ Calle Marea Alta
+</name>
+        <description><![CDATA[Dirección:<br>Av Nuevo México @ Calle Marea Alta<br>Colonia Morelos (al norte de Colonia Mitras Norte)<br>Monterrey<br>(a 100m de la Estación de Bomberos No. 3)<br>(conecta la Av Fidel Velázquez con Av Lic. Raúl Rangel Frías)<br><br><br>Día: Jueves<br>Hora: Matutino<br>Extensión: 10-15 cuadras<br>Locación: Dentro de Colonia]]></description>
+        <styleUrl>#icon-1899-795548</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3485578,25.7180383,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito La Florida
+Calle Juventino Rosas @ Calle Capitán Mariano Azueta</name>
+        <description><![CDATA[Dirección:<br>Mercadito La Florida<br>Calle Juventino Rosas @ Calle Capitán Mariano Azueta<br>Colonia Buenos Aires y Colonia La Florida<br>Monterrey<br>(junto al Hospital Psiquiátrico)<br>(también se pone los sábados - Matutino)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 7-10 cuadras<br>Locación: Sobre lote baldío, dentro de colonia]]></description>
+        <styleUrl>#icon-1899-795548</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2884978,25.6660092,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Porfirio Díaz @ Calle Océano Pacífico
+</name>
+        <description><![CDATA[Dirección:<br>Calle Porfirio Díaz @ Calle Océano Pacífico<br>Colonia Blacones de Huinalá (al sur de Colonia Jardines de Huinalá)<br>Apodaca<br><br>Día: Jueves<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-795548</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1717497,25.7376908,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Francisco Javier Mina @ Calle 24 de febrero
+</name>
+        <description><![CDATA[Dirección:<br>Calle Francisco Javier Mina @ Calle 24 de febrero<br>Colonia Vicente Guerrero<br>Guadalupe<br><br>Día: Jueves<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-795548</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2275748,25.6907252,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Santa Cruz @ Calle Diagonal Santa Cruz
+</name>
+        <description><![CDATA[Dirección:<br>Av Santa Cruz @ Calle Diagonal Santa Cruz<br>Colonia Santa Cruz (junto a Santa Cruz Arboledas)<br>Guadalupe<br>(también se pone los domingos-matutino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-795548</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1596899,25.6699952,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle General Lázaro Garza Ayala @ Calle Hermenegildo Galeana</name>
+        <description><![CDATA[Dirección:<br>Calle General Lázaro Garza Ayala @ Calle Hermenegildo Galeana<br>Centro de Juárez (Google Maps dice Colonia Joaquín Garza y Garza)<br>Juárez<br>(también se pone los Lunes - Matutino)<br><br>Día: Jueves<br>Horario: Matutino<br>Extensión 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-795548</styleUrl>
+        <Point>
+          <coordinates>
+            -100.0977035,25.6470715,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Número Tres @ Calzada del Sol
+</name>
+        <description><![CDATA[Dirección:<br>Calle Número Tres @ Calzada del Sol<br>Colonia Satélite del Norte<br>Salinas Victoria<br>(también se pone Sábado - Matutino)<br><br>Día: Jueves<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-795548</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2678082,25.9150722,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Palma @ Calle Libertad
+</name>
+        <description><![CDATA[Dirección:<br>Calle Palma @ Calle Libertad<br>Colonia Moderna<br>Monterrey<br><br>Día: Jueves<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-795548</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2882433,25.7002664,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Libertad @ Calle Laurel
+</name>
+        <description><![CDATA[Dirección:<br>Calle Libertad @ Calle Laurel<br>Colonia Moderna<br>Monterrey<br>(se pone de Miércoles a Domingo)<br><br>Día: Jueves<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-795548</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2894433,25.6998256,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Progreso @ Calle Héroes del 47
+</name>
+        <description><![CDATA[Dirección:<br>Calle Progreso @ Calle Héroes del 47<br>Colonia Terminal<br>Monterrey<br><br>Día: Jueves<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-795548</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2981956,25.688485,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Raúl Salinas Lozano @ Calle Cerro de las Mitras</name>
+        <description><![CDATA[Dirección:<br>Av Raúl Salinas Lozano (o Av Parque Industrial) @ Calle Cerro de las Mitras<br>Colonia Paseo del Real<br>Escobedo <br>(a 500 m del cruce de las vías del tren)<br>(en el extremo norte de la Av Acueducto) <br><br>Día: Jueves<br>Hora: Vespertino<br>Extensión: 7-10 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3359461,25.7931149,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Camino de la Pradera @ Av No Reelección
+</name>
+        <description><![CDATA[Dirección:<br>Calle Camino de la Pradera @ Av No Reelección<br>Colonia Barrio San Carlos,<br>Monterrey<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4009628,25.7688974,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Adolfo López Mateos @ Calle Jardines de la Primavera
+</name>
+        <description><![CDATA[Dirección:<br>Av Adolfo López Mateos @ Calle Jardines de la Primavera<br>Colonia Jardines de Monterrey II<br>Apodaca<br>(también se pone Martes - Vespertino, cerca de Lunes y Sábado - Vespertino)<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 7-10 cuadras<br>Locación: Sobre avenida y dentro de colonia]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.258339,25.8084105,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Acapulco @ Calle Lirios
+</name>
+        <description><![CDATA[Dirección:<br>Calle Acapulco @ Calle Lirios<br>Colonia Hacienda Las Margaritas 7mo Sector <br>Apodaca<br>(a 5 cuadras de Soriana Valle Soleado)<br>(también se pone Sábado - Vespertino)<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1579702,25.7140897,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cuauhtémoc @ Calle 24 de febrero
+</name>
+        <description><![CDATA[Dirección:<br>Calle Cuauhtémoc @ Calle 24 de febrero<br>(Google Maps marca la calle como "Calle 13 de noviembre")<br>Colonia Fama IV<br>Santa Catarina<br>(también se pone Lunes - Vespertino)<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4247603,25.6817385,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Isla Revillagigedo @ Calle Abasolo
+</name>
+        <description><![CDATA[Dirección:<br>Calle Isla Revillagigedo @ Calle Abasolo<br>Colonia Renacimiento 2do Sector<br>General Escobedo<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3334392,25.8013159,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Dr. Arturo González @ Calle Raúl Lozano
+</name>
+        <description><![CDATA[Dirección:<br>Calle Dr. Arturo González @ Calle Raúl Lozano<br>Colonia México Lindo<br>San Nicolás de los Garza<br>(a una cuadra de la Calle República Mexicana)<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2722151,25.7646292,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cañón de San Pablo @ Calle Cañón del Pajonal</name>
+        <description><![CDATA[Dirección:<br>Calle Cañón de San Pablo @ Calle Cañón del Pajonal<br>Colonia Las Sombrillas<br>Santa Catarina<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4554455,25.7022525,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Tramoyistas @ Av. Antiguos Ejidatarios
+</name>
+        <description><![CDATA[Dirección:<br>Calle Tramoyistas @ Av. Antiguos Ejidatarios<br>Colonia La Alianza<br>Monterrey<br>(también se pone los Lunes - Vespertino)<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4095604,25.7760804,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Sierra Negra @ Calle El Sabinal
+</name>
+        <description><![CDATA[Dirección:<br>Av Sierra Negra @ Calle El Sabinal<br>Colonia Terranova Residencial<br>Juárez<br>(también se pone Lunes - Vespertino y Sábado - Vespertino)<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1081036,25.6682917,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Blvd José Miguel González @ Calle Sinaloa
+</name>
+        <description><![CDATA[Blvd José Miguel González @ Calle Sinaloa<br>(Blvd José Miguel González viene marcada como Cuauhtémoc o Jorge A. Treviño en Google Maps)<br>Colonia Jardines de Capellanía<br>Cadereyta<br>(frente al Asilo / Casa de Reposo Nuestra Señora del Rosario)<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre lotes baldíos (jardineras) entre avenida-carretera]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -99.9930392,25.5789991,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pulga Nogalera 
+Av Sendero Divisorio 
+</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZiOKIwYspfbQYWlu3wPt2KIDkYjqsOPtHTitgtBzdJ6t25B_I9gqNO5ky2dkHeSf3liTJV1-c2_K5cWN5SbNGcC7wRbJfG-qM4cRMHQ6HFgZWWDHVXsZznszBP6I54Aat99CGiKX3Bvwr1Q-za_xzc0j1QBj0WCbetjLSqj7eYzV2BTXSPZ-9ljXHhOzXX2YZNWuK1anoVeGw?fife=s16383" height="200" width="auto" /><br><br>Dirección:<br>Pulga Nogalera<br>Ave Sendero Divisorio<br>Colonia Valle de las Alamedas<br>San Nicolás de los Garza<br><br>(frente a Parque de Perros - Escobedo Oriente)<br>( a una cuadra al oriente de Walmart San Nicolás)<br>(media cuadra al poniente de Calle Prisciliano Villarreal)<br><br>(también se pone Lunes - Vespertino)<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de estacionamiento<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZj7zNHK9tnKHkvg5YIgRHUqFZqRebmbXW0GGoiivpv297mJ-rsRUtLFoBx1E-QyXzciK-_nlhozHeke78jKbUG1FYz1wikGmRfhDlMnqVhwukk00KBodhzkbt1vN5RSpIwaOw2XTmmTcfQMKiNEkSrMISLoTVbnXkMj_MkJIJp3dcWCG8RaY_Mj7Zma7-bnFyCYCWlN2xxkRA?fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZjJQ4r0GUC5x2QeyFwwzGoBJRjqbC6eD3SwM6H5cP1UPwEYX-Fnp6ed3iJAd7FiN4cwEUpMVcyPBVoiyG8R0pRakrqnaM_o681EomZL7S6lnmKdF0J9y5fSZKhc3HhwxRpt2C8ZgkuhZ7JK0v4-2POra5p_OvtEq_bG4Eu4IR9ihd547bfPqiUCF6506qor-AAL3xefikJHbg?fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZiTgwIcu9Yh1p_ROXuZGG7ECAVJH1E8j3cPawdDFsZeL--_CMDsdUqpAHJZ119hYSHVZrF7AoQmJabrDPSLH6XrEPagZtSR40NECKwFVO9jDPk25tWJ4gvfwML0Y4Ac7kDdrZycuLaVbukHWxiwuTi78GelsQo5flKmWtURzW_FYVv1Pqk8OT1Mrpwb4Gvai69LPNc6mpUVpw?fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZgf1eD9zDGkqb7hRhRk3dDCgElXz9pgWCiA8b3OYLxkrUhukVyehYTjeM_vxGK_gmZw-1qxbm-5SU8foYjDS_2av1UENFX8Y1WUpprWJh7HrxUOxT9hu7wbRohnSZ7n-LRb14eZEXQB5n4cHvO-MtLv6ZYQMUwFMzBDyG__RSDY1P3MOM-_y_6y2bOiK4cgKER6DRsxPOywgg?fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZhHxCbCTiorEvA-kA6cVgeVSsv5Surovh42x5ziP88BTq1zN2VHv--YOa0rqRKmzwf2FkEHbiXjI5RJHCcKR3mNsJd8Y4r3FzCyJ1HN_xP8Gfq4GsBXlpKG2SqtJY5DjjGY3sJXoPfXrLSfeg8qL0Mr5ZJzRLq7UIP7l4zX7Jm1WaXaKZMjdpxMSXNllI5GR_Xns-F39kI7wA?fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZg1snvR-kqrCnQx7Nx-EaLOEszRD66OJ-69I41YimKdKVa_HRjl_oKhgk9JBoRPLHy5DKDJRJY4HpjCDHa4UV9jLBcIRkhCnn55okF1oB6qYW_rU2QgiDHPd0UORtZN1mOK_aZn8wQCrwkzBzuLjDBPDNTXqwZXvZIWMx4E-c4_zhdIhPFXIv4iXpO6Ey_cUNx2qrRoAv4smw?fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZhl-XTs060b1mYgbl4u0GoZOldycUIfOEu-mRMqVaYMOKaRcrAZgkZF2vJWfYBFbEo57zZ7gtUbJeGNBAQDpUZvnQXDA2dfxTQFWd-FybRIsd-dUAdigb0RYy89Hj2gLbfYtFnoXEHsDAoYmOyUaGlyHYpK6S8peoI3D6jB_GfY40Wum71X-rgRSOffbPO8Q6w9P55Nz9cxeA?fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZiOKIwYspfbQYWlu3wPt2KIDkYjqsOPtHTitgtBzdJ6t25B_I9gqNO5ky2dkHeSf3liTJV1-c2_K5cWN5SbNGcC7wRbJfG-qM4cRMHQ6HFgZWWDHVXsZznszBP6I54Aat99CGiKX3Bvwr1Q-za_xzc0j1QBj0WCbetjLSqj7eYzV2BTXSPZ-9ljXHhOzXX2YZNWuK1anoVeGw?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZj7zNHK9tnKHkvg5YIgRHUqFZqRebmbXW0GGoiivpv297mJ-rsRUtLFoBx1E-QyXzciK-_nlhozHeke78jKbUG1FYz1wikGmRfhDlMnqVhwukk00KBodhzkbt1vN5RSpIwaOw2XTmmTcfQMKiNEkSrMISLoTVbnXkMj_MkJIJp3dcWCG8RaY_Mj7Zma7-bnFyCYCWlN2xxkRA?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZjJQ4r0GUC5x2QeyFwwzGoBJRjqbC6eD3SwM6H5cP1UPwEYX-Fnp6ed3iJAd7FiN4cwEUpMVcyPBVoiyG8R0pRakrqnaM_o681EomZL7S6lnmKdF0J9y5fSZKhc3HhwxRpt2C8ZgkuhZ7JK0v4-2POra5p_OvtEq_bG4Eu4IR9ihd547bfPqiUCF6506qor-AAL3xefikJHbg?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZiTgwIcu9Yh1p_ROXuZGG7ECAVJH1E8j3cPawdDFsZeL--_CMDsdUqpAHJZ119hYSHVZrF7AoQmJabrDPSLH6XrEPagZtSR40NECKwFVO9jDPk25tWJ4gvfwML0Y4Ac7kDdrZycuLaVbukHWxiwuTi78GelsQo5flKmWtURzW_FYVv1Pqk8OT1Mrpwb4Gvai69LPNc6mpUVpw?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZgf1eD9zDGkqb7hRhRk3dDCgElXz9pgWCiA8b3OYLxkrUhukVyehYTjeM_vxGK_gmZw-1qxbm-5SU8foYjDS_2av1UENFX8Y1WUpprWJh7HrxUOxT9hu7wbRohnSZ7n-LRb14eZEXQB5n4cHvO-MtLv6ZYQMUwFMzBDyG__RSDY1P3MOM-_y_6y2bOiK4cgKER6DRsxPOywgg?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZhHxCbCTiorEvA-kA6cVgeVSsv5Surovh42x5ziP88BTq1zN2VHv--YOa0rqRKmzwf2FkEHbiXjI5RJHCcKR3mNsJd8Y4r3FzCyJ1HN_xP8Gfq4GsBXlpKG2SqtJY5DjjGY3sJXoPfXrLSfeg8qL0Mr5ZJzRLq7UIP7l4zX7Jm1WaXaKZMjdpxMSXNllI5GR_Xns-F39kI7wA?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZg1snvR-kqrCnQx7Nx-EaLOEszRD66OJ-69I41YimKdKVa_HRjl_oKhgk9JBoRPLHy5DKDJRJY4HpjCDHa4UV9jLBcIRkhCnn55okF1oB6qYW_rU2QgiDHPd0UORtZN1mOK_aZn8wQCrwkzBzuLjDBPDNTXqwZXvZIWMx4E-c4_zhdIhPFXIv4iXpO6Ey_cUNx2qrRoAv4smw?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZhl-XTs060b1mYgbl4u0GoZOldycUIfOEu-mRMqVaYMOKaRcrAZgkZF2vJWfYBFbEo57zZ7gtUbJeGNBAQDpUZvnQXDA2dfxTQFWd-FybRIsd-dUAdigb0RYy89Hj2gLbfYtFnoXEHsDAoYmOyUaGlyHYpK6S8peoI3D6jB_GfY40Wum71X-rgRSOffbPO8Q6w9P55Nz9cxeA?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -100.2675292,25.769379,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Sauce @ Calle Cipreses
+</name>
+        <description><![CDATA[Dirección:<br>Calle Sauce @ Calle Cipreses<br>Fraccionamiento Las Arboledas<br>García<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.5871788,25.7873758,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Lic. Gustavo Díaz Ordaz @ Av. Camino Real
+</name>
+        <description><![CDATA[Dirección:<br>Calle Lic. Gustavo Díaz Ordaz @ Av. Camino Real<br>Colonia CROC<br>Monterrey<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 3-5 cuadras]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3721735,25.7762558,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Río Amazonas @ Blvrd Julián Teviño Elizondo
+</name>
+        <description><![CDATA[Dirección:<br>Calle Río Amazonas @ Blvrd Julián Teviño Elizondo<br>Colonia Jardines de Huinalá<br>Apodaca<br>(en derredor de parque)<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1736417,25.7447317,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Dr. Carlos Martínez del Río @ Av Del Hospital</name>
+        <description><![CDATA[Dirección:<br>Calle Dr. Carlos Martínez del Río @ Av Del Hospital<br>Colonia Valle de San Blas<br>García, NL<br>(comienza sobre Calle Fernando Guajardo)<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.5675146,25.799966,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Rosendo Márquez @ Av Rodrigo Gómez
+</name>
+        <description><![CDATA[Dirección:<br>Calle Rosendo Márquez @ Av Rodrigo Gómez<br>entre las Colonias Josefa Ortiz de Domínguez y Valle del Topo Chico<br>Monterrey<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 1-3 cuadras]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3423785,25.7289904,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Plan de Parácuaro @ Calle Plan de Valladolid
+</name>
+        <description><![CDATA[Dirección:<br>Calle Plan de Parácuaro @ Calle Plan de Valladolid<br>Colonia La República<br>Monterrey<br>(también se pone Sábado - Matutino - 1 cuadra, y Sábado - Vespertino 1-2 cuadras)<br><br>Día: Jueves<br>Horario: Vespertino<br>Extensión: 1-2 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-4E342E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2973512,25.6230085,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name><![CDATA[Viernes - matutinos & vespertinos]]></name>
+      <Placemark>
+        <name>Calle Cruz Potenzada @ Av Cartagena
+</name>
+        <description><![CDATA[Dirección:<br>Calle Cruz Potenzada @ Av Cartagena<br>Colonias Hacienda los Pinos, Magnolias y Fresno II<br>Apodaca<br>(el mercado abarca más de 1 colonia)<br>(en derredor de la Iglesia Cristo Buen Pastor)<br><br>Día: Viernes<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Sobre avenida y Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2523352,25.7713382,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Las Torres @ Calle Artículo 123
+</name>
+        <description><![CDATA[Dirección:<br>Av Las Torres @ Calle Artículo 123<br>Colonia Unidad Laboral 2do Sector<br>San Nicolás de los Garza<br>(también se pone los Domingo - Matutino)<br><br>Día: Viernes<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2460436,25.7418002,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Oscar Arizpe @ Av Gustavo Sada Paz
+</name>
+        <description><![CDATA[Dirección:<br>Av Oscar Arizpe @ Av Gustavo Sada Paz<br>Colonia Industrias del Vidrio<br>San Nicolás de los Garza<br><br>Día: Viernes<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2545409,25.7072747,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Faustino Lizárraga @ Calle Higinio Rodríguez
+</name>
+        <description><![CDATA[Dirección:<br>Calle Faustino Lizárraga @ Calle Higinio Rodríguez<br>Colonia Residencial Las Puentes<br>San Nicolás de los Garza<br><br>Día: Viernes<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2787673,25.7359618,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Alfonso Reyes @ Av Rodríguez Gómez
+</name>
+        <description><![CDATA[Dirección:<br>Av Alfonso Reyes @ Av Rodríguez Gómez<br>Col Central,<br>Monterrey<br>(a espaldas de Soriana Central)<br><br>Día: Viernes<br>Hora: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3422868,25.7147132,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Calcuta @ Calle Islas del Sur
+</name>
+        <description><![CDATA[Dirección:<br>Calle Calcuta @ Calle Islas del Sur<br>Colonia Bosques del Nogalar<br>San Nicolás de los Garza<br><br>Día: Viernes<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2792617,25.7169234,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Prados
+Calle Sierra Tereyal @ Calle Sierra Madre
+</name>
+        <description><![CDATA[Dirección:<br>Mercadito Prados<br>Calle Sierra Tereyal @ Calle Sierra Madre<br>Colonia Prados de Santa Catarina<br>Santa Catarina<br><br>Día: Viernes<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4944968,25.6813235,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle San José @ Calle Sierra de Ascotán
+</name>
+        <description><![CDATA[Dirección:<br>Calle San José @ Calle Sierra de Ascotán<br>Col Villa Mitras,<br>Monterrey<br><br>Día: Viernes<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de Colonia]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3583908,25.7245917,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Mercadito "de la Josefa"
+Calle Josefa Ortiz de Domínguez @ Calle 12]]></name>
+        <description><![CDATA[Dirección:<br>Calle Josefa Ortiz de Domínguez @ Calle 12<br>Colonia Adolfo López Mateos<br>Monterrey<br>(a cuadras de la Liga Pequeña de Béisbol Mitras AC)<br>(también se pone los Martes - Vespertino)<br><br>Día: Viernes<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3616698,25.7069526,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Libertad @ Calle Laurel
+</name>
+        <description><![CDATA[Dirección:<br>Calle Libertad @ Calle Laurel<br>Colonia Moderna<br>Monterrey<br>(se pone de Miércoles a Domingo)<br><br>Día: Viernes<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2892575,25.699643,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Pedro N. Perales @ Calle General Emiliano Zapata
+</name>
+        <description><![CDATA[Dirección:<br>Calle Pedro N. Perales @ Calle General Emiliano Zapata<br>Colonia El Obispo<br>San Pedro Garza García<br><br>Día: Viernes<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            -100.403647,25.679372,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Niños Héroes @ Calle Revolución
+</name>
+        <description><![CDATA[Dirección:<br>Calle Niños Héroes @ Calle Revolución<br>Hidalgo Centro<br>Hidalgo<br>(frente a la Comandancia SSP, en derredor del Panteón Municipal de Hidalgo)<br><br>Día: Viernes<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4497999,25.9722919,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Roble entre Av Eloy Cavazos y Av Pablo Livas</name>
+        <description><![CDATA[Dirección:<br>Calle Roble entre Av Eloy Cavazos y Av Pablo Livas<br>Colonia 2 de mayo (FOMERREY 20)<br>Guadalupe<br><br>Día: Viernes<br>Hora: Vespertino<br>Extensión: +20 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.212189,25.6651727,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle González Camarena @ Calle Orto
+</name>
+        <description><![CDATA[Dirección:<br>Calle González Camarena @ Calle Orto<br>Colonia Barrio La Moderna<br>Monterrey<br>(a una cuadra de la rotonda de Av Cabezada y Av Luis Donaldo Colosio Murrieta)<br>(detrás de las sucursales de Elektra y HEMSA)<br><br>Día: Viernes<br>Hora: Vespertino<br>Extensión: 10-13 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3854811,25.7812374,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Alcanfor @ Av Concordia
+</name>
+        <description><![CDATA[Dirección:<br>Av Alcanfor @ Av Concordia<br>Colonia Ébanos IV y Ébanos III<br>Apodaca<br>(también se pone Lunes - Vespertino)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: +10 cuadras<br>Locación: sobre avenida<br><br><br>Este mercadito fue reubicado por los trabajos de drenaje y recarpeteo de la zona. No han determinado cuando regresará a su dirección original:<br><br>Dirección:<br>Av Concordia @ Av Camino Real a Santa Rosa<br>Col Ébanos V<br>Apodaca<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: sobre avenida]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2403844,25.7845245,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Paraíso @ Av Sendero Divisorio (Camino Escobedo - El Carmen)</name>
+        <description><![CDATA[Dirección:<br>Av Paraíso @ Av Sendero Divisorio (Camino Escobedo - El Carmen)<br>Fraccionamiento Buenavista<br>El Carmen<br>(junto a supermercado Merco)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 7-10 cuadras<br>Locación: sobre avenida]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3748181,25.8485475,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito San Javier
+Calle Rincón de Huinala @ Av Reforma
+</name>
+        <description><![CDATA[Mercadito San Javier<br>Calle Rincón de Huinala @ Av Reforma<br>Colonia Rincón de Huinala<br>(en otro extremo: Calle Villa Teruel @ Av Villa de San Carlos<br>Colonia Villa de San Carlos)<br>Apodaca<br><br>(antes se ponía en Carretera A Villa Juárez, pero por trabajos de recarpeteo se reubicó)<br><br>Día: Viernes<br>Horario: Vepertino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1611488,25.7355657,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Tréboles
+Calle Nogal @ Calle Olivo
+</name>
+        <description><![CDATA[Dirección:<br>Mercadito Tréboles<br>Calle Nogal @ Calle Olivo<br>Colonia Tréboles<br>Apodaca<br>(también se pone Martes y Domingo - Vespertino, pero calles arriba)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.145525,25.7643086,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Eloy Cavazos @ Av Maestro Israel Cavazos Garza</name>
+        <description><![CDATA[Dirección:<br>Av Eloy Cavazos @ Av Maestro Israel Cavazos Garza<br>Colonia Rincón de Guadalupe<br>Guadalupe<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1897013,25.6496871,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Luis Donaldo Colosio Murrieta @ 1º de Mayo</name>
+        <description><![CDATA[Dirección:<br>Calle Luis Donaldo Colosio Murrieta @ 1º de Mayo<br>Colonia Adolfo López Mateos<br>Santa Catarina<br>(sobre Parque Plaza Luis Donaldo Colosio)<br><br>Día: Viernes<br>Hora: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Sobre calle / avenida]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4447418,25.6862473,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Vista de la Anacua @ Av Vista del Huizache
+</name>
+        <description><![CDATA[Dirección:<br>Calle Vista de la Anacua @ Av Vista del Huizache<br>Colonia Vistas del Río<br>Juárez<br>(también se pone Martes - Vespertino)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1014518,25.6631378,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Mexico @ General Plutarco Elías Calles
+</name>
+        <description><![CDATA[Dirección:<br>Calle Mexico @ General Plutarco Elías Calles<br>Colonia Las Sabinas (frente a Colonia Marsella Residencial)<br>Guadalupe<br>(también se pone Domingo - Matutino)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de Colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.194465,25.6877024,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Acuario (Av Encino) @ Av Concordia
+</name>
+        <description><![CDATA[Dirección:<br>Calle Acuario (Av Encino) @ Av Concordia<br>Col Nuevo Las Puentes<br>Apodaca<br><br>Día: Viernes<br>Hora: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2629846,25.7847515,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Vía Tampico @ Av Conchello
+</name>
+        <description><![CDATA[Dirección:<br>Calle Vía Tampico @ Av Conchello<br>Col Cantú<br>Monterrey<br>(frente al Penny Riel, por Av Félix U. Gómez)<br><br>Día: Viernes<br>Hora: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2963567,25.6916665,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Ave del Paraíso @ Calle Pelícano
+</name>
+        <description><![CDATA[Dirección:<br>Calle Ave del Paraíso @ Calle Pelícano<br>Col Valle Verde<br>Monterrey<br><br>Día: Viernes<br>Hora: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.373379,25.7381227,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Adolfo Prieto 
+Calle Anáhuac @ Av Adolfo Ruiz Cortines
+</name>
+        <description><![CDATA[Dirección:<br>Mercadito Adolfo Prieto<br>Calle Anáhuac @ Av Adolfo Ruiz Cortines<br>Colonia Adolfo Prieto<br>Guadalupe<br>(junto a Jardín de Niños Adolfo Prieto)<br><br>Día: Viernes<br>Hora: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia ]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2506331,25.7029922,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Fundiciones @ Calle Golondrinas
+</name>
+        <description><![CDATA[Dirección:<br>Calle Fundiciones @ Calle Golondrinas<br>Fraccionamiento Buenos Aires,<br>Monterrey<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre camellón, dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2747944,25.6724373,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercado del Chorro
+Calle Isaac Garza @ Calle José María Coss
+</name>
+        <description><![CDATA[Dirección:<br>Calle Isaac Garza @ Calle José María Coss<br>Centro<br>Monterrey<br>(sobre Plaza del Chorro)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre parque, Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3068334,25.679919,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Coahuila @ Av Acueducto
+</name>
+        <description><![CDATA[Dirección:<br>Calle Coahuila @ Av Acueducto<br>Colonia Sierra Morena<br>Guadalupe<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.180158,25.6390672,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cerro de la Silla @ Calle Sierra Madre
+</name>
+        <description><![CDATA[Dirección:<br>Calle Cerro de la Silla @ Calle Sierra Madre<br>Colonia Los Pilares<br>Salinas Victoria<br>(también se pone Martes y Domingo - Vespertino)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2485902,25.9115543,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Río Mississipi @ San Isidro
+</name>
+        <description><![CDATA[Dirección:<br>Calle Río Mississipi @ San Isidro<br>Colonia San Isidro<br>Apodaca<br>(también se pone Martes - Vespertino, pero al otro lado del parque)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1531618,25.7605406,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Thomas Alba Edison @ Calle Pedro María Anaya
+</name>
+        <description><![CDATA[Dirección<br>Calle Thomas Alba Edison @ Calle Pedro María Anaya<br>(sobre Polígono Edison)<br>Col Rubén Jaramillo<br>Monterrey<br>(también se pone Martes - Matutino)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3318492,25.6959628,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle De los Elizondo @ Calle Gregorio Morales
+</name>
+        <description><![CDATA[Dirección:<br>Calle De los Elizondo @ Calle Gregorio Morales<br>Colonia Paseo del Norte<br>Salinas Victoria<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.283634,25.9681752,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercado Miravista
+Calle Paseo de la Amistad @ Calle Sin Nombre</name>
+        <description><![CDATA[Dirección:<br>Mercado Miravista<br>Calle Paseo de la Amistad @ Calle Sin Nombre<br>Colonia Miravista Residencial<br>General Escobedo<br>(junto al Parque / Skatepark Miravista)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 1-3 cuadras]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3137816,25.800958,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Sendero Divisorio @ Calle De la Aurora (Av Acueducto)</name>
+        <description><![CDATA[Dirección:<br>Av Sendero Divisorio @ Calle De la Aurora (Av Acueducto)<br>Colonia Balcones de Anáhuac<br>General Escobedo<br>(en el límite con San Nicolás de los Garza)<br><br>Día: Viernes:<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3233424,25.7640695,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Parajes @ Av San José</name>
+        <description><![CDATA[Dirección<br>Av Parajes @ Av San José<br>Colonia Parque Industrial Ciudad Mitras<br>García<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.427656,25.8000256,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Sierra Madre @ Av Villa Corona
+</name>
+        <description><![CDATA[Dirección:<br>Av Sierra Madre @ Av Villa Corona<br>Colonia Villas del Poniente<br>García<br>(también se pone Lunes - Vespertino)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4359371,25.7805553,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle San Rafael @ Calle Las Torres
+</name>
+        <description><![CDATA[Dirección:<br>Calle San Rafael @ Calle Las Torres<br>Colonia Urbivilla del Prado<br>García <br>(frente a la CFE Subzona García)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 1-2 cuadras<br>Locación: Dentro de lote baldío]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.5879535,25.7799157,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Los Parques @ Calle Plata
+</name>
+        <description><![CDATA[Dirección:<br>Av Los Parques @ Calle Plata<br>Colonia Los Parques Residencial<br>García<br>(también se pone Martes - Vespertino)<br><br>Día: Viernes<br>Horario: Vespertino<br>Extensión: 1-2 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-1A237E</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4643981,25.7910983,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Sábados - matutinos</name>
+      <Placemark>
+        <name>Av No Reelección @ Av Luis Donaldo Colosio Murrieta</name>
+        <description><![CDATA[Dirección:<br>Av No Reelección @ Av Luis Donaldo Colosio Murrieta<br>Colonia Chapultepec y Colonia Mirasol 1o<br>Monterrey<br><br>Día: Sábado<br>Hora: Matutino<br>Extensión: +10 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3971112,25.7651075,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Concepción Barragán @ Calle Gertrudis Bocanegra</name>
+        <description><![CDATA[Dirección:<br>Av Concepción Barragán @ Calle Gertrudis Bocanegra<br>Colonia Mujeres Ilustres (FOMERREY 4)<br>Apodaca<br>(avenida de las torres de alta tensión)<br>(también se pone los domingos en la mañana)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2594119,25.766837,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito de la Peña Guerra
+Av Rómulo Garza @ Calle Oscar Arizpe</name>
+        <description><![CDATA[Dirección:<br>Av Rómulo Garza @ Calle Oscar Arizpe<br>Colonia Constituyentes de Querétaro<br>San Nicolás de los Garza<br>(junto a Colonia Peña Guerra)<br>(cerca de donde Av Rómulo Garza comienza a llamarse Av Félix Galván)<br><br>Día: Sábado:<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Sobre avenida y Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2572514,25.713662,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av La Esperanza @ Calle Bartolomé Mitre
+</name>
+        <description><![CDATA[Dirección:<br>Av La Esperanza @ Calle Bartolomé Mitre<br>Colonia 23 de Marzo<br>Monterrey<br>(se coloca desde las 9:00 hrs hasta las 22:00 hrs: en horario matutino y vespertino)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3564087,25.7599864,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Del Bosque @ Av Pablo C. Livas
+</name>
+        <description><![CDATA[Dirección:<br>Av Del Bosque @ Av Pablo C. Livas<br>Colonia Paseo De Guadalupe (frente a Colonia Valle del Sol Fomerrey 130)<br>(también le llaman "Los Independientes")<br>(también se pone martes y domingo matutino)<br>Guadalupe<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1650205,25.6579534,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Metroplex @ Av Concordia
+</name>
+        <description><![CDATA[Dirección:<br>Av Metroplex @ Av Concordia<br>Colonia Metroplex<br>Apodaca<br>(abarca desde Av Concordia hasta Av Andrómeda)<br>(también se pone Domingo - Matutino)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2536291,25.7855293,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito La Florida
+Calle Juventino Rosas @ Calle Capitán Mariano Azueta
+</name>
+        <description><![CDATA[Dirección:<br>Mercadito La Florida<br>Calle Juventino Rosas @ Calle Capitán Mariano Azueta<br>Colonia Buenos Aires y Colonia La Florida<br>Monterrey<br>(junto al Hospital Psiquiátrico)<br>(también se pone los jueves - Matutino)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 7-10 cuadras<br>Locación: Sobre lote baldío, dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2871621,25.6643459,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Francisco J. Mújica @ Av Perimetral Norte
+</name>
+        <description><![CDATA[Dirección:<br>Calle Francisco J. Mújica @ Av Perimetral Norte<br>Colonia Mártires de Cananea<br>Santa Catarina<br>(atrás del Colegio Oxford)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4400855,25.6899998,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Churubusco (dentro de Ciudad Deportiva)
+</name>
+        <description><![CDATA[Dirección:<br>Av Churubusco a 100m de Prolongación Madero<br>Colonia Fierro<br>Monterrey<br>(dentro de Ciudad Deportiva Monterrey)<br>(también se pone los Domingos - Matutino)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de estacionamiento]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2685529,25.6891527,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Narciso Mendoza @ Av Fidel Velázquez
+</name>
+        <description><![CDATA[Dirección:<br>Calle Narciso Mendoza @ Av Fidel Velázquez<br>Colonia Niño Artillero<br>Monterrey<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3247023,25.7248044,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercado Campesino
+Calle Venustiano Carranza @ Calle Pedro Vélez
+</name>
+        <description><![CDATA[Dirección:<br>Calle Venustiano Carranza @ Calle Pedro Vélez<br>Colonia Industrial (en los límites con la Colonia Rubén Jaramillo)<br>Monterrey<br>(a espaldas de la antigua Estación de Trenes)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de terreno]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3286183,25.6950309,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Blvd. Fundadores @ Av. Pino Suárez
+</name>
+        <description><![CDATA[Dirección:<br>Blvd. Fundadores @ Av. Pino Suárez<br>Sin nombre de colonia<br>Cadereyta Jiménez<br>(también se pone Domingo - Matutino, más grande)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -99.9950004,25.5961259,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Emiliano Zapata @ Av Aztlán
+</name>
+        <description><![CDATA[Dirección:<br>Calle Emiliano Zapata @ Av Aztlán<br>Colonia Valle de Santa Lucía<br>Monterrey<br>(a media cuadra de Estación de Metro Unidad Modelo)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3536862,25.7408504,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Seguridad Social @ Av Adolfo Ruiz Cortines 
+</name>
+        <description><![CDATA[Dirección:<br>Calle Seguridad Social @ Av Adolfo Ruiz Cortines <br>Colonia Valle de Infonavit<br>Monterrey<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3821176,25.7386349,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Platino @ Av Manuel J. Clouthier
+</name>
+        <description><![CDATA[Dirección:<br>Calle Platino @ Av Manuel J. Clouthier<br>Colonia San Pedro 400,<br>San Pedro Garza García<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4160315,25.6810503,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito CBTIS
+Calle Alfombrilla @ Calle Valle del Mirador
+</name>
+        <description><![CDATA[Dirección:<br>Mercadito CBTIS<br>Calle Alfombrilla @ Calle Valle del Mirador<br>Colonia Laderas del Mirador (Fomerrey 21)<br>Monterrey<br>(en derredor del CBTIS 99)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3055323,25.6386957,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Las Flores @ Av Rodrigo Gómez y Av Raúl Rangel Frías</name>
+        <description><![CDATA[Dirección:<br>Calle Las Flores @ Av Rodrigo Gómez y Av Raúl Rangel Frías<br>Colonia Valle del Topo Chico<br>Monterrey<br>(detrás de sucursal Farmacias Guadalajara)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 3- 5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3431237,25.7329787,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Ing. Ángel Belares @ Calle Palacio de Justicia</name>
+        <description><![CDATA[Dirección:<br>Calle Ing. Ángel Belares @ Calle Palacio de Justicia<br>Colonia Ferrocarrilera<br>Monterrey<br>(también se pone Lunes - Vespertino)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3369613,25.7283359,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Uruapan
+Calle Uruapan @ Calle Jiménez
+</name>
+        <description><![CDATA[Dirección:<br>Calle Uruapan @ Calle Jiménez<br>Colonia Paraíso y Colonia Margarita Maza de Juárez<br>Guadalupe<br>(a una cuadra de la Clínica 32 IMSS)<br><br>Día: Sábado<br>Horario; Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.268003,25.6754325,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cto. de la Paz @ Calle Paseo de la Amistad
+</name>
+        <description><![CDATA[Dirección:<br>Calle Cto. de la Paz @ Calle Paseo de la Amistad<br>Colonia Monte Real Infonavit<br>Escobedo<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3149913,25.7998948,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Río Nilo @ Calle Río Pilón
+</name>
+        <description><![CDATA[Dirección:<br>Av Río Nilo @ Calle Río Pilón<br>Colonia Pueblo Nuevo V<br>Apodaca <br>(también se pone Domingo - Matutino)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1634194,25.7592828,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercado La Cienaguita
+Av Concordia @ Calle Nicaragua</name>
+        <description><![CDATA[Dirección<br>Mercado La Cienaguita<br>Av Concordia @ Calle Nicaragua<br>Colonia Prados de la Cienaguita<br>Apodaca<br>(también se pone Domingo - Matutino)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de lote baldío / Dentro de plaza]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2555127,25.7841395,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Fr. Juan de Zumárraga @ Calle Alfonso Reyes
+</name>
+        <description><![CDATA[Dirección:<br>Calle Fr. Juan de Zumárraga @ Calle Alfonso Reyes<br>Colonia Moisés Sáenz<br>Apodaca<br>(bajo el Tanque de Agua)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.257734,25.8096733,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Número Tres @ Calzada del Sol
+</name>
+        <description><![CDATA[Dirección:<br>Calle Número Tres @ Calzada del Sol<br>Colonia Satélite del Norte<br>Salinas Victoria<br>(también se pone Jueves - Matutino)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2674528,25.9142519,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Jorge González Camarena @ Calle Dr. Atl
+</name>
+        <description><![CDATA[Dirección:<br>Calle Jorge González Camarena @ Calle Dr. Atl<br>Colonia Residencial Roble 2do Sector<br>San Nicolás de los Garza<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: entre 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2830637,25.7647886,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito de la Indeco
+Calle Jacarandas 5</name>
+        <description><![CDATA[Mercadito de la Indeco<br>Calle Jacarandas 5<br><br>Dirección:<br>Calle Jacarandas 5<br>Colonia Francisco García Naranjo<br>Monterrey<br>(a 100m de Av Adolfo Ruiz Cortines y Calle San José)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: En estacionamiento]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3631061,25.718048,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Josefa Ortiz de Domínguez @ Calle Lázaro Cárdenas / Calle 15va Avenida 
+(también conocida como “Calle Burócratas”)</name>
+        <description><![CDATA[Dirección:<br>Calle Josefa Ortiz de Domínguez @ Calle Lázaro Cárdenas / Calle 15va Avenida <br>(también conocida como “Calle Burócratas”)<br>Entre Colonia Cumbres 1er Sector y Colonia Adolfo López Mateos<br>Monterrey<br>(junto a la Heladería Sultana, a 4 cuadras de Cinemex Leones)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3639054,25.7028472,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Insurgentes @ Calle Emiliano Zapata</name>
+        <description><![CDATA[Dirección:<br>Calle Insurgentes @ Calle Emiliano Zapata Guadalupe<br>Col Insurgentes<br>Guadalupe<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2116901,25.6706121,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Alfonso Martínez Domínguez @ Calle Benito Juárez</name>
+        <description><![CDATA[Dirección:<br>Calle Alfonso Martínez Domínguez @ Calle Benito Juárez<br>Centro de Pesquería<br>Pesquería<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.0505608,25.7855966,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercado 80
+Calle Emiliano Zapata @ Calle Mariano Escobedo</name>
+        <description><![CDATA[Mercado 80<br>Calle Emiliano Zapata @ Calle Mariano Escobedo<br>Colonia Nuevo San Rafael<br>Guadalupe<br>(también se pone Domingo - Matutino)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2034089,25.694931,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Vicente Guerrero @ Calle Francisco Javier Mina
+</name>
+        <description><![CDATA[Dirección:<br>Calle Vicente Guerrero @ Calle Francisco Javier Mina<br>Mina Centro<br>Mina<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.5313737,26.0025709,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle María de Jesús Candia @ Calle Batallones Rojos</name>
+        <description><![CDATA[Dirección:<br>Calle María de Jesús Candia @ Calle Batallones Rojos<br>Colonia Álvaro Obregón<br>Monterrey<br>(sobre Plaza Pública Colegio Álvaro Obregón)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1-2 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3672501,25.7334571,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Industrias del Vidrio
+Calle Doroteo Ruiz @ Av Óscar Arizpe</name>
+        <description><![CDATA[Dirección:<br>Mercadito Industrias del Vidrio<br>Calle Doroteo Ruiz @ Av Óscar Arizpe<br>Colonia Industrias del Vidrio 2do Sector<br>San Nicolás de los Garza<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1-2 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2533233,25.7064192,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[La Joroba, Toys & Diecast
+Av Universidad @ Anillo Vial Metropolitano (Av Juan Pablo II)]]></name>
+        <description><![CDATA[Dirección:<br>La Joroba, Toys & Diecast<br>Av Universidad @ Anillo Vial Metropolitano (Av Juan Pablo II)<br>Colonia Periférico Norte<br>San Nicolás de los Garza<br>(debajo del paso a elevado)<br><br>Día: Sábado<br>Horario: Matutino (10am-6pm aprox)<br>Extensión: 1 cuadra<br>Locación: Debajo del paso elevado, sobre la Cancha de la Clínica 6]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2990262,25.7499092,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Iztaccihuatl @ Calle Pico de Orizaba
+</name>
+        <description><![CDATA[Dirección:<br>Calle Iztaccihuatl @ Calle Pico de Orizaba<br>Colonia Mitras Centro<br>Monterrey<br>(frente a la Iglesia de Nuestra Señora del Carmen)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3493893,25.7013838,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Libertad @ Calle Laurel
+</name>
+        <description><![CDATA[Dirección:<br>Calle Libertad @ Calle Laurel<br>Colonia Moderna<br>Monterrey<br>(se pone de Miércoles a Domingo)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2890389,25.6998135,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Del Zócalo @ Calle De la Aurora
+</name>
+        <description><![CDATA[Dirección:<br>Calle Del Zócalo @ Calle De la Aurora<br>Colonia El Mirador<br>San Nicolás de los Garza<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3222306,25.7618192,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cristobal Colón @ Calle Reyna Isabel de Castilla
+</name>
+        <description><![CDATA[Dirección:<br>Calle Cristobal Colón @ Calle Reyna Isabel de Castilla<br>Colonia Quinto Centenario<br>(frente a colonia Hacienda del Topo)<br>Escobedo<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3321975,25.7883132,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Los Álamos @ Calle Los Eucaliptos
+</name>
+        <description><![CDATA[Dirección:<br>Calle Los Álamos @ Calle Los Eucaliptos<br>Colonia Escobedo Residencial<br>Escobedo<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3091645,25.7883741,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Plan de Parácuaro @ Calle Plan de Valladolid</name>
+        <description><![CDATA[Dirección:<br>Calle Plan de Parácuaro @ Calle Plan de Valladolid<br>Colonia La República<br>Monterrey<br>(también se pone Jueves - Vespertino, 1-2 cuadras, y Sábado - Vespertino, 1-2 cuadras)<br><br>Día: Sábado<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-F57C00</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2972256,25.6234523,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Sábados - vespertinos</name>
+      <Placemark>
+        <name>Av Balcones de San Miguel (conecta Av Adolfo Ruiz Cortines con Blvd Acapulco)</name>
+        <description><![CDATA[Dirección:<br>Av Balcones de San Miguel (conecta Av Adolfo Ruiz Cortines con Blvd Acapulco)<br>Colonia Balcones de San Miguel (se extiende también por Colonia Valle de San Miguel)<br>Guadalupe<br>(uno de sus extremos es junto a la estación Ecovía San Miguel)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: +20 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1853293,25.7214601,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle José María Morelos y Pavón @ Calle Francisco J. Mújica</name>
+        <description><![CDATA[Dirección:<br>Calle José María Morelos y Pavón @ Calle Francisco J. Mújica<br>Colonia Infonavit Felipe Carrillo Puerto (se extiende hasta Colonia Celestino Gasca)<br>General Escobedo<br>(comienza detrás del FAMSA y KFC)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: +15 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3222159,25.7866571,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av De los Astros @ Av Del Centro Norte
+</name>
+        <description><![CDATA[Dirección:<br>Av De los Astros @ Av Del Centro Norte<br>Colonia Barrio Santa Isabel y Colonia Barrio del Centro<br>Monterrey<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: +10 cuadras<br>Locación: Sobre Avenida]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4002064,25.7759045,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Río Papaloapan @ Calle Río Suchiate
+</name>
+        <description><![CDATA[Dirección:<br>Calle Río Papaloapan @ Calle Río Suchiate<br>Colonia Dos Ríos (Segundo Sector)<br>Guadalupe<br>(una cuadra al oriente de la caseta del Camión Ruta 99)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: +10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1593602,25.6773857,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av La Esperanza @ Calle Bartolomé Mitre
+</name>
+        <description><![CDATA[Dirección:<br>Av La Esperanza @ Calle Bartolomé Mitre<br>Colonia 23 de Marzo<br>Monterrey<br>(se coloca desde las 9:00 hrs hasta las 22:00 hrs: en horario matutino y vespertino)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: +10 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3556871,25.7593148,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Las Villas
+Calle Las Villa @ Eloy Cavazos</name>
+        <description><![CDATA[Dirección:<br>Mercadito Las Villas<br>Calle Las Villa @ Eloy Cavazos<br>Colonia Las Villas<br>Guadalupe<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: +10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2382673,25.6620612,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Bahía de la Paz @ Calle 15 Pte.
+</name>
+        <description><![CDATA[Dirección<br>Calle Bahía de la Paz @ Calle 15 Pte.<br>(entre Avenida Perimetral Norte y Ave Perimetral Sur)<br>Colonia Adolfo López Mateos<br>Santa Catarina<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4552615,25.6952533,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Del Teléfono @ Av Rhodesia
+</name>
+        <description><![CDATA[Dirección:<br>Av Del Teléfono @ Av Rhodesia<br>Colonia Alberto Escamilla<br>(frente a Colonia Lomas de Huinalá)<br>Apodaca<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 7-10 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1724574,25.7303885,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Luis Echeverría / Calle Lic. Julio Camelo @ Calle Julio A. Roca
+</name>
+        <description><![CDATA[Dirección:<br>Calle Luis Echeverría / Calle Lic. Julio Camelo @ Calle Julio A. Roca<br>Colonia Valle de Santa Lucía<br>Monterrey<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3509579,25.7508494,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Unicornio @ Av No Reelección
+</name>
+        <description><![CDATA[Dirección:<br>Calle Unicornio @ Av No Reelección<br>(por los dos lados del Canal)<br>Colonia San Bernabé (Fomerrey 51)<br>Monterrey<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3868062,25.758165,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle E Sexta @ Av Galaxia
+</name>
+        <description><![CDATA[Dirección:<br>Calle E Sexta @ Av. Galaxia<br>Colonia Metroplex I<br>Apodaca<br>(también se pone los Miércoles - Vespertino)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: sobre avenida]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2489216,25.7891776,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Río Orinoco @ San Isidro</name>
+        <description><![CDATA[Dirección:<br>Río Orinoco @ San Isidro<br>Colonia Pueblo Nuevo II<br>Apodaca<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: sobre avenida]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1533416,25.7568253,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Acapulco @ Calle Lirios
+</name>
+        <description><![CDATA[Dirección:<br>Calle Acapulco @ Calle Lirios<br>Colonia Hacienda Las Margaritas 7mo Sector <br>Apodaca<br>(a 5 cuadras de Soriana Valle Soleado)<br>(también se pone Jueves - Vespertino)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1575792,25.714863,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Pablo A. de la Garza @ Calle Luis G. Urbina
+</name>
+        <description><![CDATA[Dirección:<br>Calle Pablo A. de la Garza @ Calle Luis G. Urbina<br>Colonia Martínez<br>Monterrey<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2876019,25.6887853,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Camino Real a Santa Rosa @ Avenida Chopo
+</name>
+        <description><![CDATA[Dirección:<br>Calle Camino Real a Santa Rosa @ Avenida Chopo<br>Colonia Ébanos IX<br>Apodaca<br>(también se pone los Martes - Vespertino)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2391532,25.7790517,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Linda Vista
+Calle Lic. Miguel Alemán @ Carlos Medellín y/o Av Linda Vista</name>
+        <description><![CDATA[Dirección:<br>Calle Lic. Miguel Alemán @ Carlos Medellín y/o Av Linda Vista<br>Colonia Adolfo Prieto, <br>Guadalupe<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.254879,25.6972521,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Santa Úrsula @ Av Agualeguas</name>
+        <description><![CDATA[Calle Sta. Úrsula @ Av Agualeguas<br><br>Dirección:<br>Calle Santa Úrsula @ Av Agualeguas<br>Colonia La Concordia (en el límite con Colonia Santa Martha)<br>Escobedo<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3890431,25.8018762,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Madrid @ Calle Zaragoza
+</name>
+        <description><![CDATA[Dirección:<br>Calle Madrid @ Calle Zaragoza<br>Colonia Puerta Mitras<br>Santa Catarina<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4963797,25.694214,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Flores Magón
+Calle Fidel Velázquez Sánchez @ Vía Monterrey-Torreón</name>
+        <description><![CDATA[Dirección:<br>Mercadito Flores Magón<br>Calle Fidel Velázquez Sánchez @ Vía Monterrey-Torreón<br>Fraccionamiento Jardines de Escobedo II, junto a la Colonia Ricardo Flores Magón<br>General Escobedo<br>(también se pone Miércoles - Vespertino)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3288713,25.8040795,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Águila @ Calle Papagayos
+</name>
+        <description><![CDATA[Dirección:<br>Calle Camino Real a Santa Rosa @ Avenida Chopo<br>Colonia Paseo de Santa Rosa<br>Apodaca<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2290748,25.8207234,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Sierra Negra @ Calle El Sabinal
+</name>
+        <description><![CDATA[Dirección:<br>Av Sierra Negra @ Calle El Sabinal<br>Colonia Terranova Residencial<br>Juárez<br>(también se pone Lunes - Vespertino y Jueves - Vespertino)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1088616,25.6686495,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Naranjo @ Calle Alcaldía 
+</name>
+        <description><![CDATA[Dirección:<br>Calle Naranjo @ Calle Alcaldía <br>(a una cuadra de Av Lázaro Cárdenas)<br>Colonia Los Rosales / Balcones del Mirador,<br>Monterrey<br>(también se pone los Martes - Vespertino)<br><br>Día: Sábado<br>Hora: Vespertino<br>Extensión: 1-2 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2944147,25.6283182,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Hacienda San Ángel @ Calle Hacienda Palmar</name>
+        <description><![CDATA[Dirección:<br>Calle Hacienda San Ángel @ Calle Hacienda Palmar<br>Colonia Hacienda del Palmar<br>Santa Catarina<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.5064273,25.7057715,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Adolfo López Mateos @ Calle Jardines del Pino
+</name>
+        <description><![CDATA[Dirección:<br>Av Adolfo López Mateos @ Calle Jardines del Pino<br>Colonia Jardines de Monterrey II<br>Apodaca<br>(se pone cerca de Lunes, Martes y Jueves - Vespertino)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Sobre avenida y dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2612021,25.808396,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cerro de las Mitras Sur @ Calle Cerro de la Silla
+</name>
+        <description><![CDATA[Dirección:<br>Calle Cerro de las Mitras Sur @ Calle Cerro de la Silla<br>Colonia Los Pilares<br>Salinas Victoria<br>(también se pone Miércoles y Domingo - Matutino)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2406476,25.9140923,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Plan de Parácuaro @ Calle Plan de Valladolid</name>
+        <description><![CDATA[Dirección:<br>Calle Plan de Parácuaro @ Calle Plan de Valladolid<br>Colonia La República<br>Monterrey<br>(también se pone Jueves - Vespertino - 1-2 cuadras y Sábado - Matutino - 1 cuadra)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 1-2 cuadras (a veces sólo 1 cuadra)<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2971837,25.6237936,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercado La Luz
+Calle Héroes del 47 @ Calle Washington
+</name>
+        <description><![CDATA[Dirección:<br>Mercado La Luz<br>Calle Héroes del 47 @ Calle Washington<br>Centro<br>Monterrey<br>(en la explanada de La Capital)<br><br>Día: Sábado<br>Horario: Vespertino<br>Extensión: 1 cuadra<br>Locación: sobre la explanada de La Capital, frente a Paseo Santa Lucía]]></description>
+        <styleUrl>#icon-1899-E65100</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3002572,25.6726269,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Domingo - matutinos</name>
+      <Placemark>
+        <name>Av Bernardo Reyes @ Calle Apodaca
+</name>
+        <description><![CDATA[Dirección:<br>Av Bernardo Reyes @ Calle Apodaca<br>Colonia Topo Chico<br>Monterrey<br>(en derredor de Mercado Popular Emiliano Zapata)<br>(también se extiende hasta Av Aztlán)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: +15 cuadras<br>Locación: Dentro de Colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3328159,25.7344381,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Camino a Jardines de la Silla @ Calle Hacienda Dolores
+</name>
+        <description><![CDATA[Dirección:<br>Calle Camino a Jardines de la Silla @ Calle Hacienda Dolores<br>Colonia Tierra Propia 1er Sector<br>Guadalupe<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: +15 cuadras<br>Locación: Sobre avenida (el tráfico es constante y hay peligro de accidente)]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1860702,25.6439136,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Xilofactos @ Av Fidel Velázquez
+Calle Xilofactos @ Av Rodrigo Gómez</name>
+        <description><![CDATA[Dirección:<br>Calle Xilofactos @ Av Fidel Velázquez<br>Calle Xilofactos @ Av Rodrigo Gómez<br>Colonia Central <br>Monterrey<br>(a 10 metros de la estación de Metro Penitenciaría)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.338175,25.7203098,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito de la San Gilberto
+Av Lic. Luis Donaldo Colosio @ Calle San Juan de Ulúa</name>
+        <description><![CDATA[Dirección:<br>Mercadito de la San Gilberto<br>Av Lic. Luis Donaldo Colosio @ Calle San Juan de Ulúa<br>Colonia San Gilberto<br>Santa Catarina<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4616559,25.6940545,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Calzada Unión @ Calle Laureles 
+</name>
+        <description><![CDATA[Dirección:<br>Av Rómulo Garza @ Calle Laureles<br>Coloni Los Morales<br>San Nicolás de los Garza<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Dentro de Colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2330136,25.7169751,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Concepción Barragán @ Calle Gertrudis Bocanegra
+</name>
+        <description><![CDATA[Dirección:<br>Av Concepción Barragán @ Calle Gertrudis Bocanegra<br>Colonia Mujeres Ilustres (FOMERREY 4)<br>Apodaca<br>(avenida de las torres de alta tensión)<br>(también se pone los sábados en la mañana)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2602166,25.767552,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av México @ Calle Zacatecas
+</name>
+        <description><![CDATA[Dirección:<br>Av México @ Calle Zacatecas<br>Colonia Cañada Blanca<br>Guadalupe<br>(en Google Maps Av México viene nombrada como Av. Guadalajara)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1903665,25.7259642,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle José de San Martín @ Av Aztlán
+</name>
+        <description><![CDATA[Dirección:<br>Calle José de San Martín @ Av Aztlán<br>Colonia San Martín<br>Monterrey<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.364044,25.7511753,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Del Bosque @ Av Pablo C. Livas
+</name>
+        <description><![CDATA[Dirección:<br>Av Del Bosque @ Av Pablo C. Livas<br>Colonia Paseo De Guadalupe (frente a Colonia Valle del Sol Fomerrey 130)<br>(también le llaman "Los Independientes")<br>(también se pone martes y sábado matutino)<br>Guadalupe<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: +10 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1665056,25.6499699,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Soldadores @ Calle Empleados
+</name>
+        <description><![CDATA[Dirección<br>Av Soldadores @ Calle Empleados<br>Colonia La Alianza<br>Monterrey<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: ?<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4167932,25.7797231,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Concordia @ Av Metroplex
+</name>
+        <description><![CDATA[Dirección:<br>Av Concordia @ Av Metroplex<br>Colonia Metroplex<br>Apodaca<br>(abarca desde Av Concordia hasta Av Andrómeda)<br>(también se pone los Sábado - Matutino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2536532,25.7847563,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Río la Paz @ Calle Río Pilón
+</name>
+        <description><![CDATA[Dirección:<br>Calle Río la Paz @ Calle Río Pilón<br>Colonia Pueblo Nuevo V<br>Apodaca<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1669651,25.7595262,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Lic. Santiago Roel @ Calle Profesor Plinio Ordóñez
+</name>
+        <description><![CDATA[Dirección:<br>Calle Lic. Santiago Roel @ Calle Profesor Plinio Ordóñez<br>Colonia Solidaridad Social<br>General Escobedo<br>(al otro lado de a las vías del tren del estadio Tigres Girasoles)<br>(también se pone Lunes - Matutino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 7-10 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3258629,25.7835025,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Del Mirador @ Calle Del Aromo
+</name>
+        <description><![CDATA[Dirección:<br>Calle Del Mirador @ Calle Del Aromo<br>Colonia El Mirador<br>San Nicolás de los Garza<br>(a 100 metros de Avenida Sendero Norte)<br>(paralelo a las vías del tren)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de Colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3195578,25.7631219,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Churubusco (dentro de Ciudad Deportiva)
+</name>
+        <description><![CDATA[Dirección:<br>Av Churubusco a 100m de Prolongación Madero<br>Colonia Fierro<br>Monterrey<br>(dentro de Ciudad Deportiva Monterrey)<br>(también se pone los Sábados - Matutinos)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de estacionamiento]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2697921,25.6881327,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle 1º de Mayo @ Av Ruiz Cortines
+</name>
+        <description><![CDATA[Dirección:<br>Calle 1º de Mayo @ Av Ruiz Cortines<br>Colonia Valle de Infonavit<br>Monterrey<br>(justo abajo de Parque Tucán)<br>(junto al CONALEP III Monterrey)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de Colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3778046,25.7348754,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercado de la Fregonería
+Calzada San Pedro @ Calzada del Valle Alberto Santos</name>
+        <description><![CDATA[Dirección:<br>Mercado de la Fregonería<br>Calzada San Pedro @ Calzada del Valle Alberto Santos<br>Colonia: Fuentes del Calle y Colonia del Valle<br>San Pedro Garza García<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3708041,25.6566722,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Lerdo de Tejada @ Calle Las Torres
+</name>
+        <description><![CDATA[Dirección:<br>Av Lerdo de Tejada @ Calle Las Torres<br>Colonia Residencial Los Tabachines<br>San Nicolás de los Garza<br>(a un costado del Hotel 88 Inn)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3032392,25.758851,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Argelia @ Av Costa Rica
+</name>
+        <description><![CDATA[Dirección:<br>Calle Argelia @ Av Costa Rica<br>Colonia Nuevo Amanecer<br>Apodaca<br>(también se pone Miércoles - Matutino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2491312,25.7782329,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Valle Alegre @ Avenida Valle de Guadalajara</name>
+        <description><![CDATA[Dirección:<br>Calle Valle Alegre @ Avenida Valle de Guadalajara<br>Colonia Valle Soleado (FOMERREY 107)<br>Guadalupe<br>(también se pone los Martes - Vespertino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1643303,25.7037873,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>El Polvorín
+Calle Olivo @ Calle Sor Juana Inés de la Cruz (o Calle Maravilla)
+</name>
+        <description><![CDATA[Dirección:<br>El Polvorín<br>Calle Olivo @ Calle Sor Juana Inés de la Cruz (o Calle Maravilla)<br>Colonia Ampliación Los Nogales,<br>García<br>66000<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.5996877,25.7976357,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Ing. Francisco Beltrán y Calle David Berlanga
+</name>
+        <description><![CDATA[Dirección:<br>Calle Ing. Francisco Beltrán y Calle David Berlanga<br>Colonia Nueva Madero<br>Monterrey<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2793059,25.691484,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Las Torres @ Calle Artículo 123
+</name>
+        <description><![CDATA[Dirección:<br>Av Las Torres @ Calle Artículo 123<br>Colonia Unidad Laboral 2do Sector<br>San Nicolás de los Garza<br>(también se pone los Viernes - Matutino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2470843,25.741366,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Barón de Alcalá @ Barón de Petres</name>
+        <description><![CDATA[Dirección:<br>Calle Barón de Alcalá @ Barón de Petres<br>Colonia Real de Palmas<br>General Zuazua<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1695918,25.896381,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito La Estanzuela
+Cañón del Huajuco @ Av La Luz</name>
+        <description><![CDATA[Dirección:<br>Mercadito La Estanzuela<br>Cañón del Huajuco @ Av La Luz<br>Colonia Villas La Rioja (pegado a Colonia La Estanzuela)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Sobre avenida y Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2497513,25.5897342,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Blvd. Fundadores @ Av. Pino Suárez
+</name>
+        <description><![CDATA[Dirección:<br>Blvd. Fundadores @ Av. Pino Suárez<br>Sin nombre de colonia<br>Cadereyta Jiménez<br>(también se pone Sábado - Matutino, poco más chico)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 5-7 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -99.9927146,25.5954921,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Lic. José López Portillo @ Calle Lic. Sabino Gámez Martínez</name>
+        <description><![CDATA[Dirección:<br>Av Lic. José López Portillo @ Calle Lic. Sabino Gámez Martínez<br>Colonia Veinticinco de Noviembre<br>Guadalupe<br>(también se pone Miércoles - Vespertino, pero más chico)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2690008,25.6585411,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Pedro María Anaya @ Calle 18 de marzo
+</name>
+        <description><![CDATA[Dirección:<br>Calle Pedro María Anaya @ Calle 18 de marzo<br>Colonia Progreso<br>Monterrey<br>(frente a la Parroquia San Antonio de Padua)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3375018,25.6980956,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Adolfo López Mateos @ Av San Sebastián
+</name>
+        <description><![CDATA[Dirección:<br>Av Adolfo López Mateos @ Av San Sebastián<br>Colonia Veintiuno de enero<br>Guadalupe<br>(a 100m de Soriana Las Quintas)<br>(también se coloca Miércoles - Matutino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de estacionamiento]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2117705,25.6870788,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Los Encinos @ Calle Sra. Bertha Pérez de González</name>
+        <description><![CDATA[Dirección:<br>Av Los Encinos @ Calle Sra. Bertha Pérez de González<br>Fraccionamiento San Juan<br>Juárez<br>(a 100 m del WalMart Sun Mall)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1147336,25.648408,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Antiguo Camino a San José @ Calle Real de Minas
+</name>
+        <description><![CDATA[Dirección:<br>Calle Antiguo Camino a San José @ Calle Real de Minas<br>Colonia Valle de Lincoln,<br>García<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4880515,25.7909318,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Real de San Pascual @ Calle Real de San Judas
+</name>
+        <description><![CDATA[Dirección:<br>Calle Real de San Pascual @ Calle Real de San Judas<br>Col Real de San José (La Ciudadela)<br>Juárez<br>67250<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.0837648,25.6561088,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Jalostitlán @ Calle Tepatitlán
+</name>
+        <description><![CDATA[Dirección:<br>Calle Jalostitlán @ Calle Tepatitlán<br>Colonia Los Altos <br>Monterrey<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.36883,25.7146793,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Guanajuato @ Calle Libertad
+</name>
+        <description><![CDATA[Dirección:<br>Calle Guanajuato @ Calle Libertad<br>Colonia Independencia<br>Monterrey<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3147995,25.6585967,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Santa Cruz @ Diagonal Santa Cruz
+</name>
+        <description><![CDATA[Dirección:<br>Av Santa Cruz @ Calle Diagonal Santa Cruz<br>Colonia Santa Cruz (junto a Santa Cruz Arboledas)<br>Guadalupe<br>(también se pone los Jueves - Matutino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1593789,25.6709191,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercado La Cienaguita
+Av Concordia @ Calle Nicaragua</name>
+        <description><![CDATA[Dirección<br>Mercado La Cienaguita<br>Av Concordia @ Calle Nicaragua<br>Colonia Prados de la Cienaguita<br>Apodaca<br>(también se pone Sábados - Matutino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de lote baldío / Dentro de plaza]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2541609,25.7840815,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Corredor del arte
+Calle Francisco Javier Mina @ Calle José Mariano Abasolo</name>
+        <description><![CDATA[Dirección:<br>Corredor del arte<br>Calle Francisco Javier Mina @ Calle José Mariano Abasolo<br>Centro<br>Monterrey<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadrs<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3067529,25.6656659,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Mármol @ Av Las Rocas
+</name>
+        <description><![CDATA[Dirección:<br>Calle Mármol @ Av Las Rocas<br>Colonia San Bernabé<br>Monterrey<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3781016,25.756039,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Río Nilo @ Calle Río Pilón
+</name>
+        <description><![CDATA[Dirección:<br>Av Río Nilo @ Calle Río Pilón<br>Colonia Pueblo Nuevo V<br>Apodaca <br>(también se pone Sábado - Matutino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1635321,25.7602465,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Vista del Huizache @ Calle Vista de la Anacua
+</name>
+        <description><![CDATA[Dirección:<br>Av Vista del Huizache @ Calle Vista de la Anacua<br>Colonia Vistas del Río<br>Juárez<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1007432,25.6645538,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Mexico @ General Plutarco Elías Calles
+</name>
+        <description><![CDATA[Dirección:<br>Calle Mexico @ General Plutarco Elías Calles<br>Colonia Las Sabinas (frente a Colonia Marsella Residencial)<br>Guadalupe<br>(también se pone Viernes - Vespertino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de Colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1944609,25.6867573,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Toronja @ Calle Frambuesa
+</name>
+        <description><![CDATA[Dirección:<br>Calle Toronja @ Calle Frambuesa<br>Colonia Fernando Amilpa<br>General Escobedo<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2740762,25.8038005,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Concordia @ Calle Platino @ Calle Cromo
+</name>
+        <description><![CDATA[Dirección:<br>Av Concordia @ Calle Platino @ Calle Cromo<br>Colonia Nuevo Las Puentes<br>Apodaca<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Sobre lote baldíos en avenida]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.257336,25.7847974,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle San Ángel @ Privada Valle Hermoso
+</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZgB3s7xljRBTo07jkfiRDd1qX4DO8n4LLzUkpYKRM9T1zeZdbA6zry2jN_OSWLvN8k2dgp4GYBvsz-lsFE2ElU0IBnYgpf-v4LfyYRPT4SWHAlhPTWCN94wKDiRcN0xdkAKa29AvWxEXdti908rT6A-D8rl6msuRzPiBFtCkRgoc5caTTzN5pDClBHoUtii5KeIWw9lxSymLw?fife=s16383" height="200" width="auto" /><br><br>Dirección:<br>Calle San Ángel @ Privada Valle Hermoso<br>Colonia San Ángel<br>Monterrey<br>(cerca del Jardín de Niños Salvador Díaz Mirón)<br>(cerca de Escuela Batallón de San Blas)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZhcfadDS8lFUlAUTrM8Z_GIFQJPt4l4rkHQjz5LzAvzKQYVJ9AtjnHw9TEiiGoCwxUxwGf8w49h7joO7N77ET0tpiQ1acZTPnNE6bTu0TTej9lyqri_k9u35A1G1Ar8d45nUl0v978iBgBhfGVQ3DI6f1wNTYbsA5uCFgtXst-oQVeUcmUNvxXnMYnLR1WlVyJJP3tNUBZT0Q?fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZgB3s7xljRBTo07jkfiRDd1qX4DO8n4LLzUkpYKRM9T1zeZdbA6zry2jN_OSWLvN8k2dgp4GYBvsz-lsFE2ElU0IBnYgpf-v4LfyYRPT4SWHAlhPTWCN94wKDiRcN0xdkAKa29AvWxEXdti908rT6A-D8rl6msuRzPiBFtCkRgoc5caTTzN5pDClBHoUtii5KeIWw9lxSymLw?fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3ABkJAZhcfadDS8lFUlAUTrM8Z_GIFQJPt4l4rkHQjz5LzAvzKQYVJ9AtjnHw9TEiiGoCwxUxwGf8w49h7joO7N77ET0tpiQ1acZTPnNE6bTu0TTej9lyqri_k9u35A1G1Ar8d45nUl0v978iBgBhfGVQ3DI6f1wNTYbsA5uCFgtXst-oQVeUcmUNvxXnMYnLR1WlVyJJP3tNUBZT0Q?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -100.2681064,25.6215399,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Calle Norberto "Beto" Salinas @ Calle Dr. González
+]]></name>
+        <description><![CDATA[Dirección:<br>Calle Norberto "Beto" Salinas @ Calle Dr. González<br>Colonia Las Torres<br>Salinas Victoria<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3162271,25.9520545,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cerro de la Silla @ Calle Sierra Mojada
+</name>
+        <description><![CDATA[Dirección:<br>Calle Cerro de la Silla @ Calle Sierra Mojada<br>Colonia Las Malvinas<br>General Escobedo<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2948707,25.7969161,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Texcoco @ Calle Mazatlán
+</name>
+        <description><![CDATA[Dirección:<br>Calle Texcoco @ Calle Mazatlán<br>Colonia Buenos Aires y Colonia Paraíso<br>Monterrey<br>(frente a la Escuela Primaria Adolfo Prieto)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2733862,25.6698047,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Popocatéptl @ Av Las Puentes
+</name>
+        <description><![CDATA[Dirección:<br>Calle Popocatéptl @ Av Las Puentes<br>Colonia Jardines de las Puentes<br>(junto a Colonia Las Puentes 3er Sector)<br>San Nicolás de los Garza<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2782008,25.7419763,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Paseo de San Juan @ Calle Elizama
+</name>
+        <description><![CDATA[Dirección:<br>Av. Paseo de San Juan @ Calle Elizama<br>Colonia Mirador San Antonio<br>Juárez (Nuevo León)<br><br>Día: Domingo<br>Horario; Matutino<br>Extensión: 1-3 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.0592387,25.6439057,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Los Nogales @ Calle Guirnalda
+</name>
+        <description><![CDATA[Dirección:<br>Av Los Nogales @ Calle Guirnalda<br>Colonia Bosques de los Nogales<br>Salinas Victoria<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2634627,25.8916034,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cerro de las Mitras Sur @ Calle Cerro de la Silla</name>
+        <description><![CDATA[Dirección:<br>Calle Cerro de las Mitras Sur @ Calle Cerro de la Silla<br>Colonia Los Pilares<br>Salinas Victoria<br>(también se pone Miércoles - Matutino y Sábado - Vespertino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2407129,25.9149415,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Tía Lencha @ Calle Vicente Guerrero
+</name>
+        <description><![CDATA[Dirección:<br>Calle Tía Lencha @ Calle Vicente Guerrero<br>Colonia Conchita Velasco<br>Ciénega de Flores<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1723787,25.9604773,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercado 80
+Calle Emiliano Zapata @ Calle Circunvalación</name>
+        <description><![CDATA[Mercado 80<br>Calle Emiliano Zapata @ Calle Circunvalación<br>Colonia Nuevo San Rafael<br>Guadalupe<br>(también se pone Sábado - Matutino)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2035966,25.6939898,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Carretera a San Mateo @ Av Los Portales
+</name>
+        <description><![CDATA[Dirección:<br>Carretera a San Mateo @ Av Los Portales<br>Colonia Portal de Juárez y Colonia Colinas de San Juan (Colinas de la Morena)<br>Juárez<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 1-3 cuadras<br>Locación: Sobre carretera]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1004421,25.629636,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Mariano de Abasolo @ Calle Reforma
+</name>
+        <description><![CDATA[Dirección:<br>Calle Mariano de Abasolo @ Calle Reforma<br>Casco Urbano<br>San Pedro Garza García<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 1-2 cuadras<br>Locación: Sobre calle]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.4071963,25.6656852,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Libertad @ Calle Laurel</name>
+        <description><![CDATA[Dirección:<br>Calle Libertad @ Calle Laurel<br>Colonia Moderna<br>Monterrey<br>(se pone de Miércoles a Domingo)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2892522,25.6999874,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Juan José Hinojosa @ Calle Celulosa
+</name>
+        <description><![CDATA[Dirección:<br>Calle Juan José Hinojosa @ Calle Celulosa<br>Colonia San Jorge<br>Monterrey<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.3651929,25.7211991,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Sabino @ Calle Olmo
+</name>
+        <description><![CDATA[Dirección:<br>Calle Sabino @ Calle Olmo<br>Colonia Nuevo San Rafael (junto a la Colonia La Floresta)<br>(frente a la Iglesia Santo Niño de Praga)<br><br>Día: Domingo<br>Horario: Matutino<br>Extensión: 1 cuadra<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-9C27B0</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2102356,25.6954164,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Domingo - vespertinos</name>
+      <Placemark>
+        <name>Av Hacienda del Sol @ Av Paseo de los Leones
+</name>
+        <description><![CDATA[Dirección:<br>Av Hacienda del Sol @ Av Paseo de los Leones<br>Col Hacienda del Col<br>García, NL<br><br>Día: Domingo<br>Horario: Vespertino<br>Extensión: + 15 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-673AB7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.5601926,25.7915956,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mercadito Tréboles
+Av Del Prado @ Av Tréboles</name>
+        <description><![CDATA[Dirección:<br>Mercadito Tréboles<br>Av Del Prado @ Av Tréboles<br>Colonia Tréboles<br>Apodaca<br>(también se pone Martes y Viernes - Vespertino, 1 calle abajo)<br><br>Día: Domingo<br>Horario: Vespertino<br>Extensión: +15 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-673AB7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1464082,25.7629243,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av Teófilo Salinas Garza @ Calle Real de San Francisco
+</name>
+        <description><![CDATA[Dirección:<br>Av Teófilo Salinas Garza @ Calle Real de San Francisco<br>Colonia Real de San José, 2do sector<br>Juárez<br><br>Día: Domingo<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-673AB7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.0828958,25.6520276,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Av De los Puertos @ Calle Bahía Libertad
+</name>
+        <description><![CDATA[Dirección:<br>Av De los Puertos @ Calle Bahía Libertad<br>Colonia Los Puertos<br>Entre Apodaca y Juárez, N.L.<br><br>Día: Domingo<br>Horario: Vespertino<br>Extensión: 5-7 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-673AB7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.1171315,25.6854013,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Dr. José Eleuterio González @ Av del Hospital
+</name>
+        <description><![CDATA[Dirección<br>Calle Dr. José Eleuterio González @ Av del Hospital<br>Colonia Valle De San Blas<br>García, NL<br><br>Día: Domingo<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Dentro de colonia]]></description>
+        <styleUrl>#icon-1899-673AB7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.5659811,25.8020435,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Cerro de la Silla @ Calle Sierra Madre</name>
+        <description><![CDATA[Dirección:<br>Calle Cerro de la Silla @ Calle Sierra Madre<br>Los Pilares<br>Salinas Victoria<br><br>Día: Domingo<br>Horario: Vespertino<br>Extensión: 3-5 cuadras<br>Locación: Sobre avenida]]></description>
+        <styleUrl>#icon-1899-673AB7</styleUrl>
+        <Point>
+          <coordinates>
+            -100.2467287,25.9110855,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
