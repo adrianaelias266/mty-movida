@@ -5,6 +5,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Mty Movida: la agenda cultural de Monterrey. Eventos, planes para hoy y atracciones de la zona metropolitana.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mty Movida">
+<meta property="og:locale" content="es_MX">
+<meta property="og:url" content="https://mtymovida.com/">
+<meta property="og:title" content="Mty Movida · La agenda cultural de Monterrey">
+<meta property="og:description" content="Eventos, planes para hoy, festivales y atracciones de Monterrey y su zona metropolitana. Arma tu plan y no te pierdas nada.">
+<meta property="og:image" content="https://mtymovida.com/img/compartir.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mty Movida: dos amigas con sombrero vaquero caminando juntas">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://mtymovida.com/">
 <link rel="icon" type="image/png" sizes="32x32" href="img/icono-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="img/icono-192.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -643,6 +655,8 @@ a.stat{text-decoration:none}
 .solf{display:flex;flex-direction:column;gap:10px}.solf label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;color:var(--muted)}.sol2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .caltabs{display:flex;gap:8px}.copyline .btn.primary{flex:none}
 .calmas summary{cursor:pointer;font-size:14px;font-weight:600}
+.legal{max-width:760px}.legal h1{font-family:var(--f-display);font-size:clamp(30px,4vw,44px);margin:0 0 4px}.legal h2{font-family:var(--f-display);font-size:20px;margin:26px 0 8px}
+.legal p,.legal li{font-size:15.5px;line-height:1.65}.legal ul{padding-left:20px;margin:6px 0}.legal-f{color:var(--muted);font-size:13px!important}
 .merlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px}
 .merrow{display:flex;gap:10px;align-items:flex-start;text-align:left;background:var(--surface);border:0;border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);font:inherit;color:inherit;cursor:pointer}
 .merrow b{display:block;font-size:14.5px}.merrow small{color:var(--muted);font-size:12.5px}
@@ -763,7 +777,7 @@ form.card .full{grid-column:1/-1}
 </header>
 
 <main id="app"></main>
-<footer class="foot"><div class="wrap"><span class="foot-logo"><a href="#inicio" aria-label="Mty Movida, ir al inicio"><span class="lockup"><span class="lk-row"><span class="lk-name"><span class="lk-mty"><i>M</i><i>T</i><i>Y</i></span><span class="lk-mov"><i>M</i><i>O</i><i>V</i><i>I</i><i>D</i><i>A</i></span><span class="c" style="left:-5px;top:2px;background:#FDBD1A;transform:rotate(30deg)"></span><span class="c" style="left:34px;top:0;background:#1AC1B9;transform:rotate(-20deg)"></span><span class="c" style="right:-7px;top:12px;background:#FCB8D9;transform:rotate(50deg)"></span><span class="c" style="right:8px;top:1px;background:#7F95E4;transform:rotate(-40deg)"></span></span></span></span></a><span>Versión de prueba</span></span><span><a href="#nosotros" style="color:inherit">Quiénes somos</a> · Hecho para la comunidad regia</span></div></footer>
+<footer class="foot"><div class="wrap"><span class="foot-logo"><a href="#inicio" aria-label="Mty Movida, ir al inicio"><span class="lockup"><span class="lk-row"><span class="lk-name"><span class="lk-mty"><i>M</i><i>T</i><i>Y</i></span><span class="lk-mov"><i>M</i><i>O</i><i>V</i><i>I</i><i>D</i><i>A</i></span><span class="c" style="left:-5px;top:2px;background:#FDBD1A;transform:rotate(30deg)"></span><span class="c" style="left:34px;top:0;background:#1AC1B9;transform:rotate(-20deg)"></span><span class="c" style="right:-7px;top:12px;background:#FCB8D9;transform:rotate(50deg)"></span><span class="c" style="right:8px;top:1px;background:#7F95E4;transform:rotate(-40deg)"></span></span></span></span></a><span>Versión de prueba</span></span><span><a href="#nosotros" style="color:inherit">Quiénes somos</a> · <a href="#privacidad" style="color:inherit">Aviso de privacidad</a> · <a href="#terminos" style="color:inherit">Términos de uso</a></span></div></footer>
 
 <div class="modal" id="modal" hidden>
   <div class="scrim" data-close></div>
@@ -1523,7 +1537,8 @@ function openLogin(){
       <div class="field"><label for="lgMail">Correo electrónico</label><input class="inp" id="lgMail" type="email" placeholder="nombre@correo.com" autocomplete="email"></div>
       <div class="err" id="lgErr" hidden></div>
       <button class="btn primary" id="lgE" style="justify-content:center">Enviarme el enlace para entrar</button>
-      <p style="margin:0;font-size:12px;color:var(--muted)">Sin contraseña: te mandamos un enlace a tu correo y al abrirlo entras directo. Si ya tienes cuenta, solo escribe tu correo.</p></div></div>
+      <p style="margin:0;font-size:12px;color:var(--muted)">Sin contraseña: te mandamos un enlace a tu correo y al abrirlo entras directo. Si ya tienes cuenta, solo escribe tu correo.</p>
+      <p style="margin:0;font-size:12px;color:var(--muted)">Al continuar aceptas los <a href="#terminos" data-close>Términos de uso</a> y el <a href="#privacidad" data-close>Aviso de privacidad</a>.</p></div></div>
     ${illRight()}</div>`,()=>{
     const go=async()=>{ const n=document.getElementById('lgName').value.trim(), m=document.getElementById('lgMail').value.trim(), er=document.getElementById('lgErr'), b=document.getElementById('lgE');
       if(!/^\S+@\S+\.\S+$/.test(m)){ er.hidden=false; er.textContent='Escribe un correo válido.'; return; }
@@ -1854,6 +1869,65 @@ function bindDiaCompleto(){
   const sh=document.getElementById('cpShare'); if(sh) sh.onclick=()=>{ const ps=armarDia().filter(p=>p.e);
     copy(`Plan para ${relDay(CP.off).toLowerCase()}:\n`+ps.map(p=>`• ${MOMENTOS[p.m]} (${hh(p.e)}): ${p.e.t} – ${p.e.venue}`).join('\n')+`\n¿Vamos? Visto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); };
 }
+
+/* ---------- Aviso de privacidad y términos de uso ---------- */
+const LEGAL_FECHA='27 de octubre de 2026';
+function legalPage(titulo,html){ return `<div class="wrap page legal"><span class="script">Mty Movida</span><h1>${titulo}</h1><p class="legal-f">Última actualización: ${LEGAL_FECHA}</p>${html}
+  <p class="legal-f" style="margin-top:28px">¿Dudas? Escríbenos a <a href="mailto:hola@mtymovida.com">hola@mtymovida.com</a>. · <a href="#${titulo.startsWith('Aviso')?'terminos':'privacidad'}">${titulo.startsWith('Aviso')?'Términos de uso':'Aviso de privacidad'}</a></p></div>`; }
+function viewPriv(){ return legalPage('Aviso de privacidad',`
+  <h2>¿Quién es responsable de tus datos?</h2>
+  <p>Mty Movida (mtymovida.com) es un proyecto de Adriana Elías y Sharon, con domicilio en Monterrey, Nuevo León, México. Somos responsables del uso y la protección de tus datos personales, de acuerdo con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares. Puedes contactarnos en <a href="mailto:hola@mtymovida.com">hola@mtymovida.com</a>.</p>
+  <h2>¿Qué datos recabamos?</h2>
+  <ul>
+    <li><b>Si creas una cuenta:</b> tu nombre y tu correo electrónico.</li>
+    <li><b>Si usas tu cuenta:</b> los eventos que agendas o marcas que vas a ir, los organizadores que sigues, tus planes guardados, tus gustos y zonas preferidas, y las reseñas que publicas.</li>
+    <li><b>Si mandas un evento desde «Agrega tu evento»:</b> el nombre del organizador, un correo de contacto, los datos del evento y la foto o el cartel que subas.</li>
+    <li><b>Al navegar:</b> tu navegador guarda algunas preferencias (por ejemplo, tus filtros o tu plan) para que la página funcione mejor. No usamos cookies de publicidad.</li>
+  </ul>
+  <p>No pedimos ni guardamos datos sensibles, datos de tarjetas ni contraseñas: entras con un enlace que te mandamos por correo.</p>
+  <h2>¿Para qué los usamos?</h2>
+  <p><b>Para lo que nos pides (finalidades necesarias):</b></p>
+  <ul>
+    <li>Crear y mantener tu cuenta y dejarte entrar con el enlace a tu correo.</li>
+    <li>Guardar tu calendario, tus planes y tus preferencias, y mostrarte planes según tus gustos.</li>
+    <li>Preparar el enlace de tu calendario si decides conectarlo con Google Calendar, Outlook o el iPhone.</li>
+    <li>Revisar y publicar los eventos que nos mandas, y avisarte por correo si se publicaron o no.</li>
+    <li>Publicar tus reseñas con tu nombre, si decides escribir una.</li>
+  </ul>
+  <p><b>Para algo extra (finalidades secundarias):</b> mandarte recomendaciones o un resumen de eventos por correo, solo si tú lo activas en tus avisos. Puedes desactivarlo en cualquier momento desde tu cuenta o escribiéndonos, y eso no afecta tu uso de la página.</p>
+  <h2>¿Con quién compartimos tus datos?</h2>
+  <p>No vendemos ni rentamos tus datos. Para que la página funcione usamos estos servicios, que los guardan o los procesan solo por encargo nuestro y pueden estar fuera de México:</p>
+  <ul>
+    <li><b>Supabase:</b> guarda tu cuenta, tu calendario y los eventos.</li>
+    <li><b>Cloudflare:</b> publica la página.</li>
+    <li><b>Resend:</b> envía los correos de acceso y los avisos.</li>
+  </ul>
+  <p>Si conectas tu calendario, Google, Microsoft o Apple leerán el enlace de tu calendario con los eventos que agendaste. Si publicas un evento, sus datos y el nombre del organizador se muestran a todo el público. Solo compartiríamos tus datos con una autoridad si la ley nos lo exige.</p>
+  <h2>Tus derechos</h2>
+  <p>Puedes pedirnos en cualquier momento <b>ver</b> tus datos, <b>corregirlos</b>, <b>borrarlos</b> u <b>oponerte</b> a algún uso (derechos ARCO), así como <b>retirar tu consentimiento</b>. Escríbenos a <a href="mailto:hola@mtymovida.com">hola@mtymovida.com</a> desde el correo de tu cuenta, dinos qué necesitas y te respondemos en un máximo de 20 días hábiles. También puedes borrar tus eventos agendados, tus planes y tus reseñas desde la página.</p>
+  <p>Si crees que no atendimos tu solicitud, puedes acudir a la Secretaría Anticorrupción y Buen Gobierno, la autoridad encargada de la protección de datos personales.</p>
+  <h2>¿Cuánto tiempo guardamos tus datos?</h2>
+  <p>Mientras tengas tu cuenta. Si nos pides borrarla, eliminamos tus datos en un máximo de 30 días, salvo lo que la ley nos obligue a conservar.</p>
+  <h2>Cambios a este aviso</h2>
+  <p>Si cambiamos este aviso, lo publicaremos en esta misma página con la nueva fecha y, si el cambio es importante, te avisaremos por correo.</p>
+  <p>Al crear tu cuenta o mandarnos un evento, confirmas que leíste este aviso y estás de acuerdo con el uso de tus datos para las finalidades necesarias.</p>`); }
+function viewTerm(){ return legalPage('Términos de uso',`
+  <h2>Qué es Mty Movida</h2>
+  <p>Mty Movida es una agenda gratuita de eventos culturales, festivales y atracciones de Monterrey y su zona metropolitana. Juntamos información de organizadores, recintos, boleteras y otras fuentes públicas para que encuentres qué hacer.</p>
+  <h2>La información de los eventos</h2>
+  <p>Hacemos lo posible por que la información esté completa y al día, pero las fechas, horarios, precios y lugares los deciden los organizadores y pueden cambiar o cancelarse. <b>Confirma siempre con el organizador o la boletera antes de ir.</b> Mty Movida no organiza los eventos ni vende boletos; los enlaces de compra te llevan a sitios de terceros, con sus propias reglas.</p>
+  <p>Los planes que armamos para ti son sugerencias. Las sugerencias de comida te llevan a Google Maps; no son recomendaciones pagadas.</p>
+  <h2>Tu cuenta</h2>
+  <p>Tu cuenta es personal. Entras con un enlace que llega a tu correo, así que cuida el acceso a tu correo. Puedes dejar de usar la página o pedirnos que borremos tu cuenta cuando quieras.</p>
+  <h2>Lo que publicas</h2>
+  <ul>
+    <li><b>Eventos:</b> si mandas un evento, confirmas que los datos son ciertos y que tienes permiso de usar la foto o el cartel. Revisamos cada solicitud y podemos corregirla, no publicarla o retirarla, por ejemplo si está incompleta, no es en la zona metropolitana o no encaja con la agenda.</li>
+    <li><b>Reseñas:</b> deben ser sobre tu experiencia en el evento, sin insultos, datos personales de otras personas ni publicidad. Podemos quitar las que no cumplan.</li>
+  </ul>
+  <h2>Fotos y marcas</h2>
+  <p>Las fotos de los eventos pertenecen a sus organizadores o autores. Algunas fotos de lugares son de Wikimedia Commons, con su licencia libre y el crédito a su autor. Si eres dueño de alguna imagen y quieres que la retiremos, escríbenos.</p>
+  <h2>Cambios</h2>
+  <p>Podemos actualizar estos términos; la versión vigente siempre estará en esta página. Para cualquier asunto se aplican las leyes de México.</p>`); }
 
 /* ---------- Vista: Quiénes somos ---------- */
 function viewNos(){
@@ -2583,7 +2657,7 @@ function viewAgregar(){
       <div class="field"><label for="sRedes">Redes sociales</label><input class="inp" id="sRedes" placeholder="@tuevento"></div>
       <div class="field full"><label for="sImg">Foto o cartel del evento *</label><input class="inp" id="sImg" type="file" accept="image/*"><span class="hint">JPG o PNG, de preferencia horizontal. Esta foto aparece en la tarjeta y en la portada.</span><img id="sPrev" class="imgprev" alt="Vista previa de la foto" hidden></div>
       <div class="err full" id="sErr" hidden></div>
-      <div class="full row"><button class="btn primary" type="submit">Enviar para revisión</button></div>
+      <div class="full row" style="flex-direction:column;align-items:flex-start;gap:8px"><button class="btn primary" type="submit">Enviar para revisión</button><span style="font-size:12px;color:var(--muted)">Al enviarlo confirmas que los datos son ciertos y aceptas el <a href="#privacidad">Aviso de privacidad</a> y los <a href="#terminos">Términos de uso</a>.</span></div>
     </form>
     <aside style="display:flex;flex-direction:column;gap:16px">
       <div class="panel"><h3>¿Cómo funciona?</h3><ol class="steps"><li>Envías tu evento con este formulario.</li><li>Lo revisamos en un máximo de 48 horas.</li><li>Te avisamos por correo cuando esté publicado.</li></ol></div>
@@ -2701,7 +2775,9 @@ function bindEvent(e){
       persist(); reopen(e.id); render(); }); };
   document.querySelectorAll('[data-fsel]').forEach(b=>b.onclick=()=>{ FSEL[e.fechas[0].id]=b.dataset.fsel; reopen(e.id); });
   if(g('dGoing')) g('dGoing').onclick=()=>requireLogin(()=>{ const a=toggleIn(S.going,e.id); if(a&&!isSaved(e.id)) S.saved.push(e.id); persist(); toast(a?'¡Qué bien! Lo agregamos a tu calendario':'Ya no aparece que vas'); reopen(e.id); render(); });
-  if(g('dShare')) g('dShare').onclick=()=>copy(`¿Vamos? ${e.t}\n${relDay(e.off)} ${hh(e)} · ${e.venue}\nVisto en Mty Movida`,'Copiado. Pégalo en WhatsApp o donde quieras');
+  if(g('dShare')) g('dShare').onclick=async()=>{ const url=`https://mtymovida.com/e/${encodeURIComponent(String(e.padre||e.id).split('~')[0])}`, txt=`¿Vamos? ${e.t}\n${relDay(e.off)} ${hh(e)} · ${e.venue}`;
+    if(navigator.share&&/iPhone|iPad|Android/i.test(navigator.userAgent)){ try{ await navigator.share({title:e.t,text:txt,url}); return; }catch(x){ if(x&&x.name==='AbortError') return; } }
+    copy(`${txt}\n${url}`,'Enlace copiado. Pégalo en WhatsApp o donde quieras'); };
   if(g('rpSend')) g('rpSend').onclick=()=>{ toast('Gracias. Revisaremos este evento.'); g('rpSend').closest('details').open=false; };
   if(g('rvAttend')) g('rvAttend').onclick=()=>requireLogin(()=>{ if(!isSaved(e.id)) S.saved.push(e.id); persist(); reopen(e.id); });
   const rating={};
@@ -2745,7 +2821,7 @@ function bindCommon(root){
 }
 
 /* ---------- Navegación ---------- */
-const VIEWS={solicitudes:[viewSol,bindSol],nosotros:[viewNos,bindNos],hoy:[viewHoy,bindHoy],inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],festivales:[viewFest,bindFest],agregar:[viewAgregar,bindAgregar]};
+const VIEWS={privacidad:[viewPriv,()=>{}],terminos:[viewTerm,()=>{}],solicitudes:[viewSol,bindSol],nosotros:[viewNos,bindNos],hoy:[viewHoy,bindHoy],inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],festivales:[viewFest,bindFest],agregar:[viewAgregar,bindAgregar]};
 let current='inicio';
 function go(v){ if(location.hash!=='#'+v) location.hash=v; else { current=v; render(); } window.scrollTo(0,0); }
 function render(){
@@ -2756,8 +2832,11 @@ function render(){
   const nd=document.querySelector('.navdrop'); if(nd) nd.setAttribute('aria-current',['eventos','festivales','atracciones'].includes(current)?'page':'false');
   renderEd();
 }
-function fromHash(){ const [h,anc]=location.hash.replace('#','').split('#'); current=VIEWS[h]?h:'inicio'; render(); if(anc) setTimeout(()=>{ const t=document.getElementById(anc); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); },60); }
-window.addEventListener('hashchange',()=>{ fromHash(); window.scrollTo(0,0); });
+let ABRIR_T=null;
+function abrirCuandoExista(id,intentos=0){ clearTimeout(ABRIR_T); const e=ev(id)||ev(String(id).split('~')[0]); if(e) return openEvent(e.id); if(intentos<40) ABRIR_T=setTimeout(()=>abrirCuandoExista(id,intentos+1),300); else toast('Este evento ya no está en la agenda'); }
+function fromHash(){ if(/^#evento\//.test(location.hash)){ const id=decodeURIComponent(location.hash.slice(8)); if(!VIEWS[current]) current='inicio'; render(); abrirCuandoExista(id); return; }
+  const [h,anc]=location.hash.replace('#','').split('#'); current=VIEWS[h]?h:'inicio'; render(); if(anc) setTimeout(()=>{ const t=document.getElementById(anc); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); },60); }
+window.addEventListener('hashchange',()=>{ if(!/^#evento\//.test(location.hash)&&!document.getElementById('modal').hidden) closeModal(); fromHash(); window.scrollTo(0,0); });
 document.getElementById('brandBtn').onclick=()=>go('inicio');
 /* ---------- Nube (Supabase): cuentas y datos de cada persona ---------- */
 const SB_URL='https://aqakoihxgwxdyrtzjrfh.supabase.co';

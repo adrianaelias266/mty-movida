@@ -18,6 +18,8 @@ const nav = await chromium.launch({ channel: 'chrome' }).catch(() => chromium.la
 await p.goto('http://localhost:8099/', { waitUntil: 'domcontentloaded' }); await p.waitForTimeout(2500);
 const lista = await p.evaluate(() => [...EVENTS, ...Object.values(typeof SES !== 'undefined' ? SES : {})].filter(e => (!e.img || e.credit) && !String(e.id).startsWith('db-')).map(e => ({ id: e.id, t: e.t, cat: e.cat, venue: e.venue })));
 const musicales = await p.evaluate(() => [...EVENTS, ...Object.values(typeof SES !== 'undefined' ? SES : {})].filter(e => !String(e.id).startsWith('db-') && ['concierto', 'musica', 'teatro', 'danza'].includes(e.cat)).map(e => ({ id: e.id, t: e.t })));
+const fijos = await p.evaluate(() => { const o = {}; [...EVENTS, ...Object.values(typeof SES !== 'undefined' ? SES : {})].filter(e => !String(e.id).startsWith('db-')).forEach(e => {
+  o[e.id] = { t: e.t, fecha: isoOf(e.off), h: e.h || '', lugar: e.venue || '', desc: String(e.desc || '').slice(0, 200), img: /^https?:/.test(e.img || '') ? e.img : (e.img && !/^data:/.test(e.img) ? 'https://mtymovida.com/' + String(e.img).replace(/^\.?\//, '') : '') }; }); return o; });
 const atracciones = await p.evaluate(() => ATR.filter(a => !ATR_FOTO[a.id]).map(a => ({ id: 'atr:' + a.id, n: a.n })));
 await nav.close(); srv.close();
 const salida = { _reglas: REGLAS }; let nuevas = 0;
@@ -40,3 +42,7 @@ const fama = {};
 for (const e of musicales) { const v = await famaDe(artistaDe(e.t)); if (v) fama[e.id] = v; }
 writeFileSync('public/data/fama-fijas.json', JSON.stringify(fama, null, 1));
 console.log(`::notice::Reconocimiento de eventos fijos: ${Object.keys(fama).length} de ${musicales.length}`);
+// Datos de los eventos fijos para el enlace propio de cada evento (vista previa al compartir)
+for (const [id, f] of Object.entries(salida)) if (fijos[id] && f && f.foto && !fijos[id].img) fijos[id].img = f.foto;
+writeFileSync('public/data/eventos-fijos.json', JSON.stringify(fijos));
+console.log(`::notice::Eventos fijos para compartir: ${Object.keys(fijos).length}`);
