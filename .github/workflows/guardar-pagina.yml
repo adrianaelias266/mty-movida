@@ -1,0 +1,27 @@
+name: Guardar copia de páginas
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: 'Direcciones separadas por espacio'
+        required: true
+permissions:
+  contents: write
+jobs:
+  guardar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/guardar-pagina.mjs
+        env:
+          URLS: ${{ github.event.inputs.urls }}
+      - run: |
+          git config user.name "mty-movida-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b sondeo
+          git add -f sondeo
+          git commit -m "Copias de páginas para revisar"
+          git push -f origin sondeo
