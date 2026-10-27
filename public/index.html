@@ -959,7 +959,7 @@ const ATR_FOTO={
 };
 const fotoUrl=f=>f[0][0]==='!'?'https://upload.wikimedia.org/wikipedia/commons/'+f[0].slice(1):WM+f[0];
 const atrCredit=a=>{ const f=ATR_FOTO[a.id]; if(!f&&a.credit) return `Foto: <a href="${esc(a.credit.url||'#')}" target="_blank" rel="noopener" style="color:#fff">${esc(a.credit.autor)}</a> · ${esc(a.credit.licencia)} · ${esc(a.credit.fuente)}`; return f?`Foto: ${esc(f[1])} · ${f[2]} · <a href="https://commons.wikimedia.org/wiki/${encodeURI(f[3])}" target="_blank" rel="noopener" style="color:#fff">Wikimedia Commons</a>`:'Imagen ilustrativa'; };
-const atrImg = a => (ATR_FOTO[a.id]&&fotoUrl(ATR_FOTO[a.id])) || a.img || cover(a.tipo==='montana'?'mountain':a.id==='grutas'?'mountain':a.tipo, a.id, ATR_VARIANT[a.id]);
+const atrImg = a => (ATR_FOTO[a.id]&&fotoUrl(ATR_FOTO[a.id])) || a.img || cover(a.tipo==='montana'?'mountain':a.id==='grutas'?'mountain':a.tipo==='diversion'?'parque':SCENES[a.tipo]?a.tipo:'parque', a.id, ATR_VARIANT[a.id]);
 
 const CI={
   danza:'<circle cx="13" cy="4" r="2"/><path d="M13 7l-3 5 4 2-1 7M10 12l-5-2M13 7l5 4M14 14l4 6"/>',
@@ -1321,9 +1321,9 @@ const ATR = [
   {id:'tucan',n:'Parque Tucán',tipo:'parque',zona:'centro',d:'Parque del poniente de Monterrey con pista de un kilómetro, aparatos para ejercicio, alberca y vista a los cerros.',hor:'Todos los días',cos:'Gratis; la alberca tiene costo',lle:'Colonia Valle de Infonavit, Monterrey',epo:'Por la mañana'},
   {id:'roma',n:'Parque Ecológico Roma',tipo:'parque',zona:'centro',d:'Parque de barrio en el Distrito Tec con un circuito de un kilómetro para correr, juegos y cancha.',hor:'Abierto todo el día',cos:'Gratis',lle:'Colonia Roma, cerca del Tec de Monterrey',epo:'Por la mañana o al atardecer'},
   {id:'linealescobedo',n:'Parque Lineal de Escobedo',tipo:'parque',zona:'escobedo',d:'Parque largo a lo largo de la avenida Las Torres, con ciclovía, pista para correr, canchas y vista a los cerros.',hor:'Abierto todo el día',cos:'Gratis',lle:'Avenida Las Torres, Escobedo',epo:'Al atardecer'},
-  {id:'divertiparque',n:'Divertiparque Escobedo',tipo:'parque',zona:'escobedo',d:'Parque acuático municipal con alberca de olas, toboganes y mesas con sombra.',hor:'Martes a domingo, en temporada',cos:'Cuota de entrada baja',lle:'Carretera a Colombia, Escobedo',epo:'Verano'},
+  {id:'divertiparque',n:'Divertiparque Escobedo',tipo:'diversion',zona:'escobedo',d:'Parque acuático municipal con alberca de olas, toboganes y mesas con sombra.',hor:'Martes a domingo, en temporada',cos:'Cuota de entrada baja',lle:'Carretera a Colombia, Escobedo',epo:'Verano'},
   {id:'fundadores',n:'Parque Fundadores',tipo:'parque',zona:'apodaca',d:'Parque de Apodaca con lago para pescar, asadores y áreas verdes. No se permiten mascotas.',hor:'Martes a domingo',cos:'Gratis',lle:'Colonia Moderno Apodaca, Apodaca',epo:'Fines de semana en familia'},
-  {id:'acuaticosanfco',n:'Parque Acuático San Francisco',tipo:'parque',zona:'apodaca',d:'Parque municipal con albercas para niños y adultos, asadores y salvavidas.',hor:'Martes a domingo, en temporada',cos:'Gratis',lle:'Centro de Apodaca',epo:'Verano'},
+  {id:'acuaticosanfco',n:'Parque Acuático San Francisco',tipo:'diversion',zona:'apodaca',d:'Parque municipal con albercas para niños y adultos, asadores y salvavidas.',hor:'Martes a domingo, en temporada',cos:'Gratis',lle:'Centro de Apodaca',epo:'Verano'},
   {id:'xenpal',n:'Xenpal, Centro de Conservación de Fauna',tipo:'parque',zona:'garcia',d:'Centro de conservación con animales que se pueden ver de cerca y un recorrido tipo safari, rumbo a las Grutas de García.',hor:'Todos los días',cos:'Con costo de entrada',lle:'Carretera a Grutas de García, García',epo:'Por la mañana'},
   {id:'presaboca',n:'Presa de la Boca',tipo:'parque',zona:'santiago',d:'Presa con malecón, paseos en lancha y catamarán, renta de caballos y restaurantes de mariscos.',hor:'Todos los días',cos:'Cuota de entrada que incluye estacionamiento',lle:'Por la carretera Nacional, en Santiago',epo:'De día, en familia'},
   {id:'cumbres',n:'Parque Nacional Cumbres de Monterrey',tipo:'montana',zona:'santacatarina',d:'Área natural protegida que rodea Monterrey, con montañas, cañones y muchos senderos para todos los niveles.',hor:'Todo el año',cos:'Depende de la zona que visites',lle:'Por Santa Catarina (Huasteca) o por Santiago',epo:'Otoño, invierno y primavera',dif:'De fácil a difícil'},
@@ -1331,8 +1331,17 @@ const ATR = [
   {id:'elcielito',n:'El Cielito',tipo:'montana',zona:'santiago',d:'Sendero corto y sencillo en Santiago que lleva a pozas y pequeñas cascadas, que tienen agua solo en temporada de lluvias.',hor:'Todo el día',cos:'Gratis',lle:'Santiago, rumbo a la Presa de la Boca',epo:'Después de las lluvias',dif:'Fácil'},
   {id:'puertogringo',n:'Mirador Puerto Gringo',tipo:'montana',zona:'santiago',d:'Caminata de subida en la sierra de Santiago hasta un mirador con vista al valle, entre robles y pinos.',hor:'Todo el día',cos:'Gratis',lle:'Desde El Cercado o Cieneguilla, Santiago',epo:'Por la mañana, en días sin lluvia',dif:'Moderada'},
   {id:'chipitin',n:'Cascadas del Chipitín',tipo:'montana',zona:'santiago',d:'Cascada en la sierra de Santiago a la que se llega por camino de terracería y una caminata.',hor:'Consulta el horario antes de ir',cos:'Cuota de entrada',lle:'Desde Santiago, rumbo a Laguna de Sánchez y Potrero Redondo',epo:'Primavera y verano',dif:'Moderada'},
+  // Diversión en familia
+  {id:'parqueagua',n:'Parque del Agua',tipo:'parque',zona:'guadalupe',d:'Nuevo parque metropolitano junto al Estadio BBVA, donde antes estaba Bosque Mágico. Tiene senderos, espejos de agua, un mirador y un anfiteatro, y se conecta con el Gran Parque Río La Silla.',hor:'Todos los días, de mañana a noche; algunas zonas siguen en obra',cos:'Gratis',lle:'Avenida Eloy Cavazos, Guadalupe, junto al Estadio BBVA',epo:'Al atardecer, por la vista a los cerros'},
+  {id:'amazonia',n:'Expedición Amazonia',tipo:'diversion',zona:'centro',d:'Parque temático dentro de Fundidora con dinosaurios de tamaño real, aves, lémures, puentes colgantes y tirolesa.',hor:'Todos los días',cos:'Con costo de entrada',lle:'Dentro del Parque Fundidora',epo:'En familia, por la mañana'},
+  {id:'muscera',n:'Muscera, museo de cera',tipo:'diversion',zona:'centro',d:'Museo de figuras de cera de personajes famosos, con maquinitas en la planta baja.',hor:'Todos los días',cos:'Con costo de entrada',lle:'Dentro del Parque Fundidora',epo:'Cualquier día, es bajo techo'},
+  {id:'kidzania',n:'KidZania Monterrey',tipo:'diversion',zona:'sanpedro',d:'Ciudad a escala donde los niños juegan a trabajar en oficios como bomberos, pilotos o doctores.',hor:'Jueves a domingo; consulta el horario antes de ir',cos:'Con costo de entrada',lle:'Avenida Lázaro Cárdenas, Valle Oriente',epo:'Fines de semana, con niños de 4 a 14 años'},
+  {id:'sealand',n:'Sealand Monterrey',tipo:'diversion',zona:'sanpedro',d:'Acuario pequeño con pingüinos y especies marinas, con recorrido guiado.',hor:'Todos los días',cos:'Con costo de entrada; conviene comprar antes',lle:'Avenida Lázaro Cárdenas, Valle Oriente',epo:'Con niños, cualquier día'},
+  {id:'acuaticopn',n:'Parque Acuático Pueblo Nuevo',tipo:'diversion',zona:'apodaca',d:'Parque acuático municipal con albercas grandes, tobogán, juegos infantiles y asadores.',hor:'Martes a domingo, en temporada',cos:'Gratis',lle:'Avenida Río Nilo, Pueblo Nuevo, Apodaca',epo:'Verano; llega temprano para alcanzar sombra'},
+  {id:'aquasplash',n:'Aqua Splash',tipo:'diversion',zona:'elcarmen',d:'Parque acuático con toboganes y albercas para niños, en El Carmen.',hor:'Todos los días, en temporada',cos:'Con costo de entrada',lle:'El Carmen, al norte de Monterrey',epo:'Verano'},
+  {id:'bocaleones',n:'Parque Acuático Boca de Leones',tipo:'diversion',zona:'otros',d:'Balneario entre montañas en Bustamante, con albercas de agua de manantial y asadores.',hor:'Jueves a domingo, en temporada',cos:'Con costo de entrada',lle:'En Bustamante, a una hora y media al norte de Monterrey',epo:'Verano, llegando temprano'},
 ];
-const TIPOS = {museo:'Museos',parque:'Parques',montana:'Montaña y senderismo',pueblo:'Pueblos Mágicos',paseo:'Paseos'};
+const TIPOS = {museo:'Museos',parque:'Parques',montana:'Montaña y senderismo',diversion:'Diversión y parques acuáticos',pueblo:'Pueblos Mágicos',paseo:'Paseos'};
 const tipoOf = a => a.tipoLabel || a.tipo;
 
 /* ---------- Fechas ---------- */
@@ -1901,9 +1910,10 @@ function armarDC(){
         if(DC.turista&&!ICONOS.includes(x.id)) return false;
         if(DC.turista&&tp==='pueblo') return lapso>=6&&ini<=13;
         if(tp==='montana'&&paradas.some(p=>p.a&&tipoOf(p.a)==='montana')) return false;
+        if(tp==='diversion'){ const mes=dOf(DC.off).getMonth()+1; if(/acu[aá]tico|aqua|splash|boca de leones|divertiparque/i.test(x.n)&&(mes<4||mes>9)) return false; if(fin>19||(x.zona==='otros'&&lapso<7)) return false; }
         if(tp==='montana') return ini<=13&&b-a>=3; if(tp==='pueblo') return lapso>=7&&ini<14; if(tp==='museo') return fin<=18.5&&dOf(DC.off).getDay()!==1; return true; })
         .filter(x=>!paradas.some(p=>p.a&&p.a.id===x.id)&&!DC.fuera.includes('atr:'+x.id))
-        .sort((x,y)=>(DC.turista?ICONOS.indexOf(x.id)-ICONOS.indexOf(y.id):0)||(nat?({montana:2,parque:1}[tipoOf(y)]||0)-({montana:2,parque:1}[tipoOf(x)]||0):0)||(y.zona===zonaRef)-(x.zona===zonaRef)||(ATR_FOTO[y.id]?1:0)-(ATR_FOTO[x.id]?1:0));
+        .sort((x,y)=>(DC.turista?ICONOS.indexOf(x.id)-ICONOS.indexOf(y.id):0)||(DC.con==='familia'?(tipoOf(y)==='diversion')-(tipoOf(x)==='diversion'):0)||(nat?({montana:2,parque:1}[tipoOf(y)]||0)-({montana:2,parque:1}[tipoOf(x)]||0):0)||(y.zona===zonaRef)-(x.zona===zonaRef)||(ATR_FOTO[y.id]?1:0)-(ATR_FOTO[x.id]?1:0));
       const temporada=EVENTS.filter(e=>e.range&&e.mod!=='linea'&&e.off<=DC.off&&dcPasa(e)&&(UNAVEZ.test(e.t)||esFest(e)||(DC.turista&&esIcono(e)))&&!DC.fuera.includes(e.id)&&!(DC._tit&&DC._tit.has(e.t))&&!paradas.some(p=>p.e&&p.e.id===e.id));
       const k='hueco'+DC.off+'_'+Math.round(ini*2), elegido=DC.pick[k];
       const cand=DC.turista&&vuelta===0?[...lugares.map(a=>({a})),...temporada.map(e=>({e}))]:[...temporada.map(e=>({e})),...lugares.map(a=>({a}))];
