@@ -1,0 +1,25 @@
+name: Avisos a organizadores
+
+on:
+  schedule:
+    - cron: '17 * * * *'    # cada hora
+  workflow_dispatch:
+    inputs:
+      solo_marcar:
+        description: 'Marcar las solicitudes actuales como avisadas sin mandar correos'
+        required: false
+        default: 'false'
+
+jobs:
+  avisos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/avisos.mjs
+        env:
+          SUPABASE_SECRET: ${{ secrets.SUPABASE_SECRET }}
+          RESEND_KEY: ${{ secrets.RESEND_KEY }}
+          SOLO_MARCAR: ${{ github.event.inputs.solo_marcar }}
