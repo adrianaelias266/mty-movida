@@ -15,6 +15,10 @@ export const FUENTES = [
   { nombre: 'Casa Motis', sitio: 'https://www.casamotis.com', filtro: /\/detalles-y-registro\//, municipio: 'centro' },
   // "paginas": se leen directo, sin buscar en el mapa del sitio
   { nombre: 'Metapatio', sitio: 'https://www.songkick.com', paginas: ['https://www.songkick.com/venues/3675169-metapatio'], filtro: /./, municipio: 'centro', limpiarNombre: /\s+@\s+.*$/ },
+  // Cinema Río 70 (Barrio Antiguo): su cartelera de conciertos en Songkick
+  { nombre: 'Cinema Río 70', sitio: 'https://www.songkick.com', paginas: ['https://www.songkick.com/venues/3331604-cinema-rio-70'], filtro: /./, municipio: 'centro', limpiarNombre: /\s+@\s+.*$/ },
+  // Estrenos de cine de la semana (Cinemex). Cinépolis bloquea la lectura automática.
+  { nombre: 'Cinemex', sitio: 'https://cinemex.com/proximos-estrenos', lector: 'cinemex', lugar: 'Cines de Monterrey y su zona metropolitana', municipio: 'centro' },
   // Todos los conciertos de la zona de Monterrey en Songkick (la lista ya trae cada evento completo)
   { nombre: 'Songkick', sitio: 'https://www.songkick.com', lista: 'https://www.songkick.com/metro-areas/31051-mexico-monterrey', listaDirecta: true, paginasLista: 6, filtro: /./, municipio: 'centro', cat: 'concierto', limpiarNombre: /\s+@\s+.*$/ },
   // MARCO, Museo de Arte Contemporáneo: exposiciones vigentes

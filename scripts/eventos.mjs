@@ -251,7 +251,32 @@ async function filasSuperboletos(f) {
   }).filter(Boolean);
 }
 
-const LECTORES = { marco: filasMarco, superboletos: filasSuperboletos, civitas: filasCivitas, tribe: filasTribe, payload: filasPayload, nlgob: filasNLGob, primetickets: f => filasPrimeTickets(f) };
+// Devuelve el texto de un objeto {...} que empieza en "desde", respetando las comillas
+function objetoJSON(t, desde) {
+  let n = 0, enTexto = false, esc = false;
+  for (let k = desde; k < t.length; k++) {
+    const c = t[k];
+    if (enTexto) { if (esc) esc = false; else if (c === '\\') esc = true; else if (c === '"') enTexto = false; continue; }
+    if (c === '"') enTexto = true; else if (c === '{') n++; else if (c === '}') { n--; if (n === 0) return t.slice(desde, k + 1); }
+  }
+  return '';
+}
+// Cinemex: la página de próximos estrenos trae la lista de películas dentro de su código (var upcoming = {...})
+async function filasCinemex(f) {
+  const html = await traer(f.sitio); if (!html) return [];
+  const i = html.indexOf('var upcoming='); if (i < 0) return [];
+  let datos; try { datos = JSON.parse(objetoJSON(html, i + 13)); } catch { return []; }
+  const https = u => u ? (u.startsWith('//') ? 'https:' + u : u) : null;
+  return (datos.movies || []).filter(m => /^\d{4}-\d{2}-\d{2}$/.test(m.release_date || '') && enRango(m.release_date)).map(m => {
+    const inf = m.info || {}, gen = [].concat(inf.genre || []).join(', ');
+    const datosPeli = [gen, inf.duration, inf.director && `Dirección: ${inf.director}`].filter(Boolean).join(' · ');
+    return fila(f, { id: `cinemex-estreno-${m.id}`, nombre: limpiar(m.name), fecha: m.release_date, hora: null, cat: 'cine', espacio: 'interior',
+      lugar: f.lugar, url: https(m.url) || f.sitio, foto: https(m.poster_medium || m.poster_small || m.cover),
+      desc: `Estreno en cines. ${datosPeli ? datosPeli + '. ' : ''}${limpiar(inf.sinopsis || '')}` });
+  });
+}
+
+const LECTORES = { cinemex: filasCinemex, marco: filasMarco, superboletos: filasSuperboletos, civitas: filasCivitas, tribe: filasTribe, payload: filasPayload, nlgob: filasNLGob, primetickets: f => filasPrimeTickets(f) };
 
 // Boletera PrimeTickets (Foro 13): la portada trae cada obra y su página trae las funciones
 const MESES = { enero: 1, febrero: 2, marzo: 3, abril: 4, mayo: 5, junio: 6, julio: 7, agosto: 8, septiembre: 9, octubre: 10, noviembre: 11, diciembre: 12 };

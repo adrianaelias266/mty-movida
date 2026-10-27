@@ -1221,7 +1221,7 @@ const MES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','
 const longDate = o => { const d=dOf(o); return `${DOWL[d.getDay()]} ${d.getDate()} de ${MESL[d.getMonth()]}`; };
 const relDay = o => o===0?'Hoy':o===1?'Mañana':o===-1?'Ayer':longDate(o).replace(/^./,c=>c.toUpperCase());
 const momentoOf = h => { if(!h) return ''; const n=parseInt(h,10); return n<12?'manana':n<19?'tarde':'noche'; };
-const fitAttr = e => e.org==='foro13'&&e.img?' style="object-fit:contain;background:#1E1714"':'';
+const fitAttr = e => (e.org==='foro13'||e.fit==='contain')&&e.img?' style="object-fit:contain;background:#1E1714"':'';
 const hh = e => e.h?e.h+' h':'Horario por confirmar';
 const offOfDate = d => Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-T0)/864e5);
 const isoOf = o => { const d=dOf(o); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
@@ -2196,7 +2196,7 @@ async function loadApproved(){
     EVENTS.push({id,t:d.nombre,cat:CAT_OK(d.categoria),org:orgKey,venue:d.lugar||(linea?'En línea':'Por confirmar'),zona:ZONAS[d.municipio]?d.municipio:'centro',
       amb:d.espacio==='exterior'?'exterior':'interior',mod:linea?'linea':'presencial',off,h:/^\d{1,2}:\d{2}/.test(d.hora||'')?d.hora.slice(0,5).padStart(5,'0'):'',
       price:typeof d.precio==='number'?d.precio:null,tags:Array.isArray(d.caracteristicas)?d.caracteristicas:[],going:0,desc:d.descripcion||'',range,
-      img:r.foto||undefined,url:d.enlace||undefined,src:r.fuente&&r.fuente!=='Organizador'?r.fuente:undefined,credit:d.credito&&d.credito.autor?d.credito:undefined});
+      img:r.foto||undefined,url:d.enlace||undefined,src:r.fuente&&r.fuente!=='Organizador'?r.fuente:undefined,credit:d.credito&&d.credito.autor?d.credito:undefined,fit:r.fuente==='Cinemex'?'contain':undefined});
     n++;
   });
   if(n){ Object.keys(PS).forEach(k=>delete PS[k]); render(); }
