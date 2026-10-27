@@ -6,6 +6,7 @@ import { createServer } from 'node:http';
 import { extname, join } from 'node:path';
 import { chromium } from 'playwright';
 import { buscarFoto } from './fotos.mjs';
+import { artistaDe, famaDe } from './fama.mjs';
 
 const ARCHIVO = 'public/data/fotos-fijas.json';
 const REGLAS = 2;   // si cambian las reglas de búsqueda, se sube este número y se vuelve a buscar todo
@@ -16,6 +17,7 @@ const srv = createServer((q, r) => { const f = join('public', decodeURIComponent
 const nav = await chromium.launch({ channel: 'chrome' }).catch(() => chromium.launch()); const p = await nav.newPage();
 await p.goto('http://localhost:8099/', { waitUntil: 'domcontentloaded' }); await p.waitForTimeout(2500);
 const lista = await p.evaluate(() => EVENTS.filter(e => (!e.img || e.credit) && !String(e.id).startsWith('db-')).map(e => ({ id: e.id, t: e.t, cat: e.cat, venue: e.venue })));
+const musicales = await p.evaluate(() => EVENTS.filter(e => !String(e.id).startsWith('db-') && ['concierto', 'musica', 'teatro', 'danza'].includes(e.cat)).map(e => ({ id: e.id, t: e.t })));
 const atracciones = await p.evaluate(() => ATR.filter(a => !ATR_FOTO[a.id]).map(a => ({ id: 'atr:' + a.id, n: a.n })));
 await nav.close(); srv.close();
 const salida = { _reglas: REGLAS }; let nuevas = 0;
@@ -33,3 +35,8 @@ for (const a of atracciones) {
 }
 writeFileSync(ARCHIVO, JSON.stringify(salida, null, 1));
 console.log(`::notice::Eventos fijos sin foto: ${lista.length} · fotos nuevas: ${nuevas} · con foto en total: ${Object.entries(salida).filter(([k, v]) => k !== '_reglas' && v).length}`);
+// Qué tan reconocido es cada artista de los eventos fijos (para elegir lo más esperado del inicio)
+const fama = {};
+for (const e of musicales) { const v = await famaDe(artistaDe(e.t)); if (v) fama[e.id] = v; }
+writeFileSync('public/data/fama-fijas.json', JSON.stringify(fama, null, 1));
+console.log(`::notice::Reconocimiento de eventos fijos: ${Object.keys(fama).length} de ${musicales.length}`);
