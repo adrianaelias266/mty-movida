@@ -304,7 +304,7 @@ async function filasArchivo(f) {
   const { readFileSync, existsSync } = await import('node:fs');
   if (!existsSync(f.archivo)) return [];
   let lista; try { lista = JSON.parse(readFileSync(f.archivo, 'utf8')); } catch { return []; }
-  return (lista.eventos || lista).filter(e => e.fecha && enRango(e.fecha, e.hasta)).map(e => fila(f, { ...e, id: e.url ? `${e.url}#${e.fecha}` : `${f.nombre}-${e.nombre}-${e.fecha}`,
+  return (lista.eventos || lista).filter(e => e.fecha && enRango(e.fecha, e.hasta)).map(e => fila(f, { ...e, organizador: e.organizador || (e.lugar || '').split(',')[0] || f.nombre, id: e.url ? `${e.url}#${e.fecha}` : `${f.nombre}-${e.nombre}-${e.fecha}`,
     municipio: e.municipio || municipio(e.lugar || '', f.municipio) }));
 }
 

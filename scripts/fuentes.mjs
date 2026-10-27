@@ -35,9 +35,9 @@ export const FUENTES = [
   // Cultura UANL (Colegio Civil, Teatro Universitario y más): calendario de WordPress
   { nombre: 'Cultura UANL', sitio: 'https://cultura.uanl.mx', lector: 'tribe', lugar: 'UANL, Monterrey', municipio: 'centro' },
   // Fever (conciertos a la luz de las velas y experiencias): se siguen los enlaces de cada plan
-  { nombre: 'Fever', sitio: 'https://feverup.com', paginas: ['https://feverup.com/es/monterrey/eventos-musicales'], enlaces: /feverup\.com\/m\/\d+/, filtro: /./, municipio: 'centro' },
+  { nombre: 'Fever', sitio: 'https://feverup.com', paginas: ['https://feverup.com/es/monterrey/eventos-musicales'], enlaces: /feverup\.com\/m\/\d+/, filtro: /./, municipio: 'centro', organizadorDelEvento: true, organizadorLugar: true },
   // Meetup: comunidades y grupos de Monterrey
-  { nombre: 'Meetup', sitio: 'https://www.meetup.com', paginas: ['https://www.meetup.com/find/?location=mx--Monterrey&source=EVENTS'], filtro: /./, municipio: 'centro', cat: 'fandoms',
+  { nombre: 'Meetup', sitio: 'https://www.meetup.com', paginas: ['https://www.meetup.com/find/?location=mx--Monterrey&source=EVENTS'], filtro: /./, municipio: 'centro', cat: 'fandoms', organizadorDelEvento: true,
     excluir: /negocio|emprend|inversi|ventas|marketing|networking|trading|cripto|bienes ra[ií]ces/i },
   { nombre: 'Bloom Entertainment', sitio: 'https://www.eventbrite.com.mx', paginas: ['https://www.eventbrite.com.mx/o/bloom-entertainment-62162028433'], enlaces: /eventbrite\.com\.mx\/e\//, filtro: /./, municipio: 'centro' },
   { nombre: 'Casa Padre Mier', sitio: 'https://www.eventbrite.com.mx', paginas: ['https://www.eventbrite.com.mx/o/casa-padre-mier-34353364941'], enlaces: /eventbrite\.com\.mx\/e\//, filtro: /./, municipio: 'centro' },
