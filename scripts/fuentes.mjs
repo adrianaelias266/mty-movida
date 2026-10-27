@@ -19,6 +19,11 @@ export const FUENTES = [
   { nombre: 'Cinema Río 70', sitio: 'https://www.songkick.com', paginas: ['https://www.songkick.com/venues/3331604-cinema-rio-70'], filtro: /./, municipio: 'centro', cat: 'concierto', organizadorLugar: true, limpiarNombre: /\s+@\s+.*$/ },
   // Estrenos de cine de la semana (Cinemex). Cinépolis bloquea la lectura automática.
   { nombre: 'Cinemex', sitio: 'https://cinemex.com/proximos-estrenos', lector: 'cinemex', lugar: 'Cines de Monterrey y su zona metropolitana', municipio: 'centro' },
+  // Ticketmaster (todo lo que vende a 60 km de Monterrey). Requiere la llave TICKETMASTER_KEY en GitHub › Secrets.
+  { nombre: 'Ticketmaster', sitio: 'https://www.ticketmaster.com.mx', lector: 'ticketmaster', municipio: 'centro',
+    excluir: /estacionamiento|parking|vip|paquete|upgrade|meet ?(and|&) ?greet|abono/i },
+  // Passline: no deja leer su buscador; los eventos se guardan cada semana desde el navegador en este archivo
+  { nombre: 'Passline', sitio: 'https://www.passline.com', lector: 'archivo', archivo: 'public/data/passline.json', municipio: 'centro' },
   // Todos los conciertos de la zona de Monterrey en Songkick (la lista ya trae cada evento completo)
   { nombre: 'Songkick', sitio: 'https://www.songkick.com', lista: 'https://www.songkick.com/metro-areas/31051-mexico-monterrey', listaDirecta: true, paginasLista: 6, filtro: /./, municipio: 'centro', cat: 'concierto', organizadorLugar: true, limpiarNombre: /\s+@\s+.*$/ },
   // MARCO, Museo de Arte Contemporáneo: exposiciones vigentes

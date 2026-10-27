@@ -27,6 +27,7 @@ jobs:
         env:
           SOLO: ${{ github.event.inputs.solo }}
           SUPABASE_SECRET: ${{ secrets.SUPABASE_SECRET }}
+          TICKETMASTER_KEY: ${{ secrets.TICKETMASTER_KEY }}
       - name: Fotos libres para los eventos fijos de la página
         run: node scripts/fotos-fijas.mjs
       - name: Guardar fotos encontradas

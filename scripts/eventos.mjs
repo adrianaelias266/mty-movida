@@ -276,7 +276,39 @@ async function filasCinemex(f) {
   });
 }
 
-const LECTORES = { cinemex: filasCinemex, marco: filasMarco, superboletos: filasSuperboletos, civitas: filasCivitas, tribe: filasTribe, payload: filasPayload, nlgob: filasNLGob, primetickets: f => filasPrimeTickets(f) };
+// Ticketmaster: su servicio oficial de consulta (Discovery API). Necesita la llave TICKETMASTER_KEY guardada en GitHub.
+async function filasTicketmaster(f) {
+  const llave = process.env.TICKETMASTER_KEY; if (!llave) { console.log('::notice::Ticketmaster: falta la llave TICKETMASTER_KEY, se omite'); return []; }
+  const desde = hoy.toISOString().slice(0, 19) + 'Z', hasta = limite.toISOString().slice(0, 19) + 'Z', filas = [];
+  for (let pg = 0; pg < 5; pg++) {
+    const d = await json(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${llave}&countryCode=MX&latlong=25.6866,-100.3161&radius=60&unit=km&locale=es-mx&size=200&sort=date,asc&startDateTime=${desde}&endDateTime=${hasta}&page=${pg}`);
+    const evs = d?._embedded?.events || []; if (!evs.length) break;
+    for (const e of evs) {
+      const fecha = e.dates?.start?.localDate; if (!fecha || !enRango(fecha)) continue;
+      const v = e._embedded?.venues?.[0] || {}, cl = e.classifications?.[0] || {};
+      const seg = String(cl.segment?.name || '').toLowerCase(), gen = String(cl.genre?.name || '');
+      const img = (e.images || []).filter(x => x.ratio === '16_9').sort((a, b) => b.width - a.width)[0] || (e.images || [])[0];
+      const pr = (e.priceRanges || [])[0];
+      filas.push(fila(f, { id: e.url || `ticketmaster-${e.id}`, nombre: limpiar(e.name), fecha, hora: e.dates?.start?.localTime?.slice(0, 5) || null,
+        lugar: limpiar([v.name, v.address?.line1].filter(Boolean).join(', ')), municipio: municipio(v.city?.name || '', f.municipio), organizador: limpiar(v.name) || f.nombre,
+        cat: /music/.test(seg) ? 'concierto' : /arts|theatre/.test(seg) ? 'teatro' : /sport/.test(seg) ? 'deporte' : /family/.test(seg) ? 'teatro' : categoria(e.name + ' ' + gen),
+        precio: pr && pr.min ? Math.round(pr.min) : null, foto: img?.url, url: e.url, desc: limpiar(e.info || e.pleaseNote || [gen, v.name].filter(Boolean).join(' · ')) }));
+    }
+    if ((d.page?.totalPages || 1) <= pg + 1) break;
+  }
+  return filas;
+}
+
+// Eventos capturados a mano o desde el navegador (por ejemplo, Passline): archivo public/data/<nombre>.json en el repositorio
+async function filasArchivo(f) {
+  const { readFileSync, existsSync } = await import('node:fs');
+  if (!existsSync(f.archivo)) return [];
+  let lista; try { lista = JSON.parse(readFileSync(f.archivo, 'utf8')); } catch { return []; }
+  return (lista.eventos || lista).filter(e => e.fecha && enRango(e.fecha, e.hasta)).map(e => fila(f, { ...e, id: e.url ? `${e.url}#${e.fecha}` : `${f.nombre}-${e.nombre}-${e.fecha}`,
+    municipio: e.municipio || municipio(e.lugar || '', f.municipio) }));
+}
+
+const LECTORES = { ticketmaster: filasTicketmaster, archivo: filasArchivo, cinemex: filasCinemex, marco: filasMarco, superboletos: filasSuperboletos, civitas: filasCivitas, tribe: filasTribe, payload: filasPayload, nlgob: filasNLGob, primetickets: f => filasPrimeTickets(f) };
 
 // Boletera PrimeTickets (Foro 13): la portada trae cada obra y su página trae las funciones
 const MESES = { enero: 1, febrero: 2, marzo: 3, abril: 4, mayo: 5, junio: 6, julio: 7, agosto: 8, septiembre: 9, octubre: 10, noviembre: 11, diciembre: 12 };
