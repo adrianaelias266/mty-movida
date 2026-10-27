@@ -260,5 +260,45 @@
   }
  },
  "ft1": null,
- "fo3": null
+ "fo3": null,
+ "atr:mune": null,
+ "atr:palacio": null,
+ "atr:obispado": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Museo_Regional_de_Nuevo_Le%C3%B3n_%28_El_Obispado_%29_08.jpg/960px-Museo_Regional_de_Nuevo_Le%C3%B3n_%28_El_Obispado_%29_08.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Jacques Prefontaine",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Museo_Regional_de_Nuevo_Le%C3%B3n_(_El_Obispado_)_08.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "atr:metropolitano": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Museo_Metropolitano_de_Monterrey.JPG/960px-Museo_Metropolitano_de_Monterrey.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Brendablue77",
+   "licencia": "CC BY-SA 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Museo_Metropolitano_de_Monterrey.JPG",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "atr:culturaspop": null,
+ "atr:vidrio": null,
+ "atr:autos": null,
+ "atr:estaciongolfo": null,
+ "atr:ciencias": null,
+ "atr:colegiocivil": null,
+ "atr:papalote": null,
+ "atr:ninosconarte": null,
+ "atr:milarca": null,
+ "atr:antiguosmex": null,
+ "atr:museoguadalupe": null,
+ "atr:museoapodaca": null,
+ "atr:museoescobedo": null,
+ "atr:blanqueo": null,
+ "atr:museosantiago": null,
+ "atr:museolinares": null,
+ "atr:pilon": null,
+ "atr:memoriaviva": null,
+ "atr:cosassimples": null,
+ "atr:bernabe": null
 }
