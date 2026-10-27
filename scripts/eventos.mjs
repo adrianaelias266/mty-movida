@@ -29,7 +29,7 @@ async function traer(url) {
 }
 const locs = xml => [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>(?:[\s\S]*?<lastmod>([^<]+)<\/lastmod>)?/g)].map(m => ({ url: m[1].replace(/&amp;/g, '&'), mod: m[2] }));
 
-const limpiaUrl = u => /eventbrite\.com/.test(u) ? u.replace(/^https:\/\/www\.eventbrite\.com(\.mx)?\//, 'https://www.eventbrite.com.mx/').split('?')[0] : u;
+const limpiaUrl = u => /feverup\.com\/m\/\d+/.test(u) ? u.replace(/^(https:\/\/feverup\.com\/m\/\d+).*$/, '$1') : /eventbrite\.com/.test(u) ? u.replace(/^https:\/\/www\.eventbrite\.com(\.mx)?\//, 'https://www.eventbrite.com.mx/').split('?')[0] : u;
 
 async function paginasDe(f) {
   if (f.lista && f.listaDirecta) return [...Array(f.paginasLista || 5)].map((_, i) => `${f.lista}?page=${i + 1}`);
@@ -52,6 +52,7 @@ async function paginasDe(f) {
     for (const p of f.paginas) {
       const html = await traer(p); if (!html) { console.log(`::warning::${f.nombre}: no se pudo abrir ${p}`); continue; }
       for (const m of html.matchAll(/(?:href=")?(https?:\/\/[^"'\s<>#?\\]+)/g)) if (f.enlaces.test(m[1])) urls.push(limpiaUrl(m[1]));
+      for (const m of html.matchAll(/href="(\/[^"#?]+)"/g)) { const u = new URL(m[1], p).href; if (f.enlaces.test(u)) urls.push(limpiaUrl(u)); }
     }
     return [...new Set(urls)].slice(0, MAX_PAGINAS);
   }
@@ -105,6 +106,27 @@ function municipio(t, porDefecto) {
     ['allende', /^allende$|ciudad allende|allende,\s*n/], ['otros', /montemorelos|linares|zuazua|abasolo|bustamante|sabinas|villaldama|lampazos|an[aá]huac|galeana|iturbide|aramberri|doctor arroyo|rayones|general ter[aá]n|cerralvo|higueras|hualahuises|el ca[ñn]ón/],
     ['centro', /monterrey/]].find(([, x]) => x.test(t));
   return r ? r[0] : porDefecto;
+}
+// Distancia en kilómetros al centro de Monterrey
+function km(lat, lon) {
+  const r = x => x * Math.PI / 180, dLat = r(lat - 25.6866), dLon = r(lon + 100.3161);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(r(25.6866)) * Math.cos(r(lat)) * Math.sin(dLon / 2) ** 2;
+  return 12742 * Math.asin(Math.sqrt(h));
+}
+// Planes de Fever sin datos de evento (obras, experiencias): se leen los datos que trae la página
+function planFever(html, url) {
+  const meta = k => (html.match(new RegExp(`property="og:${k}" content="([^"]*)"`)) || [])[1];
+  const ini = (html.match(/"firstActiveSessionDate":"([^"]+)"/) || [])[1]; if (!ini) return null;
+  if (!/"cityCode":"MTY"/.test(html)) return null;
+  const fin = (html.match(/"lastActiveSessionDate":"([^"]+)"/) || [])[1];
+  const lugar = html.match(/"defaultPlace":\{"address":"([^"]*)"[^}]*?"latitude":([-\d.]+)[^}]*?"longitude":([-\d.]+)[^}]*?"name":"([^"]*)"/);
+  const precios = [...html.matchAll(/"placeId":\d+,"price":(\d+(?:\.\d+)?)/g)].map(m => Number(m[1])).filter(n => n > 0);
+  const nombre = limpiar(meta('title') || '').replace(/^Entradas\s+/i, '').replace(/\s*\|\s*Fever$/i, '');
+  return {
+    name: nombre, startDate: ini, endDate: fin && fin.slice(0, 10) !== ini.slice(0, 10) ? fin : null, url, image: meta('image'), description: meta('description'),
+    location: lugar ? { name: lugar[4], address: { streetAddress: lugar[1], addressLocality: 'Monterrey' }, geo: { latitude: lugar[2], longitude: lugar[3] } } : {},
+    offers: precios.length ? { price: Math.min(...precios) } : {},
+  };
 }
 function fechaHora(iso) {
   const m = String(iso).match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:T(\d{1,2}):(\d{2}))?/);
@@ -413,19 +435,31 @@ for (const f of FUENTES) {
     const nf = await completarFotos(filas); if (nf) console.log(`::notice::${f.nombre}: ${nf} fotos libres encontradas`);
     const n = await guardar([...new Map(filas.map(x => [x.fuente_url, x])).values()]);
     console.log(`::notice::${f.nombre}: ${filas.length} eventos encontrados, ${n} nuevos`);
+    if (f.lector === 'archivo' && SECRETA && filas.length) {   // el archivo manda: lo que se quitó de él se retira de la página
+      const lista = filas.map(x => `"${x.fuente_url.replace(/"/g, '\\"')}"`).join(',');
+      const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados?fuente=eq.${encodeURIComponent(f.nombre)}&estado=eq.aprobado&fuente_url=not.in.(${encodeURIComponent(lista)})`, {
+        method: 'PATCH', headers: { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}`, 'content-type': 'application/json', prefer: 'return=representation' },
+        body: JSON.stringify({ estado: 'rechazado' }),
+      });
+      if (r.ok) { const q = (await r.json()).length; if (q) console.log(`::notice::${f.nombre}: ${q} eventos retirados porque ya no están en el archivo`); }
+      else console.log(`::warning::${f.nombre}: no se pudieron retirar eventos viejos: ${r.status}`);
+    }
     total += n; continue;
   }
   const paginas = await paginasDe(f);
   const filas = [];
   for (const url of paginas) {
     const html = f.navegador ? await htmlConNavegador(url) : await traer(url); if (!html) continue;
-    for (const e of eventosLD(html)) {
+    const lds = eventosLD(html);
+    if (!lds.length && f.planFever) { const x = planFever(html, url); if (x) lds.push(x); }
+    for (const e of lds) {
       const ini = fechaHora(e.startDate), fin = fechaHora(e.endDate || e.startDate); if (!ini) continue;
       const dIni = new Date(ini.fecha + 'T00:00'), dFin = new Date(fin.fecha + 'T00:00');
       if (dFin < hoy || dIni > limite) continue;
       const loc = [].concat(e.location || [])[0] || {};
       const lugar = limpiar([loc.name, typeof loc.address === 'string' ? loc.address : loc.address?.streetAddress].filter(Boolean).join(', '));
       const ciudad = limpiar(loc.address?.addressLocality || '');
+      if (f.radioKm && loc.geo?.latitude != null && km(Number(loc.geo.latitude), Number(loc.geo.longitude)) > f.radioKm) continue;
       if (f.soloEstado && loc.address?.addressRegion && !f.soloEstado.test(loc.address.addressRegion)) continue;
       const oferta = [].concat(e.offers || [])[0] || {};
       const p0 = oferta.price ?? oferta.lowPrice;
