@@ -14,7 +14,7 @@ const SB_KEY = SECRETA || process.env.SUPABASE_KEY || 'sb_publishable_LfR-ayNY5b
 const ESTADO = SECRETA ? 'aprobado' : 'pendiente';
 const MAX_PAGINAS = 80;          // páginas por fuente en cada corrida
 const DIAS_ADELANTE = 90;        // solo eventos de hoy a 90 días
-const AGENTE = 'MtyMovidaBot/1.0 (https://mty-movida.adrianaelias266.workers.dev; agenda cultural de Monterrey)';
+const AGENTE = 'MtyMovidaBot/1.0 (https://mtymovida.com; agenda cultural de Monterrey)';
 
 const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
 const limite = new Date(hoy.getTime() + DIAS_ADELANTE * 864e5);

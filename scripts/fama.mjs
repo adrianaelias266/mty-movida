@@ -1,6 +1,6 @@
 // Qué tan reconocido es un artista: visitas de los últimos 30 días a su página de Wikipedia (en español e inglés).
 // Escala 0 a 7 (logarítmica: 4 = unas 10,000 visitas al mes). Solo cuenta si el título del artículo coincide con el nombre del artista.
-const AGENTE = 'MtyMovidaBot/1.0 (https://mty-movida.adrianaelias266.workers.dev; agenda cultural de Monterrey)';
+const AGENTE = 'MtyMovidaBot/1.0 (https://mtymovida.com; agenda cultural de Monterrey)';
 const json = async u => { try { const r = await fetch(u, { headers: { 'user-agent': AGENTE, accept: 'application/json' }, signal: AbortSignal.timeout(20000) }); return r.ok ? await r.json() : null; } catch { return null; } };
 const limpiar = t => String(t || '').replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 const hoy = new Date(); hoy.setHours(0, 0, 0, 0);

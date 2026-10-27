@@ -1,5 +1,5 @@
 // Búsqueda de fotos libres (Wikimedia Commons y Openverse) con su crédito.
-const AGENTE = 'MtyMovidaBot/1.0 (+https://mty-movida.adrianaelias266.workers.dev)';
+const AGENTE = 'MtyMovidaBot/1.0 (+https://mtymovida.com)';
 async function json(u) { try { const r = await fetch(u, { headers: { 'user-agent': AGENTE, accept: 'application/json' }, signal: AbortSignal.timeout(20000) }); return r.ok ? await r.json() : null; } catch { return null; } }
 const limpiar = t => String(t || '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 const CACHE_FOTOS = new Map(); let busquedas = 0;
