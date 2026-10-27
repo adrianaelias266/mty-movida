@@ -292,5 +292,43 @@
  "atr:pilon": null,
  "atr:memoriaviva": null,
  "atr:cosassimples": null,
- "atr:bernabe": null
+ "atr:bernabe": null,
+ "atr:estanzuela": null,
+ "atr:rioLaSilla": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Gran_parque_Rio_la_Silla.jpg/960px-Gran_parque_Rio_la_Silla.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Hesssika",
+   "licencia": "CC0",
+   "url": "https://commons.wikimedia.org/wiki/File:Gran_parque_Rio_la_Silla.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "atr:pastora": null,
+ "atr:tolteca": null,
+ "atr:capitan": null,
+ "atr:rufino": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Parque_Rufino_tamayo.jpg/960px-Parque_Rufino_tamayo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Rick González",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Parque_Rufino_tamayo.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "atr:bosquesvalle": null,
+ "atr:clouthier": null,
+ "atr:ninosheroes": null,
+ "atr:tucan": null,
+ "atr:roma": null,
+ "atr:linealescobedo": null,
+ "atr:divertiparque": null,
+ "atr:fundadores": null,
+ "atr:acuaticosanfco": null,
+ "atr:xenpal": null,
+ "atr:presaboca": null,
+ "atr:cumbres": null,
+ "atr:potrerochico": null,
+ "atr:elcielito": null,
+ "atr:puertogringo": null,
+ "atr:chipitin": null
 }
