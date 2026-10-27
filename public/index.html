@@ -180,6 +180,10 @@ a{color:var(--accent)}
 /* Portada con bloque de color */
 .homehero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:20px;align-items:stretch;margin-bottom:22px}
 @media (max-width:820px){.homehero{grid-template-columns:minmax(0,1fr)}}
+.nosbar{display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;color:inherit;background:var(--surface);box-shadow:var(--shadow);border-radius:18px;padding:16px 20px;margin:28px 0 0;font-size:14px}
+.nosbar b{display:block;font-family:var(--f-display);font-size:18px}
+.homehero.nos p{max-width:52ch}
+.homehero.solo{grid-template-columns:minmax(0,1fr)}
 .homehero .lead{display:flex;flex-direction:column;justify-content:center;gap:14px;padding-block:10px}
 .homehero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,5vw,60px);letter-spacing:-.035em;line-height:1.02}
 .homehero p{margin:0;color:var(--muted);max-width:46ch;font-size:16px}
@@ -716,7 +720,7 @@ form.card .full{grid-column:1/-1}
 </header>
 
 <main id="app"></main>
-<footer class="foot"><div class="wrap"><span><b style="font-family:var(--f-wm);font-weight:800;text-transform:uppercase;font-size:18px;letter-spacing:.03em">Mty Movida</b> · Versión de prueba</span><span>Hecho para la comunidad regia</span></div></footer>
+<footer class="foot"><div class="wrap"><span><b style="font-family:var(--f-wm);font-weight:800;text-transform:uppercase;font-size:18px;letter-spacing:.03em">Mty Movida</b> · Versión de prueba</span><span><a href="#nosotros" style="color:inherit">Quiénes somos</a> · Hecho para la comunidad regia</span></div></footer>
 
 <div class="modal" id="modal" hidden>
   <div class="scrim" data-close></div>
@@ -1627,6 +1631,7 @@ function viewInicioHTML(slides,nSlides){
     <div class="allbtn"><a class="btn" href="#eventos">Ver todos los eventos con filtros</a></div>
     <div class="sechead"><h2>Para un plan sin horario</h2><a class="btn small" href="#atracciones">Ver atracciones</a></div>
     <div class="atrgrid">${ATR.filter(a=>['fundidora','santalucia','chipinque','santiago'].includes(a.id)).map(atrCard).join('')}</div>
+    <a class="nosbar" href="#nosotros"><span><b>Somos Adriana y Sharon</b> Conoce por qué hicimos Mty Movida</span><span aria-hidden="true">→</span></a>
     <section class="cta"><div><span class="script" style="color:#CBA6FF">¿Tienes un evento?</span><h2>Publícalo en Mty Movida</h2><p>Es gratis. Que la comunidad regia se entere y llegue.</p></div><a class="btn lila" href="#agregar">Agrega tu evento</a></section>
   </div>`;
 }
@@ -1721,16 +1726,27 @@ function bindDiaCompleto(){
     copy(`Plan para ${relDay(CP.off).toLowerCase()}:\n`+ps.map(p=>`• ${MOMENTOS[p.m]} (${hh(p.e)}): ${p.e.t} – ${p.e.venue}`).join('\n')+`\n¿Vamos? Visto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); };
 }
 
+/* ---------- Vista: Quiénes somos ---------- */
+function viewNos(){
+  return `<div class="wrap page">
+    <section class="homehero nos"><div class="lead"><span class="script">Quiénes somos</span><h1>Somos Adriana y Sharon</h1>
+      <p>Creamos Mty Movida para que conozcas todo lo que pasa en la ciudad, salgas y vivas la cultura y el entretenimiento de Monterrey.</p>
+      <p>Aquí juntamos en un solo lugar los conciertos, el teatro, las exposiciones, los festivales y los planes al aire libre de toda la zona metropolitana, para que no te pierdas nada y siempre tengas un plan.</p>
+      <div class="row"><a class="btn primary" href="#hoy">¿Qué plan hoy?</a><a class="btn" href="#agregar">Agrega tu evento</a></div></div>
+      <div class="blk" id="blk" aria-hidden="true">${PZ_ORDER.map(k=>pieceHTML(k)).join("")}</div></section>
+  </div>`;
+}
+function bindNos(){ bindPieces(); }
+
 /* ---------- Vista: ¿Qué plan hoy? (3 planes y personalización) ---------- */
 function viewHoy(){
   HOME_CTX.forEach((c,i)=>slot('h'+i,homeCtx(c)));
   const chip=(attr,v,on,txt)=>`<button class="chip" ${attr}="${v}" aria-pressed="${on}">${txt}</button>`;
   const hay=HP.con||HP.zonas.length||HP.cats.length||HP.presu!=='todo'||HP.mom!=='todo';
   return `<div class="wrap page">
-    <section class="homehero"><div class="lead"><span class="script">Sal y únete a la movida</span><h1>Tus 3 planes para hoy</h1>
+    <section class="homehero solo"><div class="lead"><span class="script">Sal y únete a la movida</span><h1>Tus 3 planes para hoy</h1>
       <p>${S.user&&S.onboarded?'Elegidos según tus gustos.':'De todo lo que pasa hoy en la ciudad elegimos tres.'} Si alguno no te convence, cámbialo por uno parecido.</p>
-      <div class="row"><a class="btn primary" href="#plan">${I.dice}Ármame un plan completo</a><a class="btn" href="#personaliza" data-irperso>Personaliza tus 3 planes</a></div></div>
-      <div class="blk" id="blk" aria-hidden="true">${PZ_ORDER.map(k=>pieceHTML(k)).join("")}</div></section>
+      <div class="row"><a class="btn primary" href="#plan">${I.dice}Ármame un plan completo</a><a class="btn" href="#personaliza" data-irperso>Personaliza tus 3 planes</a></div></div></section>
     <div class="subhead"><h2>Elegidos para hoy</h2><span>${longDate(0).replace(/^./,c=>c.toUpperCase())}</span></div>
     ${HOME_CTX.some((_,i)=>PS['h'+i]&&PS['h'+i].cur)?`<div class="plans3">${HOME_CTX.map((_,i)=>planCard('h'+i)).join('')}</div>`:`<div class="empty"><b>No encontramos planes con esas preferencias</b>Prueba quitando alguna, o ${HP.cats.includes('naturaleza')?'visita un parque o una montaña en <a href="#atracciones">Atracciones</a>':'arma un <a href="#plan">plan completo</a>'}.</div>`}
     <section class="panel perso" id="personaliza">
@@ -1754,7 +1770,6 @@ function bindHoy(){
   const multi=(attr,key)=>q(`[${attr}]`).forEach(b=>b.onclick=()=>{ const v=b.getAttribute(attr); HP[key]=!v?[]:HP[key].includes(v)?HP[key].filter(x=>x!==v):[...HP[key],v]; keep(); });
   multi('data-hpzona','zonas'); multi('data-hpcat','cats');
   const r=document.getElementById('hpReset'); if(r) r.onclick=()=>{ HP={con:'',zonas:[],cats:[],presu:'todo',mom:'todo'}; keep(); };
-  bindPieces();
   const ip=document.querySelector('[data-irperso]'); if(ip) ip.onclick=ev=>{ ev.preventDefault(); document.getElementById('personaliza').scrollIntoView({behavior:'smooth',block:'start'}); };
   bindPlans(document.getElementById('app'));
 }
@@ -2488,7 +2503,7 @@ function bindCommon(root){
 }
 
 /* ---------- Navegación ---------- */
-const VIEWS={hoy:[viewHoy,bindHoy],inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],festivales:[viewFest,bindFest],agregar:[viewAgregar,bindAgregar]};
+const VIEWS={nosotros:[viewNos,bindNos],hoy:[viewHoy,bindHoy],inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],festivales:[viewFest,bindFest],agregar:[viewAgregar,bindAgregar]};
 let current='inicio';
 function go(v){ if(location.hash!=='#'+v) location.hash=v; else { current=v; render(); } window.scrollTo(0,0); }
 function render(){
