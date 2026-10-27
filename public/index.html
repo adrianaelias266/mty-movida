@@ -468,6 +468,7 @@ a.stat{text-decoration:none}
 
 
 /* Día completo */
+.perso{display:flex;flex-direction:column;gap:14px;margin-top:24px}
 .prefs{background:var(--surface);border-radius:18px;box-shadow:var(--shadow);margin-bottom:16px}
 .prefs summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .prefs summary::-webkit-details-marker{display:none}
@@ -699,7 +700,8 @@ form.card .full{grid-column:1/-1}
     </button>
     <nav class="nav" id="mainNav" aria-label="Secciones">
       <a href="#inicio" data-view="inicio">Inicio</a>
-      <a href="#plan" data-view="plan" class="hoy">¿Qué plan?</a>
+      <a href="#hoy" data-view="hoy" class="hoy">¿Qué plan hoy?</a>
+      <a href="#plan" data-view="plan">Ármame un plan completo</a>
       <a href="#eventos" data-view="eventos">Eventos</a>
       <a href="#festivales" data-view="festivales">Festivales</a>
       <a href="#calendario" data-view="calendario">Mi calendario</a>
@@ -1226,6 +1228,10 @@ function bindPlans(root){
 let PA={mood:'tranquilo',con:'amiga',cuando:'hoy',presu:'todo',mom:'todo',cats:[],modo:'uno',moms:['tarde','noche'],zonas:[]};
 try{ const pa=JSON.parse(localStorage.getItem('mtymovida-pa')||'null'); if(pa) PA=Object.assign(PA,pa); }catch(e){}
 const HOME_CTX=[{mood:'tranquilo',cuando:'hoy',presu:'todo'},{mood:'salir',cuando:'hoy',presu:'todo'},{mood:'diferente',cuando:'hoy',presu:'todo'}];
+// Preferencias para personalizar los 3 planes de hoy
+let HP={con:'',zonas:[],cats:[],presu:'todo',mom:'todo'};
+try{ const g=JSON.parse(localStorage.getItem('mtymovida-hp')||'null'); if(g) HP={...HP,...g}; }catch(e){}
+const homeCtx=c=>({...c,...(HP.con?{con:HP.con}:{}),zonas:HP.zonas,cats:HP.cats,presu:HP.presu,mom:HP.mom});
 const SEED_REVIEWS = {};
 
 /* ---------- Atracciones ---------- */
@@ -1589,7 +1595,7 @@ function topWeek(){
 }
 function viewInicio(){
   const top=topWeek();
-  HOME_CTX.forEach((c,i)=>slot('h'+i,c));
+  HOME_CTX.forEach((c,i)=>slot('h'+i,homeCtx(c)));
   // Festivales que están ocurriendo ahora (si no hay ya un evento suyo en el carrusel)
   const fAhora=FEST.filter(f=>festInfo(f).k==='ahora'&&!top.some(e=>{ try{ return f.claves&&new RegExp(f.claves,'i').test(e.t); }catch(x){ return false; } }));
   const items=top.slice(0,Math.max(6,10-fAhora.length)).map(e=>({e})); fAhora.slice(0,4).forEach((f,k)=>items.splice(Math.min(items.length,2+k*2),0,{f}));
@@ -1616,7 +1622,7 @@ function viewInicioHTML(slides,nSlides){
     </section>
     <section class="homehero"><div class="lead"><span class="script">Sal y únete a la movida</span><h1>Tus 3 planes para hoy</h1>
       <p>${S.user&&S.onboarded?'Elegidos según tus gustos.':'De todo lo que pasa hoy en la ciudad elegimos tres.'} Si alguno no te convence, cámbialo por uno parecido.</p>
-      <div class="row"><a class="btn primary" href="#plan">${I.dice}Ármame un plan a mi medida</a><a class="btn" href="#eventos">Ver todos los eventos</a></div></div>
+      <div class="row"><a class="btn primary" href="#plan">${I.dice}Ármame un plan completo</a><a class="btn" href="#hoy#personaliza">Personaliza tus 3 planes</a></div></div>
       <div class="blk" id="blk" aria-hidden="true">${PZ_ORDER.map(k=>pieceHTML(k)).join("")}</div></section>
     <div class="subhead"><h2>Elegidos para hoy</h2><span>${longDate(0).replace(/^./,c=>c.toUpperCase())}</span></div>
     <div class="plans3">${HOME_CTX.map((_,i)=>planCard('h'+i)).join('')}</div>
@@ -1694,7 +1700,7 @@ function diaCompletoHTML(){
   const precios=con.map(p=>p.e.price), total=precios.filter(x=>typeof x==='number').reduce((a,b)=>a+b,0), sinPrecio=precios.some(x=>x==null);
   const otroDia=!['hoy','manana','fecha'].includes(PA.cuando);
   return `<div class="itin">
-    <div class="itin-h"><span class="eyebrow">Tu plan completo</span><h3>${relDay(CP.off)}${CP.off>1?'':', '+longDate(CP.off)}</h3>
+    <div class="itin-h"><span class="eyebrow">Tu día completo</span><h3>${relDay(CP.off)}${CP.off>1?'':', '+longDate(CP.off)}</h3>
       <p>${con.length} ${con.length===1?'parada':'paradas'}${con.length?` · ${total?`desde $${total} por persona`:sinPrecio?'revisa los precios':'todo gratis'}${total&&sinPrecio?' más lo que cueste lo demás':''}`:''}${otroDia?' · elegimos el día con más opciones':''}</p></div>
     <div class="tl itin-tl">${paradas.map((p,i)=>{ const c=MOM_COL[p.m];
       if(!p.e) return `<div class="tl-day">${MOMENTOS[p.m]}</div><div class="it-none">No encontramos algo para la ${MOMENTOS[p.m].toLowerCase()} con lo que elegiste. Prueba con otro presupuesto o tipo de actividad.</div>`;
@@ -1721,6 +1727,38 @@ function bindDiaCompleto(){
     copy(`Plan para ${relDay(CP.off).toLowerCase()}:\n`+ps.map(p=>`• ${MOMENTOS[p.m]} (${hh(p.e)}): ${p.e.t} – ${p.e.venue}`).join('\n')+`\n¿Vamos? Visto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); };
 }
 
+/* ---------- Vista: ¿Qué plan hoy? (3 planes y personalización) ---------- */
+function viewHoy(){
+  HOME_CTX.forEach((c,i)=>slot('h'+i,homeCtx(c)));
+  const chip=(attr,v,on,txt)=>`<button class="chip" ${attr}="${v}" aria-pressed="${on}">${txt}</button>`;
+  const hay=HP.con||HP.zonas.length||HP.cats.length||HP.presu!=='todo'||HP.mom!=='todo';
+  return `<div class="wrap page">
+    <div class="phead"><div><span class="script">Elegidos para hoy</span><h1>¿Qué plan hoy?</h1><p>${longDate(0).replace(/^./,c=>c.toUpperCase())}. Tres ideas de todo lo que pasa hoy en la ciudad. Si alguna no te convence, cámbiala o personalízalas abajo.</p></div></div>
+    ${HOME_CTX.some((_,i)=>PS['h'+i]&&PS['h'+i].cur)?`<div class="plans3">${HOME_CTX.map((_,i)=>planCard('h'+i)).join('')}</div>`:`<div class="empty"><b>No encontramos planes con esas preferencias</b>Prueba quitando alguna, o ${HP.cats.includes('naturaleza')?'visita un parque o una montaña en <a href="#atracciones">Atracciones</a>':'arma un <a href="#plan">plan completo</a>'}.</div>`}
+    <section class="panel perso" id="personaliza">
+      <div class="sechead" style="margin:0"><h2>Personalízalo</h2>${hay?'<button class="btn ghost small" id="hpReset">Quitar preferencias</button>':''}</div>
+      <p class="hint" style="margin:0">Dinos qué buscas y volvemos a elegir los tres planes.</p>
+      <div class="fgroup"><h4>¿Con quién vas?</h4><div class="chips">${chip('data-hpcon','',!HP.con,'Me da igual')}${Object.entries(CON).map(([k,c])=>chip('data-hpcon',k,HP.con===k,c.n)).join('')}</div></div>
+      <div class="fgroup"><h4>¿A qué hora?</h4><div class="chips">${Object.entries(HORA).map(([k,v])=>chip('data-hpmom',k,HP.mom===k,v)).join('')}</div></div>
+      <div class="fgroup"><h4>¿En qué zona? <span class="opt">Puedes elegir varias</span></h4><div class="chips">${chip('data-hpzona','',!HP.zonas.length,'Cualquier zona')}${Object.entries(ZONAS).map(([k,z])=>chip('data-hpzona',k,HP.zonas.includes(k),z.n)).join('')}</div></div>
+      <div class="fgroup"><h4>¿Qué tipo de actividad? <span class="opt">Puedes elegir varias</span></h4><div class="chips">${chip('data-hpcat','',!HP.cats.length,'De todo un poco')}${Object.entries(CATS).map(([k,c])=>`<button class="chip" data-hpcat="${k}" aria-pressed="${HP.cats.includes(k)}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div></div>
+      <div class="fgroup"><h4>¿Cuánto quieres gastar?</h4><div class="chips">${Object.entries(PRESU).map(([k,v])=>chip('data-hppresu',k,HP.presu===k,v)).join('')}</div></div>
+    </section>
+    <div class="allbtn"><a class="btn primary" href="#plan">${I.dice}¿Tienes más tiempo? Ármame un plan completo</a></div>
+  </div>`;
+}
+function bindHoy(){
+  const keep=()=>{ try{ localStorage.setItem('mtymovida-hp',JSON.stringify(HP)); }catch(e){} Object.keys(PS).filter(k=>k[0]==='h').forEach(k=>delete PS[k]); const y=window.scrollY; render(); window.scrollTo(0,y); };
+  const q=s=>document.querySelectorAll(s);
+  q('[data-hpcon]').forEach(b=>b.onclick=()=>{ HP.con=b.dataset.hpcon; keep(); });
+  q('[data-hpmom]').forEach(b=>b.onclick=()=>{ HP.mom=b.dataset.hpmom; keep(); });
+  q('[data-hppresu]').forEach(b=>b.onclick=()=>{ HP.presu=b.dataset.hppresu; keep(); });
+  const multi=(attr,key)=>q(`[${attr}]`).forEach(b=>b.onclick=()=>{ const v=b.getAttribute(attr); HP[key]=!v?[]:HP[key].includes(v)?HP[key].filter(x=>x!==v):[...HP[key],v]; keep(); });
+  multi('data-hpzona','zonas'); multi('data-hpcat','cats');
+  const r=document.getElementById('hpReset'); if(r) r.onclick=()=>{ HP={con:'',zonas:[],cats:[],presu:'todo',mom:'todo'}; keep(); };
+  bindPlans(document.getElementById('app'));
+}
+
 /* ---------- Ármame un día completo: formulario por pasos y plan con horario ---------- */
 let DC={paso:0,off:0,desde:null,hasta:22,con:'',zonas:[],cats:[],comidas:[],presu:'todo',listo:false,pick:{},fuera:[]};
 try{ const g=JSON.parse(localStorage.getItem('mtymovida-dc')||'null'); if(g) DC={...DC,...g,paso:0}; }catch(e){}
@@ -1731,6 +1769,12 @@ const DC_PASOS=['¿Qué día?','¿De qué hora a qué hora?','¿Con quién vas?'
 const DC_COMIDAS={cafe:{n:'Café',ico:'☕',v:[8,20],d:.75,q:'cafeterías'},desayuno:{n:'Desayuno',ico:'🍳',v:[8,12],d:1,q:'desayunos'},comida:{n:'Comida',ico:'🍽️',v:[13,17],d:1.25,q:'restaurantes'},cena:{n:'Cena',ico:'🌮',v:[19,23.5],d:1,q:'cenar'},postre:{n:'Postre',ico:'🍨',v:[15,23.5],d:.5,q:'postres'}};
 const hNum=h=>{ const m=String(h||'').match(/^(\d{1,2}):(\d{2})/); return m?+m[1]+m[2]/60:null; };
 const hTxt=x=>{ const h=Math.floor(x)%24, m=Math.round((x-Math.floor(x))*60); return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`; };
+function offDePA(){ const c=PA.cuando; if(c==='manana') return 1; if(c==='fecha') return PA.foff??2; if(c==='finde'){ const d=new Date().getDay(); return d===0?0:(6-d); } return 0; }
+// Sin personalizar: plan automático del día elegido, de la siguiente hora a las 11 de la noche, con comida y cena
+function dcSync(){ DC.off=offDePA(); const n=new Date().getHours()+1;
+  if(!DC.custom){ DC.desde=DC.off===0?Math.min(Math.max(n,10),22):12; DC.hasta=23; DC.con=''; DC.zonas=[]; DC.cats=[]; DC.presu='todo'; DC.comidas=['comida','cena']; }
+  else if(DC.off===0&&DC.desde<n){ DC.desde=Math.min(n,23); if(DC.hasta<=DC.desde) DC.hasta=Math.min(24,DC.desde+3); }
+  DC.listo=true; }
 function dcDefaults(){ if(DC.desde==null||(DC.off===0&&DC.desde<new Date().getHours())){ const n=new Date().getHours()+1; DC.desde=DC.off===0?Math.min(Math.max(n,9),22):12; if(DC.hasta<=DC.desde) DC.hasta=Math.min(24,DC.desde+4); } }
 function dcPasoHTML(){
   dcDefaults(); const p=DC.paso, chip=(attr,v,on,txt)=>`<button class="chip" ${attr}="${v}" aria-pressed="${on}">${txt}</button>`;
@@ -1746,16 +1790,17 @@ function dcPasoHTML(){
   if(p===5) body=`<p class="hint" style="margin:0 0 10px">Elige las que quieras y las acomodamos en los huecos de tu plan. Puedes elegir varias.</p><div class="chips">${chip('data-dccom','',!DC.comidas.length,'Sin comida')}${Object.entries(DC_COMIDAS).map(([k,c])=>chip('data-dccom',k,DC.comidas.includes(k),c.ico+' '+c.n)).join('')}</div>`;
   if(p===6) body=`<div class="chips">${Object.entries(DC_PRESU).map(([k,v])=>chip('data-dcpresu',k,DC.presu===k,v)).join('')}</div>`;
   const listo=p!==2||DC.con;
-  return `<div class="dcwiz"><span class="eyebrow">Ármame un plan completo · Paso ${p+1} de ${DC_PASOS.length}</span>
+  return `<div class="dcwiz"><span class="eyebrow">Personaliza tu plan · Paso ${p+1} de ${DC_PASOS.length}</span>
     <div class="dcbar"><i style="width:${(p+1)/DC_PASOS.length*100}%"></i></div>
     <h2>${DC_PASOS[p]}</h2>${body}
     <div class="row dcnav">${p?'<button class="btn" id="dcAtras">← Atrás</button>':'<span></span>'}${p<DC_PASOS.length-1?`<button class="btn primary" id="dcSig" ${listo?'':'disabled'}>Siguiente →</button>`:`<button class="btn primary" id="dcArmar">${I.dice}Armar mi día</button>`}</div></div>`;
 }
-function abrirDC(){ DC.paso=0; openModal(dcPasoHTML(),bindDC); }
+function abrirDC(){ DC.paso=0; DC.off=offDePA(); if(!DC.custom){ DC.desde=null; } openModal(dcPasoHTML(),bindDC); }
 function bindDC(){
   const again=()=>{ saveDC(); refreshTop(dcPasoHTML(),bindDC); }, q=s=>document.querySelectorAll('#mBody '+s);
-  q('[data-dcoff]').forEach(b=>b.onclick=()=>{ DC.off=+b.dataset.dcoff; DC.desde=null; again(); });
-  const f=document.getElementById('dcFecha'); if(f) f.onchange=()=>{ const o=offOfDate(new Date(f.value+'T00:00')); if(o>=0&&o<=MAXOFF){ DC.off=o; DC.desde=null; again(); } };
+  const ponDia=o=>{ DC.off=o; if(o===0) PA.cuando='hoy'; else if(o===1) PA.cuando='manana'; else { PA.cuando='fecha'; PA.foff=o; } try{ localStorage.setItem('mtymovida-pa',JSON.stringify(PA)); }catch(e){} DC.desde=null; };
+  q('[data-dcoff]').forEach(b=>b.onclick=()=>{ ponDia(+b.dataset.dcoff); again(); });
+  const f=document.getElementById('dcFecha'); if(f) f.onchange=()=>{ const o=offOfDate(new Date(f.value+'T00:00')); if(o>=0&&o<=MAXOFF){ ponDia(o); again(); } };
   const d=document.getElementById('dcDesde'), h=document.getElementById('dcHasta');
   if(d) d.onchange=()=>{ DC.desde=+d.value; if(DC.hasta<=DC.desde) DC.hasta=Math.min(24,DC.desde+3); again(); };
   if(h) h.onchange=()=>{ DC.hasta=+h.value; again(); };
@@ -1765,7 +1810,7 @@ function bindDC(){
   q('[data-dcpresu]').forEach(b=>b.onclick=()=>{ DC.presu=b.dataset.dcpresu; again(); });
   const a=document.getElementById('dcAtras'); if(a) a.onclick=()=>{ DC.paso--; again(); };
   const n=document.getElementById('dcSig'); if(n) n.onclick=()=>{ DC.paso++; again(); };
-  const ar=document.getElementById('dcArmar'); if(ar) ar.onclick=()=>{ DC.listo=true; DC.pick={}; DC.fuera=[]; saveDC(); closeModal(); render(); setTimeout(()=>{ const t=document.getElementById('dia-completo'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); },60); };
+  const ar=document.getElementById('dcArmar'); if(ar) ar.onclick=()=>{ DC.listo=true; DC.custom=true; DC.pick={}; DC.fuera=[]; saveDC(); closeModal(); render(); setTimeout(()=>{ const t=document.getElementById('dia-completo'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); },60); };
 }
 // Funciones del día elegido (un evento con varias fechas cuenta con la función de ese día)
 function eventosDelDia(off){
@@ -1825,7 +1870,7 @@ function comidaDC(paradas){
     const tras=k==='postre'?(out.find(o=>o.k==='cena'&&!o.noCabe)||out.find(o=>o.k==='comida'&&!o.noCabe)||{}).hora+((out.find(o=>o.k==='cena'&&!o.noCabe)||out.find(o=>o.k==='comida'&&!o.noCabe)||{}).d||0):null;
     const ops=huecos.map(([a,b])=>({a,b,s:Math.max(a,c.v[0]),e:Math.min(b,c.v[1])})).filter(g=>g.e-g.s>=c.d);
     const h=(tras!=null&&ops.find(g=>g.s<=tras&&g.e>=tras+c.d))||ops.sort((x,y)=>(y.e-y.s)-(x.e-x.s))[0];
-    if(!h){ out.push({k,n:c.n,ico:c.ico,noCabe:true,hora:99,d:0}); continue; }
+    if(!h){ if(DC.custom) out.push({k,n:c.n,ico:c.ico,noCabe:true,hora:99,d:0}); continue; }
     const hora=tras!=null&&h.s<=tras&&h.e>=tras+c.d?tras:h.s;
     const antes=ocup.filter(o=>o[1]<=hora+.01).at(-1), desp=ocup.find(o=>o[0]>=hora), cerca=(antes||desp||[])[2];
     const ref=cerca?(cerca.e?cerca.e.venue.split(',')[0]:cerca.a.n):null, zona=cerca?ZONAS[(cerca.e||cerca.a).zona]?.n:(DC.zonas[0]?ZONAS[DC.zonas[0]].n:'Monterrey');
@@ -1841,7 +1886,7 @@ function diaDCHTML(){
   const items=[...paradas.map(p=>({h:p.ini,p})),...comidas.map(c=>({h:c.hora,c}))].sort((a,b)=>a.h-b.h);
   const resumen=[CON[DC.con]?.n,DC.zonas.length?DC.zonas.map(z=>ZONAS[z].n).join(', '):'cualquier zona',DC.presu==='todo'?'cualquier presupuesto':DC_PRESU[DC.presu].toLowerCase()].filter(Boolean).join(' · ');
   return `<div class="itin" id="dia-completo">
-    <div class="itin-h"><span class="eyebrow">Tu día completo</span><h3>${dia}${DC.off>1?'':', '+longDate(DC.off)} · de ${hTxt(DC.desde)} a ${DC.hasta===24?'medianoche':hTxt(DC.hasta)}</h3>
+    <div class="itin-h"><span class="eyebrow">${DC.custom?'Tu plan completo, a tu medida':'Tu plan completo · armado automáticamente'}</span><h3>${dia}${DC.off>1?'':', '+longDate(DC.off)} · de ${hTxt(DC.desde)} a ${DC.hasta===24?'medianoche':hTxt(DC.hasta)}</h3>
       <p>${esc(resumen)}${paradas.length?` · ${total?`desde $${total} por persona`:sinPrecio?'revisa los precios':'todo gratis'}`:''}</p></div>
     ${!paradas.length?`<div class="it-none">No encontramos eventos con lo que elegiste en ese horario. Prueba con más zonas, otro tipo de actividad u otro presupuesto.</div>`:''}
     <div class="tl itin-tl">${items.map(({p,c})=>{
@@ -1853,7 +1898,7 @@ function diaDCHTML(){
           <img src="${img}" alt=""${p.e?fitAttr(p.e):''} loading="lazy" ${open}>
           <div class="it-b"><span class="ev-when">${p.e?(p.libre?'En temporada · ':'')+priceTxt(p.e.price):TIPOS[tipoOf(p.a)]+' · '+esc(p.a.cos)}</span><b>${esc(p.e?p.e.t:p.a.n)}</b><small>${esc(p.e?p.e.venue:p.a.d.split('. ')[0])}${' · '+(ZONAS[x.zona]?.n||'')}</small>
             <div class="row"><button class="btn small" ${open}>Ver</button><button class="btn small" data-dcch="${p.libre?p.k:p.e.id}" ${p.alt&&p.alt.length?'':'disabled'}>↻ Cambiar</button><button class="btn ghost small" data-dcx="${p.e?p.e.id:'atr:'+p.a.id}">Quitar</button></div></div></div>`; }).join('')}</div>
-    <div class="row itin-act">${paradas.some(p=>p.e)?`<button class="btn primary" id="dcSave">${I.cal}Guardar el día en mi calendario</button>`:''}<button class="btn" id="dcShare">${I.share}Compartir por WhatsApp</button><button class="btn ghost" id="dcEditar">Cambiar respuestas</button></div>
+    <div class="row itin-act">${paradas.some(p=>p.e)?`<button class="btn primary" id="dcSave">${I.cal}Guardar el día en mi calendario</button>`:''}<button class="btn" id="dcShare">${I.share}Compartir por WhatsApp</button><button class="btn ghost" id="dcEditar">${DC.custom?'Cambiar respuestas':'Personalizar mi plan'}</button>${DC.custom?'<button class="btn ghost" id="dcAuto">Volver al plan automático</button>':''}</div>
   </div>`;
 }
 function bindDiaDC(){
@@ -1864,6 +1909,7 @@ function bindDiaDC(){
     keep(); toast('Parada cambiada'); });
   document.querySelectorAll('[data-dcx]').forEach(b=>b.onclick=()=>{ DC.fuera.push(b.dataset.dcx); keep(); });
   const ed=document.getElementById('dcEditar'); if(ed) ed.onclick=abrirDC;
+  const au=document.getElementById('dcAuto'); if(au) au.onclick=()=>{ DC.custom=false; DC.pick={}; DC.fuera=[]; keep(); };
   const sv=document.getElementById('dcSave'); if(sv) sv.onclick=()=>requireLogin(()=>{ const ids=armarDC().filter(p=>p.e&&!p.libre).map(p=>p.e.id);
     ids.forEach(id=>{ if(!S.saved.includes(id)) S.saved.push(id); });
     S.plans.push({id:crypto.randomUUID(),name:`Día completo · ${relDay(DC.off)}${DC.con?' · '+CON[DC.con].n.toLowerCase():''}`,ids}); persist(); toast('Guardado en tu calendario y en Mis planes'); render(); });
@@ -1877,7 +1923,7 @@ const DIA_TABS={hoy:'Hoy',manana:'Mañana',finde:'Este fin',semana:'Esta semana'
 const diaTxt=()=>{ if(PA.cuando!=='fecha') return DIA_TXT[PA.cuando]; const o=PA.foff??2, d=dOf(o); return o===0?'hoy':o===1?'mañana':`el ${DOWL[d.getDay()]} ${d.getDate()}`; };
 function viewPlan(){
   if(!DIA_TABS[PA.cuando]) PA.cuando='hoy'; if(PA.cuando==='fecha'&&!(PA.foff>=0&&PA.foff<=MAXOFF)) PA.foff=2;
-  const st=slot('w',{...PA}), dia=diaTxt();
+  dcSync(); const st=slot('w',{...PA}), dia=diaTxt();
   const grp=(key,title,obj)=>`<div class="fgroup"><h4>${title}</h4><div class="chips">${Object.entries(obj).map(([k,v])=>`<button class="chip" data-pa="${key}" data-v="${k}" aria-pressed="${PA[key]===k}">${typeof v==='string'?v:v.n}</button>`).join('')}</div></div>`;
   const list=EVENTS.filter(e=>inWhen(e,PA.cuando)).sort((a,b)=>a.off-b.off||(a.h||'99').localeCompare(b.h||'99'));
   const free=list.filter(e=>e.price===0).length, outdoor=list.filter(e=>e.amb==='exterior').length;
@@ -1896,10 +1942,10 @@ function viewPlan(){
   return `<div class="wrap page">
     <div class="hoyhero">
       <div class="hoycard">${SILLA}<span class="eyebrow" style="color:inherit;opacity:.8">${PA.cuando==='hoy'?longDate(0):PA.cuando==='manana'?longDate(1):PA.cuando==='fecha'?'Elige cualquier día del próximo mes':'Elige el día'}</span>
-        <h1>¿Qué plan <span class="dia">${dia}</span>?</h1>
+        <h1>Tu plan <span class="dia">${dia==='este fin'||dia==='esta semana'?dia:'para '+dia}</span></h1>
         <div class="daytabs" role="group" aria-label="¿Para cuándo?">${Object.entries(DIA_TABS).map(([k,v])=>`<button data-pa="cuando" data-v="${k}" aria-pressed="${PA.cuando===k}">${v}</button>`).join('')}${PA.cuando==='fecha'?`<label class="dayinp"><span class="sr">Fecha</span><input type="date" id="paFecha" value="${isoOf(PA.foff)}" min="${isoOf(0)}" max="${isoOf(MAXOFF)}"></label>`:''}</div>
-        <p>${list.length?`Hay ${list.length} eventos ${dia}.`:`No hay eventos registrados para ${dia}.`} Te armamos un día completo con horarios.</p>
-        <button class="btn lila" id="dcAbrir">${I.dice}Ármame un plan completo</button></div>
+        <p>${list.length?`Hay ${list.length} eventos ${dia}.`:`No hay eventos registrados para ${dia}.`} Abajo te dejamos un plan completo con horarios. Personalízalo a tu gusto.</p>
+        <button class="btn lila" id="dcAbrir">${I.dice}Personalizar mi plan</button></div>
       <div class="hoystats">
         <button class="stat" data-qd="todo"><b>${list.length}</b><span>eventos ${PA.cuando==='fecha'?'ese día':dia}</span></button>
         <button class="stat" data-qd="gratis"><b>${free}</b><span>gratis</span></button>
@@ -1907,16 +1953,7 @@ function viewPlan(){
         <button class="stat" id="surprise"><b>${I.dado}</b><span>Sorpréndeme</span></button>
       </div>
     </div>
-    ${DC.listo?`<div style="margin-bottom:28px">${diaDCHTML()}</div>`:''}
-    <div class="phead" id="plan-armado"><div><span class="script">Tú dime el mood</span><h2 class="h2plan">Un plan para ${dia}</h2><p>Te sugerimos uno según tus preferencias. Si no te convence, cámbialo o ajusta tus preferencias.</p></div></div>
-    <details class="prefs" ${PA.prefsOpen?'open':''}><summary>Preferencias <span class="opt">${[MOODS[PA.mood]?.n,CON[PA.con]?.n,(PA.zonas||[]).length?(PA.zonas.length+' zonas'):'',(PA.cats||[]).length?(PA.cats.length+' tipos'):'',PA.mom&&PA.mom!=='todo'?HORA[PA.mom]:'',PA.presu&&PA.presu!=='todo'?PRESU[PA.presu]:''].filter(Boolean).join(' · ')}</span></summary>
-      <div class="prefs-b">
-      ${grp('mood','¿Qué mood traes?',MOODS)}${grp('con','¿Con quién vas?',CON)}
-      <div class="fgroup"><h4>¿En qué zona? <span class="opt">Opcional · puedes elegir varias</span></h4><div class="chips">${Object.entries(ZONAS).map(([k,z])=>`<button class="chip" data-pzona="${k}" aria-pressed="${(PA.zonas||[]).includes(k)}">${z.n}</button>`).join('')}</div>${(PA.zonas||[]).length?'<button class="linkish" id="pzonaClear" style="align-self:flex-start;margin-top:6px">Cualquier zona</button>':''}</div>
-      ${grp('mom','¿A qué hora?',HORA)}
-      <div class="fgroup"><h4>¿Qué tipo de actividad? <span class="opt">Opcional · puedes elegir varias</span></h4><div class="chips">${Object.entries(CATS).map(([k,c])=>`<button class="chip" data-pcat="${k}" aria-pressed="${(PA.cats||[]).includes(k)}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div>${(PA.cats||[]).length?'<button class="linkish" id="pcatClear" style="align-self:flex-start;margin-top:6px">Cualquier actividad</button>':''}</div>
-      ${grp('presu','¿Cuánto quieres gastar?',PRESU)}</div></details>
-    <section style="min-width:0;margin-bottom:28px">${result}</section>
+    <div style="margin-bottom:28px">${diaDCHTML()}</div>
     <div class="sechead"><h2>Todo lo que hay ${dia}</h2><a class="btn small" href="#eventos" data-qd="todo">Ver con filtros</a></div>
     ${groups||'<div class="empty"><b>No hay eventos registrados</b>Prueba con otro día o visita una atracción.</div>'}
     <section class="momento"><h2>Si prefieres un plan sin horario</h2><div class="atrgrid">${quiet.map(atrCard).join('')}</div></section>
@@ -2451,7 +2488,7 @@ function bindCommon(root){
 }
 
 /* ---------- Navegación ---------- */
-const VIEWS={inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],festivales:[viewFest,bindFest],agregar:[viewAgregar,bindAgregar]};
+const VIEWS={hoy:[viewHoy,bindHoy],inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],festivales:[viewFest,bindFest],agregar:[viewAgregar,bindAgregar]};
 let current='inicio';
 function go(v){ if(location.hash!=='#'+v) location.hash=v; else { current=v; render(); } window.scrollTo(0,0); }
 function render(){
@@ -2460,7 +2497,7 @@ function render(){
   document.querySelectorAll('.nav a').forEach(a=>a.setAttribute('aria-current',a.dataset.view===current?'page':'false'));
   renderEd();
 }
-function fromHash(){ let h=location.hash.replace('#',''); if(h==='hoy'){ PA.cuando='hoy'; h='plan'; } current=VIEWS[h]?h:'inicio'; render(); }
+function fromHash(){ const [h,anc]=location.hash.replace('#','').split('#'); current=VIEWS[h]?h:'inicio'; render(); if(anc) setTimeout(()=>{ const t=document.getElementById(anc); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); },60); }
 window.addEventListener('hashchange',()=>{ fromHash(); window.scrollTo(0,0); });
 document.getElementById('brandBtn').onclick=()=>go('inicio');
 /* ---------- Nube (Supabase): cuentas y datos de cada persona ---------- */
