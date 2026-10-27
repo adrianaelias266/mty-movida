@@ -79,7 +79,8 @@ a{color:var(--accent)}
 .nav a{white-space:nowrap;text-decoration:none;color:var(--brand-dim);font-weight:600;padding:8px 12px;border-radius:999px;font-size:14px}
 .nav a:hover{color:var(--on-brand);background:rgba(255,255,255,.14)}
 .nav a[aria-current="page"]{color:var(--lila-ink);background:var(--lila-bg)}
-.nav a.hoy{color:var(--lila-bg)}
+.nav a.hoy{color:var(--lila-bg);box-shadow:inset 0 0 0 2px var(--lila-bg)}
+@media (min-width:901px) and (max-width:1440px){.nav a{padding:7px 9px;font-size:13px}}
 .nav a.hoy[aria-current="page"]{background:var(--lila-bg);color:var(--lila-ink)}
 .user-btn{flex:none;border:0;background:var(--lila-bg);color:var(--lila-ink);border-radius:999px;padding:6px 14px 6px 6px;display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
 .user-btn:hover{filter:brightness(1.05)}
@@ -102,7 +103,8 @@ a{color:var(--accent)}
   .nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:2px;overflow:visible;background:var(--brand);padding:6px max(16px,env(safe-area-inset-right,0px)) 18px max(16px,env(safe-area-inset-left,0px));box-shadow:0 14px 30px rgba(0,0,0,.25);border-top:1px solid rgba(255,255,255,.18)}
   .top.menu-open .nav{display:flex}
   .nav a{font-size:17px;padding:13px 14px;border-radius:12px}
-  .nav a,.nav a.hoy{color:var(--on-brand)}
+  .nav a{color:var(--on-brand)}
+  .nav a.hoy{color:var(--lila-bg)}
 }
 
 
@@ -700,8 +702,8 @@ form.card .full{grid-column:1/-1}
     </button>
     <nav class="nav" id="mainNav" aria-label="Secciones">
       <a href="#inicio" data-view="inicio">Inicio</a>
-      <a href="#hoy" data-view="hoy" class="hoy">¿Qué plan hoy?</a>
-      <a href="#plan" data-view="plan">Ármame un plan completo</a>
+      <a href="#hoy" data-view="hoy">¿Qué plan hoy?</a>
+      <a href="#plan" data-view="plan" class="hoy">Ármame un plan completo</a>
       <a href="#eventos" data-view="eventos">Eventos</a>
       <a href="#festivales" data-view="festivales">Festivales</a>
       <a href="#calendario" data-view="calendario">Mi calendario</a>
@@ -1595,7 +1597,6 @@ function topWeek(){
 }
 function viewInicio(){
   const top=topWeek();
-  HOME_CTX.forEach((c,i)=>slot('h'+i,homeCtx(c)));
   // Festivales que están ocurriendo ahora (si no hay ya un evento suyo en el carrusel)
   const fAhora=FEST.filter(f=>festInfo(f).k==='ahora'&&!top.some(e=>{ try{ return f.claves&&new RegExp(f.claves,'i').test(e.t); }catch(x){ return false; } }));
   const items=top.slice(0,Math.max(6,10-fAhora.length)).map(e=>({e})); fAhora.slice(0,4).forEach((f,k)=>items.splice(Math.min(items.length,2+k*2),0,{f}));
@@ -1620,12 +1621,6 @@ function viewInicioHTML(slides,nSlides){
       <div class="hero-ctl"><div class="dots">${Array.from({length:nSlides},(_,i)=>`<button data-dot="${i}" aria-label="Ir al evento ${i+1}" aria-current="${i===0}"></button>`).join('')}</div>
         <button class="hbtn" id="hPrev" aria-label="Anterior">${I.left}</button><button class="hbtn" id="hNext" aria-label="Siguiente">${I.right}</button></div>
     </section>
-    <section class="homehero"><div class="lead"><span class="script">Sal y únete a la movida</span><h1>Tus 3 planes para hoy</h1>
-      <p>${S.user&&S.onboarded?'Elegidos según tus gustos.':'De todo lo que pasa hoy en la ciudad elegimos tres.'} Si alguno no te convence, cámbialo por uno parecido.</p>
-      <div class="row"><a class="btn primary" href="#plan">${I.dice}Ármame un plan completo</a><a class="btn" href="#hoy#personaliza">Personaliza tus 3 planes</a></div></div>
-      <div class="blk" id="blk" aria-hidden="true">${PZ_ORDER.map(k=>pieceHTML(k)).join("")}</div></section>
-    <div class="subhead"><h2>Elegidos para hoy</h2><span>${longDate(0).replace(/^./,c=>c.toUpperCase())}</span></div>
-    <div class="plans3">${HOME_CTX.map((_,i)=>planCard('h'+i)).join('')}</div>
     ${hoyBlock()}
     <div class="sechead" style="margin-bottom:0"><h2>Descubre más</h2></div>
     ${rowsHTML()}
@@ -1649,7 +1644,6 @@ function bindInicio(){
   document.querySelectorAll('[data-quick]').forEach(b=>b.onclick=()=>quick(b.dataset.quick));
   document.querySelectorAll('[data-cattile]').forEach(b=>b.onclick=()=>{ clearFiltersSilent(); F.cats.add(b.dataset.cattile); go('eventos'); });
   bindPlans(document.getElementById('app'));
-  bindPieces();
   bindHoyBlock();
   bindRows();
 }
@@ -1733,7 +1727,11 @@ function viewHoy(){
   const chip=(attr,v,on,txt)=>`<button class="chip" ${attr}="${v}" aria-pressed="${on}">${txt}</button>`;
   const hay=HP.con||HP.zonas.length||HP.cats.length||HP.presu!=='todo'||HP.mom!=='todo';
   return `<div class="wrap page">
-    <div class="phead"><div><span class="script">Elegidos para hoy</span><h1>¿Qué plan hoy?</h1><p>${longDate(0).replace(/^./,c=>c.toUpperCase())}. Tres ideas de todo lo que pasa hoy en la ciudad. Si alguna no te convence, cámbiala o personalízalas abajo.</p></div></div>
+    <section class="homehero"><div class="lead"><span class="script">Sal y únete a la movida</span><h1>Tus 3 planes para hoy</h1>
+      <p>${S.user&&S.onboarded?'Elegidos según tus gustos.':'De todo lo que pasa hoy en la ciudad elegimos tres.'} Si alguno no te convence, cámbialo por uno parecido.</p>
+      <div class="row"><a class="btn primary" href="#plan">${I.dice}Ármame un plan completo</a><a class="btn" href="#personaliza" data-irperso>Personaliza tus 3 planes</a></div></div>
+      <div class="blk" id="blk" aria-hidden="true">${PZ_ORDER.map(k=>pieceHTML(k)).join("")}</div></section>
+    <div class="subhead"><h2>Elegidos para hoy</h2><span>${longDate(0).replace(/^./,c=>c.toUpperCase())}</span></div>
     ${HOME_CTX.some((_,i)=>PS['h'+i]&&PS['h'+i].cur)?`<div class="plans3">${HOME_CTX.map((_,i)=>planCard('h'+i)).join('')}</div>`:`<div class="empty"><b>No encontramos planes con esas preferencias</b>Prueba quitando alguna, o ${HP.cats.includes('naturaleza')?'visita un parque o una montaña en <a href="#atracciones">Atracciones</a>':'arma un <a href="#plan">plan completo</a>'}.</div>`}
     <section class="panel perso" id="personaliza">
       <div class="sechead" style="margin:0"><h2>Personalízalo</h2>${hay?'<button class="btn ghost small" id="hpReset">Quitar preferencias</button>':''}</div>
@@ -1756,6 +1754,8 @@ function bindHoy(){
   const multi=(attr,key)=>q(`[${attr}]`).forEach(b=>b.onclick=()=>{ const v=b.getAttribute(attr); HP[key]=!v?[]:HP[key].includes(v)?HP[key].filter(x=>x!==v):[...HP[key],v]; keep(); });
   multi('data-hpzona','zonas'); multi('data-hpcat','cats');
   const r=document.getElementById('hpReset'); if(r) r.onclick=()=>{ HP={con:'',zonas:[],cats:[],presu:'todo',mom:'todo'}; keep(); };
+  bindPieces();
+  const ip=document.querySelector('[data-irperso]'); if(ip) ip.onclick=ev=>{ ev.preventDefault(); document.getElementById('personaliza').scrollIntoView({behavior:'smooth',block:'start'}); };
   bindPlans(document.getElementById('app'));
 }
 
