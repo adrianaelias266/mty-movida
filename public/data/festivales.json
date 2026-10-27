@@ -1,1 +1,625 @@
-{"festivales":[]}
+{
+ "actualizado": "2026-10-27",
+ "festivales": [
+  {
+   "id": "palnorte",
+   "nombre": "Tecate Pa'l Norte",
+   "tipo": "musica",
+   "temporada": "marzo/abril",
+   "meses": [
+    3,
+    4
+   ],
+   "lugar": "Parque Fundidora, Monterrey",
+   "sitio": "https://www.palnorte.com.mx",
+   "redes": null,
+   "desc": "Festival de música de tres días, el más grande del norte del país. Se hace desde 2012.",
+   "claves": "pa.?l norte",
+   "ultima": {
+    "inicio": "2026-03-27",
+    "fin": "2026-03-29"
+   },
+   "buscar": "Pa'l Norte"
+  },
+  {
+   "id": "machaca",
+   "nombre": "Machaca Fest",
+   "tipo": "musica",
+   "temporada": "variable (abril, junio o noviembre)",
+   "meses": [
+    4,
+    6,
+    11
+   ],
+   "lugar": "Expo Guadalupe, Guadalupe",
+   "sitio": null,
+   "redes": null,
+   "desc": "Festival de un día con artistas de pop y rock de los noventa y dos mil.",
+   "claves": "machaca",
+   "ultima": {
+    "inicio": "2026-04-18",
+    "fin": "2026-04-18"
+   },
+   "buscar": "Machaca"
+  },
+  {
+   "id": "liveout",
+   "nombre": "Heineken Silver Live Out",
+   "tipo": "musica",
+   "temporada": "octubre",
+   "meses": [
+    10
+   ],
+   "lugar": "Parque Fundidora, Monterrey",
+   "sitio": null,
+   "redes": "https://www.instagram.com/heinekensilverliveout/",
+   "desc": "Festival de un día con pop, indie, música urbana y electrónica. Nació en 2015 como Tecate Live Out.",
+   "claves": "live out",
+   "ultima": {
+    "inicio": "2024-10-12",
+    "fin": "2024-10-12"
+   },
+   "buscar": "Live Out"
+  },
+  {
+   "id": "seveneleven",
+   "nombre": "7-Eleven Fest",
+   "tipo": "musica",
+   "temporada": "julio",
+   "meses": [
+    7
+   ],
+   "lugar": "7-Eleven Tecnológico, Garza Sada y Av. del Estado, Monterrey",
+   "sitio": null,
+   "redes": null,
+   "desc": "Concierto gratuito de rock mexicano frente al famoso 7-Eleven del Tec.",
+   "claves": "7.?eleven fest|seven ?eleven fest",
+   "ultima": {
+    "inicio": "2024-07-07",
+    "fin": "2024-07-07"
+   }
+  },
+  {
+   "id": "panzaland",
+   "nombre": "Panzaland",
+   "tipo": "gastro",
+   "temporada": "junio u octubre",
+   "meses": [
+    6,
+    10
+   ],
+   "lugar": "Parque Fundidora, Monterrey",
+   "sitio": "https://www.panzaland.mx/",
+   "redes": "https://www.instagram.com/panzalandfest",
+   "desc": "Festival de comida con música, de los creadores de «La Panza es Primero». Empezó en 2025.",
+   "claves": "panzaland",
+   "ultima": {
+    "inicio": "2026-10-17",
+    "fin": "2026-10-17"
+   },
+   "buscar": "Panzaland"
+  },
+  {
+   "id": "fisl",
+   "nombre": "Festival Internacional de Santa Lucía",
+   "tipo": "cultura",
+   "temporada": "octubre/noviembre",
+   "meses": [
+    10,
+    11
+   ],
+   "lugar": "Macroplaza, Paseo Santa Lucía, Parque Fundidora y otras sedes",
+   "sitio": "https://festivalsantalucia.gob.mx/",
+   "redes": null,
+   "desc": "El festival cultural del Gobierno de Nuevo León, con conciertos gratuitos, teatro y artes.",
+   "claves": "santa luc[ií]a|\\bFISL\\b",
+   "proxima": {
+    "inicio": "2026-10-22",
+    "fin": "2026-11-02"
+   },
+   "ultima": {
+    "inicio": "2025-10-02",
+    "fin": "2025-11-02"
+   }
+  },
+  {
+   "id": "ficmty",
+   "nombre": "Festival Internacional de Cine de Monterrey",
+   "tipo": "cine",
+   "temporada": "agosto a octubre",
+   "meses": [
+    8,
+    9,
+    10
+   ],
+   "lugar": "Varias sedes, Monterrey",
+   "sitio": "https://monterreyfilmfestival.com/",
+   "redes": null,
+   "desc": "Festival de cine con competencia internacional, desde el año 2000. Anunció su edición 21 sin fecha todavía.",
+   "claves": "festival internacional de cine de monterrey|ficmonterrey|\\bficm\\b",
+   "ultima": {
+    "inicio": "2024-09-25",
+    "fin": "2024-10-02"
+   }
+  },
+  {
+   "id": "xantoluz",
+   "nombre": "Xantoluz",
+   "tipo": "familia",
+   "temporada": "octubre/noviembre",
+   "meses": [
+    10,
+    11
+   ],
+   "lugar": "Parque España, Monterrey",
+   "sitio": null,
+   "redes": "https://www.facebook.com/xantoluz",
+   "desc": "Parque temático de Día de Muertos con luces, alebrijes y espectáculos.",
+   "claves": "xantoluz",
+   "proxima": {
+    "inicio": "2026-10-07",
+    "fin": "2026-11-08"
+   },
+   "ultima": {
+    "inicio": "2025-10-02",
+    "fin": "2025-11-02"
+   },
+   "buscar": "Xantoluz"
+  },
+  {
+   "id": "calabazas",
+   "nombre": "Parque de las Calabazas",
+   "tipo": "familia",
+   "temporada": "octubre/noviembre",
+   "meses": [
+    10,
+    11
+   ],
+   "lugar": "Parque Fundidora y Foro Valle Oriente",
+   "sitio": "https://www.parquedelascalabazas.com",
+   "redes": null,
+   "desc": "Parque de otoño y Halloween para ir en familia, de viernes a domingo, en dos sedes.",
+   "claves": "parque de las calabazas",
+   "proxima": {
+    "inicio": "2026-10-09",
+    "fin": "2026-11-08"
+   }
+  },
+  {
+   "id": "batfest",
+   "nombre": "Bat Fest Monterrey",
+   "tipo": "familia",
+   "temporada": "octubre",
+   "meses": [
+    10
+   ],
+   "lugar": "LABNL, Monterrey",
+   "sitio": null,
+   "redes": null,
+   "desc": "Festival para conocer y cuidar a los murciélagos, durante la Semana del Murciélago.",
+   "claves": "bat ?fest",
+   "ultima": {
+    "inicio": "2022-10-29",
+    "fin": "2022-10-29"
+   }
+  },
+  {
+   "id": "horrorfest",
+   "nombre": "Horror Fest Monterrey",
+   "tipo": "cultura-pop",
+   "temporada": "junio",
+   "meses": [
+    6
+   ],
+   "lugar": "Cintermex, Monterrey",
+   "sitio": null,
+   "redes": "https://www.facebook.com/HorrorFestMty",
+   "desc": "Convención y mercado de cine y cultura de terror, con entrada gratuita. Ya cumplió 20 años.",
+   "claves": "horror ?fest|nightmare market",
+   "ultima": {
+    "inicio": "2026-06-27",
+    "fin": "2026-06-28"
+   }
+  },
+  {
+   "id": "calaveras",
+   "nombre": "Festival de Calaveras",
+   "tipo": "cultura",
+   "temporada": "octubre",
+   "meses": [
+    10
+   ],
+   "lugar": "Centro de Monterrey, alrededor de la Macroplaza",
+   "sitio": null,
+   "redes": null,
+   "desc": "Desfile gratuito de Día de Muertos con comparsas y carros alegóricos, desde 2018.",
+   "claves": "desfile de calaveras|festival de calaveras",
+   "ultima": {
+    "inicio": "2026-10-25",
+    "fin": "2026-10-25"
+   }
+  },
+  {
+   "id": "mezcalfest",
+   "nombre": "Mezcal Fest Monterrey",
+   "tipo": "bebidas",
+   "temporada": "variable (junio a octubre)",
+   "meses": [
+    6,
+    9,
+    10
+   ],
+   "lugar": "Casa Vecchia, Centro, Monterrey",
+   "sitio": "https://mezcalfestmty.com/",
+   "redes": "https://www.instagram.com/mezcalfestmty",
+   "desc": "Festival de mezcal y otros destilados de agave, con pequeños productores.",
+   "claves": "mezcal ?fest",
+   "ultima": {
+    "inicio": "2026-06-19",
+    "fin": "2026-06-20"
+   },
+   "buscar": "Mezcal Fest"
+  },
+  {
+   "id": "cervezamty",
+   "nombre": "Festival de la Cerveza MTY",
+   "tipo": "bebidas",
+   "temporada": "junio",
+   "meses": [
+    6
+   ],
+   "lugar": "Parque Fundidora, Monterrey",
+   "sitio": "https://festivaldelacervezamonterrey.com",
+   "redes": "https://www.instagram.com/festivaldelacervezamty/",
+   "desc": "Festival con cientos de cervezas y música en vivo. En 2025 fue su edición 12.",
+   "claves": "festival de la cerveza",
+   "ultima": {
+    "inicio": "2025-06-13",
+    "fin": "2025-06-14"
+   },
+   "buscar": "Festival de la Cerveza"
+  },
+  {
+   "id": "grillmaster",
+   "nombre": "Grill Master H-E-B",
+   "tipo": "gastro",
+   "temporada": "agosto",
+   "meses": [
+    8
+   ],
+   "lugar": "Parque SMP, Santiago",
+   "sitio": "https://grillmasterheb.mx",
+   "redes": "https://www.instagram.com/grillmaster_mx",
+   "desc": "Campeonato y festival de parrilla y carne asada.",
+   "claves": "grill ?master",
+   "ultima": {
+    "inicio": "2026-08-14",
+    "fin": "2026-08-16"
+   }
+  },
+  {
+   "id": "tacofestsn",
+   "nombre": "Taco Fest San Nicolás",
+   "tipo": "gastro",
+   "temporada": "marzo",
+   "meses": [
+    3
+   ],
+   "lugar": "Plaza Principal, San Nicolás",
+   "sitio": null,
+   "redes": null,
+   "desc": "Festival de taquerías locales del municipio de San Nicolás.",
+   "claves": "taco ?fest",
+   "ultima": {
+    "inicio": "2025-03-28",
+    "fin": "2025-03-28"
+   }
+  },
+  {
+   "id": "tacosp",
+   "nombre": "Festival del Taco San Pedro",
+   "tipo": "gastro",
+   "temporada": "noviembre",
+   "meses": [
+    11
+   ],
+   "lugar": "Centro Cultural Plaza Fátima, San Pedro",
+   "sitio": null,
+   "redes": null,
+   "desc": "Festival municipal con concurso de taquerías. Volvió en 2025 después de seis años.",
+   "claves": "festival del taco"
+  },
+  {
+   "id": "paladares",
+   "nombre": "Paladares",
+   "tipo": "gastro",
+   "temporada": "mayo",
+   "meses": [
+    5
+   ],
+   "lugar": "Parque Fundidora, Monterrey",
+   "sitio": null,
+   "redes": "https://www.instagram.com/paladaresmx__/",
+   "desc": "Festival de comida con música en vivo. Antes se llamaba Festival del Gordo.",
+   "claves": "paladares|festival del gordo",
+   "ultima": {
+    "inicio": "2026-05-02",
+    "fin": "2026-05-03"
+   }
+  },
+  {
+   "id": "foodtruck",
+   "nombre": "Tecate Food Truck Fest",
+   "tipo": "gastro",
+   "temporada": "agosto",
+   "meses": [
+    8
+   ],
+   "lugar": "Parque Fundidora, Monterrey",
+   "sitio": null,
+   "redes": null,
+   "desc": "Festival de comida en camiones, con música, comedia y concurso de comelones.",
+   "claves": "food ?truck fest",
+   "ultima": {
+    "inicio": "2025-08-02",
+    "fin": "2025-08-02"
+   }
+  },
+  {
+   "id": "filmty",
+   "nombre": "Feria Internacional del Libro Monterrey",
+   "tipo": "cultura",
+   "temporada": "octubre",
+   "meses": [
+    10
+   ],
+   "lugar": "Cintermex, Monterrey",
+   "sitio": null,
+   "redes": "https://www.instagram.com/ferialibromty",
+   "desc": "Feria del libro del Tecnológico de Monterrey, con entrada gratuita.",
+   "claves": "feria internacional del libro|fil monterrey",
+   "ultima": {
+    "inicio": "2026-10-10",
+    "fin": "2026-10-18"
+   }
+  },
+  {
+   "id": "uanleer",
+   "nombre": "Feria Universitaria del Libro UANLeer",
+   "tipo": "cultura",
+   "temporada": "marzo",
+   "meses": [
+    3
+   ],
+   "lugar": "Colegio Civil, UANL, Monterrey",
+   "sitio": null,
+   "redes": null,
+   "desc": "Feria del libro de la Universidad Autónoma de Nuevo León.",
+   "claves": "uanleer",
+   "ultima": {
+    "inicio": "2026-03-11",
+    "fin": "2026-03-15"
+   }
+  },
+  {
+   "id": "animex",
+   "nombre": "La Conve Animex",
+   "tipo": "cultura-pop",
+   "temporada": "julio",
+   "meses": [
+    7
+   ],
+   "lugar": "Cintermex, Monterrey",
+   "sitio": null,
+   "redes": "https://www.instagram.com/laconve.animex",
+   "desc": "Convención de anime, cómics y cosplay con invitados de series y películas.",
+   "claves": "animex|la conve",
+   "ultima": {
+    "inicio": "2026-07-18",
+    "fin": "2026-07-19"
+   }
+  },
+  {
+   "id": "nortex",
+   "nombre": "Nortex Festival",
+   "tipo": "musica",
+   "temporada": "variable (abril, agosto u octubre)",
+   "meses": [
+    4,
+    8,
+    10
+   ],
+   "lugar": "Expo Guadalupe, Guadalupe",
+   "sitio": null,
+   "redes": null,
+   "desc": "Festival de un día de música norteña y regional mexicana.",
+   "claves": "nortex",
+   "ultima": {
+    "inicio": "2026-04-11",
+    "fin": "2026-04-11"
+   },
+   "buscar": "Nortex"
+  },
+  {
+   "id": "dalemixx",
+   "nombre": "Dale Mixx",
+   "tipo": "musica",
+   "temporada": "agosto",
+   "meses": [
+    8
+   ],
+   "lugar": "Parque Fundidora, Monterrey",
+   "sitio": "https://dalemixx.com.mx",
+   "redes": "https://www.instagram.com/dale_mixx",
+   "desc": "Festival de reguetón y música urbana, cada año desde 2023.",
+   "claves": "dale ?mixx",
+   "ultima": {
+    "inicio": "2026-08-15",
+    "fin": "2026-08-15"
+   },
+   "buscar": "Dale Mixx"
+  },
+  {
+   "id": "futur",
+   "nombre": "Futurfestival México",
+   "tipo": "electronica",
+   "temporada": "noviembre",
+   "meses": [
+    11
+   ],
+   "lugar": "Parque Fundidora, Monterrey",
+   "sitio": null,
+   "redes": "https://www.instagram.com/futurfestivalmexico",
+   "desc": "Festival de música electrónica. Su primera edición es en noviembre de 2026.",
+   "claves": "futur ?festival",
+   "proxima": {
+    "inicio": "2026-11-13",
+    "fin": "2026-11-14"
+   },
+   "buscar": "Futurfestival"
+  },
+  {
+   "id": "medieval",
+   "nombre": "Festival Medieval Monterrey",
+   "tipo": "familia",
+   "temporada": "mayo y noviembre",
+   "meses": [
+    5,
+    11
+   ],
+   "lugar": "Plaza B.O.F., Parque Fundidora, Monterrey",
+   "sitio": null,
+   "redes": null,
+   "desc": "Festival gratuito con combates, mercado artesanal y música de ambiente medieval.",
+   "claves": "festival medieval",
+   "ultima": {
+    "inicio": "2026-05-16",
+    "fin": "2026-05-17"
+   }
+  },
+  {
+   "id": "luztopia",
+   "nombre": "Luztopía",
+   "tipo": "familia",
+   "temporada": "noviembre a enero",
+   "meses": [
+    11,
+    12,
+    1
+   ],
+   "lugar": "Paseo Santa Lucía y Parque Fundidora, Monterrey",
+   "sitio": "https://luztopia.mx",
+   "redes": null,
+   "desc": "Festival navideño de luces con recorrido de noche. La fecha de 2026 es preliminar.",
+   "claves": "luztop[ií]a",
+   "proxima": {
+    "inicio": "2026-11-18",
+    "fin": "2027-01-06"
+   },
+   "ultima": {
+    "inicio": "2025-11-19",
+    "fin": "2026-01-06"
+   },
+   "buscar": "Luztopia"
+  },
+  {
+   "id": "teatronl",
+   "nombre": "Festival de Teatro Nuevo León",
+   "tipo": "cultura",
+   "temporada": "agosto",
+   "meses": [
+    8
+   ],
+   "lugar": "Varios teatros del área metropolitana",
+   "sitio": null,
+   "redes": null,
+   "desc": "Festival estatal de teatro con funciones en varios municipios.",
+   "claves": "festival de teatro nuevo le[oó]n",
+   "ultima": {
+    "inicio": "2026-08-20",
+    "fin": "2026-08-29"
+   }
+  },
+  {
+   "id": "cinelatino",
+   "nombre": "Festival de Cine Latinoamericano en Nuevo León",
+   "tipo": "cine",
+   "temporada": "febrero/marzo",
+   "meses": [
+    2,
+    3
+   ],
+   "lugar": "Cineteca Nuevo León, Colegio Civil y otras sedes",
+   "sitio": null,
+   "redes": null,
+   "desc": "Muestra de cine latinoamericano con apoyo de CONARTE y la UANL.",
+   "claves": "cine latinoamericano",
+   "ultima": {
+    "inicio": "2026-02-27",
+    "fin": "2026-03-01"
+   }
+  },
+  {
+   "id": "artsweek",
+   "nombre": "Monterrey Arts Week",
+   "tipo": "cultura",
+   "temporada": "enero/febrero",
+   "meses": [
+    1,
+    2
+   ],
+   "lugar": "Museos, galerías y universidades de Monterrey",
+   "sitio": "https://lasartesmonterrey.com",
+   "redes": null,
+   "desc": "Cuatro días de artes visuales con inauguraciones y visitas a estudios de artistas.",
+   "claves": "arts week|semana de las artes",
+   "ultima": {
+    "inicio": "2026-01-29",
+    "fin": "2026-02-01"
+   }
+  },
+  {
+   "id": "itinerarte",
+   "nombre": "Festival ItinerArte",
+   "tipo": "cultura",
+   "temporada": "Semana Santa",
+   "meses": [
+    3,
+    4
+   ],
+   "lugar": "Explanada del Museo de Historia Mexicana, Monterrey",
+   "sitio": null,
+   "redes": null,
+   "desc": "Festival gratuito de circo, teatro, títeres y música para las vacaciones de Semana Santa.",
+   "claves": "itinerarte",
+   "ultima": {
+    "inicio": "2026-03-27",
+    "fin": "2026-03-29"
+   }
+  },
+  {
+   "id": "expoguadalupe",
+   "nombre": "Expo Feria Guadalupe",
+   "tipo": "familia",
+   "temporada": "abril a junio (en 2026, octubre)",
+   "meses": [
+    4,
+    5,
+    6
+   ],
+   "lugar": "Expo Guadalupe, Guadalupe",
+   "sitio": null,
+   "redes": null,
+   "desc": "Feria ganadera y popular con juegos mecánicos y espectáculos. En 2026 se pasó a octubre por el Mundial.",
+   "claves": "expo ?feria guadalupe|expo guadalupe 2026",
+   "proxima": {
+    "inicio": "2026-10-01",
+    "fin": "2026-11-01"
+   },
+   "ultima": {
+    "inicio": "2025-04-24",
+    "fin": "2025-06-15"
+   }
+  }
+ ]
+}

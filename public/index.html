@@ -1987,11 +1987,13 @@ function fRango(a,b){ const d=new Date(a+'T00:00'), e=new Date((b||a)+'T00:00');
   return d.getMonth()===e.getMonth()&&d.getFullYear()===e.getFullYear()?`${d.getDate()} al ${e.getDate()} de ${MESL[e.getMonth()]} de ${e.getFullYear()}`:`${d.getDate()} de ${MESL[d.getMonth()]} al ${e.getDate()} de ${MESL[e.getMonth()]} de ${e.getFullYear()}`; }
 function festInfo(f){
   const hoyI=isoOf(0), evs=festEvs(f), pp=f.proxima||(FAUTO[f.id]&&FAUTO[f.id].detectado), px=pp&&(pp.fin||pp.inicio)>=hoyI?pp:null;
-  if(px&&px.inicio<=hoyI) return {k:'ahora',t:'¡Es ahora! Hasta el '+fRango(px.fin||px.inicio).replace(/ de \d{4}$/,''),orden:0,mes:null,evs};
-  if(evs.length&&evs[0].off<=0) return {k:'ahora',t:'¡Es hoy!',orden:0,mes:null,evs};
+  if(px&&px.inicio<=hoyI) return {k:'ahora',t:'¡Es ahora! Hasta el '+fRango(px.fin||px.inicio).replace(/ de \d{4}$/,''),orden:0,mes:new Date(hoyI+'T00:00').getMonth(),evs};
+  if(evs.length&&evs[0].off<=0) return {k:'ahora',t:'¡Es hoy!',orden:0,mes:new Date(hoyI+'T00:00').getMonth(),evs};
   if(px) return {k:'fechas',t:'Próxima edición: '+fRango(px.inicio,px.fin),orden:1+(new Date(px.inicio+'T00:00')-new Date(hoyI+'T00:00'))/864e5,mes:new Date(px.inicio+'T00:00').getMonth(),evs};
   if(evs.length) return {k:'fechas',t:'Ya hay fechas: '+relDay(evs[0].off),orden:1+evs[0].off,mes:dOf(evs[0].off).getMonth(),evs};
-  const m=new Date().getMonth(), ms=(f.meses||[]).map(x=>x-1), sig=ms.length?ms.map(x=>(x-m+12)%12).sort((a,b)=>a-b)[0]:99;
+  const hoyD=new Date(hoyI+'T00:00'), m=hoyD.getMonth(), ul=f.ultima&&f.ultima.fin?new Date(f.ultima.fin+'T00:00'):null;
+  const ya=x=>ul&&ul.getFullYear()===hoyD.getFullYear()&&ul.getMonth()===x&&ul<hoyD;   // ese mes ya pasó este año
+  const ms=(f.meses||[]).map(x=>x-1), sig=ms.length?ms.map(x=>{ const d=(x-m+12)%12; return d===0&&ya(x)?12:d; }).sort((a,b)=>a-b)[0]:99;
   return {k:'temporada',t:f.temporada?'Suele ser en '+f.temporada:'Fecha por anunciar',orden:1000+sig,mes:ms.length?(m+sig)%12:null,evs};
 }
 function festCard(f){
