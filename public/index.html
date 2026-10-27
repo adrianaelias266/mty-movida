@@ -1174,7 +1174,7 @@ function slot(id,ctx){
 function planCard(id,big){
   const st=PS[id]; if(!st||!st.cur) return '';
   const e=ev(st.cur), ctx=st.ctx, c=compOf(e), s=isSaved(e.id);
-  const others=st.list.filter(x=>x!==st.cur), pages=Math.max(1,Math.ceil(others.length/3)), alts=others.slice((st.page%pages)*3,(st.page%pages)*3+3).map(ev);
+  const others=st.list.filter(x=>x!==st.cur), shown=Math.min(others.length,(st.page+1)*3), alts=others.slice(0,shown).map(ev);
   return `<article class="pc ${big?'big':''}">
     <div class="pc-main"><div class="pc-img" data-open="${e.id}"><img src="${evImg(e)}" alt=""${fitAttr(e)}><span class="mood" style="--mc:${MOODS[ctx.mood].c}">${MOODS[ctx.mood].s}</span>${e.rec?'<span class="recb">Recomendado por Mty Movida</span>':''}</div>
     <div class="pc-body">${catDot(e.cat,big)}<span class="pc-when">${relDay(e.off)} · ${hh(e)} · ${priceTxt(e.price)}</span><h3>${esc(e.t)}</h3><p class="meta">${esc(e.venue)}${e.mod==='linea'?'':' · '+ZONAS[e.zona].n}</p>
@@ -1184,12 +1184,12 @@ function planCard(id,big){
       ${big?`<div class="row"><button class="btn small" data-pshare="${id}">${I.share}Compartir por WhatsApp</button><button class="btn small" data-psave="${id}">Guardar en Mis planes</button></div>`:''}
     </div></div>
     ${st.open?`<div class="alts"><span class="eyebrow">Opciones parecidas</span>${alts.length?alts.map(a=>`<div class="alt"><img src="${evImg(a)}" alt=""><div style="min-width:0"><b>${esc(a.t)}</b><span>${relDay(a.off)} · ${hh(a)} · ${priceTxt(a.price)} · ${ZONAS[a.zona].n}</span></div><button class="btn small" data-ppick="${id}:${a.id}">Elegir</button></div>`).join(''):'<span style="font-size:13px;color:var(--muted)">No hay más opciones con este mood. Prueba con otro día o presupuesto.</span>'}
-      ${pages>1?`<button class="btn ghost small" data-pmore="${id}" style="align-self:flex-start">Ver otras opciones</button>`:''}</div>`:''}
+      ${shown<others.length?`<button class="btn ghost small" data-pmore="${id}" style="align-self:flex-start">Ver más opciones</button>`:''}</div>`:''}
   </article>`;
 }
 function bindPlans(root){
   root.querySelectorAll('[data-pchange]').forEach(b=>b.onclick=()=>{ const st=PS[b.dataset.pchange]; st.open=!st.open; render(); });
-  root.querySelectorAll('[data-pmore]').forEach(b=>b.onclick=()=>{ PS[b.dataset.pmore].page++; render(); });
+  root.querySelectorAll('[data-pmore]').forEach(b=>b.onclick=()=>{ PS[b.dataset.pmore].page++; const y=window.scrollY; render(); window.scrollTo(0,y); });
   root.querySelectorAll('[data-ppick]').forEach(b=>b.onclick=()=>{ const [id,eid]=b.dataset.ppick.split(':'); const st=PS[id]; st.cur=eid; st.open=false; st.page=0; render(); toast('Plan cambiado'); });
   root.querySelectorAll('[data-pshare]').forEach(b=>b.onclick=()=>{ const st=PS[b.dataset.pshare], e=ev(st.cur), c=compOf(e);
     copy(`Plan ${MOODS[st.ctx.mood].s.toLowerCase()}: ${e.t}\n${relDay(e.off)} ${hh(e)} · ${e.venue}${c?`\n${c.t} ${c.a.n}`:''}\n¿Vamos? Visto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); });
