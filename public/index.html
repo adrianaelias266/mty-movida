@@ -1156,7 +1156,7 @@ const MOOD_CAT={danza:['cultural','romantico','diferente'],charlas:['cultural','
 const CON_FIT={solo:{fandoms:2,talleres:2,letras:2,expo:2,deporte:2,fiestas:0},pareja:{cine:2,musica:2,expo:2,letras:2,teatro:2,gastro:2,fandoms:0},amigos:{fiestas:2,concierto:2,gastro:2,fandoms:2,teatro:2},amiga:{musica:2,gastro:2,expo:2,cine:2,talleres:2,letras:2}};
 function moodsOf(e){ const m=new Set(MOOD_CAT[e.cat]); if(e.amb==='exterior'&&e.mod==='presencial'&&['gastro','cine'].includes(e.cat)) m.add('activo'); return m; }
 function conFit(e,c){ if(!c) return 1; if(c==='familia') return e.tags.includes('mayores')?-1:(e.tags.includes('ninos')?2:.4); if(e.mod==='linea'&&c!=='solo') return .3; const v=CON_FIT[c][e.cat]; return v===undefined?1:v; }
-function inWhen(e,w){ const o=e.off, d=dOf(o).getDay(); if(o<0||o>MAXOFF) return false; if(w==='fecha') return o===(PA.foff??2);
+function inWhen(e,w){ if(e.fechas&&e.fechas.length>1&&!e._f) return e.fechas.some(f=>inWhen({...e,off:f.off,h:f.h,_f:1},w)); const o=e.off, d=dOf(o).getDay(); if(o<0||o>MAXOFF) return false; if(w==='fecha') return o===(PA.foff??2);
   if(w==='hoy') return o===0; if(w==='manana') return o===1; if(w==='finde') return o<=6&&(d===0||d===6||(d===5&&momentoOf(e.h)==='noche')); return o<=6; }
 function candidates(ctx){
   return EVENTS.filter(e=>{ if(!inWhen(e,ctx.cuando)) return false; if(ctx.presu==='gratis'&&e.price!==0) return false; if(ctx.presu==='p200'&&(e.price==null||e.price>200)) return false; if(ctx.mom&&ctx.mom!=='todo'&&momentoOf(e.h)!==ctx.mom) return false; if(ctx.zonas&&ctx.zonas.length&&e.mod!=='linea'&&!ctx.zonas.includes(e.zona)) return false; return conFit(e,ctx.con)>=0 && (ctx.cats&&ctx.cats.length?ctx.cats.includes(e.cat):moodsOf(e).has(ctx.mood)); })
@@ -1280,8 +1280,9 @@ S.follows=(S.follows||[]).filter(o=>ORGS[o]);
 const persist = () => { try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} if(typeof syncCloud==='function') syncCloud(); };
 const F = {all:false,q:'',cats:new Set(),mom:new Set(),amb:new Set(),mod:new Set(),extras:new Set(),zona:'',precio:'',cuando:'todo',fecha:'',vista:'lista',open:false};
 let weekOff=0, calView='semana', monthOff=0, calSel=null, pendingAfterLogin=null, heroTimer=null;
-const ev = id => EVENTS.find(e=>e.id===id);
-const isSaved = id => S.saved.includes(id);
+const SES={};   // funciones extra de eventos con varias fechas (no aparecen en las listas)
+const ev = id => EVENTS.find(e=>e.id===id)||SES[id];
+const isSaved = id => S.saved.includes(id)||!!(ev(id)?.fechas||[]).some(f=>S.saved.includes(f.id));
 const toggleIn = (arr,v) => { const i=arr.indexOf(v); i>=0?arr.splice(i,1):arr.push(v); return i<0; };
 
 function reviewsOf(id){ return [...((typeof REV!=='undefined'&&REV[id])||[]),...(S.reviews[id]||[]).filter(r=>!r.synced)]; }
@@ -1375,12 +1376,36 @@ function openOnboarding(after){
     document.getElementById('obBack').onclick=()=>refreshTop(step1(),mount1); document.getElementById('obDone').onclick=finish; };
   openModal(step1(),mount1);
 }
-function toggleSave(id,cb){ requireLogin(()=>{ const added=toggleIn(S.saved,id); persist(); toast(added?'Agregado a Mi calendario':'Quitado de Mi calendario'); cb?cb():render(); }); }
+function toggleSave(id,cb){ requireLogin(()=>{ const fs=(ev(id)?.fechas||[]).map(f=>f.id), ya=fs.filter(x=>S.saved.includes(x)); if(ya.length&&!S.saved.includes(id)){ S.saved=S.saved.filter(x=>!fs.includes(x)); persist(); toast('Quitado de Mi calendario'); cb?cb():render(); return; } const added=toggleIn(S.saved,id); persist(); toast(added?'Agregado a Mi calendario':'Quitado de Mi calendario'); cb?cb():render(); }); }
 
 /* ---------- Tarjeta de evento ---------- */
+const FSEL={};   // función elegida en la ficha de cada evento con varias fechas
+function selFecha(e){ const fs=e.fechas, k=fs[0].id; return fs.find(f=>f.id===FSEL[k])||fs.find(f=>S.saved.includes(f.id))||fs.find(f=>f.id===e.id&&f.off>=0)||fs.find(f=>f.off>=0)||fs[0]; }
+function fechaCorta(f){ const d=dOf(f.off); return `${DOWL[d.getDay()]} ${d.getDate()} de ${MESL[d.getMonth()]}${f.h?' a las '+f.h:''}`; }
+function rangoFechas(e,largo){ const fs=e.fechas.filter(f=>f.off>=0), a=dOf((fs[0]||e.fechas[0]).off), b=dOf((fs.at(-1)||e.fechas.at(-1)).off), M=largo?MESL:MES;
+  if(a.getTime()===b.getTime()) return `${largo?'El ':''}${a.getDate()} de ${MESL[a.getMonth()]}`;
+  return a.getMonth()===b.getMonth()?`Del ${a.getDate()} al ${b.getDate()} ${largo?'de ':''}${M[b.getMonth()]}`:`Del ${a.getDate()} ${largo?'de ':''}${M[a.getMonth()]} al ${b.getDate()} ${largo?'de ':''}${M[b.getMonth()]}`; }
+function fechasPicker(e){ const sel=selFecha(e);
+  return `<div class="fpick"><div class="section-t" style="margin-bottom:8px">Elige tu fecha</div><div class="chips">${e.fechas.filter(f=>f.off>=0).map(f=>{ const d=dOf(f.off); return `<button class="chip" data-fsel="${esc(f.id)}" aria-pressed="${f.id===sel.id}">${DOW[d.getDay()]} ${d.getDate()} ${MES[d.getMonth()]}${f.h?' · '+f.h:''}${S.saved.includes(f.id)?' ✓':''}</button>`; }).join('')}</div></div>`; }
+// Agrupa las funciones de un mismo evento (mismo nombre y lugar) en una sola tarjeta con selector de fecha
+const nomBase=t=>String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s*[-(–]?\s*\b(\d+\s*(ra|da|er|a|o|ta)?|primera|segunda|tercera|cuarta|quinta|nueva)\s+(fecha|funcion)\b\)?/g,'').replace(/[^a-z0-9]+/g,'');
+function agrupar(){
+  const g={};
+  EVENTS.forEach(e=>{ if(e.range||e.off<0) return; const k=nomBase(e.t)+'|'+nomBase((e.venue||'').split(',')[0]); (g[k]=g[k]||[]).push(e); });
+  Object.values(g).forEach(l=>{
+    let fs=[]; l.forEach(e=>fs.push(...(e.fechas||[{id:e.id,off:e.off,h:e.h}])));
+    fs=[...new Map(fs.map(f=>[f.off+'|'+(f.h||''),f])).values()].sort((a,b)=>a.off-b.off||(a.h||'').localeCompare(b.h||''));
+    if(fs.length<2) return;
+    const p=l.slice().sort((a,b)=>a.off-b.off)[0];
+    l.forEach(e=>{ e.fechas=fs; if(e!==p){ e.padre=p.id; SES[e.id]=e; } });
+    fs.forEach(f=>{ if(!ev(f.id)) SES[f.id]={...p,id:f.id,off:f.off,h:f.h,padre:p.id}; else if(SES[f.id]) SES[f.id].fechas=fs; });
+  });
+  for(let i=EVENTS.length-1;i>=0;i--) if(EVENTS[i].padre) EVENTS.splice(i,1);
+}
 function card(e){
   const d=dOf(e.off), c=CATS[e.cat], s=isSaved(e.id);
-  const cuando=e.range&&e.off===0?(e.season?'En temporada':e.range):e.off===0?'Hoy':e.off===1?'Mañana':`${DOW[d.getDay()]} ${d.getDate()} ${MES[d.getMonth()]}`;
+  let cuando=e.range&&e.off===0?(e.season?'En temporada':e.range):e.off===0?'Hoy':e.off===1?'Mañana':`${DOW[d.getDay()]} ${d.getDate()} ${MES[d.getMonth()]}`;
+  if(e.fechas&&e.fechas.length>1){ const dias=new Set(e.fechas.map(f=>f.off)).size; if(dias>1) cuando=rangoFechas(e); else cuando+=` · ${e.fechas.length} funciones`; }
   const tags=[...(e.src?[`<span class="tag" style="background:var(--accent-soft);color:var(--accent)">${e.src}</span>`]:[]),...(e.rec&&e.off>=0?['<span class="tag rec-t">Recomendado</span>']:[]),`<span class="tag">${e.mod==='linea'?'En línea':e.amb==='exterior'?'Exterior':'Interior'}</span>`];
   let extra='';
   if(e.off<0){ const r=reviewsOf(e.id), a=avgOf(r); extra = a?`<span class="rating">${I.star.replace('<svg','<svg width="13" height="13"')} ${a.toFixed(1)} · ${r.length} reseñas</span>`:''; }
@@ -1525,16 +1550,30 @@ function topWeek(){
   return top;
 }
 function viewInicio(){
-  const top=topWeek(), month=EVENTS.filter(e=>e.off>=0&&e.off<=MAXOFF).length;
+  const top=topWeek();
   HOME_CTX.forEach((c,i)=>slot('h'+i,c));
-  const slides=top.map((e,i)=>`<div class="slide ${i===0?'on':''}" data-i="${i}" aria-hidden="${i!==0}">
+  // Festivales que están ocurriendo ahora (si no hay ya un evento suyo en el carrusel)
+  const fAhora=FEST.filter(f=>festInfo(f).k==='ahora'&&!top.some(e=>{ try{ return f.claves&&new RegExp(f.claves,'i').test(e.t); }catch(x){ return false; } }));
+  const items=top.slice(0,Math.max(6,10-fAhora.length)).map(e=>({e})); fAhora.slice(0,4).forEach((f,k)=>items.splice(Math.min(items.length,2+k*2),0,{f}));
+  const slides=items.map((it,i)=>it.f?festSlide(it.f,i):evSlide(it.e,i)).join('');
+  return viewInicioHTML(slides,items.length);
+}
+function festSlide(f,i){ const x=festInfo(f), c=FCOL[f.tipo]||'#CBA6FF', img=x.evs.find(e=>e.img);
+  return `<div class="slide ${i===0?'on':''}" data-i="${i}" aria-hidden="${i!==0}">
+      ${img?`<img src="${evImg(img)}" alt="">`:`<div style="position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,${c},transparent 60%),radial-gradient(circle at 10% 90%,#7F95E4,transparent 55%),#24123F"></div>`}
+      <div class="cap"><span class="kick">Festival · ${esc(x.t.replace(/^¡Es ahora! /,''))}</span><h2>${esc(f.nombre)}</h2><p>${esc(f.lugar||'')}</p>
+      <div class="row"><button class="btn primary" data-fest="${esc(f.id)}">Ver festival</button>${f.sitio?`<a class="btn" href="${esc(f.sitio)}" target="_blank" rel="noopener">Página oficial ↗</a>`:''}</div></div></div>`; }
+function evSlide(e,i){ return `<div class="slide ${i===0?'on':''}" data-i="${i}" aria-hidden="${i!==0}">
       <img src="${evImg(e)}" alt=""${fitAttr(e)}>
       <div class="cap"><span class="kick">${relDay(e.off)} · ${hh(e)}</span><h2>${esc(e.t)}</h2><p>${esc(e.venue)} · ${ZONAS[e.zona].n} · ${priceTxt(e.price)}</p>
-      <div class="row"><button class="btn primary" data-open="${e.id}">Ver evento</button><button class="btn" data-save="${e.id}">${isSaved(e.id)?I.ok+'Agendado':I.cal+'Agendar'}</button></div></div></div>`).join('');
+      <div class="row"><button class="btn primary" data-open="${e.id}">Ver evento</button><button class="btn" data-save="${e.id}">${isSaved(e.id)?I.ok+'Agendado':I.cal+'Agendar'}</button></div></div></div>`;
+}
+function viewInicioHTML(slides,nSlides){
+  const month=EVENTS.filter(e=>e.off>=0&&e.off<=MAXOFF).length;
   return `<div class="wrap page" style="padding-top:18px">
     <section class="hero" id="hero" aria-roledescription="carrusel" aria-label="Lo más esperado" style="margin-bottom:28px">
       ${slides}
-      <div class="hero-ctl"><div class="dots">${top.map((_,i)=>`<button data-dot="${i}" aria-label="Ir al evento ${i+1}" aria-current="${i===0}"></button>`).join('')}</div>
+      <div class="hero-ctl"><div class="dots">${Array.from({length:nSlides},(_,i)=>`<button data-dot="${i}" aria-label="Ir al evento ${i+1}" aria-current="${i===0}"></button>`).join('')}</div>
         <button class="hbtn" id="hPrev" aria-label="Anterior">${I.left}</button><button class="hbtn" id="hNext" aria-label="Siguiente">${I.right}</button></div>
     </section>
     <section class="homehero"><div class="lead"><span class="script">Sal y únete a la movida</span><h1>Tus 3 planes para hoy</h1>
@@ -1553,6 +1592,7 @@ function viewInicio(){
   </div>`;
 }
 function bindInicio(){
+  document.querySelectorAll('#hero [data-fest]').forEach(b=>b.onclick=()=>openFest(b.dataset.fest));
   const slides=[...document.querySelectorAll('.slide')], dots=[...document.querySelectorAll('[data-dot]')]; let i=0;
   const show=n=>{ i=(n+slides.length)%slides.length; slides.forEach((s,k)=>{ s.classList.toggle('on',k===i); s.setAttribute('aria-hidden',k!==i); }); dots.forEach((d,k)=>d.setAttribute('aria-current',k===i)); };
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1711,6 +1751,7 @@ function bindPlan(){
 
 /* ---------- Filtrado ---------- */
 function matchCuando(e){
+  if(e.fechas&&e.fechas.length>1&&!e._f) return e.fechas.some(f=>matchCuando({...e,off:f.off,h:f.h,_f:1}));
   const o=e.off, dow=dOf(o).getDay();
   if(o<0||o>MAXOFF) return false;
   switch(F.cuando){
@@ -1984,7 +2025,7 @@ let FEST=[], festTipo='';
 const FTIPOS={musica:'Música',electronica:'Electrónica',gastro:'Comida',bebidas:'Cerveza, vino y mezcal',cultura:'Arte y cultura',cine:'Cine',familia:'En familia','cultura-pop':'Cómics y anime',otro:'Otros'};
 const FCOL={musica:'#F9447F',electronica:'#7F95E4',gastro:'#FF8017',bebidas:'#FDBD1A',cultura:'#CBA6FF',cine:'#1AC1B9',familia:'#FDBD1A','cultura-pop':'#7F95E4',otro:'#CBA6FF'};
 let FAUTO={}; fetch('data/festivales-auto.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(d){ FAUTO=d; if(typeof render==='function'&&/festivales/.test(location.hash)) render(); } }).catch(()=>{});
-fetch('data/festivales.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(d&&d.festivales){ FEST=d.festivales; if(typeof render==='function'&&/festivales/.test(location.hash)) render(); } }).catch(()=>{});
+fetch('data/festivales.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(d&&d.festivales){ FEST=d.festivales; if(typeof render==='function'&&/^#?(festivales|inicio)?$/.test(location.hash)) render(); } }).catch(()=>{});
 function festEvs(f){ if(!f.claves) return []; let r; try{ r=new RegExp(f.claves,'i'); }catch(e){ return []; } return EVENTS.filter(e=>e.off>=0&&e.off<=MAXOFF&&r.test(e.t)).sort((a,b)=>a.off-b.off); }
 function fRango(a,b){ const d=new Date(a+'T00:00'), e=new Date((b||a)+'T00:00'); if(!b||a===b) return `${d.getDate()} de ${MESL[d.getMonth()]} de ${d.getFullYear()}`;
   return d.getMonth()===e.getMonth()&&d.getFullYear()===e.getFullYear()?`${d.getDate()} al ${e.getDate()} de ${MESL[e.getMonth()]} de ${e.getFullYear()}`:`${d.getDate()} de ${MESL[d.getMonth()]} al ${e.getDate()} de ${MESL[e.getMonth()]} de ${e.getFullYear()}`; }
@@ -2007,13 +2048,14 @@ function festCard(f){
 }
 function viewFest(){
   const lista=FEST.filter(f=>!festTipo||f.tipo===festTipo).map(f=>({f,x:festInfo(f)})).sort((a,b)=>a.x.orden-b.x.orden);
-  const ya=lista.filter(o=>o.x.k!=='temporada'), luego=lista.filter(o=>o.x.k==='temporada');
+  const ahora=lista.filter(o=>o.x.k==='ahora'), pronto=lista.filter(o=>o.x.k==='fechas'), luego=lista.filter(o=>o.x.k==='temporada');
   let mesAnt=null; const porMes=luego.map(o=>{ const h=o.x.mes!==mesAnt?`<h3 class="fmonth">${o.x.mes!=null?MESL[o.x.mes]:'Sin fecha fija'}</h3>`:''; mesAnt=o.x.mes; return h+festCard(o.f); }).join('');
   const usados=[...new Set(FEST.map(f=>f.tipo))];
-  return `<div class="wrap page"><div class="phead"><div><span class="script">Para no perdértelos</span><h1>Festivales de Monterrey</h1><p>Música, comida, cine, arte y más. Cuando un festival anuncia fechas o abre su venta de boletos, aparece aquí arriba y en la agenda.</p></div></div>
+  return `<div class="wrap page"><div class="phead"><div><span class="script">Para no perdértelos</span><h1>Festivales de Monterrey</h1><p>Música, comida, cine, arte y más. Cuando un festival anuncia sus fechas o abre su venta de boletos, pasa a «Próximamente».</p></div></div>
     <div class="chips" style="margin-bottom:16px"><button class="chip" data-ftipo="" aria-pressed="${!festTipo}">Todos</button>${usados.filter(k=>FTIPOS[k]).map(k=>`<button class="chip" data-ftipo="${k}" aria-pressed="${festTipo===k}">${FTIPOS[k]}</button>`).join('')}</div>
     ${!FEST.length?'<p>Estamos preparando la lista de festivales.</p>':''}
-    ${ya.length?`<div class="sechead"><h2>Ya tienen fechas</h2></div><div class="fgrid" style="margin-bottom:28px">${ya.map(o=>festCard(o.f)).join('')}</div>`:''}
+    ${ahora.length?`<div class="sechead"><h2>Ahora</h2></div><div class="fgrid" style="margin-bottom:28px">${ahora.map(o=>festCard(o.f)).join('')}</div>`:''}
+    ${pronto.length?`<div class="sechead"><h2>Próximamente</h2></div><div class="fgrid" style="margin-bottom:28px">${pronto.map(o=>festCard(o.f)).join('')}</div>`:''}
     ${luego.length?`<div class="sechead"><h2>Durante el año</h2></div><div class="fgrid">${porMes}</div>`:''}
     <p class="pie">Las fechas de cada temporada son aproximadas, según ediciones anteriores. Confirma en la página oficial de cada festival.</p></div>`;
 }
@@ -2141,16 +2183,17 @@ function eventHTML(e){
   return `<figure class="mhero"><img src="${evImg(e)}" alt=""${fitAttr(e)}><figcaption>${e.credit?`Foto: <a href="${esc(e.credit.url||'#')}" target="_blank" rel="noopener">${esc(e.credit.autor)}</a> · ${esc(e.credit.licencia)} · ${esc(e.credit.fuente)} · Imagen de referencia`:e.img?(e.fisl?'Foto: agenda FISL 2026':'Foto: '+esc(ORGS[e.org]?ORGS[e.org].n:'organizador')):'Imagen ilustrativa'}</figcaption></figure>
     <div class="dhead"><div class="ev-cat" style="font-size:13px;gap:10px">${catDot(e.cat)}${c.n}${past?' · Evento pasado':''}${e.rec&&!past?' · <b style="color:var(--accent)">Recomendado por Mty Movida</b>':''}</div><h2>${esc(e.t)}</h2></div>
     <div class="facts">
-      <div class="fact">${I.cal}<div><small>Fecha y hora</small>${e.range?e.range+' · '+hh(e):relDay(e.off)+(e.off>=0&&e.off<=1?', '+longDate(e.off):'')+' · '+hh(e)}</div></div>
+      <div class="fact">${I.cal}<div><small>Fecha y hora</small>${e.fechas&&e.fechas.length>1?rangoFechas(e,true)+` · ${e.fechas.length} funciones`:e.range?e.range+' · '+hh(e):relDay(e.off)+(e.off>=0&&e.off<=1?', '+longDate(e.off):'')+' · '+hh(e)}</div></div>
       <div class="fact">${I.pin}<div><small>${e.mod==='linea'?'Modalidad':'Lugar'}</small>${esc(e.venue)}${e.mod==='linea'?'':`<br>${ZONAS[e.zona].n}`}</div></div>
       <div class="fact">${I.home}<div><small>Espacio</small>${e.mod==='linea'?'En línea':(e.amb==='exterior'?'Al aire libre':'Interior')} · ${(MOMENTOS[momentoOf(e.h)]||"Horario por confirmar")}</div></div>
       <div class="fact">${I.money}<div><small>Precio</small>${priceTxt(e.price)}</div></div>
     </div>
+    ${!past&&e.fechas&&e.fechas.length>1?fechasPicker(e):''}
     ${e.tags.length?`<div class="chips">${e.tags.map(t=>`<span class="tag">${EXTRAS[t]}</span>`).join('')}</div>`:''}
     ${weather(e)}
     <p style="margin:0">${esc(e.desc)}</p>
     ${!past?`<div class="row">
-      <button class="btn ${s?'on':'primary'}" id="dSave">${s?I.ok+'En Mi calendario':I.cal+'Agendar en Mi calendario'}</button>
+      <button class="btn ${s?'on':'primary'}" id="dSave">${s?I.ok+(e.fechas&&e.fechas.length>1?'Agendado: '+fechaCorta(selFecha(e)):'En Mi calendario'):I.cal+(e.fechas&&e.fechas.length>1?'Agendar el '+fechaCorta(selFecha(e)):'Agendar en Mi calendario')}</button>
       <button class="btn ${going?'on':''}" id="dGoing">${I.people}${going?'Vas a ir':'Voy'}</button>
       <button class="btn" id="dShare">${I.share}Compartir</button>${e.url?`<a class="btn" href="${e.url}" target="_blank" rel="noopener">Comprar boletos ↗</a>`:''}</div>`:''}
     ${place?`<button class="linkish" data-atr="${place.id}" style="align-self:flex-start">Conoce este lugar: ${esc(place.n)} →</button>`:''}
@@ -2165,7 +2208,12 @@ function openEvent(id,replace){ const e=ev(id); const mount=()=>bindEvent(e); re
 function reopen(id){ if(!document.getElementById('modal').hidden && stack.length) openEvent(id,true); else openEvent(id); }
 function bindEvent(e){
   const g=id=>document.getElementById(id);
-  if(g('dSave')) g('dSave').onclick=()=>toggleSave(e.id,()=>{ reopen(e.id); render(); });
+  if(g('dSave')) g('dSave').onclick=()=>{ if(!(e.fechas&&e.fechas.length>1)) return toggleSave(e.id,()=>{ reopen(e.id); render(); });
+    requireLogin(()=>{ const sel=selFecha(e), ids=e.fechas.map(f=>f.id);
+      if(S.saved.includes(sel.id)){ S.saved=S.saved.filter(x=>x!==sel.id); toast('Quitado de Mi calendario'); }
+      else { S.saved=S.saved.filter(x=>!ids.includes(x)); S.saved.push(sel.id); toast('Agendado el '+fechaCorta(sel)); }
+      persist(); reopen(e.id); render(); }); };
+  document.querySelectorAll('[data-fsel]').forEach(b=>b.onclick=()=>{ FSEL[e.fechas[0].id]=b.dataset.fsel; reopen(e.id); });
   if(g('dGoing')) g('dGoing').onclick=()=>requireLogin(()=>{ const a=toggleIn(S.going,e.id); if(a&&!isSaved(e.id)) S.saved.push(e.id); persist(); toast(a?'¡Qué bien! Lo agregamos a tu calendario':'Ya no aparece que vas'); reopen(e.id); render(); });
   if(g('dShare')) g('dShare').onclick=()=>copy(`¿Vamos? ${e.t}\n${relDay(e.off)} ${hh(e)} · ${e.venue}\nVisto en Mty Movida`,'Copiado. Pégalo en WhatsApp o donde quieras');
   if(g('rpSend')) g('rpSend').onclick=()=>{ toast('Gracias. Revisaremos este evento.'); g('rpSend').closest('details').open=false; };
@@ -2318,12 +2366,14 @@ async function loadApproved(){
     const linea=d.municipio==='linea';
     EVENTS.push({id,t:d.nombre,cat:CAT_OK(d.categoria),org:orgKey,venue:d.lugar||(linea?'En línea':'Por confirmar'),zona:ZONAS[d.municipio]?d.municipio:'centro',
       amb:d.espacio==='exterior'?'exterior':'interior',mod:linea?'linea':'presencial',off,h:/^\d{1,2}:\d{2}/.test(d.hora||'')?d.hora.slice(0,5).padStart(5,'0'):'',
-      price:typeof d.precio==='number'?d.precio:null,tags:Array.isArray(d.caracteristicas)?d.caracteristicas:[],going:0,fama:typeof d.fama==='number'?d.fama:0,desc:d.descripcion||'',range,
+      price:typeof d.precio==='number'?d.precio:null,tags:Array.isArray(d.caracteristicas)?d.caracteristicas:[],going:0,fama:typeof d.fama==='number'?d.fama:0,fechas:Array.isArray(d.funciones)&&d.funciones.length>1?d.funciones.map((f,k)=>({id:k?id+'~'+f.fecha+'T'+(f.hora||''):id,off:offOfDate(new Date(f.fecha+'T00:00')),h:f.hora||''})).filter(f=>f.off>=0&&f.off<=MAXOFF):undefined,desc:d.descripcion||'',range,
       img:r.foto||undefined,url:d.enlace||undefined,src:r.fuente&&r.fuente!=='Organizador'?r.fuente:undefined,credit:d.credito&&d.credito.autor?d.credito:undefined,fit:r.fuente==='Cinemex'?'contain':undefined});
     n++;
   });
+  agrupar();
   if(n){ Object.keys(PS).forEach(k=>delete PS[k]); render(); }
 }
+agrupar();
 loadApproved();
 
 (function(){

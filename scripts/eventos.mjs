@@ -126,6 +126,7 @@ function planFever(html, url) {
     name: nombre, startDate: ini, endDate: fin && fin.slice(0, 10) !== ini.slice(0, 10) ? fin : null, url, image: meta('image'), description: meta('description'),
     location: lugar ? { name: lugar[4], address: { streetAddress: lugar[1], addressLocality: 'Monterrey' }, geo: { latitude: lugar[2], longitude: lugar[3] } } : {},
     offers: precios.length ? { price: Math.min(...precios) } : {},
+    funciones: [...new Set([...html.matchAll(/"startsAtIso":"([^"]+)"/g)].map(m => m[1].slice(0, 16)))].sort().map(t => ({ fecha: t.slice(0, 10), hora: t.slice(11, 16) })).filter(x => enRango(x.fecha)).slice(0, 40),
   };
 }
 function fechaHora(iso) {
@@ -160,7 +161,7 @@ function fila(f, x) {
       nombre: x.nombre, organizador: x.organizador || f.nombre, categoria: x.cat || categoria(x.nombre + ' ' + (x.desc || '')),
       municipio: x.municipio || municipio(x.lugar || '', f.municipio), fecha: x.fecha, hora: x.hora || null, hasta: x.hasta && x.hasta !== x.fecha ? x.hasta : null,
       lugar: x.lugar || f.lugar || f.nombre, espacio: x.espacio || null, precio: x.precio ?? null, caracteristicas: [], descripcion: (x.desc || '').slice(0, 400),
-      enlace: x.url || f.sitio, fuente: f.nombre,
+      enlace: x.url || f.sitio, fuente: f.nombre, ...(x.funciones && x.funciones.length > 1 ? { funciones: x.funciones } : {}),
     },
   };
 }
@@ -258,19 +259,34 @@ async function filasMarco(f) {
 }
 
 // Superboletos: su catálogo de eventos de todo el país, en un solo archivo de datos
+// Funciones de un evento de Superboletos con varias fechas: se leen de la página del evento
+async function funcionesSuperboletos(url) {
+  const h = await traer(url); if (!h) return [];
+  const MES = { enero: 1, febrero: 2, marzo: 3, abril: 4, mayo: 5, junio: 6, julio: 7, agosto: 8, septiembre: 9, octubre: 10, noviembre: 11, diciembre: 12 };
+  const fs = [...limpiar(h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ')).matchAll(/(?:lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo)\s+(\d{1,2})\s+(\w+)\s+(\d{4})\s+(\d{1,2}):(\d{2})/gi)]
+    .map(m => MES[m[2].toLowerCase()] ? { fecha: `${m[3]}-${String(MES[m[2].toLowerCase()]).padStart(2, '0')}-${m[1].padStart(2, '0')}`, hora: `${m[4].padStart(2, '0')}:${m[5]}` } : null).filter(x => x && enRango(x.fecha));
+  return [...new Map(fs.map(x => [x.fecha + x.hora, x])).values()].sort((a, b) => (a.fecha + a.hora).localeCompare(b.fecha + b.hora));
+}
 async function filasSuperboletos(f) {
   const lista = await json(f.datos) || [];
   const TIPO = { conciertos: 'concierto', teatro: 'teatro', deportes: 'deporte', familiares: 'teatro', ferias: 'fiestas', festivales: 'concierto' };
-  return lista.filter(e => /nuevo le/i.test(e.nombreEstado || '') && !(f.excluir && f.excluir.test(e.nombreEvento || ''))).map(e => {
+  const filas = lista.filter(e => /nuevo le/i.test(e.nombreEstado || '') && !(f.excluir && f.excluir.test(e.nombreEvento || ''))).map(e => {
     const m = String(e.fechaPrimeraPresentacion || '').match(/^(\d{2})\/(\d{2})\/(\d{4})(?: (\d{2}):(\d{2}))?/); if (!m) return null;
     const fecha = `${m[3]}-${m[2]}-${m[1]}`; if (!enRango(fecha)) return null;
     const hora = (String(e.fechas || '').match(/(\d{1,2}:\d{2})\s*Hrs/i) || [])[1]?.padStart(5, '0') || (m[4] ? `${m[4]}:${m[5]}` : null);
     const nombre = capitalizar(limpiar(entidades(e.nombreEvento))), pmin = Number(e.precioMinimo) || 0;
     const tipo = String(e.claveTipoEvento || '').toLowerCase();
-    return fila(f, { id: `${f.enlace}${e.eventoId}`, nombre, fecha, hora, lugar: limpiar(e.nombreRecinto), municipio: municipio(e.nombreCiudad || '', f.municipio),
+    const r = fila(f, { id: `${f.enlace}${e.eventoId}`, nombre, fecha, hora, lugar: limpiar(e.nombreRecinto), municipio: municipio(e.nombreCiudad || '', f.municipio),
       cat: TIPO[tipo] || categoria(nombre + ' ' + tipo + ' ' + (e.claveSubtipo || '')), precio: pmin > 0 ? pmin : null, foto: e.rutaImagenMain || e.rutaImagenThumb,
       url: `${f.enlace}${e.eventoId}`, organizador: limpiar(e.nombreRecinto) || f.nombre, desc: [e.artista && `Con ${capitalizar(e.artista)}.`, e.fechas && `Fecha: ${limpiar(entidades(e.fechas))}.`].filter(Boolean).join(' ') });
+    r._varias = /^del\s/i.test(String(e.fechas || '')); return r;
   }).filter(Boolean);
+  for (const x of filas) {   // eventos con varias funciones ("Del vie. 30 de octubre al dom. 1 de noviembre")
+    const v = x._varias; delete x._varias; if (!v) continue;
+    const fs = await funcionesSuperboletos(x.datos.enlace);
+    if (fs.length) { x.datos.fecha = fs[0].fecha; x.datos.hora = fs[0].hora; if (fs.length > 1) x.datos.funciones = fs; }
+  }
+  return filas;
 }
 
 // Devuelve el texto de un objeto {...} que empieza en "desde", respetando las comillas
@@ -386,7 +402,7 @@ async function filasPrimeTickets(f) {
       fuente: f.nombre, fuente_url: url, foto: o.foto, estado: ESTADO,
       datos: {
         nombre: o.nombre, organizador: f.nombre, categoria: categoria(o.tipo + ' ' + o.nombre + ' ' + desc), municipio: f.municipio,
-        fecha: unicas[0].fecha, hora: unicas[0].hora, hasta: unicas.at(-1).fecha !== unicas[0].fecha ? unicas.at(-1).fecha : null,
+        fecha: unicas[0].fecha, hora: unicas[0].hora, hasta: null, ...(unicas.length > 1 ? { funciones: unicas } : {}),
         lugar: f.lugar || f.nombre, espacio: 'interior', precio, caracteristicas: [], descripcion: desc, enlace: url, fuente: f.nombre,
       },
     });
@@ -503,8 +519,8 @@ for (const f of FUENTES) {
         foto: [].concat(e.image || [])[0]?.url || [].concat(e.image || [])[0] || null,
         datos: {
           nombre, organizador: (f.organizadorDelEvento && limpiar([].concat(e.organizer || [])[0]?.name)) || (f.organizadorLugar && limpiar(loc.name)) || f.nombre, categoria: f.cat || categoria(nombre + ' ' + desc), municipio: enLinea ? 'linea' : ciudad ? municipio(ciudad, 'otros') : municipio(lugar, f.municipio),
-          fecha: ini.fecha, hora: ini.hora, hasta: fin.fecha !== ini.fecha ? fin.fecha : null, lugar, espacio: null, precio,
-          caracteristicas: [], descripcion: desc, enlace: limpiaUrl(e.url || url), fuente: f.nombre,
+          fecha: ini.fecha, hora: ini.hora, hasta: fin.fecha !== ini.fecha && !(e.funciones && e.funciones.length > 1) ? fin.fecha : null, lugar, espacio: null, precio,
+          caracteristicas: [], descripcion: desc, enlace: limpiaUrl(e.url || url), fuente: f.nombre, ...(e.funciones && e.funciones.length > 1 ? { funciones: e.funciones } : {}),
         },
       });
     }
