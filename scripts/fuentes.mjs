@@ -76,5 +76,7 @@ export const FUENTES = [
   // Eventos del Gobierno de Nuevo León
   { nombre: 'Gobierno de Nuevo León', sitio: 'https://beta.nl.gob.mx/es/eventos', lector: 'nlgob', lista: 'https://beta.nl.gob.mx/es/eventos', municipio: 'centro' },
   // Boletera PrimeTickets: se lee la portada y la página de cada obra
+  // Chipinque: su página es una aplicación que lee esta lista de eventos
+  { nombre: 'Chipinque', sitio: 'https://www.chipinque.org.mx/inicio/eventos', lector: 'chipinque', datos: 'https://chipinque-api-prod.onrender.com/api/v1/events', medios: 'https://chipinque-api-prod.onrender.com/media/', municipio: 'sanpedro' },
   { nombre: 'Foro 13', sitio: 'https://foro13.primetickets.mx/', lector: 'primetickets', lugar: 'Foro 13, Hidalgo 511, Centro', lugarCorto: 'FORO 13', municipio: 'centro' },
 ];

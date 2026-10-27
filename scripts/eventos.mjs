@@ -322,6 +322,23 @@ async function filasTicketmaster(f) {
 }
 
 // Eventos capturados a mano o desde el navegador (por ejemplo, Passline): archivo public/data/<nombre>.json en el repositorio
+// Reserva Natural Chipinque: su aplicación lee una lista de eventos (JSON)
+async function filasChipinque(f) {
+  const d = await json(f.datos); const iso = x => x.toISOString().slice(0, 10);
+  return (d?.events || []).map(e => {
+    let fecha = (e.date || '').slice(0, 10);
+    if (!fecha && e.frequency === 'semanal' && /domingo/i.test(e.schedule || '')) { const x = new Date(hoy); x.setDate(x.getDate() + (7 - x.getDay()) % 7); fecha = iso(x); }
+    if (!fecha || !enRango(fecha)) return null;
+    const precio = (String(e.price || '').match(/\$\s*([\d,.]+)/) || [])[1];
+    return fila(f, {
+      id: `${f.datos}#${e.id}#${fecha}`, nombre: limpiar(e.title), fecha, hora: hora12(e.time), lugar: `${limpiar(e.location)}, Reserva Natural Chipinque`.replace(/^Reserva Natural Chipinque, /, ''),
+      desc: limpiar([e.subtitle && e.subtitle + '.', e.description, e.frequency === 'semanal' && `${e.schedule}.`, e.time && `Horario: ${e.time}.`].filter(Boolean).join(' ')),
+      cat: categoria(`${e.categoryLabel || ''} ${e.title}`), precio: precio ? Number(precio.replace(/,/g, '')) : null, espacio: 'exterior', municipio: 'sanpedro',
+      organizador: 'Reserva Natural Chipinque', url: f.sitio, foto: e.imageUrl ? f.medios + e.imageUrl : null,
+    });
+  }).filter(Boolean);
+}
+
 async function filasArchivo(f) {
   const { readFileSync, existsSync } = await import('node:fs');
   if (!existsSync(f.archivo)) return [];
@@ -330,7 +347,7 @@ async function filasArchivo(f) {
     municipio: e.municipio || municipio(e.lugar || '', f.municipio) }));
 }
 
-const LECTORES = { ticketmaster: filasTicketmaster, archivo: filasArchivo, cinemex: filasCinemex, marco: filasMarco, superboletos: filasSuperboletos, civitas: filasCivitas, tribe: filasTribe, payload: filasPayload, nlgob: filasNLGob, primetickets: f => filasPrimeTickets(f) };
+const LECTORES = { chipinque: filasChipinque, ticketmaster: filasTicketmaster, archivo: filasArchivo, cinemex: filasCinemex, marco: filasMarco, superboletos: filasSuperboletos, civitas: filasCivitas, tribe: filasTribe, payload: filasPayload, nlgob: filasNLGob, primetickets: f => filasPrimeTickets(f) };
 
 // Boletera PrimeTickets (Foro 13): la portada trae cada obra y su página trae las funciones
 const MESES = { enero: 1, febrero: 2, marzo: 3, abril: 4, mayo: 5, junio: 6, julio: 7, agosto: 8, septiembre: 9, octubre: 10, noviembre: 11, diciembre: 12 };
