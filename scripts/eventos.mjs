@@ -397,7 +397,7 @@ for (const f of FUENTES) {
         fuente_url: `${limpiaUrl(e.url || url)}#${e.startDate}`, estado: ESTADO,
         foto: [].concat(e.image || [])[0]?.url || [].concat(e.image || [])[0] || null,
         datos: {
-          nombre, organizador: (f.organizadorDelEvento && limpiar([].concat(e.organizer || [])[0]?.name)) || f.nombre, categoria: f.cat || categoria(nombre + ' ' + desc), municipio: enLinea ? 'linea' : ciudad ? municipio(ciudad, 'otros') : municipio(lugar, f.municipio),
+          nombre, organizador: (f.organizadorDelEvento && limpiar([].concat(e.organizer || [])[0]?.name)) || (f.organizadorLugar && limpiar(loc.name)) || f.nombre, categoria: f.cat || categoria(nombre + ' ' + desc), municipio: enLinea ? 'linea' : ciudad ? municipio(ciudad, 'otros') : municipio(lugar, f.municipio),
           fecha: ini.fecha, hora: ini.hora, hasta: fin.fecha !== ini.fecha ? fin.fecha : null, lugar, espacio: null, precio,
           caracteristicas: [], descripcion: desc, enlace: limpiaUrl(e.url || url), fuente: f.nombre,
         },

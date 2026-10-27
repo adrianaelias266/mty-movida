@@ -16,11 +16,11 @@ export const FUENTES = [
   // "paginas": se leen directo, sin buscar en el mapa del sitio
   { nombre: 'Metapatio', sitio: 'https://www.songkick.com', paginas: ['https://www.songkick.com/venues/3675169-metapatio'], filtro: /./, municipio: 'centro', limpiarNombre: /\s+@\s+.*$/ },
   // Cinema Río 70 (Barrio Antiguo): su cartelera de conciertos en Songkick
-  { nombre: 'Cinema Río 70', sitio: 'https://www.songkick.com', paginas: ['https://www.songkick.com/venues/3331604-cinema-rio-70'], filtro: /./, municipio: 'centro', limpiarNombre: /\s+@\s+.*$/ },
+  { nombre: 'Cinema Río 70', sitio: 'https://www.songkick.com', paginas: ['https://www.songkick.com/venues/3331604-cinema-rio-70'], filtro: /./, municipio: 'centro', cat: 'concierto', organizadorLugar: true, limpiarNombre: /\s+@\s+.*$/ },
   // Estrenos de cine de la semana (Cinemex). Cinépolis bloquea la lectura automática.
   { nombre: 'Cinemex', sitio: 'https://cinemex.com/proximos-estrenos', lector: 'cinemex', lugar: 'Cines de Monterrey y su zona metropolitana', municipio: 'centro' },
   // Todos los conciertos de la zona de Monterrey en Songkick (la lista ya trae cada evento completo)
-  { nombre: 'Songkick', sitio: 'https://www.songkick.com', lista: 'https://www.songkick.com/metro-areas/31051-mexico-monterrey', listaDirecta: true, paginasLista: 6, filtro: /./, municipio: 'centro', cat: 'concierto', limpiarNombre: /\s+@\s+.*$/ },
+  { nombre: 'Songkick', sitio: 'https://www.songkick.com', lista: 'https://www.songkick.com/metro-areas/31051-mexico-monterrey', listaDirecta: true, paginasLista: 6, filtro: /./, municipio: 'centro', cat: 'concierto', organizadorLugar: true, limpiarNombre: /\s+@\s+.*$/ },
   // MARCO, Museo de Arte Contemporáneo: exposiciones vigentes
   { nombre: 'MARCO', sitio: 'https://www.marco.org.mx', lector: 'marco', lugar: 'MARCO, Zuazua y Jardón, Centro', municipio: 'centro' },
   // Superboletos: todo lo que vende en Nuevo León (Arena Monterrey, Auditorio, Showcenter, etc.)
