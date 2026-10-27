@@ -1886,8 +1886,8 @@ function dcPasa(e){ const pr=e.price;
 const dcDur=e=>['concierto','teatro','danza','cine'].includes(e.cat)?2:1.5;
 function dcPuntos(e){ return esperado(e)+(DC.turista?(esIcono(e)?9:0)+(['cine','talleres','charlas','fandoms'].includes(e.cat)?-4:0):0)+(DC.cats.length&&DC.cats.includes(e.cat)?6:0)+(DC.con?conFit(e,DC.con)*1.5:0)+(e.rec?1:0); }
 function armarDC(){
-  const lapso=DC.hasta-DC.desde, meta=DC.turista?2:(lapso>=5?2:3);
-  const ops=eventosDelDia(DC.off).filter(e=>{ const h=hNum(e.h); return h!=null&&h>=DC.desde&&h+1<=DC.hasta&&dcPasa(e)&&!DC.fuera.includes(e.id)&&!(DC._tit&&DC._tit.has(e.t))&&(!DC.cats.length||DC.cats.includes(e.cat))&&!(DC.turista&&!DC.cats.length&&['charlas','talleres','fandoms','letras'].includes(e.cat)); })
+  const lapso=DC.hasta-DC.desde, meta=DC.turista?1:(lapso>=5?2:3);
+  const ops=eventosDelDia(DC.off).filter(e=>{ const h=hNum(e.h); return h!=null&&h>=DC.desde&&h+1<=DC.hasta&&dcPasa(e)&&!DC.fuera.includes(e.id)&&!(DC._tit&&DC._tit.has(e.t))&&(!DC.cats.length||DC.cats.includes(e.cat))&&!(DC.turista&&!DC.cats.length&&['charlas','talleres','fandoms','letras'].includes(e.cat))&&!(DC.turista&&['concierto','musica'].includes(e.cat)&&e.price!==0&&!DC.cats.some(c=>c==='concierto'||c==='musica')); })
     .map(e=>({e,h:hNum(e.h),p:dcPuntos(e)})).sort((a,b)=>b.p-a.p);
   const elegidos=[], cabe=(x)=>elegidos.every(y=>x.h>=y.h+dcDur(y.e)+.5||x.h+dcDur(x.e)+.5<=y.h), tipos=()=>elegidos.map(y=>y.e.cat);
   Object.values(DC.pick).forEach(id=>{ const x=ops.find(o=>o.e.id===id); if(x&&cabe(x)) elegidos.push(x); });
@@ -1916,7 +1916,7 @@ function armarDC(){
         .sort((x,y)=>(DC.turista?ICONOS.indexOf(x.id)-ICONOS.indexOf(y.id):0)||(DC.con==='familia'?(tipoOf(y)==='diversion')-(tipoOf(x)==='diversion'):0)||(nat?({montana:2,parque:1}[tipoOf(y)]||0)-({montana:2,parque:1}[tipoOf(x)]||0):0)||(y.zona===zonaRef)-(x.zona===zonaRef)||(ATR_FOTO[y.id]?1:0)-(ATR_FOTO[x.id]?1:0));
       const temporada=EVENTS.filter(e=>e.range&&e.mod!=='linea'&&e.off<=DC.off&&dcPasa(e)&&(UNAVEZ.test(e.t)||esFest(e)||(DC.turista&&esIcono(e)))&&!DC.fuera.includes(e.id)&&!(DC._tit&&DC._tit.has(e.t))&&!paradas.some(p=>p.e&&p.e.id===e.id));
       const k='hueco'+DC.off+'_'+Math.round(ini*2), elegido=DC.pick[k];
-      const cand=DC.turista&&vuelta===0?[...lugares.map(a=>({a})),...temporada.map(e=>({e}))]:[...temporada.map(e=>({e})),...lugares.map(a=>({a}))];
+      const cand=DC.turista?[...lugares.map(a=>({a})),...temporada.map(e=>({e}))]:[...temporada.map(e=>({e})),...lugares.map(a=>({a}))];
       let c=cand.find(o=>(o.e&&o.e.id===elegido)||(o.a&&'atr:'+o.a.id===elegido))||cand[0];
       if(c) paradas.push({tipo:c.e?'ev':'atr',e:c.e,a:c.a,ini,fin:c.a&&tipoOf(c.a)==='montana'?largo:fin,libre:true,k,alt:cand.filter(o=>o!==c)});
     }
