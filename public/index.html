@@ -468,6 +468,20 @@ a.stat{text-decoration:none}
 
 
 /* Día completo */
+.prefs{background:var(--surface);border-radius:18px;box-shadow:var(--shadow);margin-bottom:16px}
+.prefs summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.prefs summary::-webkit-details-marker{display:none}
+.prefs summary::after{content:"▾";margin-left:auto;transition:transform .2s}.prefs[open] summary::after{transform:rotate(180deg)}
+.prefs summary .opt{font-weight:500;color:var(--muted);font-size:13px}
+.prefs-b{padding:0 18px 18px;display:flex;flex-direction:column;gap:14px}
+.dcwiz{display:flex;flex-direction:column;gap:14px;padding:4px 2px}
+.dcwiz h2{margin:0;font-family:var(--f-display);font-size:26px;letter-spacing:-.02em}
+.dcbar{height:6px;border-radius:99px;background:var(--sunk);overflow:hidden}.dcbar i{display:block;height:100%;background:var(--brand);border-radius:99px;transition:width .3s}
+.dchoras{display:grid;grid-template-columns:1fr 1fr;gap:12px}.dchoras label,.dcfecha{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--muted)}
+.dcnav{justify-content:space-between;margin-top:6px}
+.it-food{display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;border:1.5px dashed var(--line);border-radius:18px;padding:12px;align-items:start}
+.it-food>span{font-size:24px;line-height:40px;text-align:center}
+.it-food>div{display:flex;flex-direction:column;gap:4px;align-items:flex-start}.it-food small{color:var(--muted);font-size:13px}
 .seg.modo{display:inline-flex}
 .hint{margin:6px 0 0;font-size:13px;color:var(--muted)}
 .itin{background:var(--surface);border-radius:20px;box-shadow:var(--shadow);padding:20px}
@@ -1683,6 +1697,140 @@ function bindDiaCompleto(){
     copy(`Plan para ${relDay(CP.off).toLowerCase()}:\n`+ps.map(p=>`• ${MOMENTOS[p.m]} (${hh(p.e)}): ${p.e.t} – ${p.e.venue}`).join('\n')+`\n¿Vamos? Visto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); };
 }
 
+/* ---------- Ármame un día completo: formulario por pasos y plan con horario ---------- */
+let DC={paso:0,off:0,desde:null,hasta:22,con:'',zonas:[],cats:[],presu:'todo',listo:false,pick:{},fuera:[]};
+try{ const g=JSON.parse(localStorage.getItem('mtymovida-dc')||'null'); if(g) DC={...DC,...g,paso:0}; }catch(e){}
+const saveDC=()=>{ try{ localStorage.setItem('mtymovida-dc',JSON.stringify(DC)); }catch(e){} };
+const DC_PRESU={gratis:'Que todo sea gratis',p200:'Hasta $200 por persona',p500:'Hasta $500 por persona',todo:'No importa'};
+const DC_PASOS=['¿Qué día?','¿De qué hora a qué hora?','¿Con quién vas?','¿En qué zonas?','¿Qué te gustaría hacer?','¿Cuánto quieres gastar?'];
+const hNum=h=>{ const m=String(h||'').match(/^(\d{1,2}):(\d{2})/); return m?+m[1]+m[2]/60:null; };
+const hTxt=x=>{ const h=Math.floor(x)%24, m=Math.round((x-Math.floor(x))*60); return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`; };
+function dcDefaults(){ if(DC.desde==null||(DC.off===0&&DC.desde<new Date().getHours())){ const n=new Date().getHours()+1; DC.desde=DC.off===0?Math.min(Math.max(n,9),22):12; if(DC.hasta<=DC.desde) DC.hasta=Math.min(24,DC.desde+4); } }
+function dcPasoHTML(){
+  dcDefaults(); const p=DC.paso, chip=(attr,v,on,txt)=>`<button class="chip" ${attr}="${v}" aria-pressed="${on}">${txt}</button>`;
+  let body='';
+  if(p===0){ const dias=[...Array(7).keys()]; body=`<div class="chips">${dias.map(o=>chip('data-dcoff',o,DC.off===o,o===0?'Hoy':o===1?'Mañana':`${DOWL[dOf(o).getDay()].replace(/^./,c=>c.toUpperCase())} ${dOf(o).getDate()}`)).join('')}</div>
+    <label class="dcfecha">Otro día <input type="date" class="inp" id="dcFecha" value="${isoOf(DC.off)}" min="${isoOf(0)}" max="${isoOf(MAXOFF)}"></label>`; }
+  if(p===1){ const op=(a,b,sel)=>Array.from({length:b-a+1},(_,i)=>a+i).map(h=>`<option value="${h}" ${h===sel?'selected':''}>${h===24?'medianoche':hTxt(h)}</option>`).join('');
+    body=`<div class="dchoras"><label>Desde<select class="inp" id="dcDesde">${op(DC.off===0?Math.min(Math.max(new Date().getHours(),7),23):7,23,DC.desde)}</select></label><label>Hasta<select class="inp" id="dcHasta">${op(DC.desde+1,24,DC.hasta)}</select></label></div>
+    <p class="hint">${DC.hasta-DC.desde>=5?'Con este tiempo te proponemos dos eventos con horario y una visita a algún lugar.':'Con este tiempo te proponemos hasta tres eventos con horario.'}</p>`; }
+  if(p===2) body=`<div class="chips">${Object.entries(CON).map(([k,c])=>chip('data-dccon',k,DC.con===k,c.n)).join('')}</div>`;
+  if(p===3) body=`<p class="hint" style="margin:0 0 10px">Elige las que te queden bien. Puedes elegir varias.</p><div class="chips">${chip('data-dczona','',!DC.zonas.length,'Cualquier zona')}${Object.entries(ZONAS).filter(([k])=>k!=='linea').map(([k,z])=>chip('data-dczona',k,DC.zonas.includes(k),z.n)).join('')}</div>`;
+  if(p===4) body=`<p class="hint" style="margin:0 0 10px">Marca las que quieras considerar. Puedes elegir varias.</p><div class="chips">${chip('data-dccat','',!DC.cats.length,'De todo un poco')}${Object.entries(CATS).map(([k,c])=>`<button class="chip" data-dccat="${k}" aria-pressed="${DC.cats.includes(k)}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div>`;
+  if(p===5) body=`<div class="chips">${Object.entries(DC_PRESU).map(([k,v])=>chip('data-dcpresu',k,DC.presu===k,v)).join('')}</div>`;
+  const listo=p!==2||DC.con;
+  return `<div class="dcwiz"><span class="eyebrow">Ármame un día completo · Paso ${p+1} de ${DC_PASOS.length}</span>
+    <div class="dcbar"><i style="width:${(p+1)/DC_PASOS.length*100}%"></i></div>
+    <h2>${DC_PASOS[p]}</h2>${body}
+    <div class="row dcnav">${p?'<button class="btn" id="dcAtras">← Atrás</button>':'<span></span>'}${p<DC_PASOS.length-1?`<button class="btn primary" id="dcSig" ${listo?'':'disabled'}>Siguiente →</button>`:`<button class="btn primary" id="dcArmar">${I.dice}Armar mi día</button>`}</div></div>`;
+}
+function abrirDC(){ DC.paso=0; openModal(dcPasoHTML(),bindDC); }
+function bindDC(){
+  const again=()=>{ saveDC(); refreshTop(dcPasoHTML(),bindDC); }, q=s=>document.querySelectorAll('#mBody '+s);
+  q('[data-dcoff]').forEach(b=>b.onclick=()=>{ DC.off=+b.dataset.dcoff; DC.desde=null; again(); });
+  const f=document.getElementById('dcFecha'); if(f) f.onchange=()=>{ const o=offOfDate(new Date(f.value+'T00:00')); if(o>=0&&o<=MAXOFF){ DC.off=o; DC.desde=null; again(); } };
+  const d=document.getElementById('dcDesde'), h=document.getElementById('dcHasta');
+  if(d) d.onchange=()=>{ DC.desde=+d.value; if(DC.hasta<=DC.desde) DC.hasta=Math.min(24,DC.desde+3); again(); };
+  if(h) h.onchange=()=>{ DC.hasta=+h.value; again(); };
+  q('[data-dccon]').forEach(b=>b.onclick=()=>{ DC.con=b.dataset.dccon; again(); });
+  const multi=(attr,key)=>q(`[${attr}]`).forEach(b=>b.onclick=()=>{ const v=b.getAttribute(attr); DC[key]=!v?[]:DC[key].includes(v)?DC[key].filter(x=>x!==v):[...DC[key],v]; again(); });
+  multi('data-dczona','zonas'); multi('data-dccat','cats');
+  q('[data-dcpresu]').forEach(b=>b.onclick=()=>{ DC.presu=b.dataset.dcpresu; again(); });
+  const a=document.getElementById('dcAtras'); if(a) a.onclick=()=>{ DC.paso--; again(); };
+  const n=document.getElementById('dcSig'); if(n) n.onclick=()=>{ DC.paso++; again(); };
+  const ar=document.getElementById('dcArmar'); if(ar) ar.onclick=()=>{ DC.listo=true; DC.pick={}; DC.fuera=[]; saveDC(); closeModal(); render(); setTimeout(()=>{ const t=document.getElementById('dia-completo'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); },60); };
+}
+// Funciones del día elegido (un evento con varias fechas cuenta con la función de ese día)
+function eventosDelDia(off){
+  const out=[]; EVENTS.forEach(e=>{ if(e.range||e.mod==='linea') return; const fs=e.fechas&&e.fechas.length>1?e.fechas.filter(f=>f.off===off).map(f=>ev(f.id)||{...e,off:f.off,h:f.h}):e.off===off?[e]:[]; out.push(...fs); });
+  return out;
+}
+function dcPasa(e){ const pr=e.price;
+  if(DC.presu==='gratis'&&pr!==0) return false; if(DC.presu==='p200'&&(pr==null||pr>200)) return false; if(DC.presu==='p500'&&(pr==null||pr>500)) return false;
+  if(DC.zonas.length&&!DC.zonas.includes(e.zona)) return false; if(DC.con&&conFit(e,DC.con)<0) return false; return true; }
+const dcDur=e=>['concierto','teatro','danza','cine'].includes(e.cat)?2:1.5;
+function dcPuntos(e){ return esperado(e)+(DC.cats.length&&DC.cats.includes(e.cat)?6:0)+(DC.con?conFit(e,DC.con)*1.5:0)+(e.rec?1:0); }
+function armarDC(){
+  const lapso=DC.hasta-DC.desde, meta=lapso>=5?2:3;
+  const ops=eventosDelDia(DC.off).filter(e=>{ const h=hNum(e.h); return h!=null&&h>=DC.desde&&h+1<=DC.hasta&&dcPasa(e)&&!DC.fuera.includes(e.id)&&(!DC.cats.length||DC.cats.includes(e.cat)); })
+    .map(e=>({e,h:hNum(e.h),p:dcPuntos(e)})).sort((a,b)=>b.p-a.p);
+  const elegidos=[], cabe=(x)=>elegidos.every(y=>x.h>=y.h+dcDur(y.e)+.5||x.h+dcDur(x.e)+.5<=y.h), tipos=()=>elegidos.map(y=>y.e.cat);
+  Object.values(DC.pick).forEach(id=>{ const x=ops.find(o=>o.e.id===id); if(x&&cabe(x)) elegidos.push(x); });
+  for(const x of ops){ if(elegidos.length>=meta) break; if(!elegidos.includes(x)&&cabe(x)&&!tipos().includes(x.e.cat)) elegidos.push(x); }
+  for(const x of ops){ if(elegidos.length>=meta) break; if(!elegidos.includes(x)&&cabe(x)) elegidos.push(x); }
+  elegidos.sort((a,b)=>a.h-b.h);
+  const paradas=elegidos.map(x=>({tipo:'ev',e:x.e,ini:x.h,fin:Math.min(DC.hasta,x.h+dcDur(x.e)),alt:ops.filter(o=>o!==x&&!elegidos.includes(o)).map(o=>o.e)}));
+  // Un lugar para visitar en el hueco más grande (o para completar las tres paradas)
+  if(paradas.length<3){
+    const huecos=[]; let t=DC.desde; paradas.forEach(p=>{ if(p.ini-t>=1.5) huecos.push([t,p.ini]); t=p.fin+.5; }); if(DC.hasta-t>=1.5) huecos.push([t,DC.hasta]);
+    huecos.sort((a,b)=>(b[1]-b[0])-(a[1]-a[0]));
+    const zonaRef=(paradas[0]&&paradas[0].e.zona)||DC.zonas[0]||'centro';
+    for(const [a,b] of huecos){ if(paradas.length>=3) break;
+      const ini=a, fin=Math.min(b,a+(b-a>=3?2.5:1.5));
+      const lugares=ATR.filter(x=>{ const tp=tipoOf(x); if(DC.zonas.length&&!DC.zonas.includes(x.zona)) return false; if(tp==='pueblo'||tp==='montana') return lapso>=7&&ini<14; if(tp==='museo') return fin<=18.5&&dOf(DC.off).getDay()!==1; return true; })
+        .filter(x=>!paradas.some(p=>p.a&&p.a.id===x.id)&&!DC.fuera.includes('atr:'+x.id))
+        .sort((x,y)=>(y.zona===zonaRef)-(x.zona===zonaRef)||(ATR_FOTO[y.id]?1:0)-(ATR_FOTO[x.id]?1:0));
+      const temporada=EVENTS.filter(e=>e.range&&e.mod!=='linea'&&e.off<=DC.off&&dcPasa(e)&&(UNAVEZ.test(e.t)||esFest(e))&&!DC.fuera.includes(e.id));
+      const k='hueco'+Math.round(ini*2), elegido=DC.pick[k];
+      const cand=[...temporada.map(e=>({e})),...lugares.map(a=>({a}))];
+      let c=cand.find(o=>(o.e&&o.e.id===elegido)||(o.a&&'atr:'+o.a.id===elegido))||cand[0];
+      if(c) paradas.push({tipo:c.e?'ev':'atr',e:c.e,a:c.a,ini,fin,libre:true,k,alt:cand.filter(o=>o!==c)});
+    }
+    paradas.sort((a,b)=>a.ini-b.ini);
+  }
+  return paradas;
+}
+// Sugerencia para comer: se abre Google Maps con una búsqueda cerca de la parada (no guardamos datos de restaurantes)
+function comidaDC(paradas){
+  const out=[], cubre=(a,b)=>DC.desde<b&&DC.hasta>a;
+  const tipo=[[8,11.5,'Desayuno','desayunos'],[13,16.5,'Comida','restaurantes'],[19,23.5,'Cena','cenar']].filter(([a,b])=>cubre(a,b));
+  const ps=paradas.slice().sort((x,y)=>x.ini-y.ini), huecos=[]; let t=DC.desde, prev=null;
+  ps.forEach(p=>{ huecos.push({a:t,b:p.ini,antes:prev,despues:p}); t=Math.max(t,p.fin); prev=p; }); huecos.push({a:t,b:DC.hasta,antes:prev,despues:null});
+  tipo.forEach(([a,b,n,q])=>{
+    const h=huecos.map(g=>({...g,s:Math.max(g.a,a),e:Math.min(g.b,b)})).filter(g=>g.e-g.s>=.75).sort((x,y)=>(y.e-y.s)-(x.e-x.s))[0]; if(!h) return;
+    const cerca=h.antes||h.despues; if(!cerca) return;
+    const lugar=cerca.e?cerca.e.venue.split(',')[0]:cerca.a.n, zona=ZONAS[(cerca.e||cerca.a).zona]?.n||'Monterrey';
+    const extra=DC.presu==='gratis'||DC.presu==='p200'?' económicos':DC.con==='familia'?' familiares':DC.con==='pareja'?' para una cita':'';
+    out.push({n,hora:h.s,lugar,url:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(`${q}${extra} cerca de ${lugar}, ${zona}, Nuevo León`)});
+  });
+  return out;
+}
+function diaDCHTML(){
+  if(!DC.listo) return '';
+  const paradas=armarDC(), comidas=comidaDC(paradas), dia=DC.off===0?'Hoy':DC.off===1?'Mañana':relDay(DC.off);
+  const precios=paradas.filter(p=>p.e).map(p=>p.e.price), total=precios.filter(x=>typeof x==='number').reduce((a,b)=>a+b,0), sinPrecio=precios.some(x=>x==null);
+  const items=[...paradas.map(p=>({h:p.ini,p})),...comidas.map(c=>({h:c.hora,c}))].sort((a,b)=>a.h-b.h);
+  const resumen=[CON[DC.con]?.n,DC.zonas.length?DC.zonas.map(z=>ZONAS[z].n).join(', '):'cualquier zona',DC.presu==='todo'?'cualquier presupuesto':DC_PRESU[DC.presu].toLowerCase()].filter(Boolean).join(' · ');
+  return `<div class="itin" id="dia-completo">
+    <div class="itin-h"><span class="eyebrow">Tu día completo</span><h3>${dia}${DC.off>1?'':', '+longDate(DC.off)} · de ${hTxt(DC.desde)} a ${DC.hasta===24?'medianoche':hTxt(DC.hasta)}</h3>
+      <p>${esc(resumen)}${paradas.length?` · ${total?`desde $${total} por persona`:sinPrecio?'revisa los precios':'todo gratis'}`:''}</p></div>
+    ${!paradas.length?`<div class="it-none">No encontramos eventos con lo que elegiste en ese horario. Prueba con más zonas, otro tipo de actividad u otro presupuesto.</div>`:''}
+    <div class="tl itin-tl">${items.map(({p,c})=>{
+      if(c) return `<div class="tl-day">${hTxt(c.hora)} · ${c.n}</div><div class="it-food"><span>🍽️</span><div><b>${c.n} cerca de ${esc(c.lugar)}</b><small>Te abrimos Google Maps con opciones cerca. Ahí puedes ver las calificaciones y elegir la que más te guste.</small><a class="btn small" href="${c.url}" target="_blank" rel="noopener">Ver opciones en Google Maps ↗</a></div></div>`;
+      const col=p.libre?'#1AC1B9':p.ini<12?'#FDBD1A':p.ini<19?'#FF8017':'#CBA6FF', x=p.e||p.a, img=p.e?evImg(p.e):atrImg(p.a), open=p.e?`data-open="${p.e.id}"`:`data-atr="${p.a.id}"`;
+      return `<div class="tl-day">${hTxt(p.ini)}${p.libre?' a '+hTxt(p.fin):''}${p.libre?' · Visita':''}</div>
+        <div class="it-stop" style="--c:${col};--ci:${inkOn(col)}">
+          <img src="${img}" alt=""${p.e?fitAttr(p.e):''} loading="lazy" ${open}>
+          <div class="it-b"><span class="ev-when">${p.e?(p.libre?'En temporada · ':'')+priceTxt(p.e.price):TIPOS[tipoOf(p.a)]+' · '+esc(p.a.cos)}</span><b>${esc(p.e?p.e.t:p.a.n)}</b><small>${esc(p.e?p.e.venue:p.a.d.split('. ')[0])}${' · '+(ZONAS[x.zona]?.n||'')}</small>
+            <div class="row"><button class="btn small" ${open}>Ver</button><button class="btn small" data-dcch="${p.libre?p.k:p.e.id}" ${p.alt&&p.alt.length?'':'disabled'}>↻ Cambiar</button><button class="btn ghost small" data-dcx="${p.e?p.e.id:'atr:'+p.a.id}">Quitar</button></div></div></div>`; }).join('')}</div>
+    <div class="row itin-act">${paradas.some(p=>p.e)?`<button class="btn primary" id="dcSave">${I.cal}Guardar el día en mi calendario</button>`:''}<button class="btn" id="dcShare">${I.share}Compartir por WhatsApp</button><button class="btn ghost" id="dcEditar">Cambiar respuestas</button></div>
+  </div>`;
+}
+function bindDiaDC(){
+  const keep=()=>{ saveDC(); const y=window.scrollY; render(); window.scrollTo(0,y); };
+  document.querySelectorAll('[data-dcch]').forEach(b=>b.onclick=()=>{ const k=b.dataset.dcch, ps=armarDC(), p=ps.find(x=>(x.libre?x.k:x.e&&x.e.id)===k); if(!p||!p.alt.length) return;
+    if(p.libre){ const o=p.alt[0]; DC.pick[k]=o.e?o.e.id:'atr:'+o.a.id; DC.fuera.push(p.e?p.e.id:'atr:'+p.a.id); }
+    else { const o=p.alt[0]; DC.fuera.push(p.e.id); Object.keys(DC.pick).forEach(z=>{ if(DC.pick[z]===p.e.id) delete DC.pick[z]; }); DC.pick['e'+o.id]=o.id; }
+    keep(); toast('Parada cambiada'); });
+  document.querySelectorAll('[data-dcx]').forEach(b=>b.onclick=()=>{ DC.fuera.push(b.dataset.dcx); keep(); });
+  const ed=document.getElementById('dcEditar'); if(ed) ed.onclick=abrirDC;
+  const sv=document.getElementById('dcSave'); if(sv) sv.onclick=()=>requireLogin(()=>{ const ids=armarDC().filter(p=>p.e&&!p.libre).map(p=>p.e.id);
+    ids.forEach(id=>{ if(!S.saved.includes(id)) S.saved.push(id); });
+    S.plans.push({id:crypto.randomUUID(),name:`Día completo · ${relDay(DC.off)}${DC.con?' · '+CON[DC.con].n.toLowerCase():''}`,ids}); persist(); toast('Guardado en tu calendario y en Mis planes'); render(); });
+  const sh=document.getElementById('dcShare'); if(sh) sh.onclick=()=>{ const ps=armarDC();
+    copy(`Plan para ${relDay(DC.off).toLowerCase()}:\n`+ps.map(p=>`• ${hTxt(p.ini)}: ${p.e?p.e.t+' – '+p.e.venue:'Visita '+p.a.n}`).join('\n')+`\n¿Vamos? Visto en Mty Movida`,'Plan copiado. Pégalo en WhatsApp'); };
+}
+
 /* ---------- Vista: ¿Qué plan? (Ármame un plan + lo que hay ese día) ---------- */
 const DIA_TXT={hoy:'hoy',manana:'mañana',finde:'este fin',semana:'esta semana'};
 const DIA_TABS={hoy:'Hoy',manana:'Mañana',finde:'Este fin',semana:'Esta semana',fecha:'Otro día'};
@@ -1710,8 +1858,8 @@ function viewPlan(){
       <div class="hoycard">${SILLA}<span class="eyebrow" style="color:inherit;opacity:.8">${PA.cuando==='hoy'?longDate(0):PA.cuando==='manana'?longDate(1):PA.cuando==='fecha'?'Elige cualquier día del próximo mes':'Elige el día'}</span>
         <h1>¿Qué plan <span class="dia">${dia}</span>?</h1>
         <div class="daytabs" role="group" aria-label="¿Para cuándo?">${Object.entries(DIA_TABS).map(([k,v])=>`<button data-pa="cuando" data-v="${k}" aria-pressed="${PA.cuando===k}">${v}</button>`).join('')}${PA.cuando==='fecha'?`<label class="dayinp"><span class="sr">Fecha</span><input type="date" id="paFecha" value="${isoOf(PA.foff)}" min="${isoOf(0)}" max="${isoOf(MAXOFF)}"></label>`:''}</div>
-        <p>${list.length?`Hay ${list.length} eventos ${dia}.`:`No hay eventos registrados para ${dia}.`} Dinos tu mood y te armamos un plan.</p>
-        <a class="btn lila" href="#plan-armado" data-goplan>${I.dice}Ármame un plan</a></div>
+        <p>${list.length?`Hay ${list.length} eventos ${dia}.`:`No hay eventos registrados para ${dia}.`} Te armamos un día completo con horarios.</p>
+        <button class="btn lila" id="dcAbrir">${I.dice}Ármame un día completo</button></div>
       <div class="hoystats">
         <button class="stat" data-qd="todo"><b>${list.length}</b><span>eventos ${PA.cuando==='fecha'?'ese día':dia}</span></button>
         <button class="stat" data-qd="gratis"><b>${free}</b><span>gratis</span></button>
@@ -1719,14 +1867,16 @@ function viewPlan(){
         <button class="stat" id="surprise"><b>${I.dado}</b><span>Sorpréndeme</span></button>
       </div>
     </div>
-    <div class="phead" id="plan-armado"><div><span class="script">Tú dime el mood</span><h2 class="h2plan">Ármame un plan para ${dia}</h2><p>Contesta unas preguntas y te damos un plan, o un día completo con varias paradas. Si algo no te convence, cámbialo.</p></div></div>
-    <div class="wiz"><aside class="panel"><div class="fgroup"><h4>¿Qué quieres armar?</h4><div class="seg modo" role="group"><button data-pa="modo" data-v="uno" aria-pressed="${PA.modo!=='completo'}">Un plan</button><button data-pa="modo" data-v="completo" aria-pressed="${PA.modo==='completo'}">Un día completo</button></div>${PA.modo==='completo'?'<p class="hint">Ideal para una cita: varias cosas en el mismo día.</p>':''}</div>
+    ${DC.listo?`<div style="margin-bottom:28px">${diaDCHTML()}</div>`:''}
+    <div class="phead" id="plan-armado"><div><span class="script">Tú dime el mood</span><h2 class="h2plan">Un plan para ${dia}</h2><p>Te sugerimos uno según tus preferencias. Si no te convence, cámbialo o ajusta tus preferencias.</p></div></div>
+    <details class="prefs" ${PA.prefsOpen?'open':''}><summary>Preferencias <span class="opt">${[MOODS[PA.mood]?.n,CON[PA.con]?.n,(PA.zonas||[]).length?(PA.zonas.length+' zonas'):'',(PA.cats||[]).length?(PA.cats.length+' tipos'):'',PA.mom&&PA.mom!=='todo'?HORA[PA.mom]:'',PA.presu&&PA.presu!=='todo'?PRESU[PA.presu]:''].filter(Boolean).join(' · ')}</span></summary>
+      <div class="prefs-b">
       ${grp('mood','¿Qué mood traes?',MOODS)}${grp('con','¿Con quién vas?',CON)}
       <div class="fgroup"><h4>¿En qué zona? <span class="opt">Opcional · puedes elegir varias</span></h4><div class="chips">${Object.entries(ZONAS).map(([k,z])=>`<button class="chip" data-pzona="${k}" aria-pressed="${(PA.zonas||[]).includes(k)}">${z.n}</button>`).join('')}</div>${(PA.zonas||[]).length?'<button class="linkish" id="pzonaClear" style="align-self:flex-start;margin-top:6px">Cualquier zona</button>':''}</div>
-      ${PA.modo==='completo'?`<div class="fgroup"><h4>¿Qué momentos del día? <span class="opt">Elige uno o varios</span></h4><div class="chips">${MOM_ORD.map(m=>`<button class="chip" data-pmom="${m}" aria-pressed="${(PA.moms||[]).includes(m)}">${MOMENTOS[m]}</button>`).join('')}</div></div>`:grp('mom','¿A qué hora?',HORA)}
-      <div class="fgroup"><h4>¿Qué tipo de actividad? <span class="opt">Opcional · puedes elegir varias</span></h4><div class="chips">${Object.entries(CATS).map(([k,c])=>`<button class="chip" data-pcat="${k}" aria-pressed="${(PA.cats||[]).includes(k)}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div>${(PA.cats||[]).length?'<button class="linkish" id="pcatClear" style="align-self:flex-start;margin-top:6px">Quitar tipos de actividad</button>':''}</div>
-      ${grp('presu','¿Cuánto quieres gastar?',PRESU)}</aside>
-    <section style="min-width:0">${PA.modo==='completo'?diaCompletoHTML():result}</section></div>
+      ${grp('mom','¿A qué hora?',HORA)}
+      <div class="fgroup"><h4>¿Qué tipo de actividad? <span class="opt">Opcional · puedes elegir varias</span></h4><div class="chips">${Object.entries(CATS).map(([k,c])=>`<button class="chip" data-pcat="${k}" aria-pressed="${(PA.cats||[]).includes(k)}"><i style="background:${c.c}"></i>${c.n}</button>`).join('')}</div>${(PA.cats||[]).length?'<button class="linkish" id="pcatClear" style="align-self:flex-start;margin-top:6px">Cualquier actividad</button>':''}</div>
+      ${grp('presu','¿Cuánto quieres gastar?',PRESU)}</div></details>
+    <section style="min-width:0;margin-bottom:28px">${result}</section>
     <div class="sechead"><h2>Todo lo que hay ${dia}</h2><a class="btn small" href="#eventos" data-qd="todo">Ver con filtros</a></div>
     ${groups||'<div class="empty"><b>No hay eventos registrados</b>Prueba con otro día o visita una atracción.</div>'}
     <section class="momento"><h2>Si prefieres un plan sin horario</h2><div class="atrgrid">${quiet.map(atrCard).join('')}</div></section>
@@ -1740,7 +1890,9 @@ function bindPlan(){
   document.querySelectorAll('[data-pmom]').forEach(b=>b.onclick=()=>{ const m=b.dataset.pmom; PA.moms=(PA.moms||[]).includes(m)?PA.moms.filter(x=>x!==m):[...(PA.moms||[]),m]; savePA(); const y=window.scrollY; render(); window.scrollTo(0,y); });
   document.querySelectorAll('[data-pzona]').forEach(b=>b.onclick=()=>{ const k=b.dataset.pzona; PA.zonas=(PA.zonas||[]).includes(k)?PA.zonas.filter(x=>x!==k):[...(PA.zonas||[]),k]; savePA(); const y=window.scrollY; render(); window.scrollTo(0,y); });
   const pzc=document.getElementById('pzonaClear'); if(pzc) pzc.onclick=()=>{ PA.zonas=[]; savePA(); const y=window.scrollY; render(); window.scrollTo(0,y); };
-  bindDiaCompleto();
+  bindDiaDC();
+  const dca=document.getElementById('dcAbrir'); if(dca) dca.onclick=abrirDC;
+  const pf=document.querySelector('details.prefs'); if(pf) pf.ontoggle=()=>{ PA.prefsOpen=pf.open; savePA(); };
   const pcc=document.getElementById('pcatClear'); if(pcc) pcc.onclick=()=>{ PA.cats=[]; savePA(); const y=window.scrollY; render(); window.scrollTo(0,y); };
   const fi=document.getElementById('paFecha'); if(fi) fi.onchange=()=>{ if(!fi.value) return; const o=offOfDate(new Date(fi.value+'T00:00')); if(o<0||o>MAXOFF) return; PA.foff=o; try{ localStorage.setItem('mtymovida-pa',JSON.stringify(PA)); }catch(e){} const y=window.scrollY; render(); window.scrollTo(0,y); };
   document.querySelectorAll('[data-qd]').forEach(b=>b.onclick=ev=>{ ev.preventDefault(); clearFiltersSilent(); F.cuando=PA.cuando; if(PA.cuando==='fecha') F.fecha=isoOf(PA.foff); if(b.dataset.qd==='gratis') F.precio='gratis'; if(b.dataset.qd==='exterior') F.amb.add('exterior'); go('eventos'); });
