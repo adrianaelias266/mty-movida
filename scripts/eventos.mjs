@@ -262,9 +262,8 @@ async function filasMarco(f) {
 // Funciones de un evento de Superboletos con varias fechas: se leen de la página del evento
 async function funcionesSuperboletos(url) {
   const h = await traer(url); if (!h) return [];
-  const MES = { enero: 1, febrero: 2, marzo: 3, abril: 4, mayo: 5, junio: 6, julio: 7, agosto: 8, septiembre: 9, octubre: 10, noviembre: 11, diciembre: 12 };
-  const fs = [...limpiar(h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ')).matchAll(/(?:lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo)\s+(\d{1,2})\s+(\w+)\s+(\d{4})\s+(\d{1,2}):(\d{2})/gi)]
-    .map(m => MES[m[2].toLowerCase()] ? { fecha: `${m[3]}-${String(MES[m[2].toLowerCase()]).padStart(2, '0')}-${m[1].padStart(2, '0')}`, hora: `${m[4].padStart(2, '0')}:${m[5]}` } : null).filter(x => x && enRango(x.fecha));
+  const fs = [...h.matchAll(/"presentation_date":"(\d{2})\/(\d{2})\/(\d{4})","presentation_time":"(\d{1,2}):(\d{2})"/g)]
+    .map(m => ({ fecha: `${m[3]}-${m[2]}-${m[1]}`, hora: `${m[4].padStart(2, '0')}:${m[5]}` })).filter(x => enRango(x.fecha));
   return [...new Map(fs.map(x => [x.fecha + x.hora, x])).values()].sort((a, b) => (a.fecha + a.hora).localeCompare(b.fecha + b.hora));
 }
 async function filasSuperboletos(f) {
