@@ -1986,8 +1986,8 @@ function viewHoy(){
   const hay=HP.con||HP.zonas.length||HP.cats.length||HP.presu!=='todo'||HP.mom!=='todo';
   return `<div class="wrap page">
     <span class="script" style="display:block;font-size:26px;color:var(--accent);margin-top:6px">Sal y únete a la movida</span>
+    <p class="hint" style="margin:4px 0 18px">${S.user&&S.onboarded?'Según tus gustos.':'De todo lo que pasa hoy en la ciudad elegimos tres.'} Si alguno no te convence, cámbialo por uno parecido.</p>
     <div class="subhead"><h2>Elegidos para hoy</h2><span>${longDate(0).replace(/^./,c=>c.toUpperCase())}</span></div>
-    <p class="hint" style="margin:-6px 0 14px">${S.user&&S.onboarded?'Según tus gustos.':'De todo lo que pasa hoy en la ciudad elegimos tres.'} Si alguno no te convence, cámbialo por uno parecido.</p>
     ${HOME_CTX.some((_,i)=>PS['h'+i]&&PS['h'+i].cur)?`<div class="plans3">${HOME_CTX.map((_,i)=>planCard('h'+i)).join('')}</div>`:`<div class="empty"><b>No encontramos planes con esas preferencias</b>Prueba quitando alguna, o ${HP.cats.includes('naturaleza')?'visita un parque o una montaña en <a href="#atracciones">Atracciones</a>':'arma un <a href="#plan">plan completo</a>'}.</div>`}
     <section class="panel perso" id="personaliza">
       <div class="sechead" style="margin:0"><h2>Personalízalo</h2>${hay?'<button class="btn ghost small" id="hpReset">Quitar preferencias</button>':''}</div>
