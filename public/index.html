@@ -1519,7 +1519,10 @@ function topWeek(){
   let l=EVENTS.filter(e=>e.off>=0&&e.off<=6&&e.mod!=='linea');
   if(l.length<8) l=EVENTS.filter(e=>e.off>=0&&e.off<=13&&e.mod!=='linea');
   const vistos=new Set();
-  return l.map(e=>({e,p:esperado(e)})).sort((a,b)=>b.p-a.p||a.e.off-b.e.off).map(o=>o.e).filter(e=>{ const k=String(e.t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'').slice(0,18); if(vistos.has(k)) return false; vistos.add(k); return true; }).slice(0,8);
+  const orden=l.map(e=>({e,p:esperado(e)})).sort((a,b)=>b.p-a.p||a.e.off-b.e.off).map(o=>o.e).filter(e=>{ const k=String(e.t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'').slice(0,18); if(vistos.has(k)) return false; vistos.add(k); return true; });
+  const unaVez=e=>esFest(e)||UNAVEZ.test(e.t), top=orden.slice(0,8), extra=orden.slice(8).filter(unaVez);   // siempre al menos 2 de las cosas que pasan una vez al año
+  while(top.filter(unaVez).length<2&&extra.length){ const i=top.map(unaVez).lastIndexOf(false); if(i<0) break; top.splice(i,1); top.push(extra.shift()); }
+  return top;
 }
 function viewInicio(){
   const top=topWeek(), month=EVENTS.filter(e=>e.off>=0&&e.off<=MAXOFF).length;
