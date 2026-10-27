@@ -634,6 +634,11 @@ a.stat{text-decoration:none}
 .fest .fst.ahora{background:#F9447F;color:#fff}.fest .fst.fechas{background:#1AC1B9;color:#06302E}
 .fmonth{grid-column:1/-1;margin:14px 0 0;font-family:var(--f-display);font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .fmonth:first-child{margin-top:0}
+.merlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px}
+.merrow{display:flex;gap:10px;align-items:flex-start;text-align:left;background:var(--surface);border:0;border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);font:inherit;color:inherit;cursor:pointer}
+.merrow b{display:block;font-size:14.5px}.merrow small{color:var(--muted);font-size:12.5px}
+.merdot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--line);margin-top:5px}.merdot.g{background:#FF8017}
+.note a{color:inherit}
 .note{background:var(--sun-soft);color:var(--sun);border-radius:8px;padding:10px 14px;font-size:13px;font-weight:500;margin-bottom:18px}
 
 /* Formulario */
@@ -959,7 +964,7 @@ const ATR_FOTO={
 };
 const fotoUrl=f=>f[0][0]==='!'?'https://upload.wikimedia.org/wikipedia/commons/'+f[0].slice(1):WM+f[0];
 const atrCredit=a=>{ const f=ATR_FOTO[a.id]; if(!f&&a.credit) return `Foto: <a href="${esc(a.credit.url||'#')}" target="_blank" rel="noopener" style="color:#fff">${esc(a.credit.autor)}</a> · ${esc(a.credit.licencia)} · ${esc(a.credit.fuente)}`; return f?`Foto: ${esc(f[1])} · ${f[2]} · <a href="https://commons.wikimedia.org/wiki/${encodeURI(f[3])}" target="_blank" rel="noopener" style="color:#fff">Wikimedia Commons</a>`:'Imagen ilustrativa'; };
-const atrImg = a => (ATR_FOTO[a.id]&&fotoUrl(ATR_FOTO[a.id])) || a.img || cover(a.tipo==='montana'?'mountain':a.id==='grutas'?'mountain':a.tipo==='diversion'?'parque':SCENES[a.tipo]?a.tipo:'parque', a.id, ATR_VARIANT[a.id]);
+const atrImg = a => (ATR_FOTO[a.id]&&fotoUrl(ATR_FOTO[a.id])) || a.img || cover(a.tipo==='montana'?'mountain':a.id==='grutas'?'mountain':a.tipo==='diversion'?'parque':a.tipo==='mercado'?'market':SCENES[a.tipo]?a.tipo:'parque', a.id, ATR_VARIANT[a.id]);
 
 const CI={
   danza:'<circle cx="13" cy="4" r="2"/><path d="M13 7l-3 5 4 2-1 7M10 12l-5-2M13 7l5 4M14 14l4 6"/>',
@@ -1341,7 +1346,7 @@ const ATR = [
   {id:'aquasplash',n:'Aqua Splash',tipo:'diversion',zona:'elcarmen',d:'Parque acuático con toboganes y albercas para niños, en El Carmen.',hor:'Todos los días, en temporada',cos:'Con costo de entrada',lle:'El Carmen, al norte de Monterrey',epo:'Verano'},
   {id:'bocaleones',n:'Parque Acuático Boca de Leones',tipo:'diversion',zona:'otros',d:'Balneario entre montañas en Bustamante, con albercas de agua de manantial y asadores.',hor:'Jueves a domingo, en temporada',cos:'Con costo de entrada',lle:'En Bustamante, a una hora y media al norte de Monterrey',epo:'Verano, llegando temprano'},
 ];
-const TIPOS = {museo:'Museos',parque:'Parques',montana:'Montaña y senderismo',diversion:'Diversión y parques acuáticos',pueblo:'Pueblos Mágicos',paseo:'Paseos'};
+const TIPOS = {museo:'Museos',parque:'Parques',montana:'Montaña y senderismo',diversion:'Diversión y parques acuáticos',pueblo:'Pueblos Mágicos',paseo:'Paseos',mercado:'Mercaditos'};
 const tipoOf = a => a.tipoLabel || a.tipo;
 
 /* ---------- Fechas ---------- */
@@ -1905,18 +1910,21 @@ function armarDC(){
     for(const [a,b] of huecos.slice(0,1)){
       const ini=a, fin=Math.min(b,a+(b-a>=3?2.5:1.5)), largo=Math.min(b,a+3);
       const nat=DC.cats.includes('naturaleza'), soloNat=nat&&DC.cats.length===1;
-      const lugares=ATR.filter(x=>{ const tp=tipoOf(x); if(DC.zonas.length&&!DC.zonas.includes(x.zona)) return false;
+      const diaN=DIAS_MER[dOf(DC.off).getDay()], merc=DC.turista||soloNat?[]:MER.filter(m=>m.grande&&m.dia===diaN&&(m.tarde?ini>=15&&ini<=19:ini>=8&&ini<=12)&&(!DC.zonas.length||DC.zonas.includes(m.zona))).map(merAtr);
+      const lugares=[...ATR,...merc].filter(x=>{ const tp=tipoOf(x); if(DC.zonas.length&&!DC.zonas.includes(x.zona)) return false;
         if(soloNat&&!['parque','montana'].includes(tp)) return false;
+        if(tp==='mercado') return true;
         if(DC.turista&&!ICONOS.includes(x.id)) return false;
         if(DC.turista&&tp==='pueblo') return lapso>=6&&ini<=13;
         if(tp==='montana'&&paradas.some(p=>p.a&&tipoOf(p.a)==='montana')) return false;
         if(tp==='diversion'){ const mes=dOf(DC.off).getMonth()+1; if(/acu[aá]tico|aqua|splash|boca de leones|divertiparque/i.test(x.n)&&(mes<4||mes>9)) return false; if(fin>19||(x.zona==='otros'&&lapso<7)) return false; }
         if(tp==='montana') return ini<=13&&b-a>=3; if(tp==='pueblo') return lapso>=7&&ini<14; if(tp==='museo') return fin<=18.5&&dOf(DC.off).getDay()!==1; return true; })
         .filter(x=>!paradas.some(p=>p.a&&p.a.id===x.id)&&!DC.fuera.includes('atr:'+x.id))
-        .sort((x,y)=>(DC.turista?ICONOS.indexOf(x.id)-ICONOS.indexOf(y.id):0)||(DC.con==='familia'?(tipoOf(y)==='diversion')-(tipoOf(x)==='diversion'):0)||(nat?({montana:2,parque:1}[tipoOf(y)]||0)-({montana:2,parque:1}[tipoOf(x)]||0):0)||(y.zona===zonaRef)-(x.zona===zonaRef)||(ATR_FOTO[y.id]?1:0)-(ATR_FOTO[x.id]?1:0));
+        .sort((x,y)=>(DC.turista?ICONOS.indexOf(x.id)-ICONOS.indexOf(y.id):0)||(DC.con==='familia'?(tipoOf(y)==='diversion')-(tipoOf(x)==='diversion'):0)||((DC.con==='pareja'||DC.con==='amigos'||DC.cats.includes('gastro'))?(tipoOf(y)==='mercado')-(tipoOf(x)==='mercado'):0)||(nat?({montana:2,parque:1}[tipoOf(y)]||0)-({montana:2,parque:1}[tipoOf(x)]||0):0)||(y.zona===zonaRef)-(x.zona===zonaRef)||(ATR_FOTO[y.id]?1:0)-(ATR_FOTO[x.id]?1:0));
       const temporada=EVENTS.filter(e=>e.range&&e.mod!=='linea'&&e.off<=DC.off&&dcPasa(e)&&(UNAVEZ.test(e.t)||esFest(e)||(DC.turista&&esIcono(e)))&&!DC.fuera.includes(e.id)&&!(DC._tit&&DC._tit.has(e.t))&&!paradas.some(p=>p.e&&p.e.id===e.id));
       const k='hueco'+DC.off+'_'+Math.round(ini*2), elegido=DC.pick[k];
-      const cand=DC.turista?[...lugares.map(a=>({a})),...temporada.map(e=>({e}))]:[...temporada.map(e=>({e})),...lugares.map(a=>({a}))];
+      const merPrimero=(DC.con==='pareja'||DC.con==='amigos'||DC.cats.includes('gastro'))&&lugares.some(x=>x.tipo==='mercado');
+      const cand=DC.turista||merPrimero?[...lugares.map(a=>({a})),...temporada.map(e=>({e}))]:[...temporada.map(e=>({e})),...lugares.map(a=>({a}))];
       let c=cand.find(o=>(o.e&&o.e.id===elegido)||(o.a&&'atr:'+o.a.id===elegido))||cand[0];
       if(c) paradas.push({tipo:c.e?'ev':'atr',e:c.e,a:c.a,ini,fin:c.a&&tipoOf(c.a)==='montana'?largo:fin,libre:true,k,alt:cand.filter(o=>o!==c)});
     }
@@ -1958,10 +1966,17 @@ function semanaDC(){
 }
 function enDia(d,fn){ const o=DC.off, f=DC.fuera, h=DC.desde; DC.off=d.off; DC.fuera=d.ctx.fuera; DC._tit=d.ctx.tit; DC.desde=d.ctx.desde; try{ return fn(); } finally { DC.off=o; DC.fuera=f; DC._tit=null; DC.desde=h; } }
 function diaSel(){ const sem=semanaDC(); const i=Math.min(DC.diaSel||0,sem.length-1); return {sem,i,d:sem[i]}; }
+// Ruta del plan en Google Maps: cada parada queda marcada y ahí se puede buscar comida en el camino
+function lugarMapa(p){ if(p.a&&p.a.mer) return `${p.a.mer.lat},${p.a.mer.lng}`; const x=p.e||p.a, z=ZONAS[x.zona]?.n||'Monterrey';
+  return p.e?`${p.e.venue.split(',').slice(0,2).join(',')}, ${z}, Nuevo León`:`${p.a.n}, ${z}, Nuevo León`; }
+function rutaMapa(paradas){ const l=paradas.filter(p=>p.e||p.a).sort((a,b)=>a.ini-b.ini).map(lugarMapa); if(!l.length) return null;
+  if(l.length===1) return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(l[0]);
+  return 'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(l[0])+'&destination='+encodeURIComponent(l.at(-1))+(l.length>2?'&waypoints='+encodeURIComponent(l.slice(1,-1).join('|')):'')+'&travelmode=driving'; }
 function diaDCHTML(){
   if(!DC.listo) return '';
   const {sem,i:si,d:dsel}=diaSel(), multi=sem.length>1, paradas=dsel.paradas, comidas=dsel.comidas, offD=dsel.off, dia=offD===0?'Hoy':offD===1?'Mañana':relDay(offD);
   const precios=paradas.filter(p=>p.e).map(p=>p.e.price), total=precios.filter(x=>typeof x==='number').reduce((a,b)=>a+b,0), sinPrecio=precios.some(x=>x==null);
+  const ruta=rutaMapa(paradas);
   const items=[...paradas.map(p=>({h:p.ini,p})),...comidas.map(c=>({h:c.hora,c}))].sort((a,b)=>a.h-b.h);
   const resumen=[DC.turista?'De visita en Monterrey':'',CON[DC.con]?.n,DC.zonas.length?DC.zonas.map(z=>ZONAS[z].n).join(', '):'cualquier zona',DC.presu==='todo'?'cualquier presupuesto':DC_PRESU[DC.presu].toLowerCase()].filter(Boolean).join(' · ');
   return `<div class="itin" id="dia-completo">
@@ -1972,14 +1987,14 @@ function diaDCHTML(){
     ${!paradas.length?`<div class="it-none">No encontramos eventos con lo que elegiste en ese horario. Prueba con más zonas, otro tipo de actividad u otro presupuesto.</div>`:''}
     <div class="tl itin-tl">${items.map(({p,c})=>{
       if(c&&c.noCabe) return `<div class="it-none">${c.ico} ${c.n}: no cupo en tu horario. Amplía las horas o quita alguna parada.</div>`;
-      if(c) return `<div class="tl-day">${hTxt(c.hora)} · ${c.n}</div><div class="it-food"><span>${c.ico}</span><div><b>${c.n} cerca de ${esc(c.lugar)}</b><small>Te abrimos Google Maps con opciones cerca. Ahí puedes ver las calificaciones y elegir la que más te guste.</small><a class="btn small" href="${c.url}" target="_blank" rel="noopener">Ver opciones en Google Maps ↗</a></div></div>`;
+      if(c) return `<div class="tl-day">${hTxt(c.hora)} · ${c.n}</div><div class="it-food"><span>${c.ico}</span><div><b>${c.n} cerca de ${esc(c.lugar)}</b><small>Te abrimos Google Maps con opciones cerca. Ahí puedes ver las calificaciones y elegir la que más te guste. Para ver qué te queda de camino, abre tu ruta y usa «Buscar en la ruta».</small><div class="row" style="gap:6px"><a class="btn small" href="${c.url}" target="_blank" rel="noopener">Ver opciones en Google Maps ↗</a>${ruta?`<a class="btn ghost small" href="${ruta}" target="_blank" rel="noopener">Ver mi ruta ↗</a>`:''}</div></div></div>`;
       const col=p.libre?'#1AC1B9':p.ini<12?'#FDBD1A':p.ini<19?'#FF8017':'#CBA6FF', x=p.e||p.a, img=p.e?evImg(p.e):atrImg(p.a), open=p.e?`data-open="${p.e.id}"`:`data-atr="${p.a.id}"`;
       return `<div class="tl-day">${hTxt(p.ini)}${p.libre?' a '+hTxt(p.fin):''}${p.libre?' · Visita':''}</div>
         <div class="it-stop" style="--c:${col};--ci:${inkOn(col)}">
           <img src="${img}" alt=""${p.e?fitAttr(p.e):''} loading="lazy" ${open}>
           <div class="it-b"><span class="ev-when">${p.e?(p.libre?'En temporada · ':'')+priceTxt(p.e.price):TIPOS[tipoOf(p.a)]+' · '+esc(p.a.cos)}</span><b>${esc(p.e?p.e.t:p.a.n)}</b><small>${esc(p.e?p.e.venue:p.a.d.split('. ')[0])}${' · '+(ZONAS[x.zona]?.n||'')}</small>
             <div class="row"><button class="btn small" ${open}>Ver</button><button class="btn small" data-dcch="${p.libre?p.k:p.e.id}" ${p.alt&&p.alt.length?'':'disabled'}>↻ Cambiar</button><button class="btn ghost small" data-dcx="${p.e?p.e.id:'atr:'+p.a.id}">Quitar</button></div></div></div>`; }).join('')}</div>
-    <div class="row itin-act">${paradas.some(p=>p.e)?`<button class="btn primary" id="dcSave">${I.cal}${multi?'Guardar toda la semana en mi calendario':'Guardar el día en mi calendario'}</button>`:''}<button class="btn" id="dcShare">${I.share}Compartir por WhatsApp</button><button class="btn ghost" id="dcEditar">${DC.custom?'Cambiar respuestas':'Personalizar mi plan'}</button>${DC.custom?'<button class="btn ghost" id="dcAuto">Volver al plan automático</button>':''}</div>
+    <div class="row itin-act">${paradas.some(p=>p.e)?`<button class="btn primary" id="dcSave">${I.cal}${multi?'Guardar toda la semana en mi calendario':'Guardar el día en mi calendario'}</button>`:''}${ruta?`<a class="btn" href="${ruta}" target="_blank" rel="noopener">${I.pin}Ver mi plan en el mapa</a>`:''}<button class="btn" id="dcShare">${I.share}Compartir por WhatsApp</button><button class="btn ghost" id="dcEditar">${DC.custom?'Cambiar respuestas':'Personalizar mi plan'}</button>${DC.custom?'<button class="btn ghost" id="dcAuto">Volver al plan automático</button>':''}</div>
   </div>`;
 }
 function bindDiaDC(){
@@ -2305,25 +2320,47 @@ function openGcal(){
 }
 
 /* ---------- Vista: Atracciones ---------- */
-let atrTipo='';
+let atrTipo='', MER=[], MERF={dia:'',zona:''};
+const DIAS_MER=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+fetch('data/mercaditos.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(!d) return; MER=(d.mercaditos||[]).map(m=>{
+  const dia=DIAS_MER.find(x=>m.dia.replace(':','').trim().toLowerCase()===x.toLowerCase())||m.dia.replace(':','').trim(), tarde=/vesp|vep|13:00/i.test(m.turno);
+  const n=(String(m.tam).match(/(\d+)/g)||[]).map(Number), cuadras=n.length?Math.max(...n):0;
+  return {...m,dia,tarde,cuadras,grande:cuadras>=10}; }); if(typeof render==='function'&&current==='atracciones'&&atrTipo==='mercado') render(); }).catch(()=>{});
+// Un mercadito como si fuera una atracción (para la ficha y para el plan)
+function merAtr(m){ if(typeof m==='string') m=MER.find(x=>'mer:'+x.id===m); if(!m) return null;
+  return {id:'mer:'+m.id,n:'Mercadito en '+m.n,tipo:'mercado',zona:m.zona,mer:m,d:`Mercadito sobre ruedas en ${m.colonia||'la colonia'}${m.municipio?', '+m.municipio:''}. Ocupa ${m.tam||'varias cuadras'}${m.nota?' ('+m.nota+')':''}.`,
+    hor:`${m.dia} por la ${m.tarde?'tarde':'mañana'}`,cos:'Entrada libre; lleva efectivo',lle:`<a href="https://www.google.com/maps/search/?api=1&query=${m.lat},${m.lng}" target="_blank" rel="noopener">Ver en Google Maps ↗</a>`,epo:m.tarde?'Al atardecer':'Temprano, antes del calor'}; }
+function merLista(){
+  const hoyD=new Date().getDay(), orden=[...Array(7).keys()].map(k=>DIAS_MER[(hoyD+k)%7]);
+  const l=MER.filter(m=>(!MERF.dia||m.dia===MERF.dia)&&(!MERF.zona||m.zona===MERF.zona));
+  const zonas=[...new Set(MER.map(m=>m.zona))].filter(z=>ZONAS[z]);
+  const fila=m=>`<button class="merrow" data-atr="mer:${m.id}"><span class="merdot ${m.grande?'g':''}"></span><span><b>${esc(m.n)}</b><small>${m.tarde?'Tarde':'Mañana'} · ${esc(m.colonia||'')}${m.municipio?' · '+esc(m.municipio):''}${m.tam?' · '+esc(m.tam):''}</small></span></button>`;
+  return `<div class="note">Mercaditos sobre ruedas, tianguis y pulgas, con datos de <a href="https://mercaditosenmtynl.blogspot.com/p/mercaditos-en-monterrey.html" target="_blank" rel="noopener">Mercaditos en Monterrey</a> (actualizados en 2021). Confirma antes de ir.</div>
+    <div class="chips" style="margin-bottom:10px">${['',...orden].map((d,k)=>`<button class="chip" data-merdia="${d}" aria-pressed="${MERF.dia===d}">${!d?'Todos los días':k===1?'Hoy ('+d.toLowerCase()+')':d}</button>`).join('')}</div>
+    <div class="chips" style="margin-bottom:16px"><button class="chip" data-merzona="" aria-pressed="${!MERF.zona}">Todas las zonas</button>${zonas.map(z=>`<button class="chip" data-merzona="${z}" aria-pressed="${MERF.zona===z}">${ZONAS[z].n}</button>`).join('')}</div>
+    ${!MER.length?'<p>Cargando mercaditos…</p>':!l.length?'<div class="empty"><b>No hay mercaditos con esos filtros</b>Prueba con otro día o zona.</div>':orden.filter(d=>l.some(m=>m.dia===d)).map(d=>`<section class="momento"><h2>${d}</h2><div class="merlist">${l.filter(m=>m.dia===d).sort((a,b)=>b.cuadras-a.cuadras).map(fila).join('')}</div></section>`).join('')}
+    <p class="pie">El punto naranja marca los mercaditos grandes, de 10 cuadras o más.</p>`;
+}
 function atrCard(a){ return `<button class="atr" data-atr="${a.id}"><img src="${atrImg(a)}" alt="" loading="lazy"><span class="tx"><span class="eyebrow">${TIPOS[tipoOf(a)]} · ${ZONAS[a.zona].n}</span><h3>${esc(a.n)}</h3><p>${esc(a.d)}</p></span></button>`; }
 function viewAtr(){
-  const list=ATR.filter(a=>!atrTipo||tipoOf(a)===atrTipo);
+  const list=ATR.filter(a=>!atrTipo||tipoOf(a)===atrTipo), esMer=atrTipo==='mercado';
   return `<div class="wrap page"><div class="phead"><div><span class="script">Para cualquier día</span><h1>Atracciones de Monterrey y sus alrededores</h1><p>Museos, parques, montañas, paseos y Pueblos Mágicos para planear una salida sin depender de un horario.</p></div></div>
     <div class="chips" style="margin-bottom:16px"><button class="chip" data-tipo="" aria-pressed="${!atrTipo}">Todas</button>${Object.entries(TIPOS).map(([k,n])=>`<button class="chip" data-tipo="${k}" aria-pressed="${atrTipo===k}">${n}</button>`).join('')}</div>
-    <div class="note">Verifica horarios y costos antes de ir.</div>
-    <div class="atrgrid">${list.map(atrCard).join('')}</div>
+    ${esMer?merLista():`<div class="note">Verifica horarios y costos antes de ir.</div>
+    <div class="atrgrid">${list.map(atrCard).join('')}</div>`}
     <p class="pie">Fotos de Wikimedia Commons con licencia libre. El autor y la licencia de cada foto aparecen al abrir la ficha de cada lugar.</p></div>`;
 }
-function bindAtr(){ document.querySelectorAll('[data-tipo]').forEach(b=>b.onclick=()=>{atrTipo=b.dataset.tipo;render();}); }
+function bindAtr(){ document.querySelectorAll('[data-tipo]').forEach(b=>b.onclick=()=>{atrTipo=b.dataset.tipo;render();});
+  document.querySelectorAll('[data-merdia]').forEach(b=>b.onclick=()=>{ MERF.dia=b.dataset.merdia; const y=window.scrollY; render(); window.scrollTo(0,y); });
+  document.querySelectorAll('[data-merzona]').forEach(b=>b.onclick=()=>{ MERF.zona=b.dataset.merzona; const y=window.scrollY; render(); window.scrollTo(0,y); }); }
 function openAtr(id){
-  const a=ATR.find(x=>x.id===id), evs=EVENTS.filter(e=>e.place===id&&e.off>=0&&e.off<=MAXOFF);
+  const a=ATR.find(x=>x.id===id)||merAtr(id), evs=EVENTS.filter(e=>e.place===id&&e.off>=0&&e.off<=MAXOFF);
   openModal(`<figure class="mhero" style="margin:-22px -22px 0"><img src="${atrImg(a)}" alt="${esc(a.n)}"><figcaption>${atrCredit(a)}</figcaption></figure>
     <div class="dhead"><span class="eyebrow">${TIPOS[tipoOf(a)]} · ${ZONAS[a.zona].n}</span><h2>${esc(a.n)}</h2><p style="margin:0">${esc(a.d)}</p></div>
     <div class="facts">
       <div class="fact">${I.cal}<div><small>Horario</small>${esc(a.hor)}</div></div>
       <div class="fact">${I.money}<div><small>Costo</small>${esc(a.cos)}</div></div>
-      <div class="fact">${I.pin}<div><small>Cómo llegar</small>${esc(a.lle)}</div></div>
+      <div class="fact">${I.pin}<div><small>Cómo llegar</small>${a.mer?a.lle:esc(a.lle)}</div></div>
       <div class="fact">${I.sun}<div><small>Mejor época</small>${esc(a.epo)}</div></div>
       ${a.dif?`<div class="fact">${I.people}<div><small>Dificultad</small>${esc(a.dif)}</div></div>`:''}
     </div>
