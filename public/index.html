@@ -1374,7 +1374,7 @@ const priceTxt = p => p==null?'Ver precios':p===0?'Gratis':`$${p}`;
 /* ---------- Estado ---------- */
 const KEY='mtymovida-v1';
 let S0 = {user:null,saved:[],going:[],follows:[],followCats:[],prefZonas:[],prefMom:[],onboarded:false,reviews:{},plans:[],prefs:{reminders:true,weekly:false}};
-let S=S0; try{ const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(S,JSON.parse(raw)); }catch(e){}
+let S=JSON.parse(JSON.stringify(S0)); try{ const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(S,JSON.parse(raw)); }catch(e){}
 S.follows=(S.follows||[]).filter(o=>ORGS[o]);
 const persist = () => { try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} if(typeof syncCloud==='function') syncCloud(); };
 const F = {all:false,q:'',cats:new Set(),mom:new Set(),amb:new Set(),mod:new Set(),extras:new Set(),zona:'',precio:'',cuando:'todo',fecha:'',vista:'lista',open:false};
@@ -2272,7 +2272,7 @@ function bindCal(){
   document.querySelectorAll('[data-cday]').forEach(c=>c.onclick=()=>{ const o=+c.dataset.cday; calSel=calSel===o?null:o; const y=window.scrollY; render(); window.scrollTo(0,y);
     const t=calSel!=null&&document.getElementById('cd-'+calSel); if(t) t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}); else if(calSel!=null) toast('No tienes eventos agendados ese día'); });
   if(g('mSeeDay')) g('mSeeDay').onclick=()=>{ clearFiltersSilent(); F.cuando='fecha'; F.fecha=isoOf(calSel); go('eventos'); };
-  g('logout').onclick=async()=>{ if(sb) await sb.auth.signOut(); S=blank(); CLOUD=null; Object.keys(PS).forEach(k=>delete PS[k]); try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} renderUser(); render(); toast('Sesión cerrada'); };
+  g('logout').onclick=async()=>{ if(sb){ try{ await sb.auth.signOut({scope:'local'}); }catch(e){} } ADMIN=false; const ns=document.getElementById('navSol'); if(ns) ns.hidden=true; S=blank(); CLOUD=null; Object.keys(PS).forEach(k=>delete PS[k]); try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} renderUser(); render(); toast('Sesión cerrada'); };
   g('gcal').onclick=openGcal;
   g('editGustos').onclick=()=>openOnboarding();
   g('pRem').onchange=e=>{S.prefs.reminders=e.target.checked;persist();toast(e.target.checked?'Recordatorios activados':'Recordatorios desactivados');};
