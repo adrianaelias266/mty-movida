@@ -510,7 +510,6 @@ for (const f of FUENTES) {
       const oferta = [].concat(e.offers || [])[0] || {};
       const p0 = oferta.price ?? oferta.lowPrice;
       const desde = f.precioDesde ? ([html, html.replace(/<[^>]+>/g, ' ')].map(t => t.replace(/&nbsp;|\u00a0/g, ' ').match(/Desde\s*\$\s*([\d,]+(?:\.\d+)?)/i)).find(Boolean) || [])[1] : null;   // precio escrito en la página
-      if (f.precioDesde && !desde) { const k = html.search(/subheading|\$\s?\d/); console.log(`::notice::DEPURAR ${f.nombre}: ${html.length} bytes · ${k} · ${html.slice(Math.max(0, k - 120), k + 120).replace(/\s+/g, ' ')}`); }
       const precio = p0 != null && !isNaN(Number(p0)) ? Number(p0) : desde ? Number(desde.replace(/,/g, '')) : (/gratis|libre|free/i.test(JSON.stringify(e)) ? 0 : null);
       let nombre = limpiar(e.name).replace(f.limpiarNombre || /$^/, '').trim(); if (f.capitalizar) nombre = capitalizar(nombre);
       const desc = limpiar(e.description).slice(0, 400);
