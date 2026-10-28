@@ -508,7 +508,8 @@ for (const f of FUENTES) {
       if (f.soloEstado && loc.address?.addressRegion && !f.soloEstado.test(loc.address.addressRegion)) continue;
       const oferta = [].concat(e.offers || [])[0] || {};
       const p0 = oferta.price ?? oferta.lowPrice;
-      const precio = p0 != null && !isNaN(Number(p0)) ? Number(p0) : (/gratis|libre|free/i.test(JSON.stringify(e)) ? 0 : null);
+      const desde = f.precioDesde ? (html.match(/Desde\s*\$\s*([\d,]+(?:\.\d+)?)/i) || [])[1] : null;   // precio escrito en la página
+      const precio = p0 != null && !isNaN(Number(p0)) ? Number(p0) : desde ? Number(desde.replace(/,/g, '')) : (/gratis|libre|free/i.test(JSON.stringify(e)) ? 0 : null);
       const nombre = limpiar(e.name).replace(f.limpiarNombre || /$^/, '').trim(), desc = limpiar(e.description).slice(0, 400);
       if (f.excluir && f.excluir.test(nombre)) continue;   // por ejemplo, clases deportivas que se repiten cada semana
       const enLinea = /Online/.test(String(e.eventAttendanceMode || ''));
