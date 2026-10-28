@@ -1,5 +1,5 @@
 {
- "_revisado": "2026-10-27",
+ "_revisado": "2026-10-28",
  "palnorte": {
   "firma": "0b574b405160",
   "menciona": "2027"
@@ -60,8 +60,9 @@
  "teatronl": {},
  "cinelatino": {},
  "artsweek": {
-  "firma": "6de73796bad1",
-  "menciona": "2027"
+  "firma": "88be5198125a",
+  "menciona": "2027",
+  "cambio": "2026-10-28"
  },
  "itinerarte": {},
  "expoguadalupe": {}
