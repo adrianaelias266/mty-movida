@@ -50,7 +50,7 @@ async function paginasDe(f) {
   if (f.paginas && f.enlaces) {      // páginas con la lista de eventos: se siguen los enlaces a cada evento
     const urls = [];
     for (const p of f.paginas) {
-      const html = await traer(p); if (!html) { console.log(`::warning::${f.nombre}: no se pudo abrir ${p}`); continue; }
+      const html = f.navegador ? await htmlConNavegador(p) : await traer(p); if (!html) { console.log(`::warning::${f.nombre}: no se pudo abrir ${p}`); continue; }
       for (const m of html.matchAll(/(?:href=")?(https?:\/\/[^"'\s<>#?\\]+)/g)) if (f.enlaces.test(m[1])) urls.push(limpiaUrl(m[1]));
       for (const m of html.matchAll(/href="(\/[^"#?]+)"/g)) { const u = new URL(m[1], p).href; if (f.enlaces.test(u)) urls.push(limpiaUrl(u)); }
     }
