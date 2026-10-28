@@ -502,15 +502,17 @@ for (const f of FUENTES) {
       const dIni = new Date(ini.fecha + 'T00:00'), dFin = new Date(fin.fecha + 'T00:00');
       if (dFin < hoy || dIni > limite) continue;
       const loc = [].concat(e.location || [])[0] || {};
-      const lugar = limpiar([loc.name, typeof loc.address === 'string' ? loc.address : loc.address?.streetAddress].filter(Boolean).join(', '));
+      const calle = limpiar(typeof loc.address === 'string' ? loc.address : loc.address?.streetAddress || ''), sitioN = limpiar(loc.name || '');
+      const lugar = sitioN && calle.toLowerCase().startsWith(sitioN.toLowerCase()) ? calle : limpiar([sitioN, calle].filter(Boolean).join(', '));   // sin repetir el nombre del lugar
       const ciudad = limpiar(loc.address?.addressLocality || '');
       if (f.radioKm && loc.geo?.latitude != null && km(Number(loc.geo.latitude), Number(loc.geo.longitude)) > f.radioKm) continue;
       if (f.soloEstado && loc.address?.addressRegion && !f.soloEstado.test(loc.address.addressRegion)) continue;
       const oferta = [].concat(e.offers || [])[0] || {};
       const p0 = oferta.price ?? oferta.lowPrice;
-      const desde = f.precioDesde ? (html.match(/Desde\s*\$\s*([\d,]+(?:\.\d+)?)/i) || [])[1] : null;   // precio escrito en la página
+      const desde = f.precioDesde ? (html.replace(/<[^>]+>/g, ' ').replace(/&nbsp;|\u00a0/g, ' ').match(/Desde\s*\$\s*([\d,]+(?:\.\d+)?)/i) || [])[1] : null;   // precio escrito en la página
       const precio = p0 != null && !isNaN(Number(p0)) ? Number(p0) : desde ? Number(desde.replace(/,/g, '')) : (/gratis|libre|free/i.test(JSON.stringify(e)) ? 0 : null);
-      const nombre = limpiar(e.name).replace(f.limpiarNombre || /$^/, '').trim(), desc = limpiar(e.description).slice(0, 400);
+      let nombre = limpiar(e.name).replace(f.limpiarNombre || /$^/, '').trim(); if (f.capitalizar) nombre = capitalizar(nombre);
+      const desc = limpiar(e.description).slice(0, 400);
       if (f.excluir && f.excluir.test(nombre)) continue;   // por ejemplo, clases deportivas que se repiten cada semana
       const enLinea = /Online/.test(String(e.eventAttendanceMode || ''));
       filas.push({
