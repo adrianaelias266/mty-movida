@@ -509,7 +509,7 @@ for (const f of FUENTES) {
       if (f.soloEstado && loc.address?.addressRegion && !f.soloEstado.test(loc.address.addressRegion)) continue;
       const oferta = [].concat(e.offers || [])[0] || {};
       const p0 = oferta.price ?? oferta.lowPrice;
-      const desde = f.precioDesde ? (html.replace(/<[^>]+>/g, ' ').replace(/&nbsp;|\u00a0/g, ' ').match(/Desde\s*\$\s*([\d,]+(?:\.\d+)?)/i) || [])[1] : null;   // precio escrito en la página
+      const desde = f.precioDesde ? ([html, html.replace(/<[^>]+>/g, ' ')].map(t => t.replace(/&nbsp;|\u00a0/g, ' ').match(/Desde\s*\$\s*([\d,]+(?:\.\d+)?)/i)).find(Boolean) || [])[1] : null;   // precio escrito en la página
       const precio = p0 != null && !isNaN(Number(p0)) ? Number(p0) : desde ? Number(desde.replace(/,/g, '')) : (/gratis|libre|free/i.test(JSON.stringify(e)) ? 0 : null);
       let nombre = limpiar(e.name).replace(f.limpiarNombre || /$^/, '').trim(); if (f.capitalizar) nombre = capitalizar(nombre);
       const desc = limpiar(e.description).slice(0, 400);
