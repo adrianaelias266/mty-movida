@@ -2264,20 +2264,20 @@ function viewPlan(){
   else groups=[...new Set(list.map(e=>e.off))].map(o=>`<section class="momento"><h2>${relDay(o)}</h2><div class="evgrid">${list.filter(e=>e.off===o).map(card).join('')}</div></section>`).join('');
   const quiet=ATR.filter(a=>['fundidora','santalucia','barrio'].includes(a.id));
   return `<div class="wrap page">
-    <div class="hoyhero">
+    <div class="hoyhero" style="grid-template-columns:minmax(0,1fr)">
       <div class="hoycard">${SILLA}<span class="eyebrow" style="color:inherit;opacity:.8">${PA.cuando==='hoy'?longDate(0):PA.cuando==='manana'?longDate(1):PA.cuando==='fecha'?'Elige cualquier día':'Elige el día'}</span>
         <h1>Tu plan <span class="dia">${dia==='este fin'||dia==='esta semana'?dia:'para '+dia}</span></h1>
         <div class="daytabs" role="group" aria-label="¿Para cuándo?">${Object.entries(DIA_TABS).map(([k,v])=>`<button data-pa="cuando" data-v="${k}" aria-pressed="${PA.cuando===k}">${v}</button>`).join('')}${PA.cuando==='fecha'?`<label class="dayinp"><span class="sr">Fecha</span><input type="date" id="paFecha" value="${isoOf(PA.foff)}" min="${isoOf(0)}" max="${isoOf(MAXOFF)}"></label>`:''}</div>
         <p>${list.length?`Hay ${list.length} eventos ${dia}.`:`No hay eventos registrados para ${dia}.`} Abajo te dejamos un plan completo con horarios. Personalízalo a tu gusto.</p>
         <button class="btn lila" id="dcAbrir">${I.dice}Personalizar mi plan</button></div>
-      <div class="hoystats">
+    </div>
+    <div style="margin-bottom:28px">${diaDCHTML()}</div>
+      <div class="hoystats hs4" style="margin-bottom:28px">
         <button class="stat" data-qd="todo"><b>${list.length}</b><span>eventos ${PA.cuando==='fecha'?'ese día':dia}</span></button>
         <button class="stat" data-qd="gratis"><b>${free}</b><span>gratis</span></button>
         <button class="stat" data-qd="exterior"><b>${outdoor}</b><span>al aire libre</span></button>
         <button class="stat" id="surprise"><b>${I.dado}</b><span>Sorpréndeme</span></button>
       </div>
-    </div>
-    <div style="margin-bottom:28px">${diaDCHTML()}</div>
     <div class="sechead"><h2>Todo lo que hay ${dia}</h2><a class="btn small" href="#eventos" data-qd="todo">Ver con filtros</a></div>
     ${groups||'<div class="empty"><b>No hay eventos registrados</b>Prueba con otro día o visita una atracción.</div>'}
     <section class="momento"><h2>Si prefieres un plan sin horario</h2><div class="atrgrid">${quiet.map(atrCard).join('')}</div></section>
