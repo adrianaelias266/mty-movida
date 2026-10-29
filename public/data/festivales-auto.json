@@ -65,5 +65,22 @@
   "cambio": "2026-10-29"
  },
  "itinerarte": {},
- "expoguadalupe": {}
+ "expoguadalupe": {},
+ "megatrompo": {
+  "firma": "781b45ca7e8c",
+  "menciona": null
+ },
+ "_descubiertos": [
+  {
+   "id": "auto-festival-del-acordeon-hohner",
+   "nombre": "Festival del Acordeón Hohner 2026",
+   "tipo": "musica",
+   "lugar": "Foro Corona Monterrey, Col. Centro Monterrey",
+   "inicio": "2026-11-08",
+   "fin": "2026-11-08",
+   "url": "https://www.ticketmaster.com.mx/festival-del-acordeon-hohner-2026-col-centro-monterrey-08-11-2026/event/3D00653099891CC7",
+   "img": "https://s1.ticketm.net/dam/e/df4/1387dd62-5de3-4704-aedd-6cc92b27bdf4_SOURCE",
+   "fuente": "Ticketmaster"
+  }
+ ]
 }
