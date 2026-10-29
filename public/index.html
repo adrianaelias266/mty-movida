@@ -2272,13 +2272,13 @@ function viewPlan(){
         <button class="btn lila" id="dcAbrir">${I.dice}Personalizar mi plan</button></div>
     </div>
     <div style="margin-bottom:28px">${diaDCHTML()}</div>
+    <div class="sechead"><h2>Todo lo que hay ${dia}</h2><a class="btn small" href="#eventos" data-qd="todo">Ver con filtros</a></div>
       <div class="hoystats hs4" style="margin-bottom:28px">
         <button class="stat" data-qd="todo"><b>${list.length}</b><span>eventos ${PA.cuando==='fecha'?'ese día':dia}</span></button>
         <button class="stat" data-qd="gratis"><b>${free}</b><span>gratis</span></button>
         <button class="stat" data-qd="exterior"><b>${outdoor}</b><span>al aire libre</span></button>
         <button class="stat" id="surprise"><b>${I.dado}</b><span>Sorpréndeme</span></button>
       </div>
-    <div class="sechead"><h2>Todo lo que hay ${dia}</h2><a class="btn small" href="#eventos" data-qd="todo">Ver con filtros</a></div>
     ${groups||'<div class="empty"><b>No hay eventos registrados</b>Prueba con otro día o visita una atracción.</div>'}
     <section class="momento"><h2>Si prefieres un plan sin horario</h2><div class="atrgrid">${quiet.map(atrCard).join('')}</div></section>
   </div>`;
