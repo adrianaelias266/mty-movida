@@ -2705,8 +2705,16 @@ function openAtr(id){
 let FEST=[], festTipo='';
 const FTIPOS={musica:'Música',electronica:'Electrónica',gastro:'Comida',bebidas:'Cerveza, vino y mezcal',cultura:'Arte y cultura',cine:'Cine',familia:'En familia','cultura-pop':'Cómics y anime',otro:'Otros'};
 const FCOL={musica:'#F9447F',electronica:'#7F95E4',gastro:'#FF8017',bebidas:'#FDBD1A',cultura:'#CBA6FF',cine:'#1AC1B9',familia:'#FDBD1A','cultura-pop':'#7F95E4',otro:'#CBA6FF'};
-let FAUTO={}; fetch('data/festivales-auto.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(d){ FAUTO=d; if(typeof render==='function'&&/festivales/.test(location.hash)) render(); } }).catch(()=>{});
-fetch('data/festivales.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(d&&d.festivales){ FEST=d.festivales; if(typeof render==='function'&&/^#?(festivales|inicio)?$/.test(location.hash)) render(); } }).catch(()=>{});
+// Festivales que la revisión diaria encontró en las boleteras y que no están en el catálogo
+let FEST_CAT=[];
+function mezclarFest(){ const esc2=t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  const nuevos=(FAUTO._descubiertos||[]).filter(x=>!FEST_CAT.some(f=>{ try{ return f.claves&&new RegExp(f.claves,'i').test(x.nombre); }catch(e){ return false; } })).map(x=>({
+    id:x.id, nombre:x.nombre, tipo:x.tipo||'otro', temporada:null, meses:[+x.inicio.slice(5,7)], lugar:x.lugar||'Monterrey', sitio:x.url||null, redes:null, auto:true,
+    desc:`Festival encontrado en ${x.fuente||'las boleteras'}. Revisa fechas, precios y boletos en su página.`,
+    claves:esc2(x.nombre.replace(/\s+/g,' ').trim()).replace(/ /g,'\\s+'), proxima:{inicio:x.inicio,fin:x.fin||x.inicio} }));
+  FEST=[...FEST_CAT,...nuevos]; }
+let FAUTO={}; fetch('data/festivales-auto.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(d){ FAUTO=d; mezclarFest(); if(typeof render==='function'&&/festivales/.test(location.hash)) render(); } }).catch(()=>{});
+fetch('data/festivales.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{ if(d&&d.festivales){ FEST_CAT=d.festivales; mezclarFest(); if(typeof render==='function'&&/^#?(festivales|inicio)?$/.test(location.hash)) render(); } }).catch(()=>{});
 function festEvs(f){ if(!f.claves) return []; let r; try{ r=new RegExp(f.claves,'i'); }catch(e){ return []; } return EVENTS.filter(e=>e.off>=0&&e.off<=MAXOFF&&r.test(e.t)).sort((a,b)=>a.off-b.off); }
 function fRango(a,b){ const d=new Date(a+'T00:00'), e=new Date((b||a)+'T00:00'); if(!b||a===b) return `${d.getDate()} de ${MESL[d.getMonth()]} de ${d.getFullYear()}`;
   return d.getMonth()===e.getMonth()&&d.getFullYear()===e.getFullYear()?`${d.getDate()} al ${e.getDate()} de ${MESL[e.getMonth()]} de ${e.getFullYear()}`:`${d.getDate()} de ${MESL[d.getMonth()]} al ${e.getDate()} de ${MESL[e.getMonth()]} de ${e.getFullYear()}`; }
