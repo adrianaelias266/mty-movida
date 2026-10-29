@@ -979,7 +979,7 @@ function fotoHD(u){ if(!u||typeof u!=='string'||u.startsWith('data:')) return u;
   try{
     if(/superboletosrepositorio/i.test(u)) return u.replace(/main_m_x1_/,'main_m_x2_');                        // Superboletos: 502 → 1004 px
     if(/images\.sk-static\.com\/images\/media\/profile_images\/artists\//.test(u)) return u.replace(/\/(huge_avatar|large_avatar|col\d+)(\?.*)?$/,'/original');   // Songkick: foto original del artista
-    if(/(upload|thumb)\.wikimedia\.org\/wikipedia\/commons\/thumb\//.test(u)) return u.replace('thumb.wikimedia.org','upload.wikimedia.org').replace(/\/(\d+)px-([^/?]+)(\?.*)?$/,(m,w,n)=>+w<1600?`/1600px-${n}`:m);   // Wikimedia: 960 → 1600 px
+    if(/(upload|thumb)\.wikimedia\.org\/wikipedia\/commons\/thumb\//.test(u)) return u.replace('thumb.wikimedia.org','upload.wikimedia.org').replace(/\/(\d+)px-([^/?]+)(\?.*)?$/,(m,w,n)=>+w<1280?`/1280px-${n}`:m);   // Wikimedia: 960 → 1280 px (medida estándar de Wikimedia)
     if(/^https:\/\/img\.evbuc\.com\/https%3A/.test(u)) return decodeURIComponent(u.slice(22).split('?')[0]);   // Eventbrite: la foto original
     if(/static\.wixstatic\.com\/media\/.*\/fill\/w_\d+,h_\d+/.test(u)) return u.replace(/w_(\d+),h_(\d+)/,(m,w,h)=>`w_${w*2},h_${h*2}`);   // Wix: el doble
   }catch(x){}
