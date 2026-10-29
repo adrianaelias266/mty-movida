@@ -116,7 +116,7 @@ try {
 const previos = (antes._descubiertos || []).filter(x => (x.fin || x.inicio) >= iso(hoy));
 const lista = new Map(previos.map(x => [baseNombre(x.nombre), x]));
 for (const [k, x] of encontrados) {
-  const nombre = String(x.nombre).replace(/\s*[-–|]\s*(20\d\d|d[ií]a \d.*)$/i, '').trim();
+  const nombre = String(x.nombre).replace(/\s*[-–|]\s*(20\d\d|d[ií]a \d.*)$/i, '').replace(/\s+20\d\d$/, '').trim();
   if (!lista.has(k)) console.log(`::notice::Festival nuevo encontrado: ${nombre} (${x.inicio}, ${x.fuente})`);
   lista.set(k, { id: 'auto-' + k.replace(/ /g, '-').slice(0, 40), nombre, tipo: tipoDe(x.nombre), lugar: x.lugar, inicio: x.inicio, fin: x.fin || x.inicio, url: x.url, img: x.img, fuente: x.fuente });
 }

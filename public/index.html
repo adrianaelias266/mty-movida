@@ -2761,7 +2761,7 @@ function openFest(id){
       <div class="fact">${I.pin}<div><small>Dónde</small>${esc(f.lugar||'Por anunciar')}</div></div>
       ${ult?`<div class="fact">${I.sun}<div><small>Edición anterior</small>${esc(ult)}</div></div>`:''}
     </div>
-    <div class="row">${f.sitio?`<a class="btn primary small" href="${esc(f.sitio)}" target="_blank" rel="noopener">Página oficial</a>`:''}${f.redes?`<a class="btn small" href="${esc(f.redes)}" target="_blank" rel="noopener">Redes sociales</a>`:''}</div>
+    <div class="row">${f.sitio?`<a class="btn primary small" href="${esc(f.sitio)}" target="_blank" rel="noopener">${f.auto?'Ver boletos ↗':'Página oficial'}</a>`:''}${f.redes?`<a class="btn small" href="${esc(f.redes)}" target="_blank" rel="noopener">Redes sociales</a>`:''}</div>
     ${x.evs.length?`<div><div class="section-t" style="margin-bottom:10px">En la agenda</div><div class="evgrid">${x.evs.map(card).join('')}</div></div>`:'<p style="margin:0;font-size:13px;color:var(--muted)">Todavía no hay eventos de este festival en la agenda. En cuanto abran su venta de boletos o anuncien su programa, aparecerán aquí.</p>'}`);
 }
 

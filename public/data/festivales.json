@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-10-27",
+ "actualizado": "2026-10-29",
  "festivales": [
   {
    "id": "palnorte",
@@ -639,6 +639,25 @@
     "fin": "2026-11-21"
    },
    "buscar": "Mega Trompo"
+  },
+  {
+   "id": "lovethe90s",
+   "nombre": "Love The 90s",
+   "tipo": "musica",
+   "temporada": "marzo",
+   "meses": [
+    3
+   ],
+   "lugar": "Walmart Park, Monterrey",
+   "sitio": null,
+   "redes": null,
+   "desc": "Festival de los éxitos de los noventa con Haddaway, Snap!, Dr. Alban, La Bouche, Whigfield, Safri Duo y Locomía, entre otros. Boletos en FunTicket.",
+   "claves": "love the 90'?s",
+   "proxima": {
+    "inicio": "2027-03-13",
+    "fin": "2027-03-13"
+   },
+   "buscar": "Love The 90s"
   }
  ]
 }
