@@ -169,6 +169,9 @@ a{color:var(--accent)}
 .slide.on{opacity:1;pointer-events:auto}
 .slide img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.04);transition:transform 7s ease-out}
 .slide.on img{transform:scale(1)}
+.slide.chica::before{content:"";position:absolute;inset:-30px;background:var(--fondo) center/cover;filter:blur(26px) brightness(.55);transform:scale(1.1)}
+.slide.chica img{position:relative;object-fit:contain;object-position:center 30%}
+@media (max-width:640px){.slide.chica img{object-position:center 20%}}
 @media (prefers-reduced-motion:reduce){.slide,.slide img{transition:none}.slide img{transform:none}}
 .cap{position:absolute;inset:auto 0 0 0;padding:28px 28px 54px;background:linear-gradient(180deg,rgba(18,12,9,0) 0%,rgba(18,12,9,.55) 40%,rgba(18,12,9,.88) 100%);display:flex;flex-direction:column;gap:10px;align-items:flex-start}
 .cap .kick{font-family:var(--f-mono);font-size:13px;font-weight:700;letter-spacing:0;background:var(--lila-bg);color:var(--lila-ink);padding:4px 10px;border-radius:999px}
@@ -208,6 +211,7 @@ a{color:var(--accent)}
 @media (max-width:820px){.homehero{grid-template-columns:minmax(0,1fr)}}
 .foot-frase{display:flex;flex-direction:column;line-height:1.2}.foot-frase .script{font-family:var(--f-script);font-size:22px;color:#CBA6FF}.foot-frase small{opacity:.75;font-size:12px}
 [data-open],[data-atr],[data-fest]{cursor:pointer}
+.bus-siempre{margin:0 0 14px}.bus-siempre input{font-size:16px}
 .bienv{position:fixed;inset:0;z-index:90;background:rgba(30,23,20,.55);display:grid;place-items:end center;padding:16px}
 @media(min-width:640px){.bienv{place-items:center}}
 .bienv .bx{background:var(--surface);color:var(--ink,inherit);border-radius:22px;max-width:420px;width:100%;padding:26px 22px 20px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
@@ -970,6 +974,16 @@ function cover(scene,seed,variant){
   catch(e){ COVER[k]=''; }
   return COVER[k];
 }
+// Fotos en alta calidad: cada página de boletos guarda varias medidas de la misma foto; para el carrusel y el detalle se pide la grande
+function fotoHD(u){ if(!u||typeof u!=='string'||u.startsWith('data:')) return u;
+  try{
+    if(/superboletosrepositorio/i.test(u)) return u.replace(/main_m_x1_/,'main_m_x2_');                        // Superboletos: 502 → 1004 px
+    if(/images\.sk-static\.com\/images\/media\/profile_images\/artists\//.test(u)) return u.replace(/\/(huge_avatar|large_avatar|col\d+)(\?.*)?$/,'/original');   // Songkick: foto original del artista
+    if(/(upload|thumb)\.wikimedia\.org\/wikipedia\/commons\/thumb\//.test(u)) return u.replace('thumb.wikimedia.org','upload.wikimedia.org').replace(/\/(\d+)px-([^/?]+)(\?.*)?$/,(m,w,n)=>+w<1600?`/1600px-${n}`:m);   // Wikimedia: 960 → 1600 px
+    if(/^https:\/\/img\.evbuc\.com\/https%3A/.test(u)) return decodeURIComponent(u.slice(22).split('?')[0]);   // Eventbrite: la foto original
+    if(/static\.wixstatic\.com\/media\/.*\/fill\/w_\d+,h_\d+/.test(u)) return u.replace(/w_(\d+),h_(\d+)/,(m,w,h)=>`w_${w*2},h_${h*2}`);   // Wix: el doble
+  }catch(x){}
+  return u; }
 const evImg = e => e.img || cover(CAT_SCENE[e.cat], e.id, e.cat==='deporte'?(e.place==='silla'?'silla':'hiker'):undefined);
 const ATR_VARIANT = {fundidora:'horno',horno3:'horno',silla:'silla',cola:'cascada',grutas:'cueva',huasteca:'hiker'};
 const WM='https://upload.wikimedia.org/wikipedia/commons/thumb/';
@@ -1192,7 +1206,8 @@ Object.assign(ORGS,{
   metapatio:{n:'Metapatio',c:'#12A39C',d:'Jardín y espacio comunitario en el Centro de Monterrey con cerveza artesanal, café, comida y conciertos.'},
   bloom:{n:'Bloom Entertainment',c:'#F9447F',d:'Organiza fiestas temáticas para fans de artistas en Monterrey.'},
   foro13:{n:'Foro 13',c:'#A23F96',d:'Foro de teatro independiente en el Centro de Monterrey, con varias obras en temporada a la vez.'},
-  futur:{n:'Futur Festival',c:'#24123F',d:'Festival de música techno.'}
+  futur:{n:'Futur Festival',c:'#24123F',d:'Festival de música techno.'},
+  dosfamilias:{n:'Dos Familias',c:'#C8102E',d:'Marca regiomontana de carnes y productos para taquear; organiza el Mega Trompo Fest.'}
 });
 // [id, org, fecha, hasta, hora, nombre, categoría, lugar, municipio, espacio, precio, características, descripción, foto, enlace, temporada]
 const OTROS_RAW=[
@@ -1219,6 +1234,7 @@ const OTROS_RAW=[
  ['mp4','metapatio','2026-12-04',null,'19:00','Mustard Service','concierto','Metapatio, Melchor Ocampo 222A, Centro','centro','exterior',null,['metro'],'Concierto en Metapatio. La hora es la de apertura de puertas.',SK(9607599),'https://www.songkick.com/concerts/43425877-mustard-service-at-metapatio'],
  ['bl1','bloom','2026-11-01',null,'17:30','Karol G Fest Monterrey: Pre-Party','fandoms','El Unicornio Azul 2, 5a. Avenida 2278','centro','interior',216,['mayores'],'Tercera edición de la fiesta temática para fans de Karol G, de 17:30 a 22:30 h. Para mayores de 18 años. La artista no participa en la organización.','https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F1195343737%2F1435880775353%2F1%2Foriginal.20261008-054723?crop=focalpoint&fit=crop&w=940&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.398&fp-y=0.313&s=d5e048683715f0d47fb0a5263b8e9cc4','https://www.eventbrite.com.mx/e/karol-g-fest-monterrey-pre-party-tickets-2002914219347'],
  ['ft1','futur','2026-11-13','2026-11-14','','Kappa Futur Festival México 2026','concierto','Parque Fundidora (Nave Lewis, Grúa y Horno 3)','centro','exterior',1610,['metro','estac'],'Festival de música techno en el Parque Fundidora. Boletos desde $1,610 (general del viernes); hay pase de dos días.',null,'https://www.futurfestival.mx/en'],
+ ['mt1','dosfamilias','2026-11-21',null,'','Mega Trompo Fest','gastro','Parque Fundidora, Monterrey','centro','exterior',0,['metro','estac','ninos'],'Intento de nuevo récord Guinness con un trompo gigante en Monterrey, además de música en vivo, degustaciones, actividades y experiencias. La entrada es con registro previo en la página de Dos Familias.','https://dosfamilias.mx/wp-content/uploads/2026/10/megatrompo-registro-hero-scaled.webp','https://dosfamilias.mx/registro-megatrompo/'],
  ['fo3','foro13','2026-10-22','2026-11-20','20:00','Incendios, de Wajdi Mouawad','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',550,['metro'],'Funciones jueves y viernes.',null,'https://foro13.primetickets.mx/',1],
 ];
 (function(){
@@ -1394,6 +1410,7 @@ const relDay = o => o===0?'Hoy':o===1?'Mañana':o===-1?'Ayer':longDate(o).replac
 const momentoOf = h => { if(!h) return ''; const n=parseInt(h,10); return n<12?'manana':n<19?'tarde':'noche'; };
 // Si la foto de un evento no carga, en su lugar se muestra la ilustración de su categoría (nunca un recuadro en blanco)
 document.addEventListener('error',x=>{ const img=x.target; if(img.tagName!=='IMG'||img.dataset.sf) return;
+  if(img.dataset.orig&&img.src!==img.dataset.orig&&!img.dataset.probo){ img.dataset.probo=1; img.src=img.dataset.orig; return; }   // si la foto grande no existe, la normal
   const id=img.closest('[data-open],[data-i]')?.querySelector('[data-open]')?.dataset.open||img.closest('[data-open]')?.dataset.open, e=id&&ev(id); if(!e) return;
   img.dataset.sf=1; img.removeAttribute('style'); img.src=cover(CAT_SCENE[e.cat],e.id); },true);
 const fitAttr = e => (e.org==='foro13'||e.fit==='contain')&&e.img?' style="object-fit:contain;background:#1E1714"':'';
@@ -1773,11 +1790,11 @@ function viewInicio(){
 }
 function festSlide(f,i){ const x=festInfo(f), c=FCOL[f.tipo]||'#CBA6FF', img=x.evs.find(e=>e.img);
   return `<div class="slide ${i===0?'on':''}" data-i="${i}" aria-hidden="${i!==0}" data-fest="${esc(f.id)}">
-      ${img?`<img src="${evImg(img)}" alt="">`:`<div style="position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,${c},transparent 60%),radial-gradient(circle at 10% 90%,#7F95E4,transparent 55%),#24123F"></div>`}
+      ${img?`<img src="${fotoHD(evImg(img))}" data-orig="${evImg(img)}" alt="">`:`<div style="position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,${c},transparent 60%),radial-gradient(circle at 10% 90%,#7F95E4,transparent 55%),#24123F"></div>`}
       <div class="cap"><span class="kick">Festival · ${esc(x.t.replace(/^¡Es ahora! /,''))}</span><h2>${esc(f.nombre)}</h2><p>${esc(f.lugar||'')}</p>
       <div class="row"><button class="btn primary" data-fest="${esc(f.id)}">Ver festival</button>${f.sitio?`<a class="btn" href="${esc(f.sitio)}" target="_blank" rel="noopener">Página oficial ↗</a>`:''}</div></div></div>`; }
 function evSlide(e,i){ return `<div class="slide ${i===0?'on':''}" data-i="${i}" aria-hidden="${i!==0}" data-open="${e.id}">
-      <img src="${evImg(e)}" alt=""${fitAttr(e)}>
+      <img src="${fotoHD(evImg(e))}" data-orig="${evImg(e)}" alt=""${fitAttr(e)}>
       <div class="cap"><span class="kick">${relDay(e.off)} · ${hh(e)}</span><h2>${esc(e.t)}</h2><p>${esc(e.venue)} · ${ZONAS[e.zona].n} · ${priceTxt(e.price)}</p>
       <div class="row"><button class="btn primary" data-open="${e.id}">Ver evento</button><button class="btn" data-save="${e.id}">${isSaved(e.id)?I.ok+'Agendado':I.cal+'Agendar'}</button></div></div></div>`;
 }
@@ -1814,8 +1831,12 @@ function bienvenida(){
   document.addEventListener('keydown',function k(x){ if(x.key==='Escape'){ cerrar(); document.removeEventListener('keydown',k); } });
   document.body.appendChild(d); setTimeout(()=>d.querySelector('[data-bv="si"]').focus(),50);
 }
+function fotoChica(img){ const sl=img.closest('.slide'); if(!sl||!img.naturalWidth) return;
+  const ancho=(document.getElementById('hero')?.clientWidth||800)*Math.min(2,devicePixelRatio||1);
+  if(img.naturalWidth<ancho*0.6){ sl.classList.add('chica'); sl.style.setProperty('--fondo',`url("${img.currentSrc||img.src}")`); } }
 function bindInicio(){
   setTimeout(bienvenida,700);
+  document.querySelectorAll('#hero .slide img').forEach(img=>{ if(img.complete) fotoChica(img); else img.addEventListener('load',()=>fotoChica(img),{once:true}); });
   document.querySelectorAll('#hero [data-fest]').forEach(b=>b.onclick=x=>{ const t=x.target.closest('button,a'); if(t&&t!==b&&!t.dataset.fest) return; x.stopPropagation(); openFest(b.dataset.fest); });
   const slides=[...document.querySelectorAll('.slide')], dots=[...document.querySelectorAll('[data-dot]')]; let i=0;
   const show=n=>{ i=(n+slides.length)%slides.length; slides.forEach((s,k)=>{ s.classList.toggle('on',k===i); s.setAttribute('aria-hidden',k!==i); }); dots.forEach((d,k)=>d.setAttribute('aria-current',k===i)); };
@@ -2316,11 +2337,44 @@ function matchCuando(e){
     default:return true;
   }
 }
+// Búsqueda flexible: sin importar acentos, mayúsculas, signos ni pequeños errores al escribir
+const normBus=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9ñ]+/g,' ').trim();
+function distancia(a,b,max){   // número de letras de diferencia (cambiar, quitar, poner o voltear dos letras); se detiene al pasar de max
+  if(Math.abs(a.length-b.length)>max) return max+1;
+  let prev2=null, prev=Array.from({length:b.length+1},(_,j)=>j);
+  for(let i=1;i<=a.length;i++){ const cur=[i]; let fila=i;
+    for(let j=1;j<=b.length;j++){ let v=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));
+      if(prev2&&i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1]) v=Math.min(v,prev2[j-2]+1);
+      cur[j]=v; if(v<fila) fila=v; }
+    if(fila>max) return max+1; prev2=prev; prev=cur; }
+  return prev[b.length];
+}
+// Qué tan bien coincide el evento con lo que se buscó: 3 = tal cual, 2 = inicio de palabra, 1 = parecido (con errores), 0 = nada
+function coincide(e,q){
+  const pal=q.split(' ').filter(Boolean); if(!pal.length) return 3;
+  const texto=normBus(e.t+' '+e.venue+' '+ORGS[e.org].n+' '+CATS[e.cat].n), palabras=texto.split(' ');
+  if(texto.includes(q)||texto.replace(/ /g,'').includes(q.replace(/ /g,''))) return 3;
+  let peor=3;
+  for(const w of pal){
+    let mejor=0;
+    if(w.length<=2){ if(palabras.some(x=>x===w||x.startsWith(w))) mejor=2; }
+    else if(texto.includes(w)) mejor=palabras.some(x=>x.startsWith(w))?3:2;
+    else { const max=w.length>=7?2:w.length>=4?1:0;
+      if(max&&palabras.some(x=>distancia(w,x,max)<=max||(x.length>w.length&&distancia(w,x.slice(0,w.length),max)<=max))) mejor=1;
+    }
+    if(!mejor) return 0; peor=Math.min(peor,mejor);
+  }
+  return peor;
+}
+let BUS_APROX=false;
 function filtered(){
-  const q=F.q.trim().toLowerCase();
+  const q=normBus(F.q); BUS_APROX=false;
+  let puntos=null;
+  if(q){ puntos=new Map(EVENTS.map(e=>[e,coincide(e,q)])); const hayBuenas=[...puntos.values()].some(v=>v>=2);
+    if(!hayBuenas&&[...puntos.values()].some(v=>v===1)) BUS_APROX=true; }
   return EVENTS.filter(e=>{
     if(!matchCuando(e)) return false;
-    if(q && !(e.t+' '+e.venue+' '+ORGS[e.org].n+' '+CATS[e.cat].n).toLowerCase().includes(q)) return false;
+    if(q){ const v=puntos.get(e); if(!v||(!BUS_APROX&&v<2)) return false; }
     if(F.cats.size && !F.cats.has(e.cat)) return false;
     if(F.mom.size && !F.mom.has(momentoOf(e.h))) return false;
     if(F.amb.size && !F.amb.has(e.amb)) return false;
@@ -2348,14 +2402,13 @@ function viewEventos(){
   let results;
   if(F.vista==='lista'&&!F.all&&!activeCount()) results=rowsHTML().replace(/class="rowsec"/,'class="rowsec" style="margin-top:0"')+`<div class="allbtn"><button class="btn" id="seeAll">Ver la lista completa (${list.length} eventos)</button></div>`;
   else if(F.vista==='mapa') results=mapSVG(list);
-  else if(!list.length) results=`<div class="empty"><b>No hay eventos con estos filtros</b>Prueba quitar algún filtro o cambiar la fecha.<div style="margin-top:12px"><button class="btn small" data-clear>Limpiar filtros</button></div></div>`;
+  else if(!list.length) results=`<div class="empty"><b>${F.q.trim()?`No encontramos eventos con «${esc(F.q.trim())}»`:'No hay eventos con estos filtros'}</b>${F.q.trim()?'Revisa cómo lo escribiste, prueba con una sola palabra o quita algún filtro.':'Prueba quitar algún filtro o cambiar la fecha.'}<div style="margin-top:12px"><button class="btn small" data-clear>Limpiar filtros</button></div></div>`;
   else { const byDay={}; list.forEach(e=>(byDay[e.off]=byDay[e.off]||[]).push(e));
     results=Object.keys(byDay).map(Number).sort((a,b)=>a-b).map(o=>`<section class="daygroup"><h2>${relDay(o)}<span>${o<=1?longDate(o)+' · ':''}${byDay[o].length} ${byDay[o].length===1?'evento':'eventos'}</span></h2><div class="evgrid">${byDay[o].map(card).join('')}</div></section>`).join(''); }
   return `<div class="wrap page">
     <div class="phead"><div><span class="script">Todo lo que pasa</span><h1>Todos los eventos de la ciudad</h1><p>Eventos de hoy y de los próximos 30 días. Filtra por horario, lugar y tipo, y agéndalos en tu calendario.</p></div></div>
     <div class="evlayout">
       <aside class="filters" data-fopen="${F.open}" aria-label="Filtros">
-        <div class="search">${I.search}<input id="fq" type="search" placeholder="Buscar evento, lugar u organizador" value="${esc(F.q)}" aria-label="Buscar"></div>
         <div class="fgroup"><h4>Cuándo</h4><div class="chips">${CUANDO.map(c=>`<button class="chip" data-cuando="${c[0]}" aria-pressed="${F.cuando===c[0]}">${c[1]}</button>`).join('')}</div>
           <div style="margin-top:8px"><input class="inp" type="date" id="ffecha" value="${F.fecha}" min="${isoOf(0)}" max="${isoOf(MAXOFF)}" aria-label="Elegir fecha"></div></div>
         <div class="fgroup"><h4>Horario</h4><div class="chips">${Object.entries(MOMENTOS).map(m=>chipSet(F.mom,'mom',m)).join('')}</div></div>
@@ -2367,6 +2420,8 @@ function viewEventos(){
         <div class="fgroup"><h4>Necesito que sea</h4><div class="chips">${Object.entries(EXTRAS).map(x=>chipSet(F.extras,'extras',x)).join('')}</div></div>
       </aside>
       <section style="min-width:0">
+        <div class="search bus-siempre">${I.search}<input id="fq" type="search" placeholder="Busca un evento por nombre, lugar u organizador" value="${esc(F.q)}" aria-label="Buscar evento" autocomplete="off"></div>
+        ${F.q.trim()&&BUS_APROX&&list.length?`<p class="hint" style="margin:-4px 0 12px">No encontramos «${esc(F.q.trim())}» tal cual. Estos son los más parecidos.</p>`:''}
         <div class="resbar"><div class="row"><button class="btn small ftoggle" id="ftog">Filtros${activeCount()?` (${activeCount()})`:''}</button><span class="count">${list.length} ${list.length===1?'evento':'eventos'}</span></div>
           <div class="seg" role="group" aria-label="Vista"><button data-vista="lista" aria-pressed="${F.vista==='lista'}">Lista</button><button data-vista="mapa" aria-pressed="${F.vista==='mapa'}">Mapa</button></div></div>
         ${actives.length?`<div class="active-filters">${actives.map(a=>`<button class="chip" data-rm="${a[0]}" data-v="${a[2]||''}">${esc(a[1])} ✕</button>`).join('')}<button class="btn ghost small" data-clear>Limpiar todo</button></div>`:''}
@@ -2806,7 +2861,7 @@ function eventHTML(e){
         :`<div class="panel" style="background:var(--sunk);border:0"><p style="margin:0;font-size:14px">Solo quienes agendaron este evento pueden calificarlo. Así evitamos reseñas falsas.</p></div>`)}
     </div>`;
   }
-  return `<figure class="mhero"><img src="${evImg(e)}" alt=""${fitAttr(e)}><figcaption>${e.credit?`Foto: <a href="${esc(e.credit.url||'#')}" target="_blank" rel="noopener">${esc(e.credit.autor)}</a> · ${esc(e.credit.licencia)} · ${esc(e.credit.fuente)} · Imagen de referencia`:e.img?(e.fisl?'Foto: agenda FISL 2026':'Foto: '+esc(ORGS[e.org]?ORGS[e.org].n:'organizador')):'Imagen ilustrativa'}</figcaption></figure>
+  return `<figure class="mhero"><img src="${fotoHD(evImg(e))}" data-orig="${evImg(e)}" alt=""${fitAttr(e)}><figcaption>${e.credit?`Foto: <a href="${esc(e.credit.url||'#')}" target="_blank" rel="noopener">${esc(e.credit.autor)}</a> · ${esc(e.credit.licencia)} · ${esc(e.credit.fuente)} · Imagen de referencia`:e.img?(e.fisl?'Foto: agenda FISL 2026':'Foto: '+esc(ORGS[e.org]?ORGS[e.org].n:'organizador')):'Imagen ilustrativa'}</figcaption></figure>
     <div class="dhead"><div class="ev-cat" style="font-size:13px;gap:10px">${catDot(e.cat)}${c.n}${past?' · Evento pasado':''}${e.rec&&!past?' · <b style="color:var(--accent)">Recomendado por Mty Movida</b>':''}</div><h2>${esc(e.t)}</h2></div>
     <div class="facts">
       <div class="fact">${I.cal}<div><small>Fecha y hora</small>${e.fechas&&e.fechas.length>1?rangoFechas(e,true)+` · ${e.fechas.length} funciones`:e.range?e.range+' · '+hh(e):relDay(e.off)+(e.off>=0&&e.off<=1?', '+longDate(e.off):'')+' · '+hh(e)}</div></div>

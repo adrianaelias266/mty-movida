@@ -620,6 +620,25 @@
     "inicio": "2025-04-24",
     "fin": "2025-06-15"
    }
+  },
+  {
+   "id": "megatrompo",
+   "nombre": "Mega Trompo Fest",
+   "tipo": "gastro",
+   "temporada": "noviembre",
+   "meses": [
+    11
+   ],
+   "lugar": "Parque Fundidora, Monterrey",
+   "sitio": "https://dosfamilias.mx/registro-megatrompo/",
+   "redes": null,
+   "desc": "Festival del taco de trompo organizado por Dos Familias, con intento de récord Guinness, música en vivo y degustaciones. Entrada con registro.",
+   "claves": "mega ?trompo",
+   "ultima": {
+    "inicio": "2026-11-21",
+    "fin": "2026-11-21"
+   },
+   "buscar": "Mega Trompo"
   }
  ]
 }
