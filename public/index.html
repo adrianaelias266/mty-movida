@@ -335,7 +335,7 @@ body.editing .pz.sel{outline:3px solid var(--accent)}
 .rowsec h3{font-family:var(--f-display);font-weight:700;font-size:clamp(18px,2.2vw,22px);letter-spacing:-.02em}
 .rowsec .rh span{color:var(--muted);font-size:13px}
 .rwrap{position:relative}
-.rscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-inline:2px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;padding:6px 2px 12px;scrollbar-width:none;cursor:grab}
+.rscroll{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scroll-padding-inline:2px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;padding:12px 2px 14px;scrollbar-width:none;cursor:grab}
 .rscroll.drag{cursor:grabbing;scroll-snap-type:none;user-select:none}
 .rscroll.drag .rc{pointer-events:none}
 .rc{contain:layout paint}
@@ -359,6 +359,7 @@ body.editing .pz.sel{outline:3px solid var(--accent)}
 .rtop{flex:0 0 auto;display:flex;align-items:flex-end;scroll-snap-align:start}
 .rtop .n{font-family:var(--f-display);font-weight:800;font-size:110px;line-height:.78;color:transparent;-webkit-text-stroke:3px var(--accent);margin-right:-16px;position:relative;z-index:0;letter-spacing:-.06em}
 .rtop .rc{flex-basis:200px;position:relative;z-index:1}
+.rtop{padding-bottom:10px}
 .rarrow{position:absolute;top:38%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:0;background:var(--surface);box-shadow:var(--shadow);display:grid;place-items:center;z-index:3}
 .rarrow svg{width:18px;height:18px}
 .rarrow.l{left:-12px}.rarrow.r{right:-12px}
@@ -1845,7 +1846,16 @@ function bindInicio(){
   document.getElementById('hPrev').onclick=()=>{ show(i-1); start(); };
   document.getElementById('hNext').onclick=()=>{ show(i+1); start(); };
   dots.forEach(d=>d.onclick=()=>{ show(+d.dataset.dot); start(); });
-  const hero=document.getElementById('hero'); hero.onmouseenter=()=>clearInterval(heroTimer); hero.onmouseleave=start; hero.addEventListener('focusin',()=>clearInterval(heroTimer));
+  const hero=document.getElementById('hero'); hero.onmouseenter=()=>clearInterval(heroTimer);
+  { let x0=null, y0=0, t0=0, movio=false;
+    hero.style.touchAction='pan-y';   // el dedo hacia arriba o abajo sigue moviendo la página; hacia los lados cambia de evento
+    hero.addEventListener('pointerdown',e=>{ if(e.target.closest('.hero-ctl')) return; x0=e.clientX; y0=e.clientY; t0=Date.now(); movio=false; });
+    hero.addEventListener('pointermove',e=>{ if(x0!==null&&Math.abs(e.clientX-x0)>10) movio=true; });
+    const fin=e=>{ if(x0===null) return; const dx=e.clientX-x0, dy=e.clientY-y0; x0=null;
+      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.2&&Date.now()-t0<900){ show(i+(dx<0?1:-1)); start(); } };
+    hero.addEventListener('pointerup',fin); hero.addEventListener('pointercancel',()=>{ x0=null; });
+    hero.addEventListener('click',e=>{ if(movio){ e.stopPropagation(); e.preventDefault(); movio=false; } },true);   // al deslizar no se abre el evento
+    hero.addEventListener('dragstart',e=>e.preventDefault()); } hero.onmouseleave=start; hero.addEventListener('focusin',()=>clearInterval(heroTimer));
   start();
   document.querySelectorAll('[data-quick]').forEach(b=>b.onclick=()=>quick(b.dataset.quick));
   document.querySelectorAll('[data-cattile]').forEach(b=>b.onclick=()=>{ clearFiltersSilent(); F.cats.add(b.dataset.cattile); go('eventos'); });
