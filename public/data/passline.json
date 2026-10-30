@@ -1,1 +1,71 @@
-{"actualizado":null,"eventos":[]}
+{
+ "actualizado": "2026-10-30",
+ "fuente": "Portada de Passline (su buscador tiene verificación de seguridad); eventos de Monterrey",
+ "eventos": [
+  {
+   "nombre": "Malcriada en Monterrey",
+   "fecha": "2026-10-30",
+   "hora": "20:00",
+   "lugar": "Café Iguana, Diego de Montemayor 927 Sur, Barrio Antiguo",
+   "organizador": "Café Iguana",
+   "cat": "concierto",
+   "espacio": "interior",
+   "precio": 450,
+   "url": "https://www.passline.com/eventos/malcriada-en-monterrey-547693",
+   "foto": "https://www.passline.com/imagenes/eventos/malcriada-en-monterrey-547693-rec.jpg",
+   "desc": "Concierto de Malcriada en el Café Iguana del Barrio Antiguo. Boletos desde $450 en Passline."
+  },
+  {
+   "nombre": "Silverio en Cautiverio",
+   "fecha": "2026-10-31",
+   "hora": "20:00",
+   "lugar": "Nodriza Estudio, Mariano Matamoros 534, Centro",
+   "organizador": "Nodriza Estudio",
+   "cat": "concierto",
+   "espacio": "interior",
+   "precio": 300,
+   "url": "https://www.passline.com/eventos/silverio-en-cautiverio-en-monterrey",
+   "foto": "https://www.passline.com/imagenes/eventos/-787516-rec.jpg",
+   "desc": "Show de Silverio en Nodriza Estudio, en el Centro de Monterrey. Boletos desde $300 en Passline."
+  },
+  {
+   "nombre": "Motor Art Car Show 2026",
+   "fecha": "2026-11-01",
+   "hora": "11:00",
+   "lugar": "Cintermex, Av. Fundidora 501, Obrera",
+   "organizador": "Cintermex",
+   "cat": "expo",
+   "espacio": "interior",
+   "precio": 200,
+   "url": "https://www.passline.com/eventos/motorart-2026-car-show",
+   "foto": "https://www.passline.com/imagenes/eventos/motor-art-car-show-2026-528670-rec.jpg",
+   "desc": "Exhibición de autos personalizados y clásicos en Cintermex. Entrada $200 en Passline."
+  },
+  {
+   "nombre": "Un León Marinero: Por ti me voy de tour",
+   "fecha": "2026-11-07",
+   "hora": "19:00",
+   "lugar": "Casa Motis, Padre Raymundo Jardón 910, Centro",
+   "organizador": "Casa Motis",
+   "cat": "concierto",
+   "espacio": "interior",
+   "precio": 250,
+   "url": "https://www.passline.com/eventos/un-leon-marinero-por-ti-me-voy-de-tour",
+   "foto": "https://www.passline.com/imagenes/eventos/un-leon-marinero-por-ti-me-voy-de-tour-543696-rec.jpg",
+   "desc": "Concierto de Un León Marinero con su gira Por ti me voy de tour, en Casa Motis. Boletos $250 en Passline."
+  },
+  {
+   "nombre": "CHDKF: El Fin del Mundo es Hoy",
+   "fecha": "2026-12-04",
+   "hora": "20:00",
+   "lugar": "Café Iguana, Diego de Montemayor 927 Sur, Barrio Antiguo",
+   "organizador": "Café Iguana",
+   "cat": "concierto",
+   "espacio": "interior",
+   "precio": 600,
+   "url": "https://www.passline.com/eventos/chdkf-en-monterrey-el-fin-del-mundo-es-hoy",
+   "foto": "https://www.passline.com/imagenes/eventos/chdkf-en-monterrey-el-fin-del-mundo-es-hoy-500924-rec_2.jpg",
+   "desc": "Concierto de CHDKF con su gira El Fin del Mundo es Hoy, en el Café Iguana. Boletos desde $600 en Passline."
+  }
+ ]
+}
