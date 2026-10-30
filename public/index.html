@@ -2915,7 +2915,7 @@ function bindEvent(e){
   document.querySelectorAll('[data-fsel]').forEach(b=>b.onclick=()=>{ FSEL[e.fechas[0].id]=b.dataset.fsel; reopen(e.id); });
   if(g('dGoing')) g('dGoing').onclick=()=>requireLogin(()=>{ const a=toggleIn(S.going,e.id); if(a&&!isSaved(e.id)) S.saved.push(e.id); persist(); toast(a?'¡Qué bien! Lo agregamos a tu calendario':'Ya no aparece que vas'); reopen(e.id); render(); });
   if(g('dShare')) g('dShare').onclick=async()=>{ const url=`https://mtymovida.com/e/${encodeURIComponent(String(e.padre||e.id).split('~')[0])}`, txt=`¿Vamos? ${e.t}\n${relDay(e.off)} ${hh(e)} · ${e.venue}`;
-    if(navigator.share&&/iPhone|iPad|Android/i.test(navigator.userAgent)){ try{ await navigator.share({title:e.t,text:`${txt}\n${url}`}); return; }   // el enlace va dentro del texto: varias apps (WhatsApp, Copiar) solo toman el textocatch(x){ if(x&&x.name==='AbortError') return; } }
+    if(navigator.share&&/iPhone|iPad|Android/i.test(navigator.userAgent)){ try{ await navigator.share({title:e.t,text:`${txt}\n${url}`}); return; }catch(x){ if(x&&x.name==='AbortError') return; } }
     copy(`${txt}\n${url}`,'Enlace copiado. Pégalo en WhatsApp o donde quieras'); };
   if(g('rpSend')) g('rpSend').onclick=()=>{ toast('Gracias. Revisaremos este evento.'); g('rpSend').closest('details').open=false; };
   if(g('rvAttend')) g('rvAttend').onclick=()=>requireLogin(()=>{ if(!isSaved(e.id)) S.saved.push(e.id); persist(); reopen(e.id); });
