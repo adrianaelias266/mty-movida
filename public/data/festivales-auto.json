@@ -1,5 +1,5 @@
 {
- "_revisado": "2026-10-29",
+ "_revisado": "2026-10-30",
  "palnorte": {
   "firma": "0b574b405160",
   "menciona": "2027"
@@ -60,9 +60,9 @@
  "teatronl": {},
  "cinelatino": {},
  "artsweek": {
-  "firma": "c85227430ad5",
+  "firma": "6fc98cfa9abd",
   "menciona": "2027",
-  "cambio": "2026-10-29"
+  "cambio": "2026-10-30"
  },
  "itinerarte": {},
  "expoguadalupe": {},
@@ -70,6 +70,7 @@
   "firma": "781b45ca7e8c",
   "menciona": null
  },
+ "lovethe90s": {},
  "_descubiertos": [
   {
    "id": "auto-festival-del-acordeon-hohner",
