@@ -776,10 +776,10 @@ form.card .full{grid-column:1/-1}
       <a href="/" data-view="inicio">Inicio</a>
       <a href="/nosotros" data-view="nosotros">Quiénes somos</a>
       <a href="/plan" data-view="plan" class="hoy">¿Qué plan?</a>
+      <a href="/eventos" data-view="eventos">Eventos</a>
       <div class="navgrp" id="navDesc">
         <button class="navdrop" type="button" aria-expanded="false" aria-controls="subDesc">Descubre <span class="car" aria-hidden="true">▾</span></button>
         <div class="submenu" id="subDesc">
-          <a href="/eventos" data-view="eventos">Eventos</a>
           <a href="/festivales" data-view="festivales">Festivales</a>
           <a href="/atracciones" data-view="atracciones">Atracciones</a>
         </div>
@@ -1428,7 +1428,7 @@ let S0 = {user:null,saved:[],going:[],follows:[],followCats:[],prefZonas:[],pref
 let S=JSON.parse(JSON.stringify(S0)); try{ const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(S,JSON.parse(raw)); }catch(e){}
 S.follows=(S.follows||[]).filter(o=>ORGS[o]);
 const persist = () => { try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} if(typeof syncCloud==='function') syncCloud(); if(typeof programarCalendario==='function') programarCalendario(); };
-const F = {all:false,q:'',cats:new Set(),mom:new Set(),amb:new Set(),mod:new Set(),extras:new Set(),zona:'',precio:'',cuando:'todo',fecha:'',vista:'lista',open:false};
+const F = {all:false,q:'',cats:new Set(),mom:new Set(),amb:new Set(),mod:new Set(),extras:new Set(),zona:'',org:'',precio:'',cuando:'todo',fecha:'',vista:'lista',open:false};
 let weekOff=0, calView='semana', monthOff=0, calSel=null, pendingAfterLogin=null, heroTimer=null;
 const SES={};   // funciones extra de eventos con varias fechas (no aparecen en las listas)
 const ev = id => EVENTS.find(e=>e.id===id)||SES[id];
@@ -2399,15 +2399,20 @@ function filtered(){
     if(F.amb.size && !F.amb.has(e.amb)) return false;
     if(F.mod.size && !F.mod.has(e.mod)) return false;
     if(F.zona && (e.zona!==F.zona||e.mod==='linea')) return false;
+    if(F.org && e.org!==F.org) return false;
     if(F.precio==='gratis'&&e.price!==0) return false;
     if(F.precio==='paga'&&e.price===0) return false;
     for(const x of F.extras) if(!e.tags.includes(x)) return false;
     return true;
   }).sort((a,b)=>a.off-b.off||a.h.localeCompare(b.h));
 }
-function activeCount(){ return F.cats.size+F.mom.size+F.amb.size+F.mod.size+F.extras.size+(F.zona?1:0)+(F.precio?1:0)+(F.cuando!=='todo'?1:0)+(F.q?1:0); }
+function activeCount(){ return F.cats.size+F.mom.size+F.amb.size+F.mod.size+F.extras.size+(F.zona?1:0)+(F.org?1:0)+(F.precio?1:0)+(F.cuando!=='todo'?1:0)+(F.q?1:0); }
 
 /* ---------- Vista: Eventos ---------- */
+// Organizadores con eventos en la agenda, de los que tienen más a los que tienen menos
+function orgOpciones(){ const c={}; EVENTS.filter(e=>e.off>=0&&e.off<=MAXOFF&&ORGS[e.org]).forEach(e=>c[e.org]=(c[e.org]||0)+1);
+  if(F.org&&!c[F.org]&&ORGS[F.org]) c[F.org]=0;
+  return Object.entries(c).sort((a,b)=>b[1]-a[1]||ORGS[a[0]].n.localeCompare(ORGS[b[0]].n,'es')).map(([k,n])=>`<option value="${esc(k)}" ${F.org===k?'selected':''}>${esc(ORGS[k].n)} (${n})</option>`).join(''); }
 function chipSet(set,key,label,dot){ return `<button class="chip" data-f="${key}" data-v="${label[0]}" aria-pressed="${set.has(label[0])}">${dot?`<i style="background:${dot}"></i>`:''}${label[1]}</button>`; }
 const CUANDO=[['todo','Próximos 30 días'],['hoy','Hoy'],['manana','Mañana'],['finde','Fin de semana'],['semana','Esta semana'],['quincena','Próximos 15 días']];
 function viewEventos(){
@@ -2416,7 +2421,7 @@ function viewEventos(){
   if(F.cuando!=='todo') actives.push(['cuando',F.cuando==='fecha'?relDay(offOfDate(new Date(F.fecha+'T00:00'))):CUANDO.find(c=>c[0]===F.cuando)[1]]);
   F.cats.forEach(v=>actives.push(['cats',CATS[v].n,v])); F.mom.forEach(v=>actives.push(['mom',MOMENTOS[v],v]));
   F.amb.forEach(v=>actives.push(['amb',v==='exterior'?'Exterior':'Interior',v])); F.mod.forEach(v=>actives.push(['mod',v==='linea'?'En línea':'Presencial',v]));
-  if(F.zona) actives.push(['zona',ZONAS[F.zona].n]); if(F.precio) actives.push(['precio',F.precio==='gratis'?'Gratis':'De paga']);
+  if(F.zona) actives.push(['zona',ZONAS[F.zona].n]); if(F.org&&ORGS[F.org]) actives.push(['org',ORGS[F.org].n]); if(F.precio) actives.push(['precio',F.precio==='gratis'?'Gratis':'De paga']);
   F.extras.forEach(v=>actives.push(['extras',EXTRAS[v],v]));
   let results;
   if(F.vista==='lista'&&!F.all&&!activeCount()) results=rowsHTML().replace(/class="rowsec"/,'class="rowsec" style="margin-top:0"')+`<div class="allbtn"><button class="btn" id="seeAll">Ver la lista completa (${list.length} eventos)</button></div>`;
@@ -2435,6 +2440,7 @@ function viewEventos(){
         <div class="fgroup"><h4>Espacio</h4><div class="chips">${chipSet(F.amb,'amb',['interior','Interior'])}${chipSet(F.amb,'amb',['exterior','Exterior'])}</div></div>
         <div class="fgroup"><h4>Modalidad</h4><div class="chips">${chipSet(F.mod,'mod',['presencial','Presencial'])}${chipSet(F.mod,'mod',['linea','En línea'])}</div></div>
         <div class="fgroup"><h4>Municipio</h4><select class="inp" id="fzona" aria-label="Municipio"><option value="">Toda la zona metropolitana</option>${Object.entries(ZONAS).map(([k,z])=>`<option value="${k}" ${F.zona===k?'selected':''}>${z.n}</option>`).join('')}</select></div>
+        <div class="fgroup"><h4>Organizador</h4><select class="inp" id="forg" aria-label="Organizador"><option value="">Todos los organizadores</option>${orgOpciones()}</select></div>
         <div class="fgroup"><h4>Precio</h4><div class="chips"><button class="chip" data-precio="gratis" aria-pressed="${F.precio==='gratis'}">Gratis</button><button class="chip" data-precio="paga" aria-pressed="${F.precio==='paga'}">De paga</button></div></div>
         <div class="fgroup"><h4>Necesito que sea</h4><div class="chips">${Object.entries(EXTRAS).map(x=>chipSet(F.extras,'extras',x)).join('')}</div></div>
       </aside>
@@ -2474,6 +2480,7 @@ function bindEventos(){
   $('#fq').addEventListener('input',e=>{ F.q=e.target.value; clearTimeout(bindEventos.t); bindEventos.t=setTimeout(()=>{ render(); const i=$('#fq'); i.focus(); i.setSelectionRange(i.value.length,i.value.length); },250); });
   $('#ffecha').onchange=e=>{ F.fecha=e.target.value; F.cuando=F.fecha?'fecha':'todo'; render(); };
   $('#fzona').onchange=e=>{ F.zona=e.target.value; render(); };
+  $('#forg').onchange=e=>{ F.org=e.target.value; render(); };
   $('#ftog').onclick=()=>{ F.open=!F.open; render(); };
   if($('#seeAll')) $('#seeAll').onclick=()=>{ F.all=true; render(); };
   bindRows();
@@ -2483,10 +2490,10 @@ function bindEventos(){
   document.querySelectorAll('[data-vista]').forEach(b=>b.onclick=()=>{ F.vista=b.dataset.vista; render(); });
   document.querySelectorAll('[data-zona]').forEach(g=>{ const f=()=>{ F.zona=F.zona===g.dataset.zona?'':g.dataset.zona; render(); }; g.onclick=f; g.onkeydown=e=>{ if(e.key==='Enter') f(); }; });
   document.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{ const k=b.dataset.rm;
-    if(k==='cuando'){F.cuando='todo';F.fecha='';} else if(k==='zona') F.zona=''; else if(k==='precio') F.precio=''; else F[k].delete(b.dataset.v); render(); });
+    if(k==='cuando'){F.cuando='todo';F.fecha='';} else if(k==='zona') F.zona=''; else if(k==='org') F.org=''; else if(k==='precio') F.precio=''; else F[k].delete(b.dataset.v); render(); });
   document.querySelectorAll('[data-clear]').forEach(b=>b.onclick=()=>{ clearFiltersSilent(); render(); });
 }
-function clearFiltersSilent(){ F.q='';F.cats.clear();F.mom.clear();F.amb.clear();F.mod.clear();F.extras.clear();F.zona='';F.precio='';F.cuando='todo';F.fecha=''; }
+function clearFiltersSilent(){ F.q='';F.cats.clear();F.mom.clear();F.amb.clear();F.mod.clear();F.extras.clear();F.zona='';F.org='';F.precio='';F.cuando='todo';F.fecha=''; }
 
 /* ---------- Vista: ¿Qué hago hoy? ---------- */
 function hoyBlock(){
@@ -2980,7 +2987,7 @@ function render(){
   const gd=document.getElementById('navDesc'); if(gd){ gd.classList.remove('open'); gd.querySelector('.navdrop').setAttribute('aria-expanded','false'); }
   const [vf,bf]=VIEWS[current]; const app=document.getElementById('app'); app.innerHTML=vf(); bf(); bindCommon(app);
   document.querySelectorAll('.nav a').forEach(a=>a.setAttribute('aria-current',a.dataset.view===current?'page':'false'));
-  const nd=document.querySelector('.navdrop'); if(nd) nd.setAttribute('aria-current',['eventos','festivales','atracciones'].includes(current)?'page':'false');
+  const nd=document.querySelector('.navdrop'); if(nd) nd.setAttribute('aria-current',['festivales','atracciones'].includes(current)?'page':'false');
   renderEd();
 }
 let ABRIR_T=null;
