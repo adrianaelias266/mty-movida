@@ -2268,8 +2268,13 @@ function bindDiaDC(){
   const keep=()=>{ saveDC(); const y=window.scrollY; render(); window.scrollTo(0,y); };
   document.querySelectorAll('[data-dcdia]').forEach(b=>b.onclick=()=>{ DC.diaSel=+b.dataset.dcdia; keep(); });
   document.querySelectorAll('[data-dcch]').forEach(b=>b.onclick=()=>{ const k=b.dataset.dcch, ps=enDia(diaSel().d,()=>armarDC()), p=ps.find(x=>(x.libre?x.k:x.e&&x.e.id)===k); if(!p||!p.alt.length) return;
+    // Solo cambia esta parada: las demás se quedan fijas donde están
+    ps.forEach(q=>{ if(q===p) return; if(q.libre){ if(q.k) DC.pick[q.k]=q.e?q.e.id:'atr:'+q.a.id; } else if(q.e) DC.pick['e'+q.e.id]=q.e.id; });
     if(p.libre){ const o=p.alt[0]; DC.pick[k]=o.e?o.e.id:'atr:'+o.a.id; DC.fuera.push(p.e?p.e.id:'atr:'+p.a.id); }
-    else { const o=p.alt[0]; DC.fuera.push(p.e.id); Object.keys(DC.pick).forEach(z=>{ if(DC.pick[z]===p.e.id) delete DC.pick[z]; }); DC.pick['e'+o.id]=o.id; }
+    else { const cabeEn=qs=>o=>{ const h=hNum(o.h); if(h==null) return false; const f=h+dcDur(o); return qs.every(q=>h>=q.fin+.5||f+.5<=q.ini); }, cerca=(a,b)=>Math.abs(hNum(a.h)-p.ini)-Math.abs(hNum(b.h)-p.ini);
+      // la opción más cercana al horario de la parada que se cambia, sin mover las demás
+      const otras=ps.filter(q=>q!==p), evs=otras.filter(q=>q.e&&!q.libre);
+      const o=p.alt.filter(cabeEn(otras)).sort(cerca)[0]||p.alt.filter(cabeEn(evs)).sort(cerca)[0]||p.alt[0]; DC.fuera.push(p.e.id); Object.keys(DC.pick).forEach(z=>{ if(DC.pick[z]===p.e.id) delete DC.pick[z]; }); DC.pick['e'+o.id]=o.id; }
     keep(); toast('Parada cambiada'); });
   document.querySelectorAll('[data-dcx]').forEach(b=>b.onclick=()=>{ DC.fuera.push(b.dataset.dcx); keep(); });
   const ed=document.getElementById('dcEditar'); if(ed) ed.onclick=abrirDC;
