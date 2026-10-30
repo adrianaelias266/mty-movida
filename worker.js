@@ -50,7 +50,7 @@ async function paginaEvento(id, env, url) {
   const linea = ev ? [cuando(ev.fecha, ev.h), ev.lugar].filter(Boolean).join(' · ') : '';
   const desc = ev ? [linea, String(ev.desc || '').slice(0, 160)].filter(Boolean).join('. ') : 'Eventos, planes para hoy, festivales y atracciones de Monterrey.';
   const img = ev && /^https?:\/\//.test(ev.img || '') ? ev.img : 'https://mtymovida.com/img/compartir.jpg';
-  const destino = `/#evento/${encodeURIComponent(id)}`;
+  const destino = `/evento/${encodeURIComponent(id)}`;
   const html = `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${escH(titulo)}</title><meta name="description" content="${escH(desc)}">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Mty Movida"><meta property="og:locale" content="es_MX">

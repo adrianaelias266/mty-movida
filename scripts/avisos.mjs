@@ -27,7 +27,7 @@ function correo(estado, d) {
     ${cuerpo}<p style="font-size:13px;color:#6B605B;margin-top:24px">Adriana y Sharon · <a href="${SITIO}" style="color:#BF4718">Mty Movida</a></p></div>`;
   if (estado === 'aprobado') return { asunto: `¡${d.nombre || 'Tu evento'} ya está en Mty Movida!`, html: marco(`<h2 style="color:#BF4718;margin:0 0 8px">¡Tu evento ya está publicado!</h2>
     <p>Hola${d.organizador ? ' ' + esc(d.organizador) : ''}, gracias por compartirlo con la comunidad regia. Ya aparece en la agenda de Mty Movida:</p>${datos}
-    <p style="margin:24px 0"><a href="${SITIO}/#eventos" style="background:#BF4718;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:bold">Verlo en Mty Movida</a></p>
+    <p style="margin:24px 0"><a href="${SITIO}/eventos" style="background:#BF4718;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:bold">Verlo en Mty Movida</a></p>
     <p>Compártelo con tu público para que más gente se entere. Si necesitas corregir algo, responde a este correo.</p>`) };
   if (estado === 'rechazado') return { asunto: `Sobre tu evento «${d.nombre || ''}» en Mty Movida`, html: marco(`<h2 style="color:#BF4718;margin:0 0 8px">Gracias por escribirnos</h2>
     <p>Hola${d.organizador ? ' ' + esc(d.organizador) : ''}, revisamos tu evento y por ahora no lo pudimos publicar en la agenda:</p>${datos}
