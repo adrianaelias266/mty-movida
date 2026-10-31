@@ -24,7 +24,7 @@ function correo(estado, d) {
   const datos = `<p style="margin:16px 0;padding:14px 16px;background:#F7F3F2;border-radius:12px"><b>${nombre}</b><br>${esc(fecha(d))}${d.lugar ? '<br>' + esc(d.lugar) : ''}</p>`;
   const marco = cuerpo => `<div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;padding:24px;color:#1E1714">
     <img src="${SITIO}/img/icono-192.png" alt="Mty Movida" width="56" height="56" style="border-radius:50%;display:block;margin-bottom:12px">
-    ${cuerpo}<p style="font-size:13px;color:#6B605B;margin-top:24px">Adriana y Sharon · <a href="${SITIO}" style="color:#BF4718">Mty Movida</a></p></div>`;
+    ${cuerpo}<p style="font-size:13px;color:#6B605B;margin-top:24px">Adriana y Scarlet · <a href="${SITIO}" style="color:#BF4718">Mty Movida</a></p></div>`;
   if (estado === 'aprobado') return { asunto: `¡${d.nombre || 'Tu evento'} ya está en Mty Movida!`, html: marco(`<h2 style="color:#BF4718;margin:0 0 8px">¡Tu evento ya está publicado!</h2>
     <p>Hola${d.organizador ? ' ' + esc(d.organizador) : ''}, gracias por compartirlo con la comunidad regia. Ya aparece en la agenda de Mty Movida:</p>${datos}
     <p style="margin:24px 0"><a href="${SITIO}/eventos" style="background:#BF4718;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:bold">Verlo en Mty Movida</a></p>

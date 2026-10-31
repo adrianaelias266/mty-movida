@@ -1692,7 +1692,7 @@ const saveLay=()=>{ try{ localStorage.setItem('mtymovida-layout7',JSON.stringify
 function applyLogo(){ const r=document.documentElement.style, L=LAY.logo; r.setProperty('--lg-fig',L.fig+'px'); r.setProperty('--lg-mty',L.mty+'px'); r.setProperty('--lg-mov',L.mov+'px'); r.setProperty('--lg-gap',L.gap+'px'); r.setProperty('--lg-dy',L.dy+'px'); r.setProperty('--lg-line',L.line+'px'); }
 function pieceStyle(k){ const p=LAY.pz[k]; return `left:${p.x}%;top:${p.y}%;`+(k==='msg'?`font-size:${p.w}px;width:${Math.max(30,p.w*.42)}%`:`width:${p.w}%;`+(k==='arch'?`height:${p.h}%`:'')); }
 function pieceHTML(k){
-  const inner = k==='cerro'?'<svg viewBox="0 0 200 90" preserveAspectRatio="none"><path d="M0 90 L30 60 L48 66 L78 22 L98 48 L114 40 L130 52 L152 12 L200 90 Z" fill="#FDBD1A"/><path d="M78 22 L86 34 L80 38 L72 32 Z M152 12 L161 28 L154 32 L146 26 Z" fill="#fff" opacity=".85"/></svg>' : k==='arch'?`<div class="figbox"><img src="${BIGLOGO}" alt=""><span class="nm nm-l">Sharon</span><span class="nm nm-r">Adriana</span></div>` : k==='nube'?'<svg viewBox="0 0 120 64" aria-hidden="true"><circle cx="22" cy="40" r="13" fill="#6CC5F0"/><circle cx="58" cy="24" r="19" fill="#A9DDF7"/><rect x="74" y="46" width="42" height="11" rx="5.5" fill="#6CC5F0"/></svg>':k==='nube2'?'<svg viewBox="0 0 120 64" aria-hidden="true"><path d="M8 52a26 26 0 0 1 52 0z" fill="#A9DDF7"/><circle cx="88" cy="28" r="14" fill="#6CC5F0"/></svg>':k==='msg'?'<i>sal y</i>únete a la movida':'';
+  const inner = k==='cerro'?'<svg viewBox="0 0 200 90" preserveAspectRatio="none"><path d="M0 90 L30 60 L48 66 L78 22 L98 48 L114 40 L130 52 L152 12 L200 90 Z" fill="#FDBD1A"/><path d="M78 22 L86 34 L80 38 L72 32 Z M152 12 L161 28 L154 32 L146 26 Z" fill="#fff" opacity=".85"/></svg>' : k==='arch'?`<div class="figbox"><img src="${BIGLOGO}" alt=""><span class="nm nm-l">Scarlet</span><span class="nm nm-r">Adriana</span></div>` : k==='nube'?'<svg viewBox="0 0 120 64" aria-hidden="true"><circle cx="22" cy="40" r="13" fill="#6CC5F0"/><circle cx="58" cy="24" r="19" fill="#A9DDF7"/><rect x="74" y="46" width="42" height="11" rx="5.5" fill="#6CC5F0"/></svg>':k==='nube2'?'<svg viewBox="0 0 120 64" aria-hidden="true"><path d="M8 52a26 26 0 0 1 52 0z" fill="#A9DDF7"/><circle cx="88" cy="28" r="14" fill="#6CC5F0"/></svg>':k==='msg'?'<i>sal y</i>únete a la movida':'';
   return `<div class="pz ${k}" data-pz="${k}" style="${pieceStyle(k)}">${inner}</div>`;
 }
 let EDIT=false, SEL='arch';
@@ -1858,7 +1858,7 @@ function viewInicioHTML(slides,nSlides){
     ${rowsHTML(true)}
     <div class="allbtn"><a class="btn primary" href="/eventos">Ver todos los eventos (${month})</a></div>
     <a class="nosbar" href="/atracciones"><span><b>Para un plan sin horario</b> Parques, miradores, museos y mercaditos</span><span aria-hidden="true">→</span></a>
-    <a class="nosbar" style="margin-top:12px" href="/nosotros"><span><b>Somos Adriana y Sharon</b> Conoce por qué hicimos Mty Movida</span><span aria-hidden="true">→</span></a>
+    <a class="nosbar" style="margin-top:12px" href="/nosotros"><span><b>Somos Adriana y Scarlet</b> Conoce por qué hicimos Mty Movida</span><span aria-hidden="true">→</span></a>
     <section class="cta"><div><span class="script" style="color:#CBA6FF">¿Tienes un evento?</span><h2>Publícalo en Mty Movida</h2><p>Es gratis. Que la comunidad regia se entere y llegue.</p></div><a class="btn lila" href="/agregar">Agrega tu evento</a></section>
   </div>`;
 }
@@ -1990,7 +1990,7 @@ function legalPage(titulo,html){ return `<div class="wrap page legal"><span clas
   <p class="legal-f" style="margin-top:28px">¿Dudas? Escríbenos a <a href="mailto:hola@mtymovida.com">hola@mtymovida.com</a>. · <a href="/${titulo.startsWith('Aviso')?'terminos':'privacidad'}">${titulo.startsWith('Aviso')?'Términos de uso':'Aviso de privacidad'}</a></p></div>`; }
 function viewPriv(){ return legalPage('Aviso de privacidad',`
   <h2>¿Quién es responsable de tus datos?</h2>
-  <p>Mty Movida (mtymovida.com) es un proyecto de Adriana Elías y Sharon, con domicilio en Monterrey, Nuevo León, México. Somos responsables del uso y la protección de tus datos personales, de acuerdo con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares. Puedes contactarnos en <a href="mailto:hola@mtymovida.com">hola@mtymovida.com</a>.</p>
+  <p>Mty Movida (mtymovida.com) es un proyecto de Adriana Elías y Scarlet, con domicilio en Monterrey, Nuevo León, México. Somos responsables del uso y la protección de tus datos personales, de acuerdo con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares. Puedes contactarnos en <a href="mailto:hola@mtymovida.com">hola@mtymovida.com</a>.</p>
   <h2>¿Qué datos recabamos?</h2>
   <ul>
     <li><b>Si creas una cuenta:</b> tu nombre y tu correo electrónico.</li>
@@ -2049,7 +2049,7 @@ function viewNos(){
     <div class="phead" style="align-self:stretch;margin-bottom:0"><div><span class="script">Sal y únete a la movida</span><h1>Quiénes somos</h1></div></div>
     <div class="nos-art"><div class="blk" id="blk" aria-hidden="true">${PZ_ORDER.map(k=>pieceHTML(k)).join("")}</div></div>
     <div class="nos-tx">
-      <p><b>Nosotras somos Adriana y Sharon.</b> Somos amigas y nos encanta salir, hacer planes improvisados y disfrutar de los eventos, aunque a veces no sepamos muy bien de qué se tratan.</p>
+      <p><b>Nosotras somos Adriana y Scarlet.</b> Somos amigas y nos encanta salir, hacer planes improvisados y disfrutar de los eventos, aunque a veces no sepamos muy bien de qué se tratan.</p>
       <p>Creemos que en Monterrey hay mucho más que ir a comer o por un café, por eso creamos <b>Mty Movida</b>, para que conozcas todo lo que pasa en la ciudad, que salgas y vivas la cultura y el entretenimiento.</p>
       <p>Aquí te juntamos los conciertos, el teatro, las exposiciones, los festivales y los planes al aire libre de toda la zona metropolitana, <b>porque salir es la mejor excusa para encontrarte con los demás</b>, ya sea con tus amigos de siempre o con quien está a tu lado disfrutando lo mismo.</p>
       <div class="row"><a class="btn primary" href="/plan">¿Qué plan?</a><a class="btn" href="/agregar">Agrega tu evento</a></div>
@@ -3182,7 +3182,7 @@ function solCard(r){
 Gracias por compartir "${d.nombre||'tu evento'}". Ya está publicado en Mty Movida: ${location.origin}
 
 Saludos,
-Adriana y Sharon`)}`:'';
+Adriana y Scarlet`)}`:'';
   return `<article class="panel solc"><div class="solimg">${r.foto?`<a href="${esc(r.foto)}" target="_blank" rel="noopener"><img src="${esc(r.foto)}" alt="Cartel"></a>`:'<span>Sin cartel</span>'}</div>
     <div class="solb"><span class="eyebrow">${esc(CATS[d.categoria]?.n||d.categoria||'Sin tipo')} · ${esc(ZONAS[d.municipio]?.n||d.municipio||'')}</span><h3>${esc(d.nombre||'Sin nombre')}</h3>
       <p class="solm">${fecha}<br>${esc(d.lugar||'Lugar por confirmar')}<br>${d.precio===0?'Gratis':d.precio!=null?'$'+esc(d.precio):'Precio sin indicar'}</p>

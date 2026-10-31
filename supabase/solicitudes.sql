@@ -5,8 +5,8 @@
 create table if not exists public.administradoras (correo text primary key);
 alter table public.administradoras enable row level security;
 insert into public.administradoras (correo) values ('adrianaelias266@gmail.com') on conflict do nothing;
--- Para agregar a Sharon, quita los dos guiones de la siguiente línea y pon su correo:
--- insert into public.administradoras (correo) values ('correo-de-sharon@ejemplo.com') on conflict do nothing;
+-- Para agregar a Scarlet, quita los dos guiones de la siguiente línea y pon su correo:
+-- insert into public.administradoras (correo) values ('correo-de-scarlet@ejemplo.com') on conflict do nothing;
 
 -- 2) Función que dice si quien inició sesión es administradora
 create or replace function public.es_admin() returns boolean
