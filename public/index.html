@@ -762,6 +762,15 @@ form.card .full{grid-column:1/-1}
 .foot{background:var(--brand);color:var(--brand-dim);padding-block:22px;font-size:13px}
 .foot .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
 .foot b{color:var(--on-brand);font-family:var(--f-display)}
+.hwban{display:flex;align-items:center;gap:16px;background:#1E1714;color:#fff;border-radius:22px;padding:16px 20px;margin:0 0 22px;text-decoration:none;position:relative;overflow:hidden;box-shadow:0 10px 28px rgba(30,23,20,.25);transition:transform .15s}
+.hwban:hover{transform:translateY(-2px)}.hwban .hwp{flex:none;width:58px;height:58px}.hwban b{display:block;font-size:20px;letter-spacing:-.01em;color:#fff}.hwban small{display:block;color:#E9E1DD;font-size:14px;margin-top:2px}
+.hwban .hwgo{margin-left:auto;flex:none;background:#FF8017;color:#1E1714;font-weight:800;border-radius:999px;padding:10px 16px;font-size:14px;white-space:nowrap}
+.hwban .hwk{font-family:var(--f-script);color:#FF8017;font-size:22px;line-height:1}
+@media (max-width:560px){.hwban{flex-wrap:wrap;padding:14px 16px}.hwban>span:not(.hwgo){flex:1 1 0;min-width:0}.hwban .hwgo{margin-left:0;width:100%;text-align:center}.hwban .hwp{width:46px;height:46px}}
+.hwhead{background:#1E1714;color:#fff;border-radius:26px;padding:26px 24px;margin-bottom:8px;position:relative;overflow:hidden}
+.hwhead h1{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(46px,9vw,84px);line-height:.9;margin:6px 0 12px;letter-spacing:.01em;display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:#fff}
+.hwhead .hwp{width:1.05em;height:1.05em;flex:none}.hwhead p{color:#E9E1DD;margin:0 0 14px;max-width:640px}.hwhead .script{color:#FF8017}
+.hwsec{margin:28px 0 12px}.hwsec h2{margin:0}.hwsec p{margin:4px 0 0;color:var(--muted)}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
@@ -1209,7 +1218,18 @@ Object.assign(ORGS,{
   bloom:{n:'Bloom Entertainment',c:'#F9447F',d:'Organiza fiestas temáticas para fans de artistas en Monterrey.'},
   foro13:{n:'Foro 13',c:'#A23F96',d:'Foro de teatro independiente en el Centro de Monterrey, con varias obras en temporada a la vez.'},
   futur:{n:'Futur Festival',c:'#24123F',d:'Festival de música techno.'},
-  dosfamilias:{n:'Dos Familias',c:'#C8102E',d:'Marca regiomontana de carnes y productos para taquear; organiza el Mega Trompo Fest.'}
+  dosfamilias:{n:'Dos Familias',c:'#C8102E',d:'Marca regiomontana de carnes y productos para taquear; organiza el Mega Trompo Fest.'},
+  ochenta:{n:'80nteros Retro-Bar',c:'#9B6BF2',d:'Bar con ambiente ochentero en Monterrey.'},
+  banamex:{n:'Auditorio Banamex',c:'#24123F',d:'Recinto de conciertos en Monterrey.'},
+  versalles:{n:'Teatros Versalles',c:'#E55FA6',d:'Teatros en Monterrey con obras, musicales y espectáculos para toda la familia.'},
+  candlelight:{n:'Candlelight',c:'#24123F',d:'Conciertos a la luz de las velas en distintos recintos de la ciudad.'},
+  horno3:{n:'Museo del Acero Horno 3',c:'#BF4718',d:'Museo dentro del antiguo alto horno del Parque Fundidora.'},
+  jardin85:{n:'Jardín 85',c:'#FF8017',d:'Jardín y espacio de eventos en el sur de Monterrey.'},
+  patiobarrio:{n:'Patio Barrio',c:'#1E1714',d:'Espacio de fiestas y música en el Barrio Antiguo.'},
+  unicornio:{n:'El Unicornio Azul',c:'#7F95E4',d:'Salón de fiestas y eventos en Cumbres, Monterrey.'},
+  technomty:{n:'Techno Monterrey',c:'#24123F',d:'Organiza fiestas de música techno en Monterrey.'},
+  sayu:{n:'Sayu',c:'#F9447F',d:'Bar en el Barrio Antiguo.'},
+  dctk:{n:'Dame Contakto',c:'#BF4718',d:'Fiestas temáticas en Monterrey.'}
 });
 // [id, org, fecha, hasta, hora, nombre, categoría, lugar, municipio, espacio, precio, características, descripción, foto, enlace, temporada]
 const OTROS_RAW=[
@@ -1238,6 +1258,23 @@ const OTROS_RAW=[
  ['ft1','futur','2026-11-13','2026-11-14','','Kappa Futur Festival México 2026','concierto','Parque Fundidora (Nave Lewis, Grúa y Horno 3)','centro','exterior',1610,['metro','estac'],'Festival de música techno en el Parque Fundidora. Boletos desde $1,610 (general del viernes); hay pase de dos días.',null,'https://www.futurfestival.mx/en'],
  ['mt1','dosfamilias','2026-11-21',null,'','Mega Trompo Fest','gastro','Parque Fundidora, Monterrey','centro','exterior',0,['metro','estac','ninos'],'Intento de nuevo récord Guinness con un trompo gigante en Monterrey, además de música en vivo, degustaciones, actividades y experiencias. La entrada es con registro previo en la página de Dos Familias.','https://dosfamilias.mx/wp-content/uploads/2026/10/megatrompo-registro-hero-scaled.webp','https://dosfamilias.mx/registro-megatrompo/'],
  ['fo3','foro13','2026-10-22','2026-11-20','20:00','Incendios, de Wajdi Mouawad','teatro','Foro 13, Hidalgo 511, Centro','centro','interior',550,['metro'],'Funciones jueves y viernes.',null,'https://foro13.primetickets.mx/',1],
+ // Especial de Halloween 2026 (revisado el 30 de octubre de 2026)
+ ['hw01','conarte','2026-10-30',null,'19:00','Cine de terror: Carrie','cine','Cineteca Nuevo León, Centro de las Artes, Parque Fundidora','centro','interior',50,['metro'],'Función por Halloween. También a las 21:00 h. Boletos de $50 a $70.',null,'https://dondetocahoy.com/'],
+ ['hw02','conarte','2026-10-31',null,'19:00','Cine de terror: Carrie','cine','Cineteca Nuevo León, Centro de las Artes, Parque Fundidora','centro','interior',50,['metro'],'Función por Halloween. También a las 21:00 h. Boletos de $50 a $70.',null,'https://dondetocahoy.com/'],
+ ['hw03','conarte','2026-11-01',null,'18:30','Cine de terror: Carrie','cine','Cineteca Nuevo León, Centro de las Artes, Parque Fundidora','centro','interior',50,['metro'],'Función por Halloween. También a las 20:30 h. Boletos de $50 a $70.',null,'https://dondetocahoy.com/'],
+ ['hw04','conarte','2026-10-31',null,'18:00','Cine de terror: No dejes a los niños solos','cine','Cineteca Nuevo León, Centro de las Artes, Parque Fundidora','centro','interior',50,['metro'],'Función por Halloween. Boletos de $50 a $70.',null,'https://dondetocahoy.com/'],
+ ['hw05','conarte','2026-11-01',null,'21:00','Cine de terror: No dejes a los niños solos','cine','Cineteca Nuevo León, Centro de las Artes, Parque Fundidora','centro','interior',50,['metro'],'Función por Halloween. Boletos de $50 a $70.',null,'https://dondetocahoy.com/'],
+ ['hw06','ochenta','2026-10-30',null,'18:30','Miedoscope: especial de Halloween','fiestas','80nteros Retro-Bar, Monterrey','centro','interior',200,[],'Especial de Halloween en 80nteros Retro-Bar.',null,'https://dondetocahoy.com/'],
+ ['hw07','banamex','2026-10-30',null,'20:00','Kevin Kaarl: especial de Halloween','concierto','Auditorio Banamex, Monterrey','centro','interior',null,[],'Concierto especial de Halloween de Kevin Kaarl. Consulta precios en la boletera.',null,'https://playersoflife.com/monterrey/monterrey-se-llena-de-conciertos-concursos-y-mas-este-fin-de-semana-agenda-del-30-de-octubre-al-1-de-noviembre/'],
+ ['hw08','versalles','2026-10-31',null,'16:00','Huntrix: una noche de terror','teatro','Teatros Versalles, Sala 2','centro','interior',250,[],'Espectáculo de Halloween. Boletos de $250 a $350.',null,'https://dondetocahoy.com/'],
+ ['hw09','candlelight','2026-11-01',null,'','Candlelight: lo mejor de Halloween y Día de Muertos','musica','Museo de Historia Mexicana','centro','interior',500,['metro'],'Concierto a la luz de las velas con música de Halloween y Día de Muertos. Boletos desde $500; consulta la hora en la boletera.',null,'https://halloweenmexico.com.mx/monterrey/'],
+ ['hw10','horno3','2026-11-01','2026-11-06','20:00','Recorrido de terror: Leyendas, peligros y máquinas','talleres','Museo del Acero Horno 3, Parque Fundidora','centro','interior',400,['estac'],'Recorridos nocturnos de terror el 1, 4, 5 y 6 de noviembre, con salidas a las 20:00, 20:20, 20:40, 21:00 y 21:20 h. $400 por persona.',null,'https://mvsnoticias.com/nuevo-leon/2026/10/22/recorridos-de-terror-en-el-horno-3-de-monterrey-fechas-horarios-y-costo-de-los-boletos-750799.html'],
+ ['hw11','jardin85','2026-10-08','2026-11-01','13:00','Jardín de Otoño','fiestas','Rincón Tostitos by Jardín 85, Av. Lázaro Cárdenas 2610, Del Paseo Residencial','centro','exterior',200,['estac'],'Jardín de otoño por Halloween. Jueves y viernes de 16:00 a 23:00 h; sábados y domingos de 13:00 a 23:00 h. Entrada general $200; con la casa de terror Casa Belmont, $480.',null,'https://www.posta.com.mx/nuevo-leon/halloween-2026-en-monterrey-donde-esta-el-jardin-de-otono-y-cuanto-cuesta-entrar/vl2266553',1],
+ ['hw12','patiobarrio','2026-10-30',null,'','Rupta Raw: fiesta de Halloween','fiestas','Patio Barrio, Barrio Antiguo','centro','interior',150,['mayores','metro'],'Fiesta de Halloween. Solo mayores de 18 años, con identificación oficial.',null,'https://abcnoticias.mx/tendencia/2026/10/27/donde-celebrar-halloween-en-barrio-antiguo-estos-son-3-lugares-293644.html'],
+ ['hw13','unicornio','2026-10-31',null,'21:00','Halloween: fiesta de disfraces','fiestas','El Unicornio Azul 2, Av. Paseo de los Leones 2278, Cumbres','centro','interior',300,['mayores'],'Fiesta de disfraces de Halloween. Zona general $300 más cargos.',null,'https://www.vamoseventos.com/event/halloween-fiesta-de-disfraces-en-monterrey-99b6c9dc-92b6-41bd-86c3-ae7d89fe854a'],
+ ['hw14','technomty','2026-10-31',null,'23:00','Haunted Rave: Halloween Party','fiestas','Ubicación secreta, Centro de Monterrey','centro','interior',null,['mayores'],'Fiesta de música techno de 23:00 a 07:00 h. Solo mayores de 18 años.',null,'https://www.eventbrite.com.mx/e/haunted-rave-halloween-party-tickets-2003473314616'],
+ ['hw15','sayu','2026-10-31',null,'','Sayuween: concurso de disfraces','fiestas','Sayu, Barrio Antiguo','centro','interior',null,['mayores','metro'],'Segunda edición, con premios de $6,000, $3,000 y $1,500 a los mejores disfraces. Solo mayores de 18 años.',null,'https://abcnoticias.mx/tendencia/2026/10/27/donde-celebrar-halloween-en-barrio-antiguo-estos-son-3-lugares-293644.html'],
+ ['hw16','dctk','2026-10-31',null,'','Dame Contakto: La Casa del Terror','fiestas','Círculo Mercantil, Barrio Antiguo','centro','interior',null,['mayores','metro'],'Fiesta de Halloween con entrada por boleto. Solo mayores de 18 años.',null,'https://abcnoticias.mx/tendencia/2026/10/27/donde-celebrar-halloween-en-barrio-antiguo-estos-son-3-lugares-293644.html'],
 ];
 (function(){
   const t=new Date(); t.setHours(0,0,0,0);
@@ -1708,7 +1745,7 @@ applyLogo();
 function viejoAPath(){ const h=location.hash.replace(/^#/,''); if(!h||/=/.test(h)) return false;
   const [v,anc]=h.split('#'), base=v.split('/')[0]; if(!(VIEWS_NOMBRES.includes(base)||base==='evento'||base==='hoy')) return false;
   history.replaceState(null,'',(v==='inicio'?'/':'/'+v)+location.search+(anc?'#'+anc:'')); return true; }
-const VIEWS_NOMBRES=['inicio','nosotros','plan','eventos','festivales','atracciones','calendario','agregar','privacidad','terminos','solicitudes'];
+const VIEWS_NOMBRES=['halloween','inicio','nosotros','plan','eventos','festivales','atracciones','calendario','agregar','privacidad','terminos','solicitudes'];
 function ruta(){ return decodeURIComponent(location.pathname.replace(/^\/+|\/+$/g,'')); }
 viejoAPath();
 /* ---------- Filas tipo Netflix ---------- */
@@ -1811,6 +1848,7 @@ function evSlide(e,i){ return `<div class="slide ${i===0?'on':''}" data-i="${i}"
 function viewInicioHTML(slides,nSlides){
   const month=EVENTS.filter(e=>e.off>=0&&e.off<=MAXOFF).length;
   return `<div class="wrap page" style="padding-top:18px">
+    ${hwBanner()}
     <section class="hero" id="hero" aria-roledescription="carrusel" aria-label="Lo más esperado" style="margin-bottom:28px">
       ${slides}
       <div class="hero-ctl"><div class="dots">${Array.from({length:nSlides},(_,i)=>`<button data-dot="${i}" aria-label="Ir al evento ${i+1}" aria-current="${i===0}"></button>`).join('')}</div>
@@ -2435,6 +2473,7 @@ function viewEventos(){
   else { const byDay={}; list.forEach(e=>(byDay[e.off]=byDay[e.off]||[]).push(e));
     results=Object.keys(byDay).map(Number).sort((a,b)=>a-b).map(o=>`<section class="daygroup"><h2>${relDay(o)}<span>${o<=1?longDate(o)+' · ':''}${byDay[o].length} ${byDay[o].length===1?'evento':'eventos'}</span></h2><div class="evgrid">${byDay[o].map(card).join('')}</div></section>`).join(''); }
   return `<div class="wrap page">
+    ${hwBanner()}
     <div class="phead"><div><span class="script">Todo lo que pasa</span><h1>Todos los eventos de la ciudad</h1><p>Eventos de hoy y de los próximos 30 días. Filtra por horario, lugar y tipo, y agéndalos en tu calendario.</p></div></div>
     <div class="evlayout">
       <aside class="filters" data-fopen="${F.open}" aria-label="Filtros">
@@ -2983,7 +3022,36 @@ function bindCommon(root){
 }
 
 /* ---------- Navegación ---------- */
-const VIEWS={privacidad:[viewPriv,()=>{}],terminos:[viewTerm,()=>{}],solicitudes:[viewSol,bindSol],nosotros:[viewNos,bindNos],inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],festivales:[viewFest,bindFest],agregar:[viewAgregar,bindAgregar]};
+
+/* ---------- Especial de Halloween (30 oct al 1 nov 2026): se esconde solo el lunes 2 de noviembre ---------- */
+const HW_FIN=new Date(2026,10,2), HW_IDS=['k06','cm3','cm4','sp2','sp3','sp4','sp6'], HW_RE=/rocky horror|la sepultada|parque de las calabazas/i;
+const hwActivo=()=>new Date()<HW_FIN;
+const hwOff=iso=>{ const [y,m,d]=iso.split('-').map(Number); return Math.round((new Date(y,m-1,d)-new Date(T0.getFullYear(),T0.getMonth(),T0.getDate()))/864e5); };
+function hwCalabaza(sombrero){ return `<svg class="hwp" viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="34" cy="66" rx="21" ry="27" fill="#E8690C"/><ellipse cx="66" cy="66" rx="21" ry="27" fill="#E8690C"/><ellipse cx="50" cy="66" rx="22" ry="28" fill="#FF8017"/><path d="M33 60 l6 -8 l6 8 Z M67 60 l-6 -8 l-6 8 Z" fill="#1E1714"/><path d="M32 72 Q50 88 68 72 L61 75 L57 71 L50 77 L43 71 L39 75 Z" fill="#1E1714"/>${sombrero?'<path d="M14 42 Q50 30 86 42 Q50 50 14 42 Z" fill="#CBA6FF"/><path d="M33 39 Q42 14 50 6 Q54 2 60 4 Q54 8 56 14 Q60 26 67 37 Q50 33 33 39 Z" fill="#CBA6FF"/><path d="M34 37 Q50 33 66 36 L67 40 Q50 37 34 41 Z" fill="#7E55D6"/>':'<path d="M50 39 Q49 30 55 24" stroke="#3FA34D" stroke-width="5" fill="none" stroke-linecap="round"/>'}</svg>`; }
+function hwEventos(){ const v=hwOff('2026-10-30'), d=hwOff('2026-11-01');
+  return EVENTS.filter(e=>(HW_IDS.includes(e.id)||/^hw\d/.test(e.id)||HW_RE.test(e.t))&&((e.off>=v&&e.off<=d)||(e.range&&e.off<=d))); }
+function hwBanner(){ if(!hwActivo()) return ''; const n=hwEventos().length;
+  return `<a class="hwban" href="/halloween">${hwCalabaza(true)}<span><span class="hwk">Especial de este fin</span><b>Halloween en Monterrey</b><small>${n} planes del 30 de octubre al 1 de noviembre: cine de terror, fiestas, disfraces y más</small></span><span class="hwgo">Ver el especial →</span></a>`; }
+function viewHalloween(){
+  const evs=hwEventos(), v=hwOff('2026-10-30'), hora=e=>e.h||'99';
+  const esNoche=e=>/^hw\d/.test(e.id)&&e.tags.includes('mayores'), noche=evs.filter(esNoche), resto=evs.filter(e=>!esNoche(e));
+  const temp=resto.filter(e=>e.season||(e.range&&e.off<=v)), fech=resto.filter(e=>!temp.includes(e));
+  const dia=(o,t)=>{ const l=fech.filter(e=>e.off===v+o).sort((a,b)=>hora(a).localeCompare(hora(b))); return l.length?`<div class="hwsec"><h2>${t}</h2></div><div class="evgrid">${l.map(card).join('')}</div>`:''; };
+  const letras='HALLOWEEN'.split('').map((c,i)=>`<span style="display:inline-block;transform:translateY(${[3,-4,2,-3,4,-3,2,-5,3][i]}px) rotate(${[-4,3,-2,4,-3,2,-4,3,-2][i]}deg)">${c}</span>`).join('');
+  const fin=!hwActivo();
+  return `<div class="wrap page">
+    <div class="hwhead"><span class="script">${fin?'Ya pasó':'Especial de este fin'}</span><h1>${hwCalabaza(true)}<span>${letras}</span>${hwCalabaza(false)}</h1>
+      <p>${fin?'Este especial fue del 30 de octubre al 1 de noviembre. Mira lo que viene en la agenda.':'Todo lo que hay en Monterrey del viernes 30 de octubre al domingo 1 de noviembre: cine de terror, teatro, actividades con niños, fiestas y concursos de disfraces.'}</p>
+      <div class="row"><button class="btn primary" id="hwShare">Compartir este especial</button><a class="btn" href="/eventos">Ver toda la agenda</a></div></div>
+    ${fin?'':dia(0,'Viernes 30 de octubre')+dia(1,'Sábado 31 de octubre')+dia(2,'Domingo 1 de noviembre')
+      +(temp.length?`<div class="hwsec"><h2>De temporada</h2><p>Abiertos todo el fin de semana.</p></div><div class="evgrid">${temp.map(card).join('')}</div>`:'')
+      +(noche.length?`<div class="hwsec"><h2>Para la noche (+18)</h2><p>Solo para mayores de 18 años, con identificación oficial.</p></div><div class="evgrid">${noche.sort((a,b)=>a.off-b.off||hora(a).localeCompare(hora(b))).map(card).join('')}</div>`:'')
+      +`<div class="hwsec"><h2>También con concurso de disfraces</h2><p>Arena Monterrey, Empire Social Club, Cotorritos, Hyde Urban Club y Tusa Disco anunciaron concursos de disfraces por Halloween (+18). Consulta fecha y cover en sus redes.</p></div>`}
+  </div>`;
+}
+function bindHalloween(){ const b=document.getElementById('hwShare'); if(b) b.onclick=async()=>{ const url='https://mtymovida.com/halloween', t='Halloween en Monterrey: todo lo que hay este fin';
+  if(navigator.share){ try{ await navigator.share({title:t,url}); return; }catch(x){ if(x&&x.name==='AbortError') return; } } copy(url,'Enlace copiado'); }; }
+const VIEWS={halloween:[viewHalloween,bindHalloween],privacidad:[viewPriv,()=>{}],terminos:[viewTerm,()=>{}],solicitudes:[viewSol,bindSol],nosotros:[viewNos,bindNos],inicio:[viewInicio,bindInicio],plan:[viewPlan,bindPlan],eventos:[viewEventos,bindEventos],calendario:[viewCal,bindCal],atracciones:[viewAtr,bindAtr],festivales:[viewFest,bindFest],agregar:[viewAgregar,bindAgregar]};
 let current='inicio';
 function go(v){ const dest=v==='inicio'?'/':'/'+v; if(location.pathname!==dest||location.hash) history.pushState(null,'',dest); navegar(); }
 function navegar(){ if(!/^evento\//.test(ruta())&&!document.getElementById('modal').hidden) closeModal(); fromHash(); window.scrollTo(0,0); }
