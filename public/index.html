@@ -1229,7 +1229,8 @@ Object.assign(ORGS,{
   unicornio:{n:'El Unicornio Azul',c:'#7F95E4',d:'Salón de fiestas y eventos en Cumbres, Monterrey.'},
   technomty:{n:'Techno Monterrey',c:'#24123F',d:'Organiza fiestas de música techno en Monterrey.'},
   sayu:{n:'Sayu',c:'#F9447F',d:'Bar en el Barrio Antiguo.'},
-  dctk:{n:'Dame Contakto',c:'#BF4718',d:'Fiestas temáticas en Monterrey.'}
+  dctk:{n:'Dame Contakto',c:'#BF4718',d:'Fiestas temáticas en Monterrey.'},
+  barrioembrujado:{n:'Barrio Embrujado',c:'#24123F',d:'Recorridos nocturnos teatralizados de leyendas e historias de fantasmas en el Barrio Antiguo de Monterrey, en español e inglés.'}
 });
 // [id, org, fecha, hasta, hora, nombre, categoría, lugar, municipio, espacio, precio, características, descripción, foto, enlace, temporada]
 const OTROS_RAW=[
@@ -1275,6 +1276,7 @@ const OTROS_RAW=[
  ['hw14','technomty','2026-10-31',null,'23:00','Haunted Rave: Halloween Party','fiestas','Ubicación secreta, Centro de Monterrey','centro','interior',null,['mayores'],'Fiesta de música techno de 23:00 a 07:00 h. Solo mayores de 18 años.',null,'https://www.eventbrite.com.mx/e/haunted-rave-halloween-party-tickets-2003473314616'],
  ['hw15','sayu','2026-10-31',null,'','Sayuween: concurso de disfraces','fiestas','Sayu, Barrio Antiguo','centro','interior',null,['mayores','metro'],'Segunda edición, con premios de $6,000, $3,000 y $1,500 a los mejores disfraces. Solo mayores de 18 años.',null,'https://abcnoticias.mx/tendencia/2026/10/27/donde-celebrar-halloween-en-barrio-antiguo-estos-son-3-lugares-293644.html'],
  ['hw16','dctk','2026-10-31',null,'','Dame Contakto: La Casa del Terror','fiestas','Círculo Mercantil, Barrio Antiguo','centro','interior',null,['mayores','metro'],'Fiesta de Halloween con entrada por boleto. Solo mayores de 18 años.',null,'https://abcnoticias.mx/tendencia/2026/10/27/donde-celebrar-halloween-en-barrio-antiguo-estos-son-3-lugares-293644.html'],
+ ['hw17','barrioembrujado','2026-10-31','2026-11-01','','Barrio Embrujado: Fantasmas de Monterrey','teatro','Punto de encuentro: Diego de Montemayor 446, bajo los arcos del Barrio Antiguo','centro','exterior',320,['metro','ninos'],'Recorrido nocturno de leyendas y fantasmas por el Barrio Antiguo, con actores y basado en crónicas del siglo XIX. Dura cerca de una hora. Adultos $320; niños hasta 12 años $220; paquete familiar de 4 boletos $1,000. En español e inglés. Elige día y hora en su página; los lugares se agotan en temporada.',null,'https://www.barrioembrujado.com/leyenda'],
 ];
 (function(){
   const t=new Date(); t.setHours(0,0,0,0);
