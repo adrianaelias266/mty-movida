@@ -43,6 +43,7 @@
  "k05": null,
  "k06": null,
  "k07": null,
+ "k08": null,
  "k09": null,
  "k10": null,
  "k11": null,
@@ -233,7 +234,68 @@
  },
  "ft1": null,
  "fo3": null,
- "k08": null,
+ "hw01": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Cineteca_Nuevo_Le%C3%B3n.jpg/960px-Cineteca_Nuevo_Le%C3%B3n.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "ProtoplasmaKid",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Cineteca_Nuevo_Le%C3%B3n.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "hw02": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Cineteca_Nuevo_Le%C3%B3n.jpg/960px-Cineteca_Nuevo_Le%C3%B3n.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "ProtoplasmaKid",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Cineteca_Nuevo_Le%C3%B3n.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "hw04": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Cineteca_Nuevo_Le%C3%B3n.jpg/960px-Cineteca_Nuevo_Le%C3%B3n.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "ProtoplasmaKid",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Cineteca_Nuevo_Le%C3%B3n.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "hw06": null,
+ "hw07": {
+  "foto": "https://upload.wikimedia.org/wikipedia/commons/d/db/Kevin_Kaarl_live.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "credito": {
+   "autor": "El Sombrerero",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Kevin_Kaarl_live.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "hw08": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Huntrix_the_Meal_text_logo%2C_McDonald%27s_K-Pop_Demon_Hunters_Meal%2C_Canada_%282026%29.jpg/960px-Huntrix_the_Meal_text_logo%2C_McDonald%27s_K-Pop_Demon_Hunters_Meal%2C_Canada_%282026%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Sony Pictures Animation and McDonald's",
+   "licencia": "Public domain",
+   "url": "https://commons.wikimedia.org/wiki/File:Huntrix_the_Meal_text_logo,_McDonald%27s_K-Pop_Demon_Hunters_Meal,_Canada_(2026).jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "hw09": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Candlelight_Prayer_Ritual%2C_edited.jpg/960px-Candlelight_Prayer_Ritual%2C_edited.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Muhammad Amdad Hossain , edited by W.carter",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Candlelight_Prayer_Ritual,_edited.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "hw10": null,
+ "hw11": null,
+ "hw12": null,
+ "hw13": null,
+ "hw14": null,
+ "hw15": null,
+ "hw16": null,
  "s08": {
   "foto": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Arena_Monterrey.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
   "credito": {
@@ -249,6 +311,24 @@
    "autor": "Andrea Herrera / Secretaría de Cultura de la Ciudad de México",
    "licencia": "CC BY 2.0",
    "url": "https://commons.wikimedia.org/wiki/File:Morat_en_concierto.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "hw03": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Cineteca_Nuevo_Le%C3%B3n.jpg/960px-Cineteca_Nuevo_Le%C3%B3n.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "ProtoplasmaKid",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Cineteca_Nuevo_Le%C3%B3n.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "hw05": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Cineteca_Nuevo_Le%C3%B3n.jpg/960px-Cineteca_Nuevo_Le%C3%B3n.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "ProtoplasmaKid",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Cineteca_Nuevo_Le%C3%B3n.jpg",
    "fuente": "Wikimedia Commons"
   }
  },
