@@ -252,7 +252,25 @@
    "fuente": "Wikimedia Commons"
   }
  },
+ "hw03": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Cineteca_Nuevo_Le%C3%B3n.jpg/960px-Cineteca_Nuevo_Le%C3%B3n.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "ProtoplasmaKid",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Cineteca_Nuevo_Le%C3%B3n.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
  "hw04": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Cineteca_Nuevo_Le%C3%B3n.jpg/960px-Cineteca_Nuevo_Le%C3%B3n.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "ProtoplasmaKid",
+   "licencia": "CC BY-SA 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Cineteca_Nuevo_Le%C3%B3n.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "hw05": {
   "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Cineteca_Nuevo_Le%C3%B3n.jpg/960px-Cineteca_Nuevo_Le%C3%B3n.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
   "credito": {
    "autor": "ProtoplasmaKid",
@@ -296,6 +314,7 @@
  "hw14": null,
  "hw15": null,
  "hw16": null,
+ "hw17": null,
  "s08": {
   "foto": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Arena_Monterrey.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
   "credito": {
@@ -314,24 +333,6 @@
    "fuente": "Wikimedia Commons"
   }
  },
- "hw03": {
-  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Cineteca_Nuevo_Le%C3%B3n.jpg/960px-Cineteca_Nuevo_Le%C3%B3n.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-  "credito": {
-   "autor": "ProtoplasmaKid",
-   "licencia": "CC BY-SA 4.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Cineteca_Nuevo_Le%C3%B3n.jpg",
-   "fuente": "Wikimedia Commons"
-  }
- },
- "hw05": {
-  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Cineteca_Nuevo_Le%C3%B3n.jpg/960px-Cineteca_Nuevo_Le%C3%B3n.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-  "credito": {
-   "autor": "ProtoplasmaKid",
-   "licencia": "CC BY-SA 4.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Cineteca_Nuevo_Le%C3%B3n.jpg",
-   "fuente": "Wikimedia Commons"
-  }
- },
  "s13": {
   "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Morat_en_concierto.jpg/960px-Morat_en_concierto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
   "credito": {
@@ -341,6 +342,7 @@
    "fuente": "Wikimedia Commons"
   }
  },
+ "atr:serena": null,
  "atr:obispado": {
   "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Museo_Regional_de_Nuevo_Le%C3%B3n_%28_El_Obispado_%29_08.jpg/960px-Museo_Regional_de_Nuevo_Le%C3%B3n_%28_El_Obispado_%29_08.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
   "credito": {
