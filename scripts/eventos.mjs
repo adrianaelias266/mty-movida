@@ -10,6 +10,8 @@ const SB_URL = process.env.SUPABASE_URL || 'https://aqakoihxgwxdyrtzjrfh.supabas
 // Con la llave secreta (guardada en GitHub › Secrets como SUPABASE_SECRET) los eventos de estas fuentes
 // entran ya aprobados. Sin ella, entran como "pendiente" para revisión.
 const SECRETA = process.env.SUPABASE_SECRET || '';
+// Fuentes que juntan eventos de otros (no son la boletera ni el recinto): nunca se aprueban solas
+const REVISAR = LISTA.filter(f => f.revisar).map(f => f.nombre);
 const SB_KEY = SECRETA || process.env.SUPABASE_KEY || 'sb_publishable_LfR-ayNY5bpv2xlO8pkEXQ_sE4nP0BG';
 const ESTADO = SECRETA ? 'aprobado' : 'pendiente';
 const MAX_PAGINAS = 80;          // páginas por fuente en cada corrida
@@ -156,7 +158,7 @@ const mtyHora = iso => {   // fecha en hora universal → fecha y hora de Monter
 const hora12 = t => { const m = String(t || '').match(/(\d{1,2})(?::(\d{2}))?\s*(a\.?\s?m|p\.?\s?m)/i); if (!m) { const n = String(t || '').match(/(\d{1,2}):(\d{2})/); return n ? `${n[1].padStart(2, '0')}:${n[2]}` : null; } let h = Number(m[1]) % 12; if (/p/i.test(m[3])) h += 12; return `${String(h).padStart(2, '0')}:${m[2] || '00'}`; };
 function fila(f, x) {
   return {
-    fuente: f.nombre, fuente_url: x.id, foto: x.foto || null, estado: ESTADO,
+    fuente: f.nombre, fuente_url: x.id, foto: x.foto || null, estado: f.revisar ? 'pendiente' : ESTADO,
     datos: {
       nombre: x.nombre, organizador: x.organizador || f.nombre, categoria: x.cat || categoria(x.nombre + ' ' + (x.desc || '')),
       municipio: x.municipio || municipio(x.lugar || '', f.municipio), fecha: x.fecha, hora: x.hora || null, hasta: x.hasta && x.hasta !== x.fecha ? x.hasta : null,
@@ -418,7 +420,7 @@ async function guardar(filas) {
     const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados`, { method: 'POST', headers: h, body: JSON.stringify(fila) });
     if (r.ok) { nuevos++; continue; }
     if (r.status !== 409) throw new Error(`Supabase respondió ${r.status}: ${await r.text()}`);
-    if (SECRETA) await fetch(`${SB_URL}/rest/v1/eventos_enviados?fuente_url=eq.${encodeURIComponent(fila.fuente_url)}&estado=eq.aprobado`, {
+    if (SECRETA && !REVISAR.includes(fila.fuente)) await fetch(`${SB_URL}/rest/v1/eventos_enviados?fuente_url=eq.${encodeURIComponent(fila.fuente_url)}&estado=eq.aprobado`, {
       method: 'PATCH', headers: h, body: JSON.stringify({ datos: fila.datos, foto: fila.foto }),
     });
   }
@@ -426,12 +428,20 @@ async function guardar(filas) {
 }
 
 if (SECRETA) {
-  const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados?estado=eq.pendiente&fuente=neq.Organizador`, {
+  const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados?estado=eq.pendiente&fuente=not.in.(${['Organizador', ...REVISAR].map(encodeURIComponent).join(',')})`, {
     method: 'PATCH', headers: { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}`, 'content-type': 'application/json', prefer: 'return=minimal' },
     body: JSON.stringify({ estado: 'aprobado' }),
   });
   console.log(r.ok ? '::notice::Los pendientes del recolector quedaron aprobados' : `::warning::No se pudieron aprobar los pendientes: ${r.status}`);
 } else console.log('::notice::Sin llave secreta: los eventos entran como pendientes');
+// Fuentes que solo juntan eventos de otros: lo que se aprobó solo, sin revisión, vuelve a pendientes
+if (SECRETA) {
+  const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados?estado=eq.aprobado&fuente=in.(${REVISAR.map(encodeURIComponent).join(',')})&datos->>revisado=is.null`, {
+    method: 'PATCH', headers: { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}`, 'content-type': 'application/json', prefer: 'return=minimal' },
+    body: JSON.stringify({ estado: 'pendiente' }),
+  });
+  console.log(r.ok ? '::notice::Eventos de fuentes por revisar quedaron como pendientes' : `::warning::No se pudieron pasar a pendientes: ${r.status}`);
+}
 // Fuentes que se dejaron de usar: sus eventos se retiran de la página
 const RETIRADAS = ['Meetup'];
 if (SECRETA) {

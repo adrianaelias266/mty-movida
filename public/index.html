@@ -1193,7 +1193,6 @@ const SB_RAW=[
  ['s13','2026-12-03','21:00','Morat: YEM World Tour (segunda fecha)','concierto','Morat presenta su YEM World Tour en la Arena Monterrey.',[],'4zKjTCX-ir65VjcXK5IcOA',5200],
  ['s14','2026-12-04','21:00','Morat: YEM World Tour (tercera fecha)','concierto','Tercera fecha de Morat con su YEM World Tour en la Arena Monterrey.',[],'F1EVizizBHyX8lK6DRIUcQ',4700],
  ['s15','2026-12-05','21:00','Eden Muñoz en concierto','concierto','Nueva fecha de Eden Muñoz en la Arena Monterrey.',[],'WQ0VemNOffLYv7f5vUpYew',3000],
- ['s17','2026-12-10','21:00','Sin Bandera','concierto','Concierto de Sin Bandera en la Arena Monterrey.',[],'Y48a2yGtVKMRebnjmv-1iQ',3500]
 ];
 (function(){
   const t=new Date(); t.setHours(0,0,0,0);
@@ -3175,7 +3174,7 @@ async function revisarAdmin(){
 }
 async function cargarSol(){
   if(!sb) return; SOL.error='';
-  const r=await sb.from('eventos_enviados').select('*').eq('estado',SOL.estado).or('fuente.is.null,fuente.eq.Organizador').limit(200);
+  const r=await sb.from('eventos_enviados').select('*').eq('estado',SOL.estado).or('fuente.is.null,fuente.eq.Organizador,fuente.in.(Songkick,Metapatio,"Cinema Río 70")').limit(200);
   if(r.error){ SOL.lista=[]; SOL.error=r.error.message; } else SOL.lista=(r.data||[]).sort((a,b)=>String((a.datos||{}).fecha||'').localeCompare(String((b.datos||{}).fecha||'')));
   if(SOL.estado==='pendiente'){ const a=document.getElementById('navSol'); if(a) a.textContent=SOL.lista.length?`Solicitudes (${SOL.lista.length})`:'Solicitudes'; }
 }
@@ -3219,6 +3218,7 @@ function viewSol(){
 function bindSol(){
   const q=x=>document.querySelectorAll(x), keep=()=>{ const y=window.scrollY; render(); window.scrollTo(0,y); };
   const cambiar=async(id,estado,datos)=>{ const cambio={estado}; if(datos) cambio.datos=datos;
+    if(estado==='aprobado'){ const fila=(SOL.lista||[]).find(x=>String(x.id)===String(id)); cambio.datos={...(datos||fila?.datos||{}),revisado:true}; } // aprobado por una persona: el recolector ya no lo regresa a pendientes
     const r=await sb.from('eventos_enviados').update(cambio).eq('id',id).select('id'); if(r.error||!r.data||!r.data.length){ toast('No se pudo guardar. Revisa los permisos en Supabase.'); return false; }
     return true; };
   q('[data-soltab]').forEach(b=>b.onclick=async()=>{ SOL.estado=b.dataset.soltab; SOL.lista=null; SOL.editando=null; render(); await cargarSol(); render(); });
