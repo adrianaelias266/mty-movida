@@ -1185,19 +1185,14 @@ const SB_RAW=[
  ['s01','2026-10-29','21:00','Pimpinela: Leyendas Tour 2026','concierto','El dúo argentino Pimpinela llega a la Arena Monterrey con su gira Leyendas Tour 2026.',[],'HNd1w3iu5V9hb4AEfNYSqw',2400],
  ['s02','2026-11-06','21:00','Yuri 2026','concierto','Concierto de Yuri en la Arena Monterrey.',[],'vy13qO6-6dECaHMTZBvNAA',3100],
  ['s03','2026-11-07','21:00','Los Tucanes de Tijuana: Time Tour 2026','concierto','Los Tucanes de Tijuana presentan su Time Tour 2026 en la Arena Monterrey.',[],'KDgsMAUTh0Iqb8WVVMcf1Q',2800],
- ['s04','2026-11-08','18:00','El mundo de Fede Vigevani','teatro','Show familiar del creador de contenido Fede Vigevani en la Arena Monterrey.',['ninos'],'KyN4Q2WufKE8IX1YOuU6ag',3600],
  ['s05','2026-11-13','21:00','Mägo de Oz: La noche de las brujas 2026','concierto','La banda española de folk metal Mägo de Oz presenta La noche de las brujas 2026.',[],'FJKnquy6xxNM1JiAM_0Bhg',2600],
- ['s06','2026-11-18','21:00','Ricardo Montaner: El último regreso tour','concierto','Ricardo Montaner se presenta en la Arena Monterrey con El último regreso tour.',[],'-PtLHZAe12_Zfp8ds7EMQw',3900],
  ['s07','2026-11-20','21:00','Banda MS: Somos MS Tour','concierto','Banda MS presenta su gira Somos MS Tour. Primera de dos fechas en la Arena Monterrey.',[],'BKgZLfzFc5Mm1nTelBQqBw',4800],
  ['s08','2026-11-21','21:00','Banda MS: Somos MS Tour (segunda fecha)','concierto','Segunda fecha de Banda MS con su gira Somos MS Tour en la Arena Monterrey.',[],'BKgZLfzFc5Mm1nTelBQqBw',4100],
- ['s09','2026-11-22','21:00','Eden Muñoz','concierto','Concierto de Eden Muñoz en la Arena Monterrey.',[],'Hy38n-9PwA4OnAQD__C1BA',3700],
- ['s10','2026-11-27','21:00','Earth, Wind & Fire','concierto','La legendaria agrupación de soul y funk Earth, Wind & Fire en la Arena Monterrey.',[],'-rhQAfXqGw3G3k23d1B6Wg',2900],
  ['s11','2026-11-29','18:00','Los Payasónicos: 25 aniversario','concierto','Los Payasónicos celebran 25 años con un concierto en la Arena Monterrey.',['ninos'],'nJgQMGTy-bxuxreQObZBig',2700],
  ['s12','2026-11-30','21:00','Yandel Sinfónico','concierto','Yandel interpreta sus éxitos de reguetón acompañado de orquesta sinfónica.',[],'-hPOfxLqhRFLpurjAC9XKg',3300],
  ['s13','2026-12-03','21:00','Morat: YEM World Tour (segunda fecha)','concierto','Morat presenta su YEM World Tour en la Arena Monterrey.',[],'4zKjTCX-ir65VjcXK5IcOA',5200],
  ['s14','2026-12-04','21:00','Morat: YEM World Tour (tercera fecha)','concierto','Tercera fecha de Morat con su YEM World Tour en la Arena Monterrey.',[],'F1EVizizBHyX8lK6DRIUcQ',4700],
  ['s15','2026-12-05','21:00','Eden Muñoz en concierto','concierto','Nueva fecha de Eden Muñoz en la Arena Monterrey.',[],'WQ0VemNOffLYv7f5vUpYew',3000],
- ['s16','2026-12-06','21:00','Intocable: Antología Tour','concierto','Intocable presenta su Antología Tour en la Arena Monterrey.',[],'0026KI1Wak7ieXzX2AXX2Q',4400],
  ['s17','2026-12-10','21:00','Sin Bandera','concierto','Concierto de Sin Bandera en la Arena Monterrey.',[],'Y48a2yGtVKMRebnjmv-1iQ',3500]
 ];
 (function(){
@@ -3261,6 +3256,8 @@ async function loadApproved(){
     if(!ORGS[orgKey]) ORGS[orgKey]={n:orgName,c:'#7F95E4',d:''};
     let off=offOfDate(new Date(d.fecha+'T00:00')), range=null;
     // Si ya está en la agenda (agregado a mano), no se repite
+    // Fechas que revisamos y no existen: no se muestran aunque vengan del recolector
+    if([['beele','2026-11-17'],['rauldiblasio','2026-11-25']].some(([t,f])=>norm(d.nombre).startsWith(t)&&d.fecha===f)) return;
     const nn=norm(d.nombre), parecido=t=>{ const a=norm(t); return a===nn||(Math.min(a.length,nn.length)>=6&&(a.startsWith(nn)||nn.startsWith(a))); };
     if(EVENTS.some(x=>parecido(x.t)&&(x.off===off||x.range))) return;
     if(d.hasta&&/^\d{4}-\d{2}-\d{2}$/.test(d.hasta)){ const end=offOfDate(new Date(d.hasta+'T00:00')); if(off<0&&end>=0) off=0; const h=new Date(d.hasta+'T00:00'); range=`Hasta el ${h.getDate()} de ${MESL[h.getMonth()]}`; }
