@@ -1160,7 +1160,6 @@ const CONARTE_RAW=[
  ['k13','2026-11-07','16:00','Arte y juego para los más pequeños: Música, juego y tradiciones','musica','Niños CONARTE, Parque Fundidora','interior','Rondas, canciones y juegos para cantar, bailar y compartir con la primera infancia. A cargo de Sandunga.',['ninos','metro'],0,70],
  ['k14','2026-11-07','17:30','Disco de oro: legado de los sonidos de Monterrey','musica','Casa de la Cultura de Nuevo León','exterior','Conversatorio con dueños de sonidos y discotecas de Monterrey sobre la música desde el vinil, seguido de una tocada sonidera.',['metro'],0,210],
  ['k15','2026-11-08','13:00','Temporada de Música: El mundo se borra a sí mismo','teatro','Gran Sala del Teatro de la Ciudad','interior','Musical de títeres con música original: una oruga busca a su mejor amigo, que desapareció misteriosamente. $150 general; $100 estudiantes, maestros e INAPAM.',['metro'],100,120],
- ['k16','2026-11-13','20:00','Temporada de Teatro: Yo no soy Charlie','teatro','Sala Experimental del Teatro de la Ciudad','interior','Tras un intento de suicidio, un hombre emprende un viaje delirante con un sacerdote, un policía, un payaso y un hombre disfrazado de pollo. Funciones del 13 al 22 de noviembre. $150 general; $100 estudiantes, maestros e INAPAM.',['mayores','metro'],100,90],
  ['k17','2026-11-03','18:30','Taller de danza española y flamenco','talleres','Escuela Adolfo Prieto, Centro de las Artes','interior','Aprende a bailar sevillanas con Alonso Real. Martes y jueves del 3 al 26 de noviembre, de 18:30 a 20:00 h. Costo $1,500. Para mayores de 18 años.',['metro'],1500,25],
  ['k18','2026-11-07','11:00','Taller: El arte de tocar las castañuelas','talleres','Escuela Adolfo Prieto, Centro de las Artes','interior','Técnica básica de castañuelas con Alonso Real. Sábados 7, 14, 21 y 28 de noviembre, de 11:00 a 13:00 h. Costo $1,500. Para mayores de 18 años.',['metro'],1500,15],
  ['k19','2026-11-21','10:00','Clase maestra: Trasciende el duelo','talleres','Escuela Adolfo Prieto, Centro de las Artes','interior','Danzas circulares y sonoterapia con gongos, cuencos tibetanos y voz, impartida por Héster Martínez y Aury Leija. $550 antes del 1 de noviembre, $650 después. Para mayores de 18 años.',['metro'],550,20],
@@ -3269,8 +3268,9 @@ async function loadApproved(){
     let off=offOfDate(new Date(d.fecha+'T00:00')), range=null;
     // Si ya está en la agenda (agregado a mano), no se repite
     // Fechas que revisamos y no existen: no se muestran aunque vengan del recolector
-    {const nn=norm(d.nombre); if(['axelcatalan','damasgratis','losaptos','almostdone'].some(x=>nn.startsWith(x))||['renee','dri'].includes(nn)) return;} // conciertos sin confirmar (revisión 2 nov 2026)
-    if([['beele','2026-11-17'],['rauldiblasio','2026-11-25']].some(([t,f])=>norm(d.nombre).startsWith(t)&&d.fecha===f)) return;
+    {const nn=norm(d.nombre); if(['axelcatalan','damasgratis','losaptos','almostdone','rapsodiadenataliavirgen','mexicodiverso'].some(x=>nn.startsWith(x))||['renee','dri'].includes(nn)) return;} // conciertos sin confirmar (revisión 2 nov 2026)
+    if(['mexicodiverso','rapsodiadenatalia'].some(x=>norm(d.nombre).includes(x))||(norm(d.nombre).includes('radiografia')&&d.fecha==='2026-11-07')) return; // obras sin función confirmada (revisión 3 nov 2026)
+    if([['beele','2026-11-17'],['rauldiblasio','2026-11-25'],['radiografia','2026-11-07']].some(([t,f])=>norm(d.nombre).startsWith(t)&&d.fecha===f)) return;
     const nn=norm(d.nombre), parecido=t=>{ const a=norm(t); return a===nn||(Math.min(a.length,nn.length)>=6&&(a.startsWith(nn)||nn.startsWith(a))); };
     if(EVENTS.some(x=>parecido(x.t)&&(x.off===off||x.range))) return;
     if(d.hasta&&/^\d{4}-\d{2}-\d{2}$/.test(d.hasta)){ const end=offOfDate(new Date(d.hasta+'T00:00')); if(off<0&&end>=0) off=0; const h=new Date(d.hasta+'T00:00'); range=`Hasta el ${h.getDate()} de ${MESL[h.getMonth()]}`; }
