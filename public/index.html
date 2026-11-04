@@ -1155,7 +1155,6 @@ const CONARTE_RAW=[
  ['k08','2026-10-31','19:30','Room with a view: Ballet Nacional de Marsella (segunda función)','danza','Gran Sala del Teatro de la Ciudad','interior','Segunda función de la obra de La Horde con música de DJ Rone. $400 planta baja y $300 planta alta. Para adolescentes y adultos.',['metro'],300,240],
  ['k09','2026-10-31','11:00','Mercado cultural: El vagón amarillo','gastro','Casa de la Cultura de Nuevo León','exterior','Espacio de convivencia para conocer y apoyar emprendimientos locales, artistas y diseñadores. De 11:00 a 16:00 h.',['ninos','metro'],0,180],
  ['k10','2026-10-31','16:30','Círculo de lectura: Entre páginas y calles','letras','Casa de la Cultura de Nuevo León','interior','Cómo vivimos, construimos y soñamos nuestras ciudades, a partir del libro Todo sobre la casa de Anatxu Zabalbeascoa. Registro por WhatsApp al 81 1192 8494.',['metro'],0,30],
- ['k11','2026-11-05','20:00','Inauguración: Resolona, de Juan José Cerón','expo','Fototeca de Nuevo León, Centro de las Artes','interior','Exposición que recorre la carrera del fotógrafo Juan José Cerón, del documentalismo a la historia del fotoperiodismo.',['metro','accesible'],0,95],
  ['k12','2026-11-06','20:00','Temporada de Danza: Cuando el pueblo baila','danza','Gran Sala del Teatro de la Ciudad','interior','Danza contemporánea que reinterpreta tradiciones del folclore mexicano con música tradicional y experimental. $150 general; $100 estudiantes, maestros e INAPAM.',['metro'],100,140],
  ['k13','2026-11-07','16:00','Arte y juego para los más pequeños: Música, juego y tradiciones','musica','Niños CONARTE, Parque Fundidora','interior','Rondas, canciones y juegos para cantar, bailar y compartir con la primera infancia. A cargo de Sandunga.',['ninos','metro'],0,70],
  ['k14','2026-11-07','17:30','Disco de oro: legado de los sonidos de Monterrey','musica','Casa de la Cultura de Nuevo León','exterior','Conversatorio con dueños de sonidos y discotecas de Monterrey sobre la música desde el vinil, seguido de una tocada sonidera.',['metro'],0,210],
@@ -3262,7 +3261,9 @@ async function loadApproved(){
   const norm=t=>String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'');
   const orgPorNombre=t=>Object.keys(ORGS).find(k=>norm(ORGS[k].n)===norm(t)||norm(ORGS[k].n).startsWith(norm(t))||norm(t).startsWith(norm(ORGS[k].n)));
   data.forEach(r=>{
-    const d=r.datos||{}; if(!d.nombre||!/^\d{4}-\d{2}-\d{2}$/.test(d.fecha||'')) return;
+    const d={...(r.datos||{})}; if(!d.nombre||!/^\d{4}-\d{2}-\d{2}$/.test(d.fecha||'')) return;
+    // Fechas corregidas con la fuente oficial (MARCO, revisión 4 nov 2026)
+    if(String(d.nombre).toLowerCase().includes('hirmas')||String(d.nombre).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes('cuerpo, performance')){ d.fecha='2026-11-07'; d.hasta='2027-05-02'; }
     const id='db-'+r.id; if(ev(id)) return;
     const orgName=d.organizador||r.fuente||'Organizador';
     const orgKey=orgPorNombre(orgName)||'org-'+norm(orgName);
