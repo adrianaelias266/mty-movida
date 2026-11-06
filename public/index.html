@@ -3192,7 +3192,7 @@ async function revisarAdmin(){
 }
 async function cargarSol(){
   if(!sb) return; SOL.error='';
-  const r=await sb.from('eventos_enviados').select('*').eq('estado',SOL.estado).or('fuente.is.null,fuente.eq.Organizador,fuente.in.(Songkick,Metapatio,"Cinema Río 70")').limit(200);
+  const r=await sb.from('eventos_enviados').select('*').eq('estado',SOL.estado).or('fuente.is.null,fuente.eq.Organizador').limit(200);
   if(r.error){ SOL.lista=[]; SOL.error=r.error.message; } else SOL.lista=(r.data||[]).sort((a,b)=>String((a.datos||{}).fecha||'').localeCompare(String((b.datos||{}).fecha||'')));
   if(SOL.estado==='pendiente'){ const a=document.getElementById('navSol'); if(a) a.textContent=SOL.lista.length?`Solicitudes (${SOL.lista.length})`:'Solicitudes'; }
 }

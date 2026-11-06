@@ -12,6 +12,8 @@ const SB_URL = process.env.SUPABASE_URL || 'https://aqakoihxgwxdyrtzjrfh.supabas
 const SECRETA = process.env.SUPABASE_SECRET || '';
 // Fuentes que juntan eventos de otros (no son la boletera ni el recinto): nunca se aprueban solas
 const REVISAR = LISTA.filter(f => f.revisar).map(f => f.nombre);
+// Fuentes que se dejaron de usar. Songkick (y Metapatio y Cinema Río 70, que se leían desde Songkick) solo junta eventos de otros: se dejó de usar el 6 nov 2026
+const RETIRADAS = ['Meetup', 'Songkick', 'Metapatio', 'Cinema Río 70'];
 const SB_KEY = SECRETA || process.env.SUPABASE_KEY || 'sb_publishable_LfR-ayNY5bpv2xlO8pkEXQ_sE4nP0BG';
 const ESTADO = SECRETA ? 'aprobado' : 'pendiente';
 const MAX_PAGINAS = 80;          // páginas por fuente en cada corrida
@@ -428,28 +430,19 @@ async function guardar(filas) {
 }
 
 if (SECRETA) {
-  const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados?estado=eq.pendiente&fuente=not.in.(${['Organizador', ...REVISAR].map(encodeURIComponent).join(',')})`, {
+  const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados?estado=eq.pendiente&fuente=not.in.(${['Organizador', ...REVISAR, ...RETIRADAS].map(x => encodeURIComponent(`"${x}"`)).join(',')})`, {
     method: 'PATCH', headers: { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}`, 'content-type': 'application/json', prefer: 'return=minimal' },
     body: JSON.stringify({ estado: 'aprobado' }),
   });
   console.log(r.ok ? '::notice::Los pendientes del recolector quedaron aprobados' : `::warning::No se pudieron aprobar los pendientes: ${r.status}`);
 } else console.log('::notice::Sin llave secreta: los eventos entran como pendientes');
-// Fuentes que solo juntan eventos de otros: lo que se aprobó solo, sin revisión, vuelve a pendientes
-if (SECRETA) {
-  const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados?estado=eq.aprobado&fuente=in.(${REVISAR.map(encodeURIComponent).join(',')})&datos->>revisado=is.null`, {
-    method: 'PATCH', headers: { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}`, 'content-type': 'application/json', prefer: 'return=minimal' },
-    body: JSON.stringify({ estado: 'pendiente' }),
-  });
-  console.log(r.ok ? '::notice::Eventos de fuentes por revisar quedaron como pendientes' : `::warning::No se pudieron pasar a pendientes: ${r.status}`);
-}
 // Fuentes que se dejaron de usar: sus eventos se retiran de la página
-const RETIRADAS = ['Meetup'];
 if (SECRETA) {
-  const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados?fuente=in.(${RETIRADAS.map(encodeURIComponent).join(',')})&estado=eq.aprobado`, {
+  const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados?fuente=in.(${RETIRADAS.map(x => encodeURIComponent(`"${x}"`)).join(',')})&estado=in.(aprobado,pendiente)`, {
     method: 'PATCH', headers: { apikey: SB_KEY, authorization: `Bearer ${SB_KEY}`, 'content-type': 'application/json', prefer: 'return=minimal' },
     body: JSON.stringify({ estado: 'rechazado' }),
   });
-  if (!r.ok) console.log(`::warning::No se pudieron retirar las fuentes viejas: ${r.status}`);
+  console.log(r.ok ? `::notice::Eventos de fuentes retiradas (${RETIRADAS.join(', ')}) quedaron como rechazados` : `::warning::No se pudieron retirar las fuentes viejas: ${r.status}`);
 }
 
 import { buscarFoto } from './fotos.mjs';
