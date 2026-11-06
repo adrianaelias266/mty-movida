@@ -1,8 +1,9 @@
 {
- "_revisado": "2026-11-05",
+ "_revisado": "2026-11-06",
  "palnorte": {
-  "firma": "0b574b405160",
-  "menciona": "2027"
+  "firma": "5f4fde48363d",
+  "menciona": "2027",
+  "cambio": "2026-11-06"
  },
  "machaca": {},
  "liveout": {},
@@ -22,9 +23,9 @@
  },
  "xantoluz": {},
  "calabazas": {
-  "firma": "2c8447f3b4b5",
+  "firma": "7fa0ac630599",
   "menciona": null,
-  "cambio": "2026-10-31"
+  "cambio": "2026-11-06"
  },
  "batfest": {},
  "horrorfest": {},
@@ -62,9 +63,9 @@
  "teatronl": {},
  "cinelatino": {},
  "artsweek": {
-  "firma": "4d058b6101f0",
+  "firma": "5dcd5e8fb905",
   "menciona": "2027",
-  "cambio": "2026-11-05"
+  "cambio": "2026-11-06"
  },
  "itinerarte": {},
  "expoguadalupe": {},
