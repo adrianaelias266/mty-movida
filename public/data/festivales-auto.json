@@ -1,5 +1,5 @@
 {
- "_revisado": "2026-11-06",
+ "_revisado": "2026-11-07",
  "palnorte": {
   "firma": "5f4fde48363d",
   "menciona": "2027",
@@ -63,15 +63,16 @@
  "teatronl": {},
  "cinelatino": {},
  "artsweek": {
-  "firma": "5dcd5e8fb905",
+  "firma": "4d058b6101f0",
   "menciona": "2027",
-  "cambio": "2026-11-06"
+  "cambio": "2026-11-07"
  },
  "itinerarte": {},
  "expoguadalupe": {},
  "megatrompo": {
-  "firma": "781b45ca7e8c",
-  "menciona": null
+  "firma": "78f715547692",
+  "menciona": null,
+  "cambio": "2026-11-07"
  },
  "lovethe90s": {},
  "_descubiertos": [
