@@ -1188,8 +1188,6 @@ const SB_RAW=[
  ['s08','2026-11-21','21:00','Banda MS: Somos MS Tour (segunda fecha)','concierto','Segunda fecha de Banda MS con su gira Somos MS Tour en la Arena Monterrey.',[],'BKgZLfzFc5Mm1nTelBQqBw',4100],
  ['s11','2026-11-29','18:00','Los Payasónicos: 25 aniversario','concierto','Los Payasónicos celebran 25 años con un concierto en la Arena Monterrey.',['ninos'],'nJgQMGTy-bxuxreQObZBig',2700],
  ['s12','2026-11-30','21:00','Yandel Sinfónico','concierto','Yandel interpreta sus éxitos de reguetón acompañado de orquesta sinfónica.',[],'-hPOfxLqhRFLpurjAC9XKg',3300],
- ['s13','2026-12-03','21:00','Morat: YEM World Tour (segunda fecha)','concierto','Morat presenta su YEM World Tour en la Arena Monterrey.',[],'4zKjTCX-ir65VjcXK5IcOA',5200],
- ['s14','2026-12-04','21:00','Morat: YEM World Tour (tercera fecha)','concierto','Tercera fecha de Morat con su YEM World Tour en la Arena Monterrey.',[],'F1EVizizBHyX8lK6DRIUcQ',4700],
  ['s15','2026-12-05','21:00','Eden Muñoz en concierto','concierto','Nueva fecha de Eden Muñoz en la Arena Monterrey.',[],'WQ0VemNOffLYv7f5vUpYew',3000],
 ];
 (function(){
@@ -1296,7 +1294,6 @@ const OTROS_RAW=[
  ['ig01','cafeiguana','2026-11-06',null,'21:00','Peces Raros','concierto','Café Iguana, Diego de Montemayor 927 sur, Barrio Antiguo','centro','interior',null,['metro'],'Concierto de Peces Raros en Café Iguana. Consulta precios en la boletera.',null,'https://songkick.com/es/concerts/43324966-peces-raros-at-cafe-iguana'],
  ['ig02','cafeiguana','2026-11-07',null,'','John 5','concierto','Café Iguana, Diego de Montemayor 927 sur, Barrio Antiguo','centro','interior',null,['metro'],'Concierto de John 5 en Café Iguana. Consulta precios en la boletera.',null,'https://app.songkick.com/venues/89823-cafe-iguana'],
  ['ig03','cafeiguana','2026-11-08',null,'','Ultraligera','concierto','Café Iguana, Diego de Montemayor 927 sur, Barrio Antiguo','centro','interior',null,['metro'],'Concierto de Ultraligera en Café Iguana. Consulta precios en la boletera.',null,'https://app.songkick.com/venues/89823-cafe-iguana'],
- ['ig04','cafeiguana','2026-11-19',null,'','Doyle','concierto','Café Iguana, Diego de Montemayor 927 sur, Barrio Antiguo','centro','interior',null,['metro'],'Concierto de Doyle en Café Iguana. Consulta precios en la boletera.',null,'https://app.songkick.com/venues/89823-cafe-iguana'],
  ['ig06','cafeiguana','2026-11-28',null,'20:00','Insite','concierto','Café Iguana, Diego de Montemayor 927 sur, Barrio Antiguo','centro','interior',null,['metro'],'Concierto de Insite en Café Iguana. Consulta precios en la boletera.',null,'https://playersoflife.com/monterrey/monterrey-se-llena-de-conciertos-obras-y-partidos-durante-noviembre-2026-la-agenda-completa/'],
  ['ig07','cafeiguana','2026-12-05',null,'','Nacho Vegas','concierto','Café Iguana, Diego de Montemayor 927 sur, Barrio Antiguo','centro','interior',null,['metro'],'Concierto de Nacho Vegas en Café Iguana. Consulta precios en la boletera.',null,'https://songkick.com/concerts/43347853-nacho-vegas-at-cafe-iguana'],
  ['cn01','conarte','2026-11-04',null,'19:00','Biblioteca Prometheus: club de ciencia ficción dura','letras','Casa de la Cultura de Nuevo León','centro','interior',0,['metro'],'Club de lectura moderado por Carlos Ruiz para analizar obras de ciencia ficción dura. Entrada libre con registro previo por WhatsApp al 81 1192 8494.',null,'https://conarte.org.mx/agenda/biblioteca-prometheus-club-de-ciencia-ficcion-dura-noviembre-2026/'],
@@ -3273,6 +3270,7 @@ async function loadApproved(){
     // Si ya está en la agenda (agregado a mano), no se repite
     // Fechas que revisamos y no existen: no se muestran aunque vengan del recolector
     {const nn=norm(d.nombre); if(['axelcatalan','damasgratis','losaptos','almostdone','rapsodiadenataliavirgen','mexicodiverso'].some(x=>nn.startsWith(x))||['renee','dri'].includes(nn)) return;} // conciertos sin confirmar (revisión 2 nov 2026)
+    if(/\*\*\*SUITES\*\*\*|no tiene acceso al show|^muestra de teatro uanl 2026\. facultades/i.test(String(d.nombre))) return; // boletos de suites, accesos sin show y el evento general de la Muestra UANL (ya están sus 17 funciones)
     if(['mexicodiverso','rapsodiadenatalia'].some(x=>norm(d.nombre).includes(x))||(norm(d.nombre).includes('radiografia')&&d.fecha==='2026-11-07')) return; // obras sin función confirmada (revisión 3 nov 2026)
     if([['beele','2026-11-17'],['rauldiblasio','2026-11-25'],['radiografia','2026-11-07']].some(([t,f])=>norm(d.nombre).startsWith(t)&&d.fecha===f)) return;
     const nn=norm(d.nombre), parecido=t=>{ const a=norm(t); return a===nn||(Math.min(a.length,nn.length)>=6&&(a.startsWith(nn)||nn.startsWith(a))); };
