@@ -3298,7 +3298,9 @@ function bindSol(){
 }
 
 /* Eventos aprobados en el panel de Supabase (enviados por organizadores o encontrados por el recolector) */
-const CAT_OK=k=>CATS[k]?k:'expo';
+const CAT_OK=k=>CATS[k]?k:'talleres';
+// Deporte y bienestar: ejercicio para hacer o partidos para ver van juntos
+const DEPORTE_RE=/\b(yoga|pilates|tochito|softball|s[oó]ftbol|f[uú]tbol|b[aá]squet|voleibol|v[oó]leibol|capoeira|softcombat|roundnet|roudnet|zumba|crossfit|calistenia|boxeo|tai chi|chi kung|medita|rodada|carrera atl[eé]tica|\d+ ?k\b|marat[oó]n|ciclismo|running|skate|patinaje|escalada|trepa[aá]rboles|entrenamiento|acondicionamiento|nations league|liga mx|\bvs?\.\s|b[eé]isbol|lucha libre|salto con cuerda)|\bfit\b|cumbia fit|vikings of/i;
 async function loadApproved(){
   if(!sb) return;
   const { data, error } = await sb.from('eventos_enviados').select('id,datos,foto,fuente').eq('estado','aprobado');
@@ -3327,7 +3329,7 @@ async function loadApproved(){
     if(EVENTS.some(x=>parecido(x.t)&&(x.off===off||x.range))) return;
     if(d.hasta&&/^\d{4}-\d{2}-\d{2}$/.test(d.hasta)){ const end=offOfDate(new Date(d.hasta+'T00:00')); if(off<0&&end>=0) off=0; const h=new Date(d.hasta+'T00:00'); range=`Hasta el ${h.getDate()} de ${MESL[h.getMonth()]}`; }
     const linea=d.municipio==='linea';
-    EVENTS.push({id,t:d.nombre,cat:CAT_OK(d.categoria),org:orgKey,venue:d.lugar||(linea?'En línea':'Por confirmar'),zona:ZONAS[d.municipio]?d.municipio:'centro',
+    EVENTS.push({id,t:d.nombre,cat:DEPORTE_RE.test(d.nombre||'')&&!/concierto|teatro|danza/.test(d.categoria||'')?'deporte':CAT_OK(d.categoria),org:orgKey,venue:d.lugar||(linea?'En línea':'Por confirmar'),zona:ZONAS[d.municipio]?d.municipio:'centro',
       amb:d.espacio==='exterior'?'exterior':'interior',mod:linea?'linea':'presencial',off,h:/^\d{1,2}:\d{2}/.test(d.hora||'')?d.hora.slice(0,5).padStart(5,'0'):'',
       price:typeof d.precio==='number'?d.precio:null,tags:Array.isArray(d.caracteristicas)?d.caracteristicas:[],going:0,fama:typeof d.fama==='number'?d.fama:0,fechas:Array.isArray(d.funciones)&&d.funciones.length>1?d.funciones.map((f,k)=>({id:k?id+'~'+f.fecha+'T'+(f.hora||''):id,off:offOfDate(new Date(f.fecha+'T00:00')),h:f.hora||''})).filter(f=>f.off>=0&&f.off<=MAXOFF):undefined,desc:d.descripcion||'',range,
       img:r.foto||undefined,url:d.enlace||undefined,src:r.fuente&&r.fuente!=='Organizador'?r.fuente:undefined,credit:d.credito&&d.credito.autor?d.credito:undefined,fit:r.fuente==='Cinemex'?'contain':undefined});

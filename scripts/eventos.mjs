@@ -96,11 +96,11 @@ function eventosLD(html) {
 const limpiar = t => String(t || '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#8211;/g, '–').replace(/&#8220;|&#8221;/g, '"').replace(/\s+/g, ' ').trim();
 function categoria(t) {
   t = t.toLowerCase();
-  const reglas = [['charlas', /charla|conferencia|conversatorio|diálogo|panel|club/], ['talleres', /taller|clase|curso|seminario/], ['danza', /danza|ballet|flamenco|baile/],
+  const reglas = [['deporte', /\b(yoga|pilates|tochito|softball|s[oó]ftbol|f[uú]tbol|b[aá]squet|voleibol|v[oó]leibol|capoeira|softcombat|roundnet|roudnet|zumba|crossfit|calistenia|boxeo|tai chi|chi kung|medita|rodada|carrera atl[eé]tica|\d+ ?k\b|marat[oó]n|ciclismo|running|skate|patinaje|escalada|trepa[aá]rboles|entrenamiento|acondicionamiento|nations league|liga mx|\bvs?\.\s|b[eé]isbol|lucha libre|salto con cuerda)|\bfit\b|cumbia fit|vikings of/], ['charlas', /charla|conferencia|conversatorio|diálogo|panel|club/], ['talleres', /taller|clase|curso|seminario/], ['danza', /danza|ballet|flamenco|baile/],
     ['teatro', /teatro|obra|comedia|títeres|clown|inmersiv|jurado/], ['cine', /cine|película|cortometraje|proyección|cineteca/], ['expo', /exposición|muestra|galería|museo|inauguración/],
     ['letras', /lectura|poesía|libro|literatura|cuento/], ['concierto', /concierto|orquesta|sinfónic|banda|tour/], ['musica', /música|musical|canto|coro/],
-    ['fiestas', /fiesta|festival de calaveras|noche de/], ['gastro', /mercado|bazar|gastronom|comida/], ['naturaleza', /senderismo|caminata|hiking|naturaleza|observaci[oó]n de aves|bosque|cascada|murci[eé]lago|reserva natural|ecol[oó]gic/], ['deporte', /carrera|rodada|yoga/]];
-  return (reglas.find(([, r]) => r.test(t)) || ['expo'])[0];
+    ['fiestas', /fiesta|festival de calaveras|noche de/], ['gastro', /mercado|bazar|gastronom|comida/], ['naturaleza', /senderismo|caminata|hiking|naturaleza|observaci[oó]n de aves|bosque|cascada|murci[eé]lago|reserva natural|ecol[oó]gic/], ];
+  return (reglas.find(([, r]) => r.test(t)) || ['talleres'])[0]; // si no se reconoce, va a «Dinámicas y talleres», no a exposiciones
 }
 function municipio(t, porDefecto) {
   t = t.toLowerCase();
