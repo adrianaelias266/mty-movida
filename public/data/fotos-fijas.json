@@ -154,6 +154,29 @@
  "mt16": null,
  "mt17": null,
  "nj01": null,
+ "cn20": null,
+ "cn21": null,
+ "cn22": null,
+ "lz01": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Parque_Fundidora%2C_Monterrey%2C_Mexico_-_panoramio_%289%29.jpg/960px-Parque_Fundidora%2C_Monterrey%2C_Mexico_-_panoramio_%289%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Betox",
+   "licencia": "CC BY 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Parque_Fundidora,_Monterrey,_Mexico_-_panoramio_(9).jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "mu01": null,
+ "nz01": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/AUSTIN_TV_-_VERBENA_NAVIDE%C3%91A.jpg/960px-AUSTIN_TV_-_VERBENA_NAVIDE%C3%91A.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Claudia Campos/Secretaría de Cultura de la Ciudad de México",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:AUSTIN_TV_-_VERBENA_NAVIDE%C3%91A.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "tw01": null,
  "sp1": null,
  "sp2": {
   "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Parque_Rufino_tamayo.jpg/960px-Parque_Rufino_tamayo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -304,15 +327,6 @@
    "fuente": "Wikimedia Commons"
   }
  },
- "ig04": {
-  "foto": "https://live.staticflickr.com/3247/2388469422_a838625905_b.jpg",
-  "credito": {
-   "autor": "fdecomite",
-   "licencia": "CC BY 2.0",
-   "url": "https://www.flickr.com/photos/21649179@N00/2388469422",
-   "fuente": "Openverse"
-  }
- },
  "ig06": {
   "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/INSITE_along_the_Pilchuck_River.jpg/960px-INSITE_along_the_Pilchuck_River.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
   "credito": {
@@ -351,24 +365,6 @@
    "autor": "Hector Martínez",
    "licencia": "CC BY-SA 2.0",
    "url": "https://commons.wikimedia.org/wiki/File:Arena_Monterrey.jpg",
-   "fuente": "Wikimedia Commons"
-  }
- },
- "s14": {
-  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Morat_en_concierto.jpg/960px-Morat_en_concierto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-  "credito": {
-   "autor": "Andrea Herrera / Secretaría de Cultura de la Ciudad de México",
-   "licencia": "CC BY 2.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Morat_en_concierto.jpg",
-   "fuente": "Wikimedia Commons"
-  }
- },
- "s13": {
-  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Morat_en_concierto.jpg/960px-Morat_en_concierto.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-  "credito": {
-   "autor": "Andrea Herrera / Secretaría de Cultura de la Ciudad de México",
-   "licencia": "CC BY 2.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Morat_en_concierto.jpg",
    "fuente": "Wikimedia Commons"
   }
  },
