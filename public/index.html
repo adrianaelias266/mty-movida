@@ -2919,8 +2919,10 @@ function bindAgregar(){
     (async()=>{
       try{
         const f=document.getElementById('sImg').files[0], ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
-        const path=`${new Date().toISOString().slice(0,10)}/${crypto.randomUUID()}.${ext}`;
-        const up=await sb.storage.from('carteles').upload(path,f,{contentType:f.type});
+        const uid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2,10); // celulares viejos no tienen randomUUID
+        const path=`${new Date().toISOString().slice(0,10)}/${uid}.${ext||'jpg'}`;
+        if(f.size>20*1024*1024){ const e2=new Error('grande'); e2.grande=true; throw e2; }
+        const up=await sb.storage.from('carteles').upload(path,f,{contentType:f.type||'image/jpeg'});
         if(up.error) throw up.error;
         const foto=sb.storage.from('carteles').getPublicUrl(path).data.publicUrl;
         const datos={nombre:n,organizador:v('sOrg'),correo:v('sMail'),categoria:v('sCat'),municipio:v('sZona'),fecha:v('sFecha'),hora:v('sHora'),lugar:v('sLugar'),
@@ -2930,7 +2932,7 @@ function bindAgregar(){
         if(ins.error) throw ins.error;
         document.getElementById('subForm').outerHTML=`<div class="panel" style="padding:28px"><span class="eyebrow">Recibido</span><h3 style="font-family:var(--f-display);font-size:22px">Gracias. Recibimos "${esc(n)}".</h3><p style="margin:0;color:var(--muted)">Lo revisaremos y te avisaremos por correo cuando esté publicado.</p><div><button class="btn" id="again">Enviar otro evento</button></div></div>`;
         document.getElementById('again').onclick=render; window.scrollTo({top:0,behavior:'smooth'});
-      }catch(x){ console.warn(x); btn.disabled=false; btn.textContent='Enviar para revisión'; er.hidden=false; er.textContent='No pudimos enviar tu evento. Intenta de nuevo en unos minutos.'; }
+      }catch(x){ console.warn(x); btn.disabled=false; btn.textContent='Enviar para revisión'; er.hidden=false; er.textContent=x&&x.grande?'La foto pesa más de 20 MB. Elige una más ligera o una captura de pantalla del cartel.':'No pudimos enviar tu evento. Intenta de nuevo en unos minutos o mándalo al correo de la derecha.'+(x&&x.message?` (Detalle: ${String(x.message).slice(0,80)})`:''); }
     })();
   });
 }
