@@ -1,0 +1,16 @@
+name: Agregar administradora
+on:
+  workflow_dispatch:
+    inputs:
+      correo:
+        description: Correo con el que inicia sesión en la página
+        required: true
+jobs:
+  agregar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node scripts/admin-agregar.mjs
+        env:
+          SUPABASE_SECRET: ${{ secrets.SUPABASE_SECRET }}
+          CORREO: ${{ inputs.correo }}
