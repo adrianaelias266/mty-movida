@@ -422,7 +422,7 @@ async function guardar(filas) {
     const r = await fetch(`${SB_URL}/rest/v1/eventos_enviados`, { method: 'POST', headers: h, body: JSON.stringify(fila) });
     if (r.ok) { nuevos++; continue; }
     if (r.status !== 409) throw new Error(`Supabase respondió ${r.status}: ${await r.text()}`);
-    if (SECRETA && !REVISAR.includes(fila.fuente)) await fetch(`${SB_URL}/rest/v1/eventos_enviados?fuente_url=eq.${encodeURIComponent(fila.fuente_url)}&estado=eq.aprobado`, {
+    if (SECRETA && !REVISAR.includes(fila.fuente)) await fetch(`${SB_URL}/rest/v1/eventos_enviados?fuente_url=eq.${encodeURIComponent(fila.fuente_url)}&estado=eq.aprobado&datos->>revisado=is.null`, {
       method: 'PATCH', headers: h, body: JSON.stringify({ datos: fila.datos, foto: fila.foto }),
     });
   }

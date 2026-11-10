@@ -3265,7 +3265,7 @@ function bindSol(){
     const archivo=form.querySelector('input[name=__foto]')?.files[0]; return {r,d,archivo}; };
   const fotoNueva=async archivo=>{ if(!archivo) return {}; try{ toast('Subiendo foto…'); return {foto:await subirCartel(archivo)}; }catch(x){ toast(x&&x.grande?'La foto pesa más de 20 MB; elige una más ligera.':'No se pudo subir la foto.'); return null; } };
   q('[data-solform]').forEach(form=>form.onsubmit=async ev=>{ ev.preventDefault(); const {r,d,archivo}=leer(form); const ex=await fotoNueva(archivo); if(!ex) return; if(await cambiar(r.id,'aprobado',d,ex)){ toast('Guardado y aprobado'); SOL.editando=null; await cargarSol(); loadApproved(); keep(); } });
-  q('[data-solsave]').forEach(b=>b.onclick=async()=>{ const form=b.closest('form'), {r,d,archivo}=leer(form); const ex=await fotoNueva(archivo); if(!ex) return; if(await cambiar(r.id,r.estado,d,ex)){ if(ex.foto) loadApproved(); toast('Cambios guardados'); SOL.editando=null; await cargarSol(); keep(); } });
+  q('[data-solsave]').forEach(b=>b.onclick=async()=>{ const form=b.closest('form'), {r,d,archivo}=leer(form); const ex=await fotoNueva(archivo); if(!ex) return; if(await cambiar(r.id,r.estado,d,ex)){ if(r.estado==='aprobado') loadApproved(); toast('Cambios guardados'); SOL.editando=null; await cargarSol(); keep(); } });
 }
 
 /* Eventos aprobados en el panel de Supabase (enviados por organizadores o encontrados por el recolector) */
