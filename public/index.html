@@ -1791,7 +1791,9 @@ viejoAPath();
 const upc=(a,b)=>EVENTS.filter(e=>e.off>=a&&e.off<=b);
 function buildRows(corto){
   const rows=[], used=S.user&&S.onboarded;
-  rows.push({t:'Top 10 en Monterrey esta semana',s:'',top:true,items:upc(0,6).sort((a,b)=>b.going-a.going).slice(0,10)});
+  rows.push({t:'Top 10 en Monterrey esta semana',s:'',top:true,items:mezclar(upc(0,6).sort((a,b)=>b.going-a.going),10)});
+  rows.push({t:'Escena independiente',s:'Foros, cafés y bares de la ciudad',items:upc(0,13).filter(esIndie)});
+  rows.push({t:'Teatro, danza y exposiciones',s:'Para una salida cultural',items:upc(0,13).filter(esCultura)});
   if(used) S.followCats.slice(0,2).forEach(k=>rows.push({t:`Porque te gusta: ${CATS[k].n.toLowerCase()}`,s:'Según tus gustos',items:upc(0,MAXOFF).filter(e=>e.cat===k)}));
   rows.push({t:'Festival Internacional de Santa Lucía',s:'Entrada libre · del 22 oct al 2 nov',items:upc(0,MAXOFF).filter(e=>e.fisl&&!/^[cd]/.test(e.id)).sort((a,b)=>a.off-b.off||a.h.localeCompare(b.h))});
   rows.push({t:'Temporada CONARTE',s:'Teatro, danza, música y talleres',items:upc(0,MAXOFF).filter(e=>e.org==='conarte'&&!e.range).sort((a,b)=>a.off-b.off||a.h.localeCompare(b.h))});
@@ -1804,12 +1806,12 @@ function buildRows(corto){
   if(used&&S.follows.length) rows.push({t:'De organizadores que sigues',s:'Lo nuevo de quienes sigues',items:upc(0,MAXOFF).filter(e=>S.follows.includes(e.org))});
   rows.push({t:'Para ir con niños',s:'Aptos para toda la familia',items:upc(0,MAXOFF).filter(e=>e.tags.includes('ninos'))});
   rows.push({t:'Lo que viene este mes',s:'Para apartar la fecha',items:upc(7,MAXOFF).sort((a,b)=>b.going-a.going)});
-  // En el inicio solo van 3 filas: lo más visto, lo gratis y lo que recomendamos
-  const lista=corto?['Top 10','Gratis este fin','Recomendados','Lo que viene'].map(t=>rows.find(r=>r.t.startsWith(t))).filter(Boolean):rows;
+  // En el inicio van 5 filas: lo más visto, la escena independiente, lo cultural, lo gratis y lo que recomendamos
+  const lista=corto?['Top 10','Escena independiente','Teatro, danza','Gratis este fin','Recomendados','Lo que viene'].map(t=>rows.find(r=>r.t.startsWith(t))).filter(Boolean):rows;
   // Un evento aparece una sola vez en la página: si ya salió en una fila de arriba, no se repite abajo
   const vistos=new Set();
   return lista.map(r=>{ let it=r.top?r.items:r.items.sort((a,b)=>a.off-b.off||a.h.localeCompare(b.h)); it=it.filter(e=>!vistos.has(e.id)).slice(0,10); it.forEach(e=>vistos.add(e.id)); return {...r,items:it}; })
-    .filter(r=>r.items.length>=3).slice(0,corto?3:8);
+    .filter(r=>r.items.length>=3).slice(0,corto?5:10);
 }
 function rowCard(e){ const s=isSaved(e.id);
   return `<article class="rc" data-open="${e.id}" tabindex="0"><div class="rc-img"><img src="${evImg(e)}" alt=""${fitAttr(e)} loading="lazy" decoding="async"><span class="ev-hr">${hh(e)}</span></div>
@@ -1857,12 +1859,28 @@ function esperado(e){
   if(SEMANAL.test(txt)||e.cat==='cine') p-=5;
   return p+(e.going||0)/1000;
 }
+// Mezcla para el inicio: que no sean puros conciertos. Máximo 40 % de música,
+// al menos 2 cosas culturales (teatro, danza, expos, letras, talleres) y al menos 2 de la escena independiente.
+const INDIE_RE=/casa motis|caf[eé] iguana|metapatio|gargant[uú]a|nodriza|aparato|nejayote|foro 13|labnl|mcmullens|casa armadillo|saxy jazz|nandas|el unicornio azul|puerta del sol/i;
+const INDIE_ORG=['casamotis','cafeiguana','nejayote','nandas','tributowings','nodriza','foro13','labnl'];
+const esMusica=e=>e.cat==='concierto'||e.cat==='musica';
+const esCultura=e=>!esMusica(e)&&(['teatro','expo','danza','letras','arte','talleres'].includes(e.cat)||/teatro|danza|exposici|museo|lectura|libro|obra|t[ií]teres|muestra/i.test(e.t+' '+(e.venue||'')));
+const esIndie=e=>!GRANDE.test(e.t+' '+(e.venue||''))&&(INDIE_ORG.includes(e.org)||INDIE_RE.test((e.venue||'')+' '+e.t));
+function mezclar(orden,n){
+  const maxM=Math.ceil(n*0.4), top=[];
+  for(const e of orden){ if(top.length>=n) break; if(esMusica(e)&&top.filter(esMusica).length>=maxM) continue; top.push(e); }
+  for(const e of orden){ if(top.length>=n) break; if(!top.includes(e)) top.push(e); }
+  const asegurar=(cumple,min)=>{ const extra=orden.filter(e=>cumple(e)&&!top.includes(e));
+    while(top.filter(cumple).length<min&&extra.length){ let i=-1; for(let k=top.length-1;k>=0;k--){ const x=top[k]; if(!cumple(x)&&!(esCultura(x)&&top.filter(esCultura).length<=2)&&!(esIndie(x)&&top.filter(esIndie).length<=2)){ i=k; break; } } if(i<0) break; top.splice(i,1,extra.shift()); } };
+  asegurar(esCultura,2); asegurar(esIndie,2);
+  return top;
+}
 function topWeek(){
   let l=EVENTS.filter(e=>e.off>=0&&e.off<=6&&e.mod!=='linea');
   if(l.length<8) l=EVENTS.filter(e=>e.off>=0&&e.off<=13&&e.mod!=='linea');
   const vistos=new Set();
   const orden=l.map(e=>({e,p:esperado(e)})).sort((a,b)=>b.p-a.p||a.e.off-b.e.off).map(o=>o.e).filter(e=>{ const k=String(e.t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'').slice(0,18); if(vistos.has(k)) return false; vistos.add(k); return true; });
-  const unaVez=e=>esFest(e)||UNAVEZ.test(e.t), top=orden.slice(0,8), extra=orden.slice(8).filter(unaVez);   // siempre al menos 2 de las cosas que pasan una vez al año
+  const unaVez=e=>esFest(e)||UNAVEZ.test(e.t), top=mezclar(orden,8), extra=orden.filter(e=>!top.includes(e)).filter(unaVez);   // siempre al menos 2 de las cosas que pasan una vez al año
   while(top.filter(unaVez).length<2&&extra.length){ const i=top.map(unaVez).lastIndexOf(false); if(i<0) break; top.splice(i,1); top.push(extra.shift()); }
   return top;
 }
