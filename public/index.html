@@ -1864,14 +1864,14 @@ function esperado(e){
 const INDIE_RE=/casa motis|caf[eé] iguana|metapatio|gargant[uú]a|nodriza|aparato|nejayote|foro 13|labnl|mcmullens|casa armadillo|saxy jazz|nandas|el unicornio azul|puerta del sol/i;
 const INDIE_ORG=['casamotis','cafeiguana','nejayote','nandas','tributowings','nodriza','foro13','labnl'];
 const esMusica=e=>e.cat==='concierto'||e.cat==='musica';
-const NO_CULT=/tochito|softball|f[uú]tbol|basquet|b[aá]squetbol|yoga|reciclaje|corrida|carrera|\bfit\b|deport|softcombat|capoeira|roudnet|roundnet|cachorros|apoyo|cumplea[nñ]os/i;
+const NO_CULT=/juego callejero|guiado por app|tochito|softball|f[uú]tbol|basquet|b[aá]squetbol|yoga|reciclaje|corrida|carrera|\bfit\b|deport|softcombat|capoeira|roudnet|roundnet|cachorros|apoyo|cumplea[nñ]os/i;
 const esCultura=e=>!esMusica(e)&&!NO_CULT.test(e.t)&&(['teatro','expo','danza','letras','arte'].includes(e.cat)||/teatro|danza|exposici|museo|lectura|libro|obra|t[ií]teres|muestra/i.test(e.t+' '+(e.venue||'')));
 const esIndie=e=>!GRANDE.test(e.t+' '+(e.venue||''))&&(INDIE_ORG.includes(e.org)||INDIE_RE.test((e.venue||'')+' '+e.t));
 // Intercala para que de inmediato se vea un concierto, uno cultural y uno independiente, y así sucesivamente
 function intercalar(lista){
-  const tipo=e=>esIndie(e)?'i':esMusica(e)?'m':esCultura(e)?'c':'o', b={m:[],c:[],i:[],o:[]};
-  lista.forEach(e=>b[tipo(e)].push(e));
-  const out=[]; while(out.length<lista.length){ for(const k of ['m','c','i','o']) if(b[k].length) out.push(b[k].shift()); }
+  const resto=[...lista], out=[], ciclo=[esMusica,e=>esCultura(e)&&!esMusica(e),e=>esIndie(e)&&!esMusica(e)];
+  let k=0; while(resto.length){ const quiere=ciclo[k%3]; let i=resto.findIndex(e=>quiere(e)&&!(k%3===1&&esIndie(e)&&resto.some(x=>esCultura(x)&&!esIndie(x)&&!esMusica(x))));
+    if(i<0) i=resto.findIndex(quiere); if(i<0) i=0; out.push(resto.splice(i,1)[0]); k++; }
   return out;
 }
 function mezclar(orden,n){
