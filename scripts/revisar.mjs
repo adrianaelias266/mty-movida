@@ -16,6 +16,14 @@ for (const [nombre, vp] of [['celular', { width: 390, height: 844 }], ['compu', 
   console.log(`::notice::${nombre}: ${Date.now() - t0} ms · ${JSON.stringify(info)}`);
   for (const e of errs.slice(0, 15)) console.log(`::warning::${nombre} error: ${e.slice(0, 300)}`);
   for (const f of fallas.slice(0, 20)) console.log(`::warning::${nombre} petición: ${f}`);
+  for (const v of ['eventos', 'festivales', 'atracciones', 'plan', 'calendario', 'agregar', 'nosotros', 'e/tw01']) {
+    const antes = errs.length;
+    try { await p.goto(new URL('/' + v, URL0).href, { waitUntil: 'networkidle', timeout: 30000 }); await p.waitForTimeout(1500); } catch (e) { errs.push(v + ' carga: ' + e.message); }
+    const txt = await p.evaluate(() => (document.querySelector('main') || document.body).innerText.length).catch(() => -1);
+    console.log(`::notice::${nombre} /${v}: texto ${txt} · errores nuevos ${errs.length - antes}`);
+  }
+  try { await p.goto(URL0, { waitUntil: 'networkidle' }); const a = await p.$('a[href^="/e/"], [data-ev], .ev'); if (a) { await a.click(); await p.waitForTimeout(1500); console.log(`::notice::${nombre} clic en evento → ${p.url()}`); } } catch (e) { errs.push('clic: ' + e.message); }
+  for (const e of errs.slice(0, 15)) console.log(`::warning::${nombre} error2: ${e.slice(0, 300)}`);
   await p.screenshot({ path: `revision-${nombre}.png`, fullPage: false });
   await p.close();
 }
