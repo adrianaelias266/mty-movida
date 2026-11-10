@@ -2904,7 +2904,17 @@ function viewAgregar(){
     </aside>
   </div></div>`;
 }
+async function subirCartel(f){
+  const ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const uid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2,10); // celulares viejos no tienen randomUUID
+  const path=`${new Date().toISOString().slice(0,10)}/${uid}.${ext||'jpg'}`;
+  if(f.size>20*1024*1024){ const e2=new Error('grande'); e2.grande=true; throw e2; }
+  const up=await sb.storage.from('carteles').upload(path,f,{contentType:f.type||'image/jpeg'});
+  if(up.error) throw up.error;
+  return sb.storage.from('carteles').getPublicUrl(path).data.publicUrl;
+}
 function bindAgregar(){
+  if(ADMIN){ const lb=document.querySelector('label[for=sImg]'), hn=lb&&lb.parentElement.querySelector('.hint'); if(lb) lb.textContent='Foto o cartel del evento (opcional para administradoras)'; if(hn) hn.textContent='Puedes mandarlo sin foto y agregarla después desde Solicitudes, con el botón «Editar».'; }
 
   document.getElementById('cpMail').onclick=()=>copy('eventos@mtymovida.mx','Correo copiado');
   document.getElementById('sImg').onchange=e=>{ const f=e.target.files[0], p=document.getElementById('sPrev'); if(!f){p.hidden=true;return;} const rd=new FileReader(); rd.onload=()=>{ p.src=rd.result; p.hidden=false; }; rd.readAsDataURL(f); };
@@ -2912,19 +2922,14 @@ function bindAgregar(){
     const req=['sNombre','sOrg','sMail','sCat','sZona','sFecha','sHora','sDesc'], miss=req.filter(id=>!document.getElementById(id).value.trim()), er=document.getElementById('sErr');
     if(miss.length){ er.hidden=false; er.textContent='Faltan campos obligatorios (marcados con *).'; document.getElementById(miss[0]).focus(); return; }
     if(!/^\S+@\S+\.\S+$/.test(document.getElementById('sMail').value)){ er.hidden=false; er.textContent='Revisa el correo de contacto.'; return; }
-    if(!document.getElementById('sImg').files.length){ er.hidden=false; er.textContent='Agrega una foto o el cartel del evento.'; return; }
+    if(!document.getElementById('sImg').files.length&&!ADMIN){ er.hidden=false; er.textContent='Agrega una foto o el cartel del evento.'; return; }
     const v=id=>document.getElementById(id).value.trim(), n=v('sNombre'), btn=document.querySelector('#subForm button[type=submit]');
     if(!sb){ er.hidden=false; er.textContent='No pudimos conectar con el servidor. Revisa tu conexión e intenta de nuevo, o escríbenos al correo de la derecha.'; return; }
     btn.disabled=true; btn.textContent='Enviando…'; er.hidden=true;
     (async()=>{
       try{
-        const f=document.getElementById('sImg').files[0], ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
-        const uid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2,10); // celulares viejos no tienen randomUUID
-        const path=`${new Date().toISOString().slice(0,10)}/${uid}.${ext||'jpg'}`;
-        if(f.size>20*1024*1024){ const e2=new Error('grande'); e2.grande=true; throw e2; }
-        const up=await sb.storage.from('carteles').upload(path,f,{contentType:f.type||'image/jpeg'});
-        if(up.error) throw up.error;
-        const foto=sb.storage.from('carteles').getPublicUrl(path).data.publicUrl;
+        const f=document.getElementById('sImg').files[0]; let foto=null;
+        if(f) foto=await subirCartel(f); // las administradoras pueden mandar el evento sin foto y agregarla después en Solicitudes
         const datos={nombre:n,organizador:v('sOrg'),correo:v('sMail'),categoria:v('sCat'),municipio:v('sZona'),fecha:v('sFecha'),hora:v('sHora'),lugar:v('sLugar'),
           espacio:(document.querySelector('input[name=sAmb]:checked')||{}).value||null,precio:v('sPrecio')===''?null:Number(v('sPrecio')),
           caracteristicas:[...document.querySelectorAll('input[name=sExtra]:checked')].map(c=>c.value),descripcion:v('sDesc'),enlace:v('sLink'),redes:v('sRedes')};
@@ -3216,6 +3221,7 @@ function solCard(r){
     <div class="sol2"><label>Precio (vacío si no se sabe, 0 si es gratis)<input class="inp" type="number" min="0" name="precio" value="${d.precio??''}"></label><label>Organizador<input class="inp" name="organizador" value="${f('organizador')}"></label></div>
     <label>Descripción<textarea class="inp" name="descripcion" rows="4">${f('descripcion')}</textarea></label>
     <label>Enlace para boletos o información<input class="inp" name="enlace" value="${f('enlace')}"></label>
+    <label>${r.foto?'Cambiar foto o cartel':'Agregar foto o cartel'}<input class="inp" type="file" name="__foto" accept="image/*"></label>
     <div class="row"><button class="btn primary" type="submit">Guardar y aprobar</button><button class="btn" type="button" data-solsave="${r.id}">Solo guardar</button><button class="btn ghost" type="button" data-solcancel>Cancelar</button></div></form></article>`;
   const fecha=d.fecha?`${longDateIso(d.fecha)}${d.hora?' · '+esc(d.hora):''}`:'Sin fecha';
   const aviso=d.correo?`mailto:${encodeURIComponent(d.correo)}?subject=${encodeURIComponent('Tu evento ya está en Mty Movida')}&body=${encodeURIComponent(`Hola,
@@ -3244,7 +3250,7 @@ function viewSol(){
 }
 function bindSol(){
   const q=x=>document.querySelectorAll(x), keep=()=>{ const y=window.scrollY; render(); window.scrollTo(0,y); };
-  const cambiar=async(id,estado,datos)=>{ const cambio={estado}; if(datos) cambio.datos=datos;
+  const cambiar=async(id,estado,datos,extra)=>{ const cambio={estado,...(extra||{})}; if(datos) cambio.datos=datos;
     if(estado==='aprobado'){ const fila=(SOL.lista||[]).find(x=>String(x.id)===String(id)); cambio.datos={...(datos||fila?.datos||{}),revisado:true}; } // aprobado por una persona: el recolector ya no lo regresa a pendientes
     const r=await sb.from('eventos_enviados').update(cambio).eq('id',id).select('id'); if(r.error||!r.data||!r.data.length){ toast('No se pudo guardar. Revisa los permisos en Supabase.'); return false; }
     return true; };
@@ -3255,9 +3261,11 @@ function bindSol(){
   q('[data-soled]').forEach(b=>b.onclick=()=>{ SOL.editando=b.dataset.soled; keep(); });
   q('[data-solcancel]').forEach(b=>b.onclick=()=>{ SOL.editando=null; keep(); });
   const leer=form=>{ const r=SOL.lista.find(x=>String(x.id)===form.dataset.solform), d={...(r.datos||{})}, fd=new FormData(form);
-    for(const [k,v] of fd.entries()) d[k]=k==='precio'?(v===''?null:Number(v)):String(v).trim(); return {r,d}; };
-  q('[data-solform]').forEach(form=>form.onsubmit=async ev=>{ ev.preventDefault(); const {r,d}=leer(form); if(await cambiar(r.id,'aprobado',d)){ toast('Guardado y aprobado'); SOL.editando=null; await cargarSol(); loadApproved(); keep(); } });
-  q('[data-solsave]').forEach(b=>b.onclick=async()=>{ const form=b.closest('form'), {r,d}=leer(form); if(await cambiar(r.id,r.estado,d)){ toast('Cambios guardados'); SOL.editando=null; await cargarSol(); keep(); } });
+    for(const [k,v] of fd.entries()){ if(k.startsWith('__')) continue; d[k]=k==='precio'?(v===''?null:Number(v)):String(v).trim(); }
+    const archivo=form.querySelector('input[name=__foto]')?.files[0]; return {r,d,archivo}; };
+  const fotoNueva=async archivo=>{ if(!archivo) return {}; try{ toast('Subiendo foto…'); return {foto:await subirCartel(archivo)}; }catch(x){ toast(x&&x.grande?'La foto pesa más de 20 MB; elige una más ligera.':'No se pudo subir la foto.'); return null; } };
+  q('[data-solform]').forEach(form=>form.onsubmit=async ev=>{ ev.preventDefault(); const {r,d,archivo}=leer(form); const ex=await fotoNueva(archivo); if(!ex) return; if(await cambiar(r.id,'aprobado',d,ex)){ toast('Guardado y aprobado'); SOL.editando=null; await cargarSol(); loadApproved(); keep(); } });
+  q('[data-solsave]').forEach(b=>b.onclick=async()=>{ const form=b.closest('form'), {r,d,archivo}=leer(form); const ex=await fotoNueva(archivo); if(!ex) return; if(await cambiar(r.id,r.estado,d,ex)){ if(ex.foto) loadApproved(); toast('Cambios guardados'); SOL.editando=null; await cargarSol(); keep(); } });
 }
 
 /* Eventos aprobados en el panel de Supabase (enviados por organizadores o encontrados por el recolector) */
