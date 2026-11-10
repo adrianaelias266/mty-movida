@@ -1864,7 +1864,7 @@ function esperado(e){
 const INDIE_RE=/casa motis|caf[eé] iguana|metapatio|gargant[uú]a|nodriza|aparato|nejayote|foro 13|labnl|mcmullens|casa armadillo|saxy jazz|nandas|el unicornio azul|puerta del sol/i;
 const INDIE_ORG=['casamotis','cafeiguana','nejayote','nandas','tributowings','nodriza','foro13','labnl'];
 const esMusica=e=>e.cat==='concierto'||e.cat==='musica';
-const esCultura=e=>!esMusica(e)&&(['teatro','expo','danza','letras','arte','talleres'].includes(e.cat)||/teatro|danza|exposici|museo|lectura|libro|obra|t[ií]teres|muestra/i.test(e.t+' '+(e.venue||'')));
+const esCultura=e=>!esMusica(e)&&(['teatro','expo','danza','letras','arte'].includes(e.cat)||/teatro|danza|exposici|museo|lectura|libro|obra|t[ií]teres|muestra/i.test(e.t+' '+(e.venue||'')));
 const esIndie=e=>!GRANDE.test(e.t+' '+(e.venue||''))&&(INDIE_ORG.includes(e.org)||INDIE_RE.test((e.venue||'')+' '+e.t));
 function mezclar(orden,n){
   const maxM=Math.ceil(n*0.4), top=[];
@@ -1882,6 +1882,9 @@ function topWeek(){
   const orden=l.map(e=>({e,p:esperado(e)})).sort((a,b)=>b.p-a.p||a.e.off-b.e.off).map(o=>o.e).filter(e=>{ const k=String(e.t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'').slice(0,18); if(vistos.has(k)) return false; vistos.add(k); return true; });
   const unaVez=e=>esFest(e)||UNAVEZ.test(e.t), top=mezclar(orden,8), extra=orden.filter(e=>!top.includes(e)).filter(unaVez);   // siempre al menos 2 de las cosas que pasan una vez al año
   while(top.filter(unaVez).length<2&&extra.length){ const i=top.map(unaVez).lastIndexOf(false); if(i<0) break; top.splice(i,1); top.push(extra.shift()); }
+  // después de meter los festivales, que la música no pase del 40 %
+  const maxM=Math.ceil(top.length*0.4), resto=orden.filter(e=>!top.includes(e)&&!esMusica(e));
+  while(top.filter(esMusica).length>maxM&&resto.length){ let i=-1; for(let k=top.length-1;k>=0;k--){ if(esMusica(top[k])&&!unaVez(top[k])){ i=k; break; } } if(i<0) break; top.splice(i,1,resto.shift()); }
   return top;
 }
 function viewInicio(){
