@@ -1791,7 +1791,7 @@ viejoAPath();
 const upc=(a,b)=>EVENTS.filter(e=>e.off>=a&&e.off<=b);
 function buildRows(corto){
   const rows=[], used=S.user&&S.onboarded;
-  rows.push({t:'Top 10 en Monterrey esta semana',s:'',top:true,items:mezclar(upc(0,6).sort((a,b)=>b.going-a.going),10)});
+  rows.push({t:'Top 10 en Monterrey esta semana',s:'',top:true,items:intercalar(mezclar(upc(0,6).sort((a,b)=>b.going-a.going),10))});
   rows.push({t:'Escena independiente',s:'Foros, cafés y bares de la ciudad',items:upc(0,13).filter(esIndie)});
   rows.push({t:'Teatro, danza y exposiciones',s:'Para una salida cultural',items:upc(0,13).filter(esCultura)});
   if(used) S.followCats.slice(0,2).forEach(k=>rows.push({t:`Porque te gusta: ${CATS[k].n.toLowerCase()}`,s:'Según tus gustos',items:upc(0,MAXOFF).filter(e=>e.cat===k)}));
@@ -1867,6 +1867,13 @@ const esMusica=e=>e.cat==='concierto'||e.cat==='musica';
 const NO_CULT=/tochito|softball|f[uú]tbol|basquet|b[aá]squetbol|yoga|reciclaje|corrida|carrera|\bfit\b|deport|softcombat|capoeira|roudnet|roundnet|cachorros|apoyo|cumplea[nñ]os/i;
 const esCultura=e=>!esMusica(e)&&!NO_CULT.test(e.t)&&(['teatro','expo','danza','letras','arte'].includes(e.cat)||/teatro|danza|exposici|museo|lectura|libro|obra|t[ií]teres|muestra/i.test(e.t+' '+(e.venue||'')));
 const esIndie=e=>!GRANDE.test(e.t+' '+(e.venue||''))&&(INDIE_ORG.includes(e.org)||INDIE_RE.test((e.venue||'')+' '+e.t));
+// Intercala para que de inmediato se vea un concierto, uno cultural y uno independiente, y así sucesivamente
+function intercalar(lista){
+  const tipo=e=>esIndie(e)?'i':esMusica(e)?'m':esCultura(e)?'c':'o', b={m:[],c:[],i:[],o:[]};
+  lista.forEach(e=>b[tipo(e)].push(e));
+  const out=[]; while(out.length<lista.length){ for(const k of ['m','c','i','o']) if(b[k].length) out.push(b[k].shift()); }
+  return out;
+}
 function mezclar(orden,n){
   const maxM=Math.ceil(n*0.4), top=[];
   for(const e of orden){ if(top.length>=n) break; if(esMusica(e)&&top.filter(esMusica).length>=maxM) continue; top.push(e); }
@@ -1886,13 +1893,13 @@ function topWeek(){
   // después de meter los festivales, que la música no pase del 40 %
   const maxM=Math.ceil(top.length*0.4), resto=orden.filter(e=>!top.includes(e)&&!esMusica(e));
   while(top.filter(esMusica).length>maxM&&resto.length){ let i=-1; for(let k=top.length-1;k>=0;k--){ if(esMusica(top[k])&&!unaVez(top[k])){ i=k; break; } } if(i<0) break; top.splice(i,1,resto.shift()); }
-  return top;
+  return intercalar(top);
 }
 function viewInicio(){
   const top=topWeek();
   // Festivales que están ocurriendo ahora (si no hay ya un evento suyo en el carrusel)
   const fAhora=FEST.filter(f=>festInfo(f).k==='ahora'&&!top.some(e=>{ try{ return f.claves&&new RegExp(f.claves,'i').test(e.t); }catch(x){ return false; } }));
-  const items=top.slice(0,Math.max(6,10-fAhora.length)).map(e=>({e})); fAhora.slice(0,4).forEach((f,k)=>items.splice(Math.min(items.length,2+k*2),0,{f}));
+  const items=top.slice(0,Math.max(6,10-fAhora.length)).map(e=>({e})); fAhora.slice(0,4).forEach((f,k)=>items.splice(Math.min(items.length,3+k*4),0,{f}));
   const slides=items.map((it,i)=>it.f?festSlide(it.f,i):evSlide(it.e,i)).join('');
   return viewInicioHTML(slides,items.length);
 }
