@@ -1,0 +1,11 @@
+name: Listar solicitudes
+on:
+  workflow_dispatch:
+jobs:
+  listar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node scripts/solicitudes-lista.mjs
+        env:
+          SUPABASE_SECRET: ${{ secrets.SUPABASE_SECRET }}
