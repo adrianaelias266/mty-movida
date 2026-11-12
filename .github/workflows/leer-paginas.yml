@@ -13,6 +13,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: node scripts/leer-paginas.mjs
+      - run: node scripts/leer-paginas.mjs && node scripts/leer-labnl.mjs
         env:
           URLS: ${{ github.event.inputs.urls }}
