@@ -109,6 +109,15 @@
    "fuente": "Wikimedia Commons"
   }
  },
+ "s08": {
+  "foto": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Arena_Monterrey.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "credito": {
+   "autor": "Hector Martínez",
+   "licencia": "CC BY-SA 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Arena_Monterrey.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
  "s11": {
   "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Los_Payasonicos.jpg/960px-Los_Payasonicos.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
   "credito": {
@@ -220,6 +229,84 @@
  "tg01": null,
  "tt01": null,
  "sr01": null,
+ "md01": null,
+ "tw25": null,
+ "kl01": null,
+ "sm20": null,
+ "sm26": null,
+ "vp01": null,
+ "ah02": null,
+ "lp01": null,
+ "fm01": null,
+ "sk01": null,
+ "hk01": null,
+ "ex01": null,
+ "cp20": null,
+ "rs22": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/R%C3%ADo_Santa_Catarina_tras_un_incendio_en_Monterrey%2C_Nuevo_Le%C3%B3n%2C_M%C3%A9xico_3.png/960px-R%C3%ADo_Santa_Catarina_tras_un_incendio_en_Monterrey%2C_Nuevo_Le%C3%B3n%2C_M%C3%A9xico_3.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Chorizoconhuevo",
+   "licencia": "CC BY 4.0",
+   "url": "https://commons.wikimedia.org/wiki/File:R%C3%ADo_Santa_Catarina_tras_un_incendio_en_Monterrey,_Nuevo_Le%C3%B3n,_M%C3%A9xico_3.png",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "mn24": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Parque_Rufino_tamayo.jpg/960px-Parque_Rufino_tamayo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Rick González",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Parque_Rufino_tamayo.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "ff20": null,
+ "ss01": null,
+ "eg01": null,
+ "ed26": null,
+ "dp20": null,
+ "au21": null,
+ "mh29": null,
+ "ci21": null,
+ "dd28": null,
+ "cm28": null,
+ "yk06": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Museo_Metropolitano_de_Monterrey.JPG/960px-Museo_Metropolitano_de_Monterrey.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Brendablue77",
+   "licencia": "CC BY-SA 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Museo_Metropolitano_de_Monterrey.JPG",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "pi12": null,
+ "fj44": null,
+ "rf19": null,
+ "tp12": null,
+ "bp13": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Parque_Rufino_tamayo.jpg/960px-Parque_Rufino_tamayo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Rick González",
+   "licencia": "CC BY 2.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Parque_Rufino_tamayo.jpg",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "hm27": null,
+ "sp25": null,
+ "pe02": {
+  "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Auditorio_San_Pedro_Tlalcuapan.JPG/960px-Auditorio_San_Pedro_Tlalcuapan.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credito": {
+   "autor": "Esmeralda Paredes",
+   "licencia": "CC BY-SA 3.0",
+   "url": "https://commons.wikimedia.org/wiki/File:Auditorio_San_Pedro_Tlalcuapan.JPG",
+   "fuente": "Wikimedia Commons"
+  }
+ },
+ "em19": null,
+ "dn05": null,
+ "dn06": null,
+ "gp06": null,
  "sp1": null,
  "sp2": {
   "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Parque_Rufino_tamayo.jpg/960px-Parque_Rufino_tamayo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -260,7 +347,6 @@
    "fuente": "Wikimedia Commons"
   }
  },
- "fo3": null,
  "hw01": {
   "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Cineteca_Nuevo_Le%C3%B3n.jpg/960px-Cineteca_Nuevo_Le%C3%B3n.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
   "credito": {
@@ -401,15 +487,6 @@
   }
  },
  "cn13": null,
- "s08": {
-  "foto": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Arena_Monterrey.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-  "credito": {
-   "autor": "Hector Martínez",
-   "licencia": "CC BY-SA 2.0",
-   "url": "https://commons.wikimedia.org/wiki/File:Arena_Monterrey.jpg",
-   "fuente": "Wikimedia Commons"
-  }
- },
  "atr:serena": null,
  "atr:obispado": {
   "foto": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Museo_Regional_de_Nuevo_Le%C3%B3n_%28_El_Obispado_%29_08.jpg/960px-Museo_Regional_de_Nuevo_Le%C3%B3n_%28_El_Obispado_%29_08.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
