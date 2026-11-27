@@ -1,5 +1,5 @@
 {
- "_revisado": "2026-11-26",
+ "_revisado": "2026-11-27",
  "palnorte": {
   "firma": "c2b392f18068",
   "menciona": "2027",
@@ -18,9 +18,9 @@
   "cambio": "2026-11-26"
  },
  "ficmty": {
-  "firma": "81fc3391a564",
+  "firma": "ae40088b8e2a",
   "menciona": null,
-  "cambio": "2026-11-26"
+  "cambio": "2026-11-27"
  },
  "xantoluz": {},
  "calabazas": {
@@ -64,16 +64,16 @@
  "teatronl": {},
  "cinelatino": {},
  "artsweek": {
-  "firma": "81fc3391a564",
-  "menciona": null,
-  "cambio": "2026-11-26"
+  "firma": "8bbb0ee79f77",
+  "menciona": "2027",
+  "cambio": "2026-11-27"
  },
  "itinerarte": {},
  "expoguadalupe": {},
  "megatrompo": {
-  "firma": "81fc3391a564",
+  "firma": "b575f1f73045",
   "menciona": null,
-  "cambio": "2026-11-26"
+  "cambio": "2026-11-27"
  },
  "lovethe90s": {},
  "_descubiertos": []
